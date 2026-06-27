@@ -1,0 +1,86 @@
+{
+  "project_id": "hashima-island-mystery-ja",
+  "plan_id": "BLOCK_RES_001",
+  "created_at": "2026-06-27",
+  "source_gate": "ai_image_generation_readiness_gate",
+  "total_blocked": 2,
+  "total_resolved": 2,
+
+  "blocked_images": [
+    {
+      "image_id": "IMG005",
+      "scene_id": "S009",
+      "original_prompt_id_ref": "PROMPT_005",
+      "original_prompt_content_summary": "Aerial bird's eye view of a small isolated concrete island in open ocean, densely packed multi-story apartment buildings, dramatic overcast sky, CG render style",
+
+      "block_reason": "DATA ERROR — orphaned slot. IMG005 was originally the AI generation slot for scene S007 (aerial view), before S007 received a real photo (IMG006, CC BY 2.0, downloaded 2026-06-27). When IMG006 was created, IMG005 was reassigned to S009 (school interior) but its prompt was never updated. PROMPT_005 (aerial CG island) is completely wrong for S009 (school classroom with desks and blackboard).",
+
+      "can_rewrite_safely": false,
+      "reason_cannot_rewrite": "The slot itself is structurally redundant. S009 already has IMG008 assigned in scene.json, and IMG008 now has a corrected school interior prompt (PROMPT_S009_SCHOOL). Having two image slots for S009 creates an ambiguity about which image the editor should use. Suppress IMG005 entirely.",
+
+      "resolution": "SUPPRESS",
+      "resolution_detail": "IMG005 slot is suppressed. No image will be generated for this slot. S009 school interior will be handled exclusively by IMG008 with PROMPT_S009_SCHOOL. The aerial island visual (if needed as additional B-roll) is already covered by IMG006 (real photo, CC BY 2.0).",
+
+      "replacement_strategy": "NOT_NEEDED — S009 covered by IMG008",
+      "real_photo_candidate": false,
+      "stock_recommended": false,
+      "ai_fallback_slot": "IMG008",
+
+      "image_plan_change_required": true,
+      "image_plan_change": "Set IMG005 status to 'suppressed'. Already set to 'BLOCKED_DATA_ERROR' in previous gate. Final status should be 'suppressed_orphan_slot'.",
+
+      "generation_queue_change": "Update IMG005 entry: safety_status → SUPPRESSED. Remove from active generation count.",
+
+      "exact_next_action": "Mark IMG005 as suppressed in image_plan.json and generation_queue.json. IMG008 (S009 school interior) proceeds with PROMPT_S009_SCHOOL. No generation for IMG005.",
+
+      "ai_count_impact": "Active AI images: 18 → 17 (IMG005 suppressed). ai_generate_count in image_plan should be updated from 15 to reflect 17 active - 3 pending legal = 14 confirmed-AI. Note: suppressing IMG005 also resolves the duplicate-scene assignment for S009."
+    },
+    {
+      "image_id": "IMG008",
+      "scene_id": "S009",
+      "original_prompt_id_ref": "PROMPT_008",
+      "original_prompt_content_summary": "Abstract mine tunnel interior, narrow passage disappearing into darkness, single dim light source, oppressive atmosphere, no people — the SAFETY-CONTROLLED mine tunnel prompt",
+
+      "block_reason": "CRITICAL DATA ERROR + SAFETY GATE BYPASS. IMG008 (scene S009 — school interior) had prompt_id_ref pointing to PROMPT_008, which is the mine tunnel prompt reserved exclusively for IMG009 (S011a) under mandatory human review gate FIX-M1. Using PROMPT_008 for IMG008 would have: (1) generated a mine tunnel image for the school interior scene, and (2) generated an unreviewed mine image outside the safety gate — a direct violation of FIX-M1 protocol.",
+
+      "can_rewrite_safely": true,
+      "reason_can_rewrite": "The error is purely in the prompt_id_ref data, not in the scene itself. S009 (school interior) is a benign, non-sensitive scene. A school interior prompt is safe and fully appropriate for S009. The corrected prompt PROMPT_S009_SCHOOL was prepared in the readiness gate and is available in generation_queue.json supplemental_prompts.",
+
+      "resolution": "UNBLOCK_AND_RECLASSIFY",
+      "resolution_detail": "image_plan.json was already corrected in the previous gate: IMG008 prompt_id_ref changed from PROMPT_008 to PROMPT_S009_SCHOOL. The correction is in place. IMG008 should now be classified as READY_WITH_REWRITE — it can be generated in Batch 2 using the school interior prompt.",
+
+      "replacement_strategy": "AI_WITH_CORRECTED_PROMPT",
+      "real_photo_candidate": false,
+      "stock_recommended": false,
+
+      "corrected_prompt": "Interior of ruined school classroom, overturned wooden desks and metal chairs scattered on crumbling concrete floor, faded chalk writing on deteriorating blackboard barely visible, light filtering through broken windows casting shafts across dust and debris, abandoned educational atmosphere, quiet sense of loss, haikyo aesthetic, high contrast, cinematic, desaturated with warm dust tones against cool concrete, film grain --ar 16:9 --no people, faces, identifiable text on blackboard, modern objects, logos, bright colors",
+      "corrected_negative_prompt": "people, faces, legible text, logos, bright colors, modern objects, watermark",
+      "corrected_prompt_id": "PROMPT_S009_SCHOOL",
+      "corrected_prompt_location": "assets/ai_images/generation_queue.json → supplemental_prompts.school_interior_prompt",
+
+      "image_plan_change_required": false,
+      "image_plan_change": "Already corrected in previous gate. IMG008 now has prompt_id_ref: PROMPT_S009_SCHOOL, safety_audit_flag: DATA_ERROR_CORRECTED.",
+
+      "generation_queue_change": "Update IMG008 entry in generation_queue.json: safety_status → READY_WITH_REWRITE, add corrected prompt text, set output_filename, remove block_reason.",
+
+      "exact_next_action": "Update IMG008 in generation_queue.json to READY_WITH_REWRITE status. Include school interior prompt. Schedule for Batch 2 generation.",
+
+      "safety_confirmation": "CONFIRMED SAFE. The corrected PROMPT_S009_SCHOOL: (1) depicts an empty school interior only, (2) has no human forms, (3) has no forced labor context, (4) has no mine/tunnel/suffering content, (5) has explicit --no people and --no faces in negative prompt, (6) references no real historical victims.",
+
+      "note_on_mine_safety": "PROMPT_008 (mine tunnel) remains exclusively assigned to IMG009 (S011a). The correction of IMG008 does not affect IMG009's mandatory human review gate. PROMPT_008 must never appear outside IMG009."
+    }
+  ],
+
+  "post_resolution_queue_summary": {
+    "total_images_in_plan": 18,
+    "suppressed": 1,
+    "active_ai_images": 17,
+    "READY": 3,
+    "READY_WITH_REWRITE": 10,
+    "HUMAN_REVIEW_REQUIRED": 4,
+    "BLOCKED": 0,
+    "queue_clean": true,
+    "mine_prompt_isolation_verified": true,
+    "note": "After resolution: PROMPT_008 is isolated to IMG009 only. No unsafe prompt references remain in active queue entries. S009 school interior is covered by IMG008 with correct prompt. IMG005 is suppressed."
+  }
+}

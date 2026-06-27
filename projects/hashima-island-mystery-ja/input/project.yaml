@@ -1,0 +1,57 @@
+project:
+  topic: "The Mystery of Hashima Island"
+  language: "ja"
+  video_length_minutes: 12
+  style: "dark_documentary"
+  niche: "japanese_mystery"
+  channel_name: ""
+  notes: "Apply japan_template.md. Ma principle. Forced labor history handled with sensitivity."
+
+pipeline:
+  start_stage: 0
+  stop_after_stage: 12
+  max_retries_per_stage: 1
+  halt_on_advisory: false
+
+quality:
+  word_count_tolerance: 0.10
+  min_verified_facts: 5
+  min_sources: 4
+  require_source_pass: false
+
+models:
+  primary: "claude-opus-4-8"
+  secondary: "claude-sonnet-4-6"
+  stage_overrides: {}
+
+images:
+  max_ai_escalation_rate: 0.35
+  minimum_license: "cc_by"
+  allow_fair_use: true
+
+voice:
+  elevenlabs_voice_id: ""
+
+seo:
+  tag_count_min: 15
+  tag_count_max: 28
+  extra_tags:
+    - "Hashima Island"
+    - "Gunkanjima"
+    - "abandoned island Japan"
+    - "軍艦島"
+
+export:
+  bundle_export_assets: true
+  include_run_log: true
+  generate_editor_handoff: true
+
+analytics:
+  write_to_memory: true
+  project_tags:
+    - "japanese_mystery"
+    - "abandoned_location"
+    - "historical"
+    - "nagasaki"
+
+schema_version: "1.0"

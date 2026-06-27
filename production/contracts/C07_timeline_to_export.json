@@ -1,0 +1,307 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Contract C07: Timeline → Export / Publish",
+  "contract_id": "C07",
+  "version": "1.0",
+  "description": "Governs the transition from an approved timeline to final export and YouTube publishing. Defines render approval gates, SEO pre-publish checks, thumbnail approval, content policy validation, and post-publish state updates. This is the terminal contract in the pipeline — once passed, the video is published.",
+  "upstream_documents": [
+    {
+      "document": "timeline.json",
+      "required_state": "assembly_status must be 'approved'",
+      "produces_schema": "https://ai-youtube-studio/production/schemas/timeline.json"
+    },
+    {
+      "document": "seo.json",
+      "required_state": "publish_readiness must be 'approved'",
+      "produces_schema": "https://ai-youtube-studio/production/schemas/seo.json"
+    },
+    {
+      "document": "thumbnail.json",
+      "required_state": "selected_concept_id must be non-null AND corresponding concept.status must be 'approved'",
+      "produces_schema": "https://ai-youtube-studio/production/schemas/thumbnail.json"
+    },
+    {
+      "document": "export.json",
+      "required_state": "review_decision must be 'GO' or 'GO_WITH_FIXES' AND review_open_fixes must be 0",
+      "produces_schema": "https://ai-youtube-studio/production/schemas/export.json"
+    }
+  ],
+  "downstream_state": {
+    "description": "After this contract is satisfied and publish succeeds, export.json is updated to reflect final state.",
+    "final_export_fields": [
+      "status = 'published'",
+      "publishing_urls.youtube = actual YouTube URL",
+      "published_at = ISO 8601 timestamp",
+      "metrics.review_fixes_resolved = metrics.review_fixes_required"
+    ]
+  },
+  "input": {
+    "description": "All conditions that must be satisfied before the publish action is executed.",
+    "timeline_requirements": [
+      {
+        "field": "timeline.assembly_status",
+        "required_value": "approved",
+        "purpose": "Prevents publishing from an unapproved or draft edit."
+      },
+      {
+        "field": "timeline.output_file_path",
+        "required": "non-null",
+        "purpose": "Render must be complete before publish. output_file_path = null means render has not run."
+      },
+      {
+        "field": "timeline.render_settings",
+        "purpose": "All render settings must be populated. Missing settings → render will fail or produce incorrect output."
+      }
+    ],
+    "seo_requirements": [
+      {
+        "field": "seo.selected_title_id",
+        "required": "non-null",
+        "purpose": "A title must be selected before publishing."
+      },
+      {
+        "field": "seo.titles[selected].status",
+        "required_value": "approved",
+        "purpose": "The selected title must be approved. A draft or rejected title cannot be published."
+      },
+      {
+        "field": "seo.titles[selected].factual_accuracy_check",
+        "required_value": true,
+        "purpose": "Title must have been fact-checked before use."
+      },
+      {
+        "field": "seo.titles[selected].off_limits_check",
+        "required_value": true,
+        "purpose": "Title must have been checked against story_bible forbidden expressions."
+      },
+      {
+        "field": "seo.description.dispute_disclosure_included",
+        "conditional": "Required true if research.json contains any facts with status=disputed",
+        "purpose": "Viewer must be informed of disputed historical claims."
+      },
+      {
+        "field": "seo.publish_readiness",
+        "required_value": "approved",
+        "purpose": "SEO must have explicit human sign-off before publishing."
+      },
+      {
+        "field": "seo.content_policy.sensitive_topics",
+        "purpose": "If forced_labor or historical_violence present, content_declaration must be populated."
+      }
+    ],
+    "thumbnail_requirements": [
+      {
+        "field": "thumbnail.selected_concept_id",
+        "required": "non-null",
+        "purpose": "A thumbnail must be selected."
+      },
+      {
+        "field": "thumbnail.concepts[selected].status",
+        "required_value": "approved",
+        "purpose": "The thumbnail must be approved."
+      },
+      {
+        "field": "thumbnail.concepts[selected].respect_check",
+        "required_value": true,
+        "purpose": "Thumbnail must have been reviewed for potential disrespect before publishing."
+      },
+      {
+        "field": "thumbnail.concepts[selected].file_path",
+        "required": "non-null",
+        "purpose": "Thumbnail file must exist before publishing."
+      }
+    ],
+    "review_gate_requirements": [
+      {
+        "field": "export.review_decision",
+        "allowed_values": ["GO", "GO_WITH_FIXES"],
+        "purpose": "NO_GO decision blocks publishing entirely."
+      },
+      {
+        "field": "export.review_open_fixes",
+        "required_value": 0,
+        "purpose": "All review fixes must be resolved before publishing. Open fixes = production debt that blocks publish."
+      }
+    ],
+    "preconditions": [
+      "timeline.assembly_status === 'approved'",
+      "timeline.output_file_path is not null (render complete)",
+      "seo.selected_title_id is not null",
+      "seo.publish_readiness === 'approved'",
+      "thumbnail.selected_concept_id is not null",
+      "thumbnail.concepts[selected].file_path is not null",
+      "export.review_decision in ['GO', 'GO_WITH_FIXES']",
+      "export.review_open_fixes === 0"
+    ]
+  },
+  "output": {
+    "description": "State changes made to export.json after successful publishing.",
+    "export_updates": [
+      {
+        "field": "status",
+        "value": "published"
+      },
+      {
+        "field": "publishing_urls.youtube",
+        "value": "YouTube video URL (e.g. https://www.youtube.com/watch?v=...)"
+      },
+      {
+        "field": "published_at",
+        "value": "ISO 8601 UTC timestamp of publish"
+      },
+      {
+        "field": "metrics.review_fixes_resolved",
+        "value": "Must equal metrics.review_fixes_required at publish time"
+      }
+    ],
+    "post_publish_actions": [
+      "Set seo.publishing.visibility to 'public' or 'scheduled' based on publish decision",
+      "Populate seo.publishing.scheduled_publish_utc if scheduled",
+      "Add video to seo.publishing.playlist_ids if applicable",
+      "Upload subtitle file to YouTube via YouTube Data API"
+    ]
+  },
+  "validation": {
+    "gate": "Pre-Publish Gate",
+    "checks": [
+      {
+        "check_id": "C07-V01",
+        "description": "timeline.assembly_status === 'approved'",
+        "severity": "FAIL",
+        "action_on_fail": "Complete timeline review. Get director approval. Set status to 'approved'."
+      },
+      {
+        "check_id": "C07-V02",
+        "description": "timeline.output_file_path is non-null",
+        "severity": "FAIL",
+        "action_on_fail": "Run render. Confirm output file exists at specified path."
+      },
+      {
+        "check_id": "C07-V03",
+        "description": "seo.selected_title_id is non-null",
+        "severity": "FAIL",
+        "action_on_fail": "Select a title from seo.titles where status=approved."
+      },
+      {
+        "check_id": "C07-V04",
+        "description": "Selected title factual_accuracy_check = true",
+        "severity": "FAIL",
+        "action_on_fail": "Run factual accuracy check on title. Confirm against research.json."
+      },
+      {
+        "check_id": "C07-V05",
+        "description": "export.review_decision !== 'NO_GO'",
+        "severity": "CRITICAL",
+        "action_on_fail": "Halt publish. Return to review gate. Resolve all blocker issues."
+      },
+      {
+        "check_id": "C07-V06",
+        "description": "export.review_open_fixes === 0",
+        "severity": "FAIL",
+        "action_on_fail": "Complete all open fixes. Update export.review_fixes_resolved count."
+      },
+      {
+        "check_id": "C07-V07",
+        "description": "thumbnail.concepts[selected].file_path is non-null",
+        "severity": "FAIL",
+        "action_on_fail": "Produce thumbnail file. Set file_path."
+      },
+      {
+        "check_id": "C07-V08",
+        "description": "thumbnail.concepts[selected].respect_check === true",
+        "severity": "FAIL",
+        "action_on_fail": "Perform respect check. Document result in respect_check_notes."
+      },
+      {
+        "check_id": "C07-V09",
+        "description": "seo.content_policy.content_declaration is non-empty if sensitive_topics is non-empty",
+        "severity": "HIGH",
+        "action_on_fail": "Add content_declaration to content_policy."
+      },
+      {
+        "check_id": "C07-V10",
+        "description": "seo.description.dispute_disclosure_included = true if any research fact has status=disputed",
+        "severity": "HIGH",
+        "action_on_fail": "Add dispute disclosure to description text."
+      }
+    ]
+  },
+  "failure_conditions": [
+    {
+      "condition": "export.review_decision = 'NO_GO'",
+      "severity": "CRITICAL",
+      "pipeline_action": "halt",
+      "human_action": "Review is blocked. Address all BLOCKER and HIGH issues. Re-submit for review."
+    },
+    {
+      "condition": "Selected title is factually incorrect",
+      "severity": "CRITICAL",
+      "pipeline_action": "halt",
+      "human_action": "Delete factually incorrect title (FIX-B1 applies for Title B). Select a different approved title."
+    },
+    {
+      "condition": "Thumbnail respect check not performed",
+      "severity": "FAIL",
+      "pipeline_action": "halt",
+      "human_action": "Perform respect check. Document result. Only proceed if result is acceptable."
+    },
+    {
+      "condition": "Render file does not exist at output_file_path",
+      "severity": "CRITICAL",
+      "pipeline_action": "halt",
+      "human_action": "Re-run render. Confirm render completes successfully. Verify file at path."
+    },
+    {
+      "condition": "review_open_fixes > 0",
+      "severity": "FAIL",
+      "pipeline_action": "halt",
+      "human_action": "Complete all open fixes listed in review/production_go_no_go.md. Update export.json fix count."
+    }
+  ],
+  "recovery_strategy": [
+    {
+      "scenario": "review_decision = 'GO_WITH_FIXES' and fixes pending",
+      "strategy": "Work through fix commands in priority order: BLOCKER → HIGH → MEDIUM → LOW. Mark each fixed in export.json. Decrement review_open_fixes by 1 per fix. Only proceed to publish when review_open_fixes = 0."
+    },
+    {
+      "scenario": "Thumbnail not produced",
+      "strategy": "Take the background image from image_plan.json (via selected_concept.background.image_id_ref). Apply text overlays per concept definition. Export as 1280×720 JPG under 2MB. Set file_path. Set status=approved after respect check."
+    },
+    {
+      "scenario": "Title factual issue discovered at publish gate",
+      "strategy": "Flag title as rejected. Set rejection_reason. Remove from seo.titles array. Select next-best approved title. If no approved title exists, write and approve a new one."
+    },
+    {
+      "scenario": "Render fails",
+      "strategy": "Check render log for error. Common causes: missing input file, codec not installed, bitrate too high. Fix cause. Re-run render. Do not publish from a partial or corrupt render output."
+    }
+  ],
+  "example": {
+    "pre_publish_gate_pass": {
+      "timeline_assembly_status": "approved",
+      "timeline_output_file_path": "export/hashima-island-mystery-ja_final.mp4",
+      "seo_selected_title_id": "TITLE_A",
+      "seo_title_status": "approved",
+      "seo_title_factual_accuracy_check": true,
+      "seo_publish_readiness": "approved",
+      "thumbnail_selected_concept_id": "THUMB_A",
+      "thumbnail_file_path": "visuals/thumbnail_a.jpg",
+      "thumbnail_respect_check": true,
+      "review_decision": "GO_WITH_FIXES",
+      "review_open_fixes": 0,
+      "result": "PASS — proceed to publish"
+    },
+    "pre_publish_gate_fail": {
+      "timeline_assembly_status": "draft_complete",
+      "review_decision": "GO_WITH_FIXES",
+      "review_open_fixes": 12,
+      "seo_selected_title_id": null,
+      "violations": [
+        "C07-V01: assembly_status !== 'approved'",
+        "C07-V03: selected_title_id is null",
+        "C07-V06: review_open_fixes > 0"
+      ],
+      "result": "FAIL — do not publish"
+    }
+  }
+}

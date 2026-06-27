@@ -1,0 +1,30 @@
+{
+  "project_id": "hashima-island-mystery-ja",
+  "schema_version": "1.0",
+  "status": "pending_recording",
+  "language": "ja",
+  "format": "SRT",
+  "entry_count": 1,
+  "warnings": [
+    {
+      "warning_id": "W003",
+      "severity": "MEDIUM",
+      "field": "entries",
+      "message": "Subtitle generation requires completed voice recording. recording_status=not_started. This file contains a single placeholder entry. Subtitle timecodes, duration, and text must be regenerated from the approved voice recording. Do not publish with placeholder subtitles."
+    }
+  ],
+  "entries": [
+    {
+      "index": 1,
+      "start": "00:00:00,000",
+      "end": "00:00:01,000",
+      "duration_ms": 1000,
+      "text": "[PLACEHOLDER — subtitle generation requires completed voice recording. Do not publish.]",
+      "line_id_ref": null,
+      "speaker": null,
+      "style": null
+    }
+  ],
+  "created_at": "2026-06-27T08:00:00Z",
+  "updated_at": "2026-06-27T08:00:00Z"
+}

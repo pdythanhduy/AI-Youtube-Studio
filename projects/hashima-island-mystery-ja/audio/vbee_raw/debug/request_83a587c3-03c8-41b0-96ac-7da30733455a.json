@@ -1,0 +1,31 @@
+{
+  "fetched_at": "2026-06-27T15:58:40.204108+00:00",
+  "request_id": "83a587c3-03c8-41b0-96ac-7da30733455a",
+  "resolved_url": "https://vbee.vn/api/v1/tts/83a587c3-03c8-41b0-96ac-7da30733455a/callback-result",
+  "url_template": "https://vbee.vn/api/v1/tts/{request_id}/callback-result",
+  "http_status": 200,
+  "response": {
+    "result": {
+      "callback_url": "https://example.com/vbee-callback",
+      "created_at": "2026-06-27T15:58:35.220Z",
+      "payload": {
+        "app_id": "fa5f1973-7980-43e9-b69e-b468425cc943",
+        "audio_link": "https://vbee.vn/s/83a587c3-03c8-41b0-96ac-7da30733455a/67a9fbf1-a6cc-43c2-828a-ccd15e71b455",
+        "audio_type": "mp3",
+        "bitrate": 128,
+        "characters": 6,
+        "created_at": "2026-06-27T15:58:33.168Z",
+        "request_id": "83a587c3-03c8-41b0-96ac-7da30733455a",
+        "sample_rate": "48000",
+        "speed_rate": 1,
+        "status": "SUCCESS",
+        "timestamp_words": [],
+        "voice_code": "ja-JP-Standard-C"
+      },
+      "request_id": "83a587c3-03c8-41b0-96ac-7da30733455a",
+      "result": "<!doctype html><html lang=\"en\"><head><title>Example Domain</title><link rel=\"icon\" href=\"data:,\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"><style>body{background:#eee;width:60vw;margin:15vh auto;font-family:system-ui,sans-serif}h1{font-size:1.5em}div{opacity:0.8}a:link,a:visited{color:#348}</style></head><body><div><h1>Example Domain</h1><p>This domain is for use in documentation examples without needing permission. Avoid use in operations.</p><p><a href=\"https://iana.org/domains/example\">Learn more</a></p></div></body></html>",
+      "status_code": "405"
+    },
+    "status": 1
+  }
+}

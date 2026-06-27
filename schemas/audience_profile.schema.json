@@ -1,0 +1,198 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://ai-youtube-studio/schemas/audience_profile.schema.json",
+  "title": "Audience Profile Schema",
+  "description": "Defines the knowledge level, attention span, vocabulary, and engagement expectations for a specific audience tier. Audience Profiles have the lowest priority in the override hierarchy — they are overridden by all other profile types.",
+  "version": "1.0",
+  "type": "object",
+  "required": [
+    "audience_id",
+    "schema_version",
+    "knowledge_profile",
+    "language_profile",
+    "engagement_profile"
+  ],
+  "additionalProperties": false,
+  "properties": {
+
+    "audience_id": {
+      "type": "string",
+      "enum": ["beginner", "general", "enthusiast", "expert"],
+      "description": "Canonical audience tier identifier."
+    },
+
+    "schema_version": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+$"
+    },
+
+    "display_name": {
+      "type": "string",
+      "description": "Human-readable label. e.g. 'General Audience', 'Domain Enthusiast'."
+    },
+
+    "description": {
+      "type": "string",
+      "description": "One-sentence description of this audience tier."
+    },
+
+    "demographic_signals": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "age_range_min": { "type": ["integer", "null"] },
+        "age_range_max": { "type": ["integer", "null"] },
+        "typical_prior_exposure": {
+          "type": ["string", "null"],
+          "description": "How much exposure this audience has had to the topic area. e.g. 'none', 'casual news consumer', 'active hobbyist'."
+        },
+        "cultural_context_assumption": {
+          "type": "string",
+          "enum": ["low", "medium", "high"],
+          "description": "How much shared cultural context to assume. high = can reference cultural touchstones without explanation."
+        }
+      }
+    },
+
+    "knowledge_profile": {
+      "type": "object",
+      "required": ["assumed_knowledge_level", "jargon_tolerance"],
+      "additionalProperties": false,
+      "properties": {
+        "assumed_knowledge_level": {
+          "type": "string",
+          "enum": ["none", "basic", "intermediate", "advanced"],
+          "description": "What the audience already knows about the topic. Script should not re-explain things at this level."
+        },
+        "jargon_tolerance": {
+          "type": "string",
+          "enum": ["none", "low", "medium", "high"],
+          "description": "How much technical or domain-specific language is acceptable without definition."
+        },
+        "explanation_depth": {
+          "type": "string",
+          "enum": ["surface", "moderate", "thorough", "deep"],
+          "description": "How deeply to explain concepts. 'surface' = what, not why. 'deep' = mechanisms and implications."
+        },
+        "citation_expectation": {
+          "type": "string",
+          "enum": ["none", "light", "standard", "rigorous"],
+          "description": "How much source attribution this audience expects."
+        },
+        "nuance_tolerance": {
+          "type": "string",
+          "enum": ["low", "medium", "high"],
+          "description": "Whether this audience can hold ambiguity. 'low' = clear conclusions required. 'high' = comfortable with 'we don't know'."
+        }
+      }
+    },
+
+    "language_profile": {
+      "type": "object",
+      "required": ["vocabulary_level"],
+      "additionalProperties": false,
+      "properties": {
+        "vocabulary_level": {
+          "type": "string",
+          "enum": ["simple", "conversational", "standard", "elevated", "technical"],
+          "description": "Vocabulary complexity to use in scripts."
+        },
+        "sentence_complexity": {
+          "type": "string",
+          "enum": ["short_simple", "moderate", "complex_allowed"],
+          "description": "Preferred sentence structure."
+        },
+        "analogy_reliance": {
+          "type": "string",
+          "enum": ["high", "medium", "low"],
+          "description": "How often to use analogies and comparisons to familiar concepts. 'high' for beginners."
+        },
+        "recap_frequency": {
+          "type": "string",
+          "enum": ["frequent", "moderate", "minimal", "none"],
+          "description": "How often to recap or summarize key points within the video."
+        }
+      }
+    },
+
+    "engagement_profile": {
+      "type": "object",
+      "required": ["attention_span_model"],
+      "additionalProperties": false,
+      "properties": {
+        "attention_span_model": {
+          "type": "string",
+          "enum": ["very_short", "short", "moderate", "long", "very_long"],
+          "description": "Expected attention persistence. 'very_short' = needs re-engagement every 30-60s. 'very_long' = tolerates deep dives."
+        },
+        "hook_sensitivity": {
+          "type": "string",
+          "enum": ["very_high", "high", "medium", "low"],
+          "description": "How critical the first 30 seconds are for this audience. Expert audiences tolerate slow builds."
+        },
+        "trust_building_requirement": {
+          "type": "string",
+          "enum": ["immediate", "earned_quickly", "earned_over_time", "already_trusted"],
+          "description": "How much the audience needs to trust the creator before engaging deeply. 'immediate' = new audience, skeptical."
+        },
+        "engagement_triggers": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "What motivates this audience. e.g. ['surprising facts', 'personal relevance', 'social proof', 'mystery']."
+        },
+        "emotional_range": {
+          "type": "string",
+          "enum": ["narrow", "moderate", "wide"],
+          "description": "How wide an emotional range this audience responds to. 'narrow' = keep it measured."
+        },
+        "comment_likelihood": {
+          "type": "string",
+          "enum": ["very_low", "low", "medium", "high", "very_high"],
+          "description": "Estimated comment engagement propensity."
+        }
+      }
+    },
+
+    "pacing_preference": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Audience-level pacing guidance. Lowest priority in override hierarchy.",
+      "properties": {
+        "overall_pace": {
+          "type": "string",
+          "enum": ["very_fast", "fast", "moderate", "slow", "very_slow"]
+        },
+        "tolerance_for_silence": {
+          "type": "string",
+          "enum": ["very_low", "low", "medium", "high"],
+          "description": "'very_low' = silence triggers skip. 'high' = silence is appreciated for reflection."
+        },
+        "tolerance_for_repetition": {
+          "type": "string",
+          "enum": ["none", "low", "medium"],
+          "description": "Whether this audience tolerates recap or repetition of key points."
+        }
+      }
+    },
+
+    "script_guidance": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "assume_prior_videos_seen": { "type": "boolean", "default": false },
+        "self_contained_required": {
+          "type": "boolean",
+          "description": "If true, every video must make sense without prior channel context.",
+          "default": true
+        },
+        "outro_cta_style": {
+          "type": ["string", "null"],
+          "description": "How to pitch the next video. e.g. 'soft suggestion', 'direct ask', 'embedded question'."
+        }
+      }
+    },
+
+    "created_at": { "type": "string", "format": "date-time" },
+    "updated_at": { "type": "string", "format": "date-time" }
+  }
+}

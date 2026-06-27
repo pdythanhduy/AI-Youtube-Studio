@@ -1,0 +1,367 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://ai-youtube-studio/production/schemas/voice.json",
+  "title": "Voice",
+  "description": "Produced at Stage 9. Defines narrator profile, recording specifications, and the full narration broken into deliverable lines. Each line maps to a line_id in story.json. This document is the handoff to the voice actor or TTS system. The lines array plus pauses array is the authoritative read order.",
+  "type": "object",
+  "required": [
+    "project_id",
+    "schema_version",
+    "language",
+    "narrator_profile",
+    "recording_specs",
+    "sections",
+    "total_narration_word_count",
+    "estimated_duration_seconds",
+    "timed_readthrough_required",
+    "created_at"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "project_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9-]{2,62}[a-z0-9]$"
+    },
+    "schema_version": {
+      "type": "string",
+      "const": "1.0"
+    },
+    "language": {
+      "type": "string"
+    },
+    "narrator_profile": {
+      "$ref": "#/definitions/narrator_profile"
+    },
+    "recording_specs": {
+      "$ref": "#/definitions/recording_specs"
+    },
+    "tts_settings": {
+      "$ref": "#/definitions/tts_settings"
+    },
+    "sections": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/definitions/voice_section"
+      }
+    },
+    "pronunciation_checkpoints": {
+      "type": "array",
+      "description": "Terms that must be verified correct before recording begins. Drawn from story_bible.pronunciation_guide.",
+      "items": {
+        "type": "object",
+        "required": ["term", "correct_reading", "common_error"],
+        "properties": {
+          "term": { "type": "string" },
+          "correct_reading": { "type": "string" },
+          "common_error": { "type": ["string", "null"] }
+        }
+      }
+    },
+    "total_narration_word_count": {
+      "type": "integer",
+      "description": "Word count of all narration lines only. Must match story.script.word_count."
+    },
+    "estimated_duration_seconds": {
+      "type": "integer",
+      "description": "Estimated recording duration including all pauses. Must be within ±45 seconds of project.duration_minutes × 60."
+    },
+    "timed_readthrough_required": {
+      "type": "boolean",
+      "description": "If true, a timed read-through must be completed and duration confirmed before studio booking.",
+      "default": true
+    },
+    "timed_readthrough_result_seconds": {
+      "type": ["integer", "null"],
+      "description": "Actual duration from timed read-through. Null until completed."
+    },
+    "recording_status": {
+      "type": "string",
+      "enum": ["not_started", "readthrough_pending", "readthrough_passed", "recording_booked", "recording_complete", "approved"],
+      "default": "not_started"
+    },
+    "file_path": {
+      "type": ["string", "null"],
+      "description": "Relative path to final approved recording file. Null until complete."
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "definitions": {
+    "narrator_profile": {
+      "type": "object",
+      "required": ["gender_preference", "age_range", "register", "tone_style", "forbidden_styles"],
+      "properties": {
+        "gender_preference": {
+          "type": "string",
+          "enum": ["male", "female", "neutral", "any"]
+        },
+        "age_range": {
+          "type": "string",
+          "description": "Perceived age of narrator voice.",
+          "examples": ["30s-50s", "20s-30s"]
+        },
+        "register": {
+          "type": "string",
+          "enum": ["formal", "semi_formal", "conversational"],
+          "description": "Overall formality level."
+        },
+        "tone_style": {
+          "type": "string",
+          "description": "Reference tone style for casting.",
+          "examples": ["NHKドキュメンタリーナレーター調", "BBC documentary narrator", "dark true crime podcast"]
+        },
+        "reference_programs": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Specific programs whose narrator style should be referenced.",
+          "examples": [["NHKスペシャル", "岩波ドキュメンタリー"]]
+        },
+        "forbidden_styles": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Explicitly forbidden delivery styles.",
+          "examples": [["news anchor", "commercial", "upbeat presenter", "whisper ASMR"]]
+        }
+      }
+    },
+    "recording_specs": {
+      "type": "object",
+      "required": ["sample_rate_hz", "bit_depth", "file_format", "peak_dbfs", "noise_floor_dbfs"],
+      "properties": {
+        "sample_rate_hz": {
+          "type": "integer",
+          "enum": [44100, 48000, 96000],
+          "default": 48000
+        },
+        "bit_depth": {
+          "type": "integer",
+          "enum": [16, 24, 32],
+          "default": 24
+        },
+        "file_format": {
+          "type": "string",
+          "enum": ["wav", "aiff", "flac"],
+          "default": "wav",
+          "description": "Master recording format. MP3 or AAC only for reference copies."
+        },
+        "peak_dbfs": {
+          "type": "number",
+          "maximum": 0,
+          "default": -3,
+          "description": "Maximum peak level in dBFS."
+        },
+        "noise_floor_dbfs": {
+          "type": "number",
+          "maximum": 0,
+          "default": -60,
+          "description": "Maximum acceptable noise floor."
+        },
+        "room_treatment": {
+          "type": "string",
+          "enum": ["dry_no_reverb", "studio_treated", "any"],
+          "default": "dry_no_reverb",
+          "description": "Reverb is added in post. Raw recording must be dry."
+        },
+        "deliver_as": {
+          "type": "string",
+          "enum": ["single_file", "per_section", "per_line"],
+          "description": "How the narrator should deliver the recording.",
+          "default": "single_file"
+        }
+      }
+    },
+    "tts_settings": {
+      "type": ["object", "null"],
+      "description": "Settings for AI TTS synthesis. Null if using human narrator.",
+      "required": ["engine", "voice_id"],
+      "properties": {
+        "engine": {
+          "type": "string",
+          "enum": ["elevenlabs", "azure_neural", "google_neural2", "openai_tts", "amazon_polly"]
+        },
+        "voice_id": {
+          "type": "string",
+          "description": "Engine-specific voice identifier.",
+          "examples": ["ja-JP-KeitaNeural", "ja-JP-NanamiNeural"]
+        },
+        "speaking_rate": {
+          "type": "number",
+          "minimum": 0.5,
+          "maximum": 2.0,
+          "description": "Speaking rate multiplier. 1.0 = normal.",
+          "examples": [0.85]
+        },
+        "pitch": {
+          "type": "number",
+          "description": "Pitch adjustment in semitones or percentage depending on engine."
+        },
+        "pause_tag": {
+          "type": "string",
+          "description": "SSML tag format for pauses in this engine.",
+          "examples": ["<break time=\"2000ms\"/>", "<prosody rate=\"silent\">"]
+        },
+        "ssml_enabled": {
+          "type": "boolean",
+          "default": true
+        }
+      }
+    },
+    "voice_section": {
+      "type": "object",
+      "required": ["section_id", "lines"],
+      "properties": {
+        "section_id": {
+          "type": "string",
+          "enum": ["HOOK", "ACT_I", "ACT_II", "ACT_III", "ACT_IV", "ACT_V", "OUTRO"]
+        },
+        "pacing_default": {
+          "type": "string",
+          "enum": ["very_slow", "slow", "normal"],
+          "description": "Default pacing for this section. Individual lines may override."
+        },
+        "lines": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/voice_line"
+          }
+        }
+      }
+    },
+    "voice_line": {
+      "type": "object",
+      "required": ["line_id", "line_type", "text"],
+      "additionalProperties": false,
+      "properties": {
+        "line_id": {
+          "type": "string",
+          "pattern": "^L[0-9]{3}$",
+          "description": "Foreign key to story.script.sections[].lines[].line_id."
+        },
+        "line_type": {
+          "type": "string",
+          "enum": ["narration", "pause", "silence", "direction_only"],
+          "description": "narration = read aloud. pause = timed silence. silence = extended silence (Ma beat). direction_only = instruction for narrator, not read."
+        },
+        "text": {
+          "type": "string",
+          "description": "Text to read aloud (if narration) or direction text (if direction_only/pause). Narrator reads ONLY narration lines."
+        },
+        "pacing": {
+          "type": ["string", "null"],
+          "enum": ["very_slow", "slow", "normal", null],
+          "description": "Overrides section pacing_default."
+        },
+        "pause_before_seconds": {
+          "type": "number",
+          "minimum": 0,
+          "default": 0,
+          "description": "Pause before reading this line."
+        },
+        "pause_after_seconds": {
+          "type": "number",
+          "minimum": 0,
+          "default": 0,
+          "description": "Pause after reading this line."
+        },
+        "delivery_note": {
+          "type": ["string", "null"],
+          "description": "Specific delivery instruction for this line only.",
+          "examples": ["「消えました」を低めのトーンで。", "問いが宙に浮くように。"]
+        },
+        "take_count_required": {
+          "type": "integer",
+          "minimum": 1,
+          "default": 1,
+          "description": "Minimum number of takes required for this line."
+        }
+      }
+    }
+  },
+  "examples": [
+    {
+      "project_id": "hashima-island-mystery-ja",
+      "schema_version": "1.0",
+      "language": "ja",
+      "narrator_profile": {
+        "gender_preference": "male",
+        "age_range": "30s-50s",
+        "register": "semi_formal",
+        "tone_style": "NHKドキュメンタリーナレーター調",
+        "reference_programs": ["NHKスペシャル", "岩波ドキュメンタリー"],
+        "forbidden_styles": ["news anchor", "commercial", "upbeat presenter"]
+      },
+      "recording_specs": {
+        "sample_rate_hz": 48000,
+        "bit_depth": 24,
+        "file_format": "wav",
+        "peak_dbfs": -3,
+        "noise_floor_dbfs": -60,
+        "room_treatment": "dry_no_reverb",
+        "deliver_as": "single_file"
+      },
+      "tts_settings": {
+        "engine": "azure_neural",
+        "voice_id": "ja-JP-KeitaNeural",
+        "speaking_rate": 0.85,
+        "pitch": 0,
+        "pause_tag": "<break time=\"2000ms\"/>",
+        "ssml_enabled": true
+      },
+      "sections": [
+        {
+          "section_id": "HOOK",
+          "pacing_default": "slow",
+          "lines": [
+            {
+              "line_id": "L001",
+              "line_type": "narration",
+              "text": "かつて、ここに5,259人が暮らしていました。",
+              "pacing": "slow",
+              "pause_before_seconds": 0,
+              "pause_after_seconds": 1,
+              "delivery_note": "「かつて」を少し強調。郷愁ではなく、事実の提示として。",
+              "take_count_required": 1
+            },
+            {
+              "line_id": "L004",
+              "line_type": "pause",
+              "text": "[PAUSE:2s]",
+              "pacing": null,
+              "pause_before_seconds": 0,
+              "pause_after_seconds": 2,
+              "delivery_note": "完全な無音。呼吸音もマイクに入れない。",
+              "take_count_required": 1
+            }
+          ]
+        }
+      ],
+      "pronunciation_checkpoints": [
+        {
+          "term": "端島",
+          "correct_reading": "はしま",
+          "common_error": "「橋（はし）」と混同しないこと"
+        },
+        {
+          "term": "閉山",
+          "correct_reading": "へいざん",
+          "common_error": "「へいさん」ではない"
+        }
+      ],
+      "total_narration_word_count": 1201,
+      "estimated_duration_seconds": 720,
+      "timed_readthrough_required": true,
+      "timed_readthrough_result_seconds": null,
+      "recording_status": "readthrough_pending",
+      "file_path": null,
+      "created_at": "2026-06-27T06:00:00Z",
+      "updated_at": "2026-06-27T06:00:00Z"
+    }
+  ]
+}

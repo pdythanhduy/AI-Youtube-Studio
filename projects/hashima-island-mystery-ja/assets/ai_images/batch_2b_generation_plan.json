@@ -1,0 +1,358 @@
+{
+  "project_id": "hashima-island-mystery-ja",
+  "plan_id": "BATCH_2B_GEN_PLAN_001",
+  "plan_date": "2026-06-27",
+  "batch_id": "BATCH_2B",
+  "gate": "batch_2b_generation_plan",
+  "total_images": 5,
+  "image_ids": ["IMG008", "IMG014", "IMG015", "IMG017", "IMG019"],
+  "excluded_from_batch_2b": {
+    "IMG013": "In regeneration (attempt 1 of 3) — run in parallel",
+    "IMG009": "Mine tunnel — FIX-M1 separate gate, not touched",
+    "IMG001": "HUMAN_REVIEW_REQUIRED — CC BY-SA legal hold",
+    "IMG007": "HUMAN_REVIEW_REQUIRED — CC BY-SA legal hold",
+    "IMG016": "HUMAN_REVIEW_REQUIRED — CC BY-SA legal hold"
+  },
+
+  "global_style": {
+    "aspect_ratio": "16:9",
+    "color_grade": "dark_documentary",
+    "saturation": "desaturated",
+    "film_grain": true,
+    "resolution_target": "1920x1080",
+    "tool": "Midjourney v6.1"
+  },
+
+  "flag_word_scan": {
+    "target_words": ["haunting", "oppressive", "terrifying", "horror", "ghostly", "nightmare", "cursed", "melancholic"],
+    "safe_replacements": {
+      "haunting": "quiet",
+      "oppressive": "austere",
+      "terrifying": "factual",
+      "horror": "documentary",
+      "ghostly": "abandoned",
+      "nightmare": "reflective",
+      "cursed": "desaturated",
+      "melancholic": "reflective"
+    },
+    "findings": [
+      { "image_id": "IMG014", "flag_word": "melancholic", "context": "beautiful and melancholic", "action": "REPLACED with 'beautiful and reflective'" }
+    ],
+    "images_with_no_flag_words": ["IMG008", "IMG015", "IMG017", "IMG019"]
+  },
+
+  "images": [
+    {
+      "image_id": "IMG008",
+      "scene_id": "S009",
+      "section": "ACT_II",
+      "timecode": "3:00–3:40",
+      "duration_seconds": 40,
+      "shot_type": "medium_shot",
+      "motion_direction": "slow_pan_right",
+      "scene_description_en": "Interior of ruined school building. Overturned desks and chairs. Faded chalk on blackboard. Light penetrating the classroom. Quiet sense of loss.",
+      "scene_description_ja": "廃墟の校舎内。倒れた机と椅子。黒板に消えかけたチョーク。光が差し込む教室。静かな喪失感。",
+
+      "safety_status": "READY_WITH_REWRITE",
+      "batch_2b_approved": true,
+      "reason_approved_for_batch_2b": "UNBLOCKED in queue cleanup (2026-06-27). Was erroneously blocked due to PROMPT_008 (mine tunnel) data error in image_plan.json. Corrected to PROMPT_S009_SCHOOL. Subject: school interior haikyo. No sensitive historical content — Hashima school closed normally in 1974 (civilian closure, not forced labor). All 10 safety dimensions pass.",
+      "historical_context_note": "S009 depicts the Hashima school, which served the civilian mining community's children. It is NOT a forced labor site. Context: civilian community life (ACT II, before forced labor section). Zero safety sensitivity beyond standard haikyo protocol.",
+
+      "flag_words_found": [],
+      "prompt_changes_from_queue": "None required. Prompt already correctly rewritten as PROMPT_S009_SCHOOL.",
+
+      "final_prompt": "Interior of ruined school classroom, overturned wooden desks and metal chairs scattered on crumbling concrete floor, faded chalk writing on deteriorating blackboard barely visible, light filtering through broken windows casting shafts across dust and debris, abandoned educational atmosphere, quiet sense of loss, haikyo aesthetic, high contrast, cinematic, desaturated with warm dust tones against cool concrete, film grain --ar 16:9 --no people, faces, identifiable text on blackboard, modern objects, logos, bright colors, watermark",
+      "negative_prompt": "people, faces, legible text on blackboard, logos, bright colors, modern objects, watermark",
+      "aspect_ratio": "16:9",
+      "output_filename": "IMG008_S009_school_interior.png",
+      "save_to": "assets/ai_images/generated/batch_2b/",
+
+      "midjourney_command": "/imagine Interior of ruined school classroom, overturned wooden desks and metal chairs scattered on crumbling concrete floor, faded chalk writing on deteriorating blackboard barely visible, light filtering through broken windows casting shafts across dust and debris, abandoned educational atmosphere, quiet sense of loss, haikyo aesthetic, high contrast, cinematic, desaturated with warm dust tones against cool concrete, film grain --ar 16:9 --no people, faces, identifiable text on blackboard, modern objects, logos, bright colors, watermark --v 6.1 --q 2",
+
+      "safety_audit_results": {
+        "no_people_unless_allowed": "PASS — explicit --no people, faces in negative",
+        "no_identifiable_people": "PASS",
+        "no_victims": "PASS — civilian school context, not labor",
+        "no_suffering_depiction": "PASS — 'quiet sense of loss' is appropriate documentary tone",
+        "no_forced_labor_imagery": "PASS — school ≠ labor site",
+        "no_ghost_horror_framing": "PASS — haikyo aesthetic, not horror",
+        "no_gore_violence": "PASS",
+        "no_misleading_historical_simulation": "PASS — general haikyo interior",
+        "respectful_hashima_tone": "PASS",
+        "youtube_documentary_suitable": "PASS"
+      },
+
+      "qa_checklist_after_generation": [
+        "No people visible (zero human forms, silhouettes, shadows of people)",
+        "No faces visible",
+        "Desks and/or chairs present and overturned",
+        "Blackboard visible — chalk writing illegible/faded",
+        "Light shafts through windows present",
+        "No modern objects (no plastic, no fluorescent lights, no digital elements)",
+        "No legible text anywhere",
+        "Color palette is desaturated — warm dust against cool concrete",
+        "No bright colors",
+        "16:9 composition confirmed",
+        "Suitable for slow_pan_right 40 seconds"
+      ],
+
+      "post_process_notes": "Film grain. Desaturation to dark_documentary target. Apply slow_pan_right at 40-second duration. Narration lines L009/L010/L011 span this entire 40-second scene."
+    },
+
+    {
+      "image_id": "IMG014",
+      "scene_id": "S017",
+      "section": "ACT_III",
+      "timecode": "7:30–8:00",
+      "duration_seconds": 30,
+      "shot_type": "medium_shot",
+      "motion_direction": "static",
+      "scene_description_en": "Ruined room interior. Light beams cutting through dust and debris. Light itself provides the motion. Composition that feels alive even as a still image.",
+      "scene_description_ja": "廃墟の部屋。光の筋（光線）が塵埃とともに差し込む。光そのものが「動く」演出として機能。静止画でも動きを感じる構図。",
+
+      "safety_status": "READY_WITH_REWRITE",
+      "batch_2b_approved": true,
+      "reason_approved_for_batch_2b": "Original prompt from generation_queue.json contained flag word 'melancholic' — replaced with 'reflective'. Additional differentiation terms added to prevent visual duplication with IMG011 (S013, already approved), which also uses light beam imagery at wide/grand scale. IMG014 must read as room-scale and intimate, not grand-scale ruin.",
+
+      "flag_words_found": ["melancholic"],
+      "flag_word_replacement": {
+        "original": "beautiful and melancholic",
+        "corrected": "beautiful and reflective"
+      },
+      "additional_changes": [
+        "Added 'intimate room-scale interior, single abandoned room' to positive prompt — differentiates from IMG011 (wide multi-storey ruin)",
+        "Added 'wide exterior view' to negative prompt — prevents generation of wide landscape",
+        "Negative prompt expanded with 'watermark, logos'"
+      ],
+
+      "final_prompt": "Dramatic shafts of natural light breaking through collapsed concrete ceiling of abandoned building, dust particles dancing visibly in light beams, chiaroscuro lighting, beautiful and reflective, cinematic, high contrast, dark surroundings with brilliant light shafts, film grain, intimate room-scale interior, single abandoned room with collapsed ceiling opening above, no motion implied --ar 16:9 --no people, furniture, text, modern objects, logos, watermark, wide exterior view, bright colors",
+      "negative_prompt": "people, furniture, text, modern objects, logos, watermark, bright colors, wide exterior view, human figures",
+      "aspect_ratio": "16:9",
+      "output_filename": "IMG014_S017_light_beams_interior.png",
+      "save_to": "assets/ai_images/generated/batch_2b/",
+
+      "midjourney_command": "/imagine Dramatic shafts of natural light breaking through collapsed concrete ceiling of abandoned building, dust particles dancing visibly in light beams, chiaroscuro lighting, beautiful and reflective, cinematic, high contrast, dark surroundings with brilliant light shafts, film grain, intimate room-scale interior, single abandoned room with collapsed ceiling opening above, no motion implied --ar 16:9 --no people, furniture, text, modern objects, logos, watermark, wide exterior view, bright colors --v 6.1 --q 2",
+
+      "visual_duplication_warning": "IMG011 (S013, APPROVED) also features dramatic light shafts through collapsed ceiling. QA must confirm: IMG014 should feel ROOM-SCALE and INTIMATE; IMG011 should feel GRAND-SCALE and multi-storey. If IMG014 output is compositionally identical to IMG011, regenerate with stronger 'single small room' direction.",
+
+      "safety_audit_results": {
+        "no_people_unless_allowed": "PASS",
+        "no_identifiable_people": "PASS",
+        "no_victims": "PASS",
+        "no_suffering_depiction": "PASS — light beams are contemplative and beautiful, not suffering",
+        "no_forced_labor_imagery": "PASS — ACT III, after forced labor section",
+        "no_ghost_horror_framing": "PASS — 'reflective' not 'haunting'; light is warm/cinematic",
+        "no_gore_violence": "PASS",
+        "no_misleading_historical_simulation": "PASS — interior ruin with no historical claim",
+        "respectful_hashima_tone": "PASS",
+        "youtube_documentary_suitable": "PASS"
+      },
+
+      "qa_checklist_after_generation": [
+        "No people, furniture, or modern objects present",
+        "Light shafts (2–3 visible beams) clearly visible through dust",
+        "Dark interior surround with brilliant light — high chiaroscuro contrast",
+        "SCALE CHECK: room-scale and intimate (single room), NOT wide multi-storey ruin (that is IMG011)",
+        "No exterior views — interior only",
+        "No text, no watermarks, no logos",
+        "No bright colors — dark surroundings only",
+        "16:9 format confirmed",
+        "Usable as static hold for 30 seconds — the light movement carries the scene",
+        "VISUAL DUPLICATION CHECK: Compare against approved IMG011. If images are too similar, escalate to director."
+      ],
+
+      "post_process_notes": "Film grain. Dark_documentary palette. Static hold for 30 seconds — no camera motion. L021 and L022 narration including [PAUSE:2s] span this scene. The still image's light beam quality IS the visual motion."
+    },
+
+    {
+      "image_id": "IMG015",
+      "scene_id": "S018",
+      "section": "ACT_III",
+      "timecode": "8:00–8:30",
+      "duration_seconds": 30,
+      "shot_type": "wide_shot",
+      "motion_direction": "slow_pan_right",
+      "scene_description_en": "Post-typhoon ruins. Collapsed walls, exposed rebar. Weathering suggesting 35 years of erosion. Cool dawn light.",
+      "scene_description_ja": "台風後の廃墟。崩れた壁、露出した鉄骨。35年間の侵食を感じさせる風化。青みがかった夜明け光。",
+
+      "safety_status": "READY_WITH_REWRITE",
+      "batch_2b_approved": true,
+      "reason_approved_for_batch_2b": "No flag words detected. Prompt is correctly rewritten from PROMPT_012 content (storm sea + concrete structure) — matches S018 scene description exactly. Subject is pure architectural/weather imagery. Zero human or labor content. Historical reference '35 years of erosion' is accurate and factual (1974 + 35 = 2009 era, and the island continued deteriorating). Negative prompt expanded for safety.",
+
+      "flag_words_found": [],
+      "prompt_changes_from_queue": "Expanded negative prompt with 'human figures, watermark, logos' for consistency with Batch 2B standards. No other changes.",
+
+      "final_prompt": "Post-typhoon ruins of concrete structure near ocean, collapsed walls with exposed rebar, turbulent dark grey ocean waves crashing at base of ruins, heavy dark clouds overhead, dramatic weather, cool blue-grey dawn light, wide cinematic shot, powerful atmosphere of weathering and time, 35 years of erosion expressed in material degradation --ar 16:9 --no people, human figures, boats, bright sunlight, tropical colors, text, logos, watermark, modern elements",
+      "negative_prompt": "people, human figures, boats, bright sunlight, tropical colors, text, logos, watermark, modern elements",
+      "aspect_ratio": "16:9",
+      "output_filename": "IMG015_S018_storm_ruins.png",
+      "save_to": "assets/ai_images/generated/batch_2b/",
+
+      "midjourney_command": "/imagine Post-typhoon ruins of concrete structure near ocean, collapsed walls with exposed rebar, turbulent dark grey ocean waves crashing at base of ruins, heavy dark clouds overhead, dramatic weather, cool blue-grey dawn light, wide cinematic shot, powerful atmosphere of weathering and time, 35 years of erosion expressed in material degradation --ar 16:9 --no people, human figures, boats, bright sunlight, tropical colors, text, logos, watermark, modern elements --v 6.1 --q 2",
+
+      "safety_audit_results": {
+        "no_people_unless_allowed": "PASS — 'no people, human figures' in negative",
+        "no_identifiable_people": "PASS",
+        "no_victims": "PASS — weather and architecture only",
+        "no_suffering_depiction": "PASS — storm is a natural event, not human suffering",
+        "no_forced_labor_imagery": "PASS — ACT III post-closure, no labor reference",
+        "no_ghost_horror_framing": "PASS — dramatic weather is documentary realism, not horror",
+        "no_gore_violence": "PASS",
+        "no_misleading_historical_simulation": "PASS — 'post-typhoon' and '35 years of erosion' are accurate architectural facts",
+        "respectful_hashima_tone": "PASS — 'weathering and time' is respectful documentary language",
+        "youtube_documentary_suitable": "PASS"
+      },
+
+      "qa_checklist_after_generation": [
+        "No people or human forms visible",
+        "Collapsed concrete structure with exposed rebar present",
+        "Ocean waves visible at base of structure",
+        "Dark clouds or dramatic sky present",
+        "Cool blue-grey dawn light quality",
+        "Wide composition — suitable for slow_pan_right 30 seconds",
+        "No boats, no modern elements",
+        "No text, no watermarks",
+        "No bright colors or tropical palette",
+        "16:9 format confirmed"
+      ],
+
+      "post_process_notes": "Film grain. Maintain cool blue-grey palette — do not warm. Apply slow_pan_right at 30-second duration. Narration L023 spans this scene."
+    },
+
+    {
+      "image_id": "IMG017",
+      "scene_id": "S021",
+      "section": "ACT_IV",
+      "timecode": "9:40–10:20",
+      "duration_seconds": 40,
+      "shot_type": "close_up",
+      "motion_direction": "slow_zoom_in",
+      "scene_description_en": "Contrast of heritage plaque with surrounding ruins. Metal plate against rusted concrete. Pride and erasure coexisting. Close-up.",
+      "scene_description_ja": "世界遺産プレートの廃墟との対比。金属製プレートと錆びたコンクリート。誇りと忘却の共存。クローズアップ。",
+
+      "safety_status": "READY_WITH_REWRITE",
+      "batch_2b_approved": true,
+      "reason_approved_for_batch_2b": "No flag words. Subject is a physical heritage plaque — factually appropriate for S021. The scene purpose (UNESCO tension/juxtaposition) is served by the visual of official recognition against physical decay. Critical: all text on plaque must be illegible/worn — prompt and negative prompt both enforce this. Corrected from PROMPT_017 content (tourist vessel, which belongs to S023/IMG019).",
+
+      "flag_words_found": [],
+      "prompt_changes_from_queue": [
+        "Added 'heavily tarnished and weathered with worn inscription that is illegible due to age and corrosion' to plaque description — removes ambiguity about text legibility",
+        "Negative prompt strengthened: 'legible text in any language, readable inscription' added explicitly"
+      ],
+
+      "critical_note": "The plaque text MUST be illegible. Generating a plaque with readable text risks: (1) inventing specific UNESCO declaration text not in the script, (2) falsely attributing specific language to the UNESCO designation. Negative prompt enforces this.",
+
+      "final_prompt": "Close-up of an aged bronze or metal heritage designation plaque mounted on crumbling concrete ruin wall, plaque surface heavily tarnished and weathered with worn inscription that is illegible due to age and corrosion, surrounding concrete crumbling and water-stained, documentary detail shot, desaturated with muted warm tones against cool concrete grey, juxtaposition of official recognition and physical decay --ar 16:9 --no people, legible text in any language, readable inscription, logos, bright colors, pristine surfaces, modern elements, watermark",
+      "negative_prompt": "people, legible text, readable inscription, text in any language, logos, bright colors, pristine surfaces, modern elements, watermark",
+      "aspect_ratio": "16:9",
+      "output_filename": "IMG017_S021_heritage_plaque_ruin.png",
+      "save_to": "assets/ai_images/generated/batch_2b/",
+
+      "midjourney_command": "/imagine Close-up of an aged bronze or metal heritage designation plaque mounted on crumbling concrete ruin wall, plaque surface heavily tarnished and weathered with worn inscription that is illegible due to age and corrosion, surrounding concrete crumbling and water-stained, documentary detail shot, desaturated with muted warm tones against cool concrete grey, juxtaposition of official recognition and physical decay --ar 16:9 --no people, legible text in any language, readable inscription, logos, bright colors, pristine surfaces, modern elements, watermark --v 6.1 --q 2",
+
+      "safety_audit_results": {
+        "no_people_unless_allowed": "PASS",
+        "no_identifiable_people": "PASS",
+        "no_victims": "PASS",
+        "no_suffering_depiction": "PASS — physical object only",
+        "no_forced_labor_imagery": "PASS — plaque is post-2015 UNESCO context",
+        "no_ghost_horror_framing": "PASS",
+        "no_gore_violence": "PASS",
+        "no_misleading_historical_simulation": "PASS — plaque text must be illegible; no specific UNESCO text will appear",
+        "respectful_hashima_tone": "PASS — 'juxtaposition of official recognition and physical decay' is factual and respectful",
+        "youtube_documentary_suitable": "PASS"
+      },
+
+      "qa_checklist_after_generation": [
+        "Metal/bronze plaque clearly identifiable as primary subject",
+        "CRITICAL: No legible text anywhere on plaque — inscription must be fully worn/unreadable",
+        "No other legible text anywhere in frame",
+        "Surrounding concrete visibly crumbling, water-stained, decayed",
+        "No pristine or modern surfaces",
+        "Desaturated warm-cool palette contrast (warm metal vs cool concrete)",
+        "No people, no logos, no watermarks",
+        "Close-up composition — plaque fills significant portion of frame",
+        "16:9 format confirmed",
+        "Suitable for slow_zoom_in 40 seconds"
+      ],
+
+      "post_process_notes": "Film grain. Maintain desaturated palette. Slow_zoom_in at 40-second duration. Narration L028/L029/L030 including [PAUSE:2s] spans this scene. Slight warm toning on the plaque itself vs cool concrete background will reinforce the juxtaposition in post."
+    },
+
+    {
+      "image_id": "IMG019",
+      "scene_id": "S023",
+      "section": "OUTRO",
+      "timecode": "11:00–11:30",
+      "duration_seconds": 30,
+      "shot_type": "medium_shot",
+      "motion_direction": "slow_zoom_in",
+      "scene_description_en": "Hashima silhouette viewed from tourist ferry. POV over bow looking at ruins. Contemporary visitor's gaze.",
+      "scene_description_ja": "観光客の船から見る端島のシルエット。船の舳先越しに廃墟を眺める視点。現在進行形の訪問者の視線。",
+
+      "safety_status": "READY_WITH_REWRITE",
+      "batch_2b_approved": true,
+      "reason_approved_for_batch_2b": "PROMPT_019 does not exist in ai_image_prompts.md (PROMPT_001–018 only). Correctly substituted with PROMPT_017 content (tourist vessel). Subject: contemporary tourist ferry approaching Hashima — factually accurate (ferries run from Nagasaki today). OUTRO context: optimistic, present-day visitor perspective. No historical sensitivity. Key risk: people on vessel deck → negative prompt explicitly blocks.",
+
+      "flag_words_found": [],
+      "prompt_changes_from_queue": [
+        "Removed 'slightly warmer palette relative to rest of video' from positive prompt — this is a post-processing color grade instruction, not a generation parameter. Moved to post_process_notes.",
+        "Added 'no people on deck, no crew members, no tourists visible on vessel' to negative prompt — closes vessel-people generation risk",
+        "Negative prompt standardized with watermark"
+      ],
+
+      "final_prompt": "Small contemporary tourist vessel approaching a large weathered concrete island in middle distance, ocean surface calm, medium shot from water level, bow of vessel visible in foreground with empty deck, island growing larger in frame, overcast sky, desaturated palette, muted tones, documentary style --ar 16:9 --no people, faces, human figures on vessel, crew members, tourists visible, text, logos, dramatic weather, bright colors, watermark",
+      "negative_prompt": "people, faces, human figures on vessel, crew members, tourists visible on deck, text, logos, dramatic weather, bright colors, watermark",
+      "aspect_ratio": "16:9",
+      "output_filename": "IMG019_S023_tourist_ferry_approach.png",
+      "save_to": "assets/ai_images/generated/batch_2b/",
+
+      "midjourney_command": "/imagine Small contemporary tourist vessel approaching a large weathered concrete island in middle distance, ocean surface calm, medium shot from water level, bow of vessel visible in foreground with empty deck, island growing larger in frame, overcast sky, desaturated palette, muted tones, documentary style --ar 16:9 --no people, faces, human figures on vessel, crew members, tourists visible, text, logos, dramatic weather, bright colors, watermark --v 6.1 --q 2",
+
+      "post_process_color_note": "Apply subtle warm color grade in post (slight amber/brown tint) relative to other images in the video. The OUTRO should feel less cold/grey than ACT II/III — this is a directorial choice about the present-day contemporary context. Do not attempt to generate this tonal shift via prompt.",
+
+      "safety_audit_results": {
+        "no_people_unless_allowed": "PASS — explicit 'no people, faces, human figures on vessel' in negative",
+        "no_identifiable_people": "PASS",
+        "no_victims": "PASS — contemporary tourism context",
+        "no_suffering_depiction": "PASS",
+        "no_forced_labor_imagery": "PASS — OUTRO context, present day",
+        "no_ghost_horror_framing": "PASS",
+        "no_gore_violence": "PASS",
+        "no_misleading_historical_simulation": "PASS — tourist ferry approaching Hashima is real contemporary activity",
+        "respectful_hashima_tone": "PASS — 'contemporary visitor's gaze' frames with appropriate distance",
+        "youtube_documentary_suitable": "PASS"
+      },
+
+      "qa_checklist_after_generation": [
+        "CRITICAL: No people visible anywhere on vessel deck (no crew, no tourists, no silhouettes)",
+        "No faces visible",
+        "Vessel bow visible in foreground — empty deck",
+        "Island (weathered concrete ruins) visible in middle-to-far distance and growing",
+        "Calm ocean surface — no storm, no dramatic waves",
+        "No text, no logos, no watermarks on vessel or anywhere",
+        "No bright colors",
+        "Desaturated documentary palette",
+        "16:9 format confirmed",
+        "Suitable for slow_zoom_in 30 seconds — island approaching in frame"
+      ],
+
+      "post_process_notes": "Film grain. Apply subtle post-processing warm grade (slight amber vs the cool grey of ACT II/III) — represents the present-day contemporary context. Slow_zoom_in at 30-second duration. L031 is B-ROLL only; L032 is spoken OUTRO line."
+    }
+  ],
+
+  "batch_summary": {
+    "total_images": 5,
+    "safety_status": {
+      "IMG008": "READY_WITH_REWRITE — APPROVED FOR BATCH 2B",
+      "IMG014": "READY_WITH_REWRITE — APPROVED FOR BATCH 2B (flag word corrected)",
+      "IMG015": "READY_WITH_REWRITE — APPROVED FOR BATCH 2B",
+      "IMG017": "READY_WITH_REWRITE — APPROVED FOR BATCH 2B",
+      "IMG019": "READY_WITH_REWRITE — APPROVED FOR BATCH 2B"
+    },
+    "flag_words_corrected": 1,
+    "negative_prompts_expanded": 3,
+    "generation_may_begin": true,
+    "parallel_track": "IMG013 regeneration (attempt 1 of 3) runs in parallel — save as IMG013_S016_personal_items_v2.png"
+  }
+}

@@ -1,0 +1,337 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://ai-youtube-studio/production/schemas/image_plan.json",
+  "title": "Image Plan",
+  "description": "Produced at Stage 7 and extended at Stage 8. Defines every visual asset required for production: its sourcing strategy, legal status, AI generation prompt, and approval status. Each image maps to one or more scenes in scene.json. No scene with source_type=AI_GENERATE or STOCK_LICENSED may be edited without a corresponding approved image in this document.",
+  "type": "object",
+  "required": [
+    "project_id",
+    "schema_version",
+    "image_count",
+    "ai_generate_count",
+    "stock_licensed_count",
+    "motion_graphics_count",
+    "images",
+    "created_at"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "project_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9-]{2,62}[a-z0-9]$"
+    },
+    "schema_version": {
+      "type": "string",
+      "const": "1.0"
+    },
+    "image_count": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Total images. Must equal length of images array."
+    },
+    "ai_generate_count": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "stock_licensed_count": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "motion_graphics_count": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "ai_image_tool": {
+      "type": ["string", "null"],
+      "enum": ["midjourney", "dall_e_3", "stable_diffusion_xl", "firefly", "ideogram", "flux", null],
+      "description": "Primary AI image generation tool for this project. Null if not yet decided."
+    },
+    "global_style": {
+      "$ref": "#/definitions/global_style"
+    },
+    "images": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/definitions/image"
+      }
+    },
+    "sensitive_scene_ids": {
+      "type": "array",
+      "items": { "type": "string", "pattern": "^IMG[0-9]{3}[a-z]?$" },
+      "description": "Image IDs that require mandatory human review before use. Includes any scene depicting sensitive historical periods."
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "definitions": {
+    "global_style": {
+      "type": "object",
+      "description": "Style constants applied to all AI-generated images in this project.",
+      "required": ["aspect_ratio", "color_palette", "film_grain"],
+      "properties": {
+        "aspect_ratio": {
+          "type": "string",
+          "enum": ["16:9", "9:16", "1:1", "4:3"],
+          "default": "16:9"
+        },
+        "color_palette": {
+          "type": "string",
+          "description": "Color direction for consistency.",
+          "examples": ["desaturated grey, blue-grey, muted brown"]
+        },
+        "film_grain": {
+          "type": "boolean",
+          "default": true
+        },
+        "style_keywords": {
+          "type": "array",
+          "items": { "type": "string" },
+          "examples": [["cinematic", "dark documentary", "atmospheric", "moody"]]
+        },
+        "global_negative_prompt": {
+          "type": ["string", "null"],
+          "description": "Negative prompt applied to ALL AI images in addition to per-image negatives.",
+          "examples": ["bright colors, clear sky, sunlight, modern logos, text overlays, watermarks"]
+        }
+      }
+    },
+    "image": {
+      "type": "object",
+      "required": [
+        "image_id",
+        "scene_refs",
+        "image_type",
+        "legal_status",
+        "priority",
+        "approval_status"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "image_id": {
+          "type": "string",
+          "pattern": "^IMG[0-9]{3}[a-z]?$",
+          "description": "Unique identifier. Format: IMG001... IMG999. Subimages: IMG011a.",
+          "examples": ["IMG001", "IMG011a"]
+        },
+        "scene_refs": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string", "pattern": "^S[0-9]{3}[a-z]?$" },
+          "description": "Scene IDs this image serves. Usually one, but may cover multiple scenes."
+        },
+        "image_type": {
+          "type": "string",
+          "enum": [
+            "establishing_shot",
+            "interior_ruin",
+            "exterior_ruin",
+            "aerial_view",
+            "archival_simulation",
+            "nature_shot",
+            "abstract_atmosphere",
+            "symbolic_still_life",
+            "light_study",
+            "texture_detail",
+            "portrait",
+            "map_graphic",
+            "infographic",
+            "title_card"
+          ]
+        },
+        "legal_status": {
+          "type": "string",
+          "enum": [
+            "AI_GENERATE",
+            "STOCK_LICENSED",
+            "REAL_PHOTO_LICENSED",
+            "PUBLIC_DOMAIN",
+            "MOTION_GRAPHICS",
+            "ORIGINAL",
+            "PENDING_CLEARANCE"
+          ]
+        },
+        "legal_status_reason": {
+          "type": ["string", "null"],
+          "description": "Why this legal_status was chosen."
+        },
+        "stock_search_required": {
+          "type": "boolean",
+          "description": "If true, attempt licensed stock sourcing before AI generation."
+        },
+        "stock_agencies": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Ordered list of stock agencies to check.",
+          "examples": [["Getty Images Japan", "アフロ", "時事通信フォト"]]
+        },
+        "description_en": {
+          "type": "string",
+          "minLength": 10,
+          "description": "English description of the image for sourcing and generation."
+        },
+        "style_notes": {
+          "type": ["string", "null"],
+          "description": "Style direction specific to this image."
+        },
+        "ai_prompt": {
+          "$ref": "#/definitions/ai_prompt"
+        },
+        "priority": {
+          "type": "string",
+          "enum": ["HIGH", "MEDIUM", "LOW"],
+          "description": "HIGH = required before edit lock. MEDIUM = preferred. LOW = optional/replaceable."
+        },
+        "sensitive_content": {
+          "type": "boolean",
+          "default": false,
+          "description": "True if this image depicts or implies sensitive historical events. Triggers mandatory_human_review."
+        },
+        "mandatory_human_review": {
+          "type": "boolean",
+          "default": false,
+          "description": "If true, a human must approve this image before it can be used in the edit."
+        },
+        "human_review_criteria": {
+          "type": ["string", "null"],
+          "description": "What specifically the human reviewer must check. Required when mandatory_human_review=true."
+        },
+        "fallback_image_id": {
+          "type": ["string", "null"],
+          "pattern": "^IMG[0-9]{3}[a-z]?$",
+          "description": "If this image fails review or generation, use this image ID instead."
+        },
+        "approval_status": {
+          "type": "string",
+          "enum": ["pending", "approved", "rejected", "fallback_used"],
+          "description": "Set during production. All images must be approved before timeline assembly."
+        },
+        "file_path": {
+          "type": ["string", "null"],
+          "description": "Relative path to generated/sourced file. Null until produced."
+        },
+        "notes": {
+          "type": ["string", "null"],
+          "maxLength": 500
+        }
+      }
+    },
+    "ai_prompt": {
+      "type": ["object", "null"],
+      "description": "Null for non-AI images. Required when legal_status=AI_GENERATE.",
+      "required": ["positive", "negative"],
+      "properties": {
+        "positive": {
+          "type": "string",
+          "minLength": 20,
+          "description": "Main generation prompt."
+        },
+        "negative": {
+          "type": "string",
+          "description": "Negative prompt. Appended to global_style.global_negative_prompt."
+        },
+        "style_suffix": {
+          "type": ["string", "null"],
+          "description": "Tool-specific style parameters.",
+          "examples": ["--ar 16:9 --v 6", "--style raw"]
+        },
+        "seed": {
+          "type": ["integer", "null"],
+          "description": "Reproducibility seed. Set after successful generation."
+        },
+        "generation_tool": {
+          "type": ["string", "null"],
+          "enum": ["midjourney", "dall_e_3", "stable_diffusion_xl", "firefly", "ideogram", "flux", null]
+        },
+        "max_reject_attempts": {
+          "type": "integer",
+          "default": 3,
+          "description": "How many times to regenerate before falling back to fallback_image_id."
+        }
+      }
+    }
+  },
+  "examples": [
+    {
+      "project_id": "hashima-island-mystery-ja",
+      "schema_version": "1.0",
+      "image_count": 20,
+      "ai_generate_count": 17,
+      "stock_licensed_count": 0,
+      "motion_graphics_count": 3,
+      "ai_image_tool": "midjourney",
+      "global_style": {
+        "aspect_ratio": "16:9",
+        "color_palette": "desaturated grey, blue-grey, muted brown",
+        "film_grain": true,
+        "style_keywords": ["cinematic", "dark documentary", "atmospheric", "moody"],
+        "global_negative_prompt": "people, text, logos, bright colors, clear sky, sunlight, watermarks, modern signage"
+      },
+      "images": [
+        {
+          "image_id": "IMG001",
+          "scene_refs": ["S001"],
+          "image_type": "establishing_shot",
+          "legal_status": "AI_GENERATE",
+          "legal_status_reason": "Best atmospheric angles require private access. Real photos exist but usage rights unclear.",
+          "stock_search_required": true,
+          "stock_agencies": ["Getty Images Japan", "アフロ", "時事通信フォト", "長崎市観光写真素材"],
+          "description_en": "Hashima Island wide shot from sea level. Grey overcast sky. Concrete ruins visible above seawall. Mist on water.",
+          "style_notes": "Cinematic. Dark. Desaturated. The island should feel large and looming.",
+          "ai_prompt": {
+            "positive": "Abandoned concrete island rising from the sea, overcast grey sky, mist on the water, crumbling multi-story buildings visible above a weathered seawall, dramatic low angle view from sea level, cinematic wide shot, desaturated color palette, film grain, moody and atmospheric, dark documentary style",
+            "negative": "people, text, logos, bright colors, clear weather, tropical",
+            "style_suffix": "--ar 16:9",
+            "seed": null,
+            "generation_tool": "midjourney",
+            "max_reject_attempts": 3
+          },
+          "priority": "HIGH",
+          "sensitive_content": false,
+          "mandatory_human_review": false,
+          "human_review_criteria": null,
+          "fallback_image_id": "IMG020",
+          "approval_status": "pending",
+          "file_path": null,
+          "notes": "Opening image of entire video. Must seek real photography first."
+        },
+        {
+          "image_id": "IMG009",
+          "scene_refs": ["S011a", "S011b"],
+          "image_type": "abstract_atmosphere",
+          "legal_status": "AI_GENERATE",
+          "legal_status_reason": "Underground mine interior — no public access.",
+          "stock_search_required": false,
+          "stock_agencies": [],
+          "description_en": "Abstract mine tunnel interior. Rock walls. Single dim light source. Sense of depth and darkness. No people.",
+          "style_notes": "Noir lighting. Narrow perspective. Abstract and atmospheric ONLY.",
+          "ai_prompt": {
+            "positive": "Abstract mine tunnel interior, narrow passage disappearing into darkness, single dim light source casting harsh shadows on rough rock walls, deep shadow, noir lighting, oppressive atmosphere, cinematic close-up perspective",
+            "negative": "people, silhouettes, figures, human shadows, implied human presence, human shapes, bodies, modern equipment, text",
+            "style_suffix": "--ar 16:9",
+            "seed": null,
+            "generation_tool": "midjourney",
+            "max_reject_attempts": 3
+          },
+          "priority": "HIGH",
+          "sensitive_content": true,
+          "mandatory_human_review": true,
+          "human_review_criteria": "Inspect for any human form, silhouette, shadow readable as human, or implied human body shape. If found → REJECT. Do not use. Do not modify. Regenerate. If rejection occurs 3 consecutive times → use fallback_image_id.",
+          "fallback_image_id": "IMG015",
+          "approval_status": "pending",
+          "file_path": null,
+          "notes": "CRITICAL: This scene covers forced labor era (1939-1945). Atmospheric ONLY. No human depictions under any circumstances."
+        }
+      ],
+      "sensitive_scene_ids": ["IMG009"],
+      "created_at": "2026-06-27T05:30:00Z",
+      "updated_at": "2026-06-27T06:00:00Z"
+    }
+  ]
+}

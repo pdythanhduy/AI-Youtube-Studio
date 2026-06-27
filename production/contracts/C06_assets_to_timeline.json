@@ -1,0 +1,254 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Contract C06: Assets → Timeline",
+  "contract_id": "C06",
+  "version": "1.0",
+  "description": "Governs the assembly of production assets (approved images, approved narration recordings, licensed music, SFX) into timeline.json. Defines what asset states are required before edit assembly begins, what timeline tracks must contain, and how the timeline is validated before rendering.",
+  "upstream_documents": [
+    {
+      "document": "image_plan.json",
+      "required_state": "All HIGH priority images must have approval_status in ['approved', 'pending_production']",
+      "produces_schema": "https://ai-youtube-studio/production/schemas/image_plan.json"
+    },
+    {
+      "document": "voice.json",
+      "required_state": "recording_status must be 'approved'",
+      "produces_schema": "https://ai-youtube-studio/production/schemas/voice.json"
+    },
+    {
+      "document": "scene.json",
+      "required_state": "coverage_validated = true",
+      "produces_schema": "https://ai-youtube-studio/production/schemas/scene.json"
+    },
+    {
+      "document": "subtitle.json",
+      "required_state": "entry_count > 0",
+      "produces_schema": "https://ai-youtube-studio/production/schemas/subtitle.json",
+      "notes": "Subtitle is generated after narration recording is done and timecodes are available."
+    }
+  ],
+  "downstream_document": {
+    "document": "timeline.json",
+    "produces_schema": "https://ai-youtube-studio/production/schemas/timeline.json"
+  },
+  "input": {
+    "description": "States that must be satisfied before timeline assembly begins.",
+    "required_asset_states": [
+      {
+        "asset": "All image_plan images with approval_status = 'rejected'",
+        "action": "Must be replaced or removed before assembly. A rejected image blocks assembly of its associated scene clip."
+      },
+      {
+        "asset": "voice.recording_status",
+        "required_values": ["approved"],
+        "action_if_not_met": "Halt assembly. Do not assemble timeline without approved narration."
+      },
+      {
+        "asset": "Music track",
+        "required": "At least one music audio_clip entry in tracks.music",
+        "legal_status_required": "royalty_free, creative_commons, or licensed_sync"
+      }
+    ],
+    "preconditions": [
+      "image_plan: no images with approval_status = 'rejected' in HIGH priority",
+      "voice.recording_status in ['approved']",
+      "scene.coverage_validated = true",
+      "Human Review Gate decision = GO or GO_WITH_FIXES (fixes resolved)"
+    ]
+  },
+  "output": {
+    "description": "What timeline.json must contain when assembly is complete.",
+    "required_tracks": [
+      {
+        "track": "tracks.video",
+        "minimum_clips": 1,
+        "constraint": "Total video coverage must equal total_duration_seconds (no gaps, no overlaps beyond dissolve overlap)",
+        "purpose": "Every second of video must have a visual source."
+      },
+      {
+        "track": "tracks.narration",
+        "constraint": "All approved voice_lines with line_type=narration must map to an AUD[0-9]{3} clip with line_id_ref",
+        "purpose": "All recorded narration must be placed in the timeline."
+      },
+      {
+        "track": "tracks.music",
+        "minimum_clips": 1,
+        "constraint": "Music must cover full video duration (fade in/out allowed). No silence gaps in music track unless intentional SFX cue.",
+        "purpose": "Continuous music underlies the entire documentary."
+      }
+    ],
+    "optional_tracks": [
+      {
+        "track": "tracks.sfx",
+        "purpose": "Sound effects for Ma beat ambience, transition cues, or scene-specific audio."
+      },
+      {
+        "track": "tracks.text_overlay",
+        "purpose": "Title cards, year stamps, source credits, lower thirds."
+      },
+      {
+        "track": "tracks.subtitle",
+        "minimum_entries": 1,
+        "purpose": "Subtitle file reference for upload to YouTube."
+      }
+    ],
+    "chapter_markers": {
+      "requirement": "At least 3 chapter markers required for YouTube chapter feature",
+      "first_marker": "Must be at timecode '0:00'",
+      "format": "MM:SS"
+    },
+    "timing_constraints": [
+      {
+        "constraint": "video_clip.in_point of clip[n+1] must equal video_clip.out_point of clip[n] minus dissolve overlap (if any)",
+        "purpose": "No timeline gaps."
+      },
+      {
+        "constraint": "narration clip timing must align with voice_line position in script flow",
+        "purpose": "Narration must not precede the scene it describes."
+      },
+      {
+        "constraint": "Ma beat scene must have no narration clip overlapping its time window",
+        "purpose": "The silence of the Ma beat must be preserved in the timeline."
+      },
+      {
+        "constraint": "audio_clip.volume_db for music track must be ≤ -12 dB when narration is present",
+        "purpose": "Music must not overpower narration. Recommend -18 dB under narration."
+      }
+    ],
+    "color_grade": {
+      "required": true,
+      "default": "dark_documentary_v1",
+      "purpose": "All video clips must have color_grade set for visual consistency. Must be set before rendering."
+    },
+    "render_settings": {
+      "required": true,
+      "minimum_bitrate_video_mbps": 8,
+      "codec_video": "h264",
+      "container": "mp4",
+      "purpose": "Render settings must be explicit before rendering begins."
+    },
+    "assembly_status_progression": [
+      "pending → in_progress → draft_complete → review_pending → approved → rendered"
+    ]
+  },
+  "validation": {
+    "gate": "Timeline Assembly Validation (before render approval)",
+    "checks": [
+      {
+        "check_id": "C06-V01",
+        "description": "Total video coverage equals total_duration_seconds (no gaps)",
+        "severity": "FAIL",
+        "action_on_fail": "Identify gap. Extend adjacent clip or add filler clip with same source."
+      },
+      {
+        "check_id": "C06-V02",
+        "description": "Music track covers full duration",
+        "severity": "FAIL",
+        "action_on_fail": "Extend or loop music clip to cover gap."
+      },
+      {
+        "check_id": "C06-V03",
+        "description": "All narration clips have valid line_id_ref",
+        "severity": "WARNING",
+        "action_on_fail": "Tag missing line_id_ref. Cross-reference with voice.json."
+      },
+      {
+        "check_id": "C06-V04",
+        "description": "Music volume during narration sections ≤ -12 dB",
+        "severity": "HIGH",
+        "action_on_fail": "Apply volume automation or lower base volume to -18 dB."
+      },
+      {
+        "check_id": "C06-V05",
+        "description": "Ma beat time window has no narration clip",
+        "severity": "FAIL",
+        "action_on_fail": "Remove any narration clip overlapping Ma beat window."
+      },
+      {
+        "check_id": "C06-V06",
+        "description": "chapter_markers[0].timecode === '0:00'",
+        "severity": "WARNING",
+        "action_on_fail": "Add or correct first chapter marker."
+      },
+      {
+        "check_id": "C06-V07",
+        "description": "render_settings is populated with at least codec_video, bitrate_video_mbps, container",
+        "severity": "FAIL",
+        "action_on_fail": "Populate render_settings before proceeding."
+      },
+      {
+        "check_id": "C06-V08",
+        "description": "All HIGH priority images with approval_status != 'approved' are absent from video track",
+        "severity": "FAIL",
+        "action_on_fail": "Replace timeline clip with fallback_image_id reference."
+      },
+      {
+        "check_id": "C06-V09",
+        "description": "At least one subtitle track is present in tracks.subtitle",
+        "severity": "HIGH",
+        "action_on_fail": "Add subtitle_file_ref to subtitle track."
+      }
+    ]
+  },
+  "failure_conditions": [
+    {
+      "condition": "voice.recording_status is not 'approved'",
+      "severity": "CRITICAL",
+      "pipeline_action": "halt",
+      "human_action": "Complete recording, review takes, approve final narration before assembling timeline."
+    },
+    {
+      "condition": "HIGH priority image has no approved version and no fallback",
+      "severity": "HIGH",
+      "pipeline_action": "halt",
+      "human_action": "Resolve image: approve AI generation, find stock alternative, or create motion graphic."
+    },
+    {
+      "condition": "Timeline has narration in Ma beat window",
+      "severity": "FAIL",
+      "pipeline_action": "revision_required",
+      "human_action": "Remove narration clip from Ma beat time window."
+    },
+    {
+      "condition": "Music track absent",
+      "severity": "HIGH",
+      "pipeline_action": "revision_required",
+      "human_action": "License and add music track. Minimum: one royalty-free track for full duration."
+    }
+  ],
+  "recovery_strategy": [
+    {
+      "scenario": "Rejected AI image blocks scene assembly",
+      "strategy": "Check image_plan.fallback_image_id for the rejected image. Use fallback as clip source. If no fallback: (1) try stock search for same visual concept; (2) if no stock: create MOTION_GRAPHICS placeholder; (3) update image_plan entry to reflect actual source used."
+    },
+    {
+      "scenario": "Narration clip overlaps Ma beat",
+      "strategy": "Trim narration clip to end before Ma beat in_point. If narration text is too long, confirm with voice director whether to cut take or re-record shortened take."
+    },
+    {
+      "scenario": "Video coverage gap",
+      "strategy": "Identify scene that should cover the gap. If scene clip is missing: pull from image_plan. If image is not yet generated: use nearest approved image with a slow zoom applied."
+    },
+    {
+      "scenario": "Music track ends before video ends",
+      "strategy": "Loop final 30 seconds of music track with 3-second crossfade. Fade to silence for final 5 seconds of video."
+    }
+  ],
+  "example": {
+    "valid_assembly_state": {
+      "voice_recording_status": "approved",
+      "high_priority_images_approved": 17,
+      "high_priority_images_rejected": 0,
+      "music_track_present": true,
+      "music_license": "royalty_free",
+      "subtitle_track_present": true,
+      "chapter_markers_count": 6,
+      "first_chapter_timecode": "0:00",
+      "timeline_total_duration_seconds": 720,
+      "scene_coverage_seconds": 720,
+      "coverage_match": true,
+      "ma_beat_narration_overlap": false,
+      "result": "PROCEED to render"
+    }
+  }
+}

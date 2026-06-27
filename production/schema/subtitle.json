@@ -1,0 +1,210 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://ai-youtube-studio/production/schemas/subtitle.json",
+  "title": "Subtitle",
+  "description": "Subtitle/caption data for the video. Derived from voice.json after recording is complete and timecodes are known. Each entry maps a time range to a text string. Supports Japanese full-width display, multi-language caption tracks, and platform-specific format export.",
+  "type": "object",
+  "required": [
+    "project_id",
+    "schema_version",
+    "language",
+    "format",
+    "source_document",
+    "entries",
+    "entry_count",
+    "created_at"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "project_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9-]{2,62}[a-z0-9]$"
+    },
+    "schema_version": {
+      "type": "string",
+      "const": "1.0"
+    },
+    "language": {
+      "type": "string",
+      "description": "BCP-47 language code of subtitle text."
+    },
+    "format": {
+      "type": "string",
+      "enum": ["webvtt", "srt", "ttml", "ass", "json"],
+      "description": "Primary subtitle format. webvtt is preferred for web/YouTube. SRT for legacy tools.",
+      "default": "webvtt"
+    },
+    "source_document": {
+      "type": "string",
+      "enum": ["voice.json", "recording_file"],
+      "description": "Whether subtitles were generated from voice.json lines or from transcription of the recording."
+    },
+    "timecode_offset_seconds": {
+      "type": "number",
+      "default": 0,
+      "description": "Global offset in seconds applied to all timecodes. Used to sync if narration starts after 0:00."
+    },
+    "max_chars_per_line": {
+      "type": "integer",
+      "default": 40,
+      "description": "Maximum characters per subtitle line. Japanese: 20-25 chars. Latin: 42 chars."
+    },
+    "max_lines_per_entry": {
+      "type": "integer",
+      "enum": [1, 2, 3],
+      "default": 2
+    },
+    "additional_tracks": {
+      "type": "array",
+      "description": "Additional caption tracks in other languages.",
+      "items": {
+        "type": "object",
+        "required": ["language", "format", "entries"],
+        "properties": {
+          "language": { "type": "string" },
+          "format": { "type": "string", "enum": ["webvtt", "srt"] },
+          "entries": {
+            "type": "array",
+            "items": { "$ref": "#/definitions/subtitle_entry" }
+          }
+        }
+      }
+    },
+    "entries": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/definitions/subtitle_entry"
+      }
+    },
+    "entry_count": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Must equal length of entries array."
+    },
+    "platform_exports": {
+      "type": "object",
+      "description": "Platform-specific export status.",
+      "properties": {
+        "youtube": {
+          "type": "object",
+          "properties": {
+            "format": { "type": "string", "const": "webvtt" },
+            "file_path": { "type": ["string", "null"] },
+            "uploaded": { "type": "boolean", "default": false }
+          }
+        },
+        "tiktok": {
+          "type": "object",
+          "properties": {
+            "format": { "type": "string", "const": "srt" },
+            "file_path": { "type": ["string", "null"] },
+            "uploaded": { "type": "boolean", "default": false }
+          }
+        }
+      }
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "definitions": {
+    "subtitle_entry": {
+      "type": "object",
+      "required": ["index", "start", "end", "text"],
+      "additionalProperties": false,
+      "properties": {
+        "index": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Sequential entry number starting at 1."
+        },
+        "start": {
+          "type": "string",
+          "pattern": "^[0-9]{2}:[0-9]{2}:[0-9]{2}\\.[0-9]{3}$",
+          "description": "Start timecode in HH:MM:SS.mmm format.",
+          "examples": ["00:00:05.000", "00:01:40.500"]
+        },
+        "end": {
+          "type": "string",
+          "pattern": "^[0-9]{2}:[0-9]{2}:[0-9]{2}\\.[0-9]{3}$",
+          "description": "End timecode in HH:MM:SS.mmm format."
+        },
+        "duration_ms": {
+          "type": "integer",
+          "minimum": 100,
+          "description": "Duration in milliseconds. Must equal (end - start)."
+        },
+        "text": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 300,
+          "description": "Subtitle text. Newlines are permitted for line breaks within the entry."
+        },
+        "line_id_ref": {
+          "type": ["string", "null"],
+          "pattern": "^L[0-9]{3}$",
+          "description": "Foreign key to voice.json line_id. Null if derived from transcription."
+        },
+        "speaker": {
+          "type": ["string", "null"],
+          "description": "Speaker label. Null for single-narrator videos."
+        },
+        "style": {
+          "type": ["string", "null"],
+          "description": "WebVTT cue style class. Null for default styling.",
+          "examples": [".caption-default", ".caption-emphasis"]
+        }
+      }
+    }
+  },
+  "examples": [
+    {
+      "project_id": "hashima-island-mystery-ja",
+      "schema_version": "1.0",
+      "language": "ja",
+      "format": "webvtt",
+      "source_document": "voice.json",
+      "timecode_offset_seconds": 0,
+      "max_chars_per_line": 25,
+      "max_lines_per_entry": 2,
+      "entries": [
+        {
+          "index": 1,
+          "start": "00:00:03.000",
+          "end": "00:00:08.000",
+          "duration_ms": 5000,
+          "text": "かつて、ここに5,259人が\n暮らしていました。",
+          "line_id_ref": "L001",
+          "speaker": null,
+          "style": null
+        },
+        {
+          "index": 2,
+          "start": "00:00:09.500",
+          "end": "00:00:15.000",
+          "duration_ms": 5500,
+          "text": "子どもが走り回る声。\n石炭を掘る男たちの息遣い。",
+          "line_id_ref": "L002",
+          "speaker": null,
+          "style": null
+        }
+      ],
+      "entry_count": 2,
+      "platform_exports": {
+        "youtube": {
+          "format": "webvtt",
+          "file_path": null,
+          "uploaded": false
+        }
+      },
+      "created_at": "2026-06-27T08:00:00Z",
+      "updated_at": "2026-06-27T08:00:00Z"
+    }
+  ]
+}

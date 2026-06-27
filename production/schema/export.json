@@ -1,0 +1,534 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://ai-youtube-studio/production/schemas/export.json",
+  "title": "Export Manifest",
+  "description": "Master project state document. Tracks lifecycle of every production document and asset from creation to delivery. This is the single source of truth for pipeline progress. Updated at the completion of every stage. Consumed by monitoring systems, dashboards, n8n flows, and CI pipelines.",
+  "type": "object",
+  "required": [
+    "project_id",
+    "schema_version",
+    "status",
+    "pipeline_stage",
+    "stages",
+    "documents",
+    "warnings",
+    "created_at"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "project_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9-]{2,62}[a-z0-9]$"
+    },
+    "schema_version": {
+      "type": "string",
+      "const": "1.0"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "initializing",
+        "in_progress",
+        "pipeline_complete",
+        "review_pending",
+        "review_fixes_required",
+        "review_approved",
+        "production_in_progress",
+        "production_complete",
+        "published",
+        "failed",
+        "archived"
+      ]
+    },
+    "pipeline_stage": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 12,
+      "description": "Last completed pipeline stage."
+    },
+    "qa_result": {
+      "type": ["string", "null"],
+      "enum": ["PASS", "FAIL", null]
+    },
+    "review_decision": {
+      "type": ["string", "null"],
+      "enum": ["GO", "GO_WITH_FIXES", "NO_GO", null],
+      "description": "Decision from Human Review Gate."
+    },
+    "review_open_fixes": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Number of open fixes from review. Must be 0 before status can advance to review_approved."
+    },
+    "stages": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/definitions/stage_record"
+      }
+    },
+    "documents": {
+      "$ref": "#/definitions/document_registry"
+    },
+    "warnings": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/warning_record"
+      }
+    },
+    "errors": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/error_record"
+      }
+    },
+    "publishing_urls": {
+      "type": "object",
+      "description": "Platform URLs after publishing.",
+      "additionalProperties": false,
+      "properties": {
+        "youtube": { "type": ["string", "null"], "format": "uri" },
+        "tiktok": { "type": ["string", "null"], "format": "uri" },
+        "instagram": { "type": ["string", "null"], "format": "uri" }
+      }
+    },
+    "metrics": {
+      "$ref": "#/definitions/metrics"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "pipeline_completed_at": {
+      "type": ["string", "null"],
+      "format": "date-time"
+    },
+    "published_at": {
+      "type": ["string", "null"],
+      "format": "date-time"
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "definitions": {
+    "stage_record": {
+      "type": "object",
+      "required": ["stage_number", "stage_name", "status"],
+      "additionalProperties": false,
+      "properties": {
+        "stage_number": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 12
+        },
+        "stage_name": {
+          "type": "string",
+          "enum": [
+            "project_setup",
+            "research",
+            "source_verification",
+            "story_outline",
+            "script",
+            "story_bible",
+            "scene_list",
+            "image_plan",
+            "ai_image_prompts",
+            "voice",
+            "seo",
+            "qa",
+            "export"
+          ]
+        },
+        "status": {
+          "type": "string",
+          "enum": ["pending", "in_progress", "complete", "needs_revision", "failed", "skipped"]
+        },
+        "result": {
+          "type": ["string", "null"],
+          "enum": ["PASS", "NEEDS_REVISION", "FAIL", null],
+          "description": "Stage outcome for stages that produce a verdict."
+        },
+        "documents_produced": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Document keys from the documents registry produced by this stage."
+        },
+        "warning_codes": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Warning codes generated during this stage."
+        },
+        "error_codes": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "started_at": {
+          "type": ["string", "null"],
+          "format": "date-time"
+        },
+        "completed_at": {
+          "type": ["string", "null"],
+          "format": "date-time"
+        },
+        "duration_seconds": {
+          "type": ["number", "null"]
+        },
+        "model_used": {
+          "type": ["string", "null"],
+          "description": "AI model used for this stage.",
+          "examples": ["claude-opus-4-8", "claude-sonnet-4-6"]
+        }
+      }
+    },
+    "document_registry": {
+      "type": "object",
+      "description": "One entry per production document. Keys are document identifiers. All required documents must reach status=complete before export.",
+      "additionalProperties": false,
+      "properties": {
+        "project": { "$ref": "#/definitions/document_entry" },
+        "research": { "$ref": "#/definitions/document_entry" },
+        "story": { "$ref": "#/definitions/document_entry" },
+        "story_bible": { "$ref": "#/definitions/document_entry" },
+        "scene_list": { "$ref": "#/definitions/document_entry" },
+        "image_plan": { "$ref": "#/definitions/document_entry" },
+        "voice": { "$ref": "#/definitions/document_entry" },
+        "subtitle": { "$ref": "#/definitions/document_entry" },
+        "timeline": { "$ref": "#/definitions/document_entry" },
+        "thumbnail": { "$ref": "#/definitions/document_entry" },
+        "seo": { "$ref": "#/definitions/document_entry" },
+        "export_manifest": { "$ref": "#/definitions/document_entry" }
+      }
+    },
+    "document_entry": {
+      "type": "object",
+      "required": ["schema_ref", "file_path", "status"],
+      "properties": {
+        "schema_ref": {
+          "type": "string",
+          "description": "URL of the JSON schema that validates this document.",
+          "examples": ["https://ai-youtube-studio/production/schemas/research.json"]
+        },
+        "file_path": {
+          "type": "string",
+          "description": "Relative file path within the project directory."
+        },
+        "status": {
+          "type": "string",
+          "enum": ["absent", "in_progress", "complete", "validated", "superseded"],
+          "description": "absent = not yet created. in_progress = partially written. complete = written. validated = schema-validated by a validator. superseded = replaced by a newer version."
+        },
+        "stage_produced": {
+          "type": ["integer", "null"],
+          "minimum": 0,
+          "maximum": 12
+        },
+        "file_size_bytes": {
+          "type": ["integer", "null"]
+        },
+        "checksum_sha256": {
+          "type": ["string", "null"],
+          "description": "SHA-256 checksum of the file at last validation."
+        },
+        "validated_at": {
+          "type": ["string", "null"],
+          "format": "date-time"
+        },
+        "validation_errors": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "JSON Schema validation errors. Empty if status=validated."
+        },
+        "notes": {
+          "type": ["string", "null"]
+        }
+      }
+    },
+    "warning_record": {
+      "type": "object",
+      "required": ["warning_id", "code", "stage_number", "message", "resolved"],
+      "properties": {
+        "warning_id": {
+          "type": "string",
+          "pattern": "^W[0-9]{3}$"
+        },
+        "code": {
+          "type": "string",
+          "description": "Error code from director_error_handling.md.",
+          "examples": ["ERR_WARN_001", "ERR_WARN_004"]
+        },
+        "stage_number": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "message": {
+          "type": "string"
+        },
+        "resolved": {
+          "type": "boolean"
+        },
+        "resolution_notes": {
+          "type": ["string", "null"]
+        }
+      }
+    },
+    "error_record": {
+      "type": "object",
+      "required": ["error_id", "code", "stage_number", "message", "severity", "halted_pipeline"],
+      "properties": {
+        "error_id": {
+          "type": "string",
+          "pattern": "^E[0-9]{3}$"
+        },
+        "code": {
+          "type": "string",
+          "examples": ["ERR_CRITICAL_001", "ERR_FAIL_003"]
+        },
+        "stage_number": { "type": "integer" },
+        "message": { "type": "string" },
+        "severity": {
+          "type": "string",
+          "enum": ["CRITICAL", "HIGH", "MEDIUM"]
+        },
+        "halted_pipeline": { "type": "boolean" },
+        "recovery_action": { "type": ["string", "null"] }
+      }
+    },
+    "metrics": {
+      "type": "object",
+      "description": "Production metrics. Populated as pipeline runs.",
+      "properties": {
+        "total_stages": { "type": "integer" },
+        "stages_passed": { "type": "integer" },
+        "stages_failed": { "type": "integer" },
+        "total_warnings": { "type": "integer" },
+        "total_errors": { "type": "integer" },
+        "documents_complete": { "type": "integer" },
+        "documents_total": { "type": "integer" },
+        "ai_images_required": { "type": "integer" },
+        "ai_images_approved": { "type": "integer" },
+        "script_word_count": { "type": "integer" },
+        "script_word_count_target": { "type": "integer" },
+        "qa_checks_passed": { "type": "integer" },
+        "qa_checks_failed": { "type": "integer" },
+        "review_blockers": { "type": "integer" },
+        "review_fixes_required": { "type": "integer" },
+        "review_fixes_resolved": { "type": "integer" },
+        "total_pipeline_duration_seconds": { "type": ["number", "null"] }
+      }
+    }
+  },
+  "examples": [
+    {
+      "project_id": "hashima-island-mystery-ja",
+      "schema_version": "1.0",
+      "status": "review_fixes_required",
+      "pipeline_stage": 12,
+      "qa_result": "PASS",
+      "review_decision": "GO_WITH_FIXES",
+      "review_open_fixes": 12,
+      "stages": [
+        {
+          "stage_number": 0,
+          "stage_name": "project_setup",
+          "status": "complete",
+          "result": "PASS",
+          "documents_produced": ["project"],
+          "warning_codes": [],
+          "error_codes": [],
+          "started_at": "2026-06-27T00:00:00Z",
+          "completed_at": "2026-06-27T00:05:00Z",
+          "duration_seconds": 300,
+          "model_used": "claude-opus-4-8"
+        },
+        {
+          "stage_number": 2,
+          "stage_name": "source_verification",
+          "status": "needs_revision",
+          "result": "NEEDS_REVISION",
+          "documents_produced": ["research"],
+          "warning_codes": ["ERR_WARN_001"],
+          "error_codes": [],
+          "started_at": "2026-06-27T01:00:00Z",
+          "completed_at": "2026-06-27T01:30:00Z",
+          "duration_seconds": 1800,
+          "model_used": "claude-opus-4-8"
+        }
+      ],
+      "documents": {
+        "project": {
+          "schema_ref": "https://ai-youtube-studio/production/schemas/project.json",
+          "file_path": "project.json",
+          "status": "complete",
+          "stage_produced": 0,
+          "file_size_bytes": null,
+          "checksum_sha256": null,
+          "validated_at": null,
+          "validation_errors": [],
+          "notes": null
+        },
+        "research": {
+          "schema_ref": "https://ai-youtube-studio/production/schemas/research.json",
+          "file_path": "research/research.json",
+          "status": "complete",
+          "stage_produced": 2,
+          "file_size_bytes": null,
+          "checksum_sha256": null,
+          "validated_at": null,
+          "validation_errors": [],
+          "notes": "3 FLAG items. Language adjustments applied."
+        },
+        "story": {
+          "schema_ref": "https://ai-youtube-studio/production/schemas/story.json",
+          "file_path": "script/story.json",
+          "status": "complete",
+          "stage_produced": 4,
+          "file_size_bytes": null,
+          "checksum_sha256": null,
+          "validated_at": null,
+          "validation_errors": [],
+          "notes": null
+        },
+        "story_bible": {
+          "schema_ref": "https://ai-youtube-studio/production/schemas/story_bible.json",
+          "file_path": "script/story_bible.json",
+          "status": "complete",
+          "stage_produced": 5,
+          "file_size_bytes": null,
+          "checksum_sha256": null,
+          "validated_at": null,
+          "validation_errors": [],
+          "notes": null
+        },
+        "scene_list": {
+          "schema_ref": "https://ai-youtube-studio/production/schemas/scene.json",
+          "file_path": "visuals/scene.json",
+          "status": "complete",
+          "stage_produced": 6,
+          "file_size_bytes": null,
+          "checksum_sha256": null,
+          "validated_at": null,
+          "validation_errors": [],
+          "notes": "Motion direction column added per review FIX-H2."
+        },
+        "image_plan": {
+          "schema_ref": "https://ai-youtube-studio/production/schemas/image_plan.json",
+          "file_path": "visuals/image_plan.json",
+          "status": "complete",
+          "stage_produced": 7,
+          "file_size_bytes": null,
+          "checksum_sha256": null,
+          "validated_at": null,
+          "validation_errors": [],
+          "notes": null
+        },
+        "voice": {
+          "schema_ref": "https://ai-youtube-studio/production/schemas/voice.json",
+          "file_path": "voice/voice.json",
+          "status": "complete",
+          "stage_produced": 9,
+          "file_size_bytes": null,
+          "checksum_sha256": null,
+          "validated_at": null,
+          "validation_errors": [],
+          "notes": null
+        },
+        "subtitle": {
+          "schema_ref": "https://ai-youtube-studio/production/schemas/subtitle.json",
+          "file_path": "voice/subtitle.json",
+          "status": "absent",
+          "stage_produced": null,
+          "file_size_bytes": null,
+          "checksum_sha256": null,
+          "validated_at": null,
+          "validation_errors": [],
+          "notes": "Generated after recording is complete."
+        },
+        "timeline": {
+          "schema_ref": "https://ai-youtube-studio/production/schemas/timeline.json",
+          "file_path": "edit/timeline.json",
+          "status": "absent",
+          "stage_produced": null,
+          "file_size_bytes": null,
+          "checksum_sha256": null,
+          "validated_at": null,
+          "validation_errors": [],
+          "notes": "Populated when edit begins."
+        },
+        "thumbnail": {
+          "schema_ref": "https://ai-youtube-studio/production/schemas/thumbnail.json",
+          "file_path": "visuals/thumbnail.json",
+          "status": "complete",
+          "stage_produced": 10,
+          "file_size_bytes": null,
+          "checksum_sha256": null,
+          "validated_at": null,
+          "validation_errors": [],
+          "notes": "THUMB_B deleted per review FIX-B1."
+        },
+        "seo": {
+          "schema_ref": "https://ai-youtube-studio/production/schemas/seo.json",
+          "file_path": "seo/seo.json",
+          "status": "complete",
+          "stage_produced": 10,
+          "file_size_bytes": null,
+          "checksum_sha256": null,
+          "validated_at": null,
+          "validation_errors": [],
+          "notes": "TITLE_B deleted per review FIX-B1."
+        },
+        "export_manifest": {
+          "schema_ref": "https://ai-youtube-studio/production/schemas/export.json",
+          "file_path": "export/export_manifest.json",
+          "status": "in_progress",
+          "stage_produced": 0,
+          "file_size_bytes": null,
+          "checksum_sha256": null,
+          "validated_at": null,
+          "validation_errors": [],
+          "notes": "Updated at every stage completion."
+        }
+      },
+      "warnings": [
+        {
+          "warning_id": "W001",
+          "code": "ERR_WARN_001",
+          "stage_number": 2,
+          "message": "3 FLAG items in source verification. Language adjustments applied to research.json.",
+          "resolved": true,
+          "resolution_notes": "Applied adjustments: 「最古」→「最古級のひとつ」; 「世界最高」→「世界最高水準のひとつ」; Skyfall excluded from script."
+        }
+      ],
+      "errors": [],
+      "publishing_urls": {
+        "youtube": null,
+        "tiktok": null,
+        "instagram": null
+      },
+      "metrics": {
+        "total_stages": 13,
+        "stages_passed": 12,
+        "stages_failed": 0,
+        "total_warnings": 1,
+        "total_errors": 0,
+        "documents_complete": 9,
+        "documents_total": 12,
+        "ai_images_required": 17,
+        "ai_images_approved": 0,
+        "script_word_count": 1201,
+        "script_word_count_target": 1201,
+        "qa_checks_passed": 20,
+        "qa_checks_failed": 0,
+        "review_blockers": 1,
+        "review_fixes_required": 12,
+        "review_fixes_resolved": 0,
+        "total_pipeline_duration_seconds": null
+      },
+      "created_at": "2026-06-27T00:00:00Z",
+      "pipeline_completed_at": "2026-06-27T12:00:00Z",
+      "published_at": null,
+      "updated_at": "2026-06-27T12:00:00Z"
+    }
+  ]
+}

@@ -1,0 +1,180 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://ai-youtube-studio/production/schemas/project.json",
+  "title": "Project",
+  "description": "Root project document. Created at Stage 0. Fields marked immutable cannot change after Stage 1 begins. All other documents in the pipeline carry project_id as a foreign key.",
+  "type": "object",
+  "required": [
+    "project_id",
+    "schema_version",
+    "topic",
+    "language",
+    "duration_minutes",
+    "style",
+    "niche",
+    "status",
+    "pipeline_stage",
+    "created_at"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "project_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9-]{2,62}[a-z0-9]$",
+      "description": "Unique slug. Immutable after creation. Used as folder name and cross-document reference key.",
+      "examples": ["hashima-island-mystery-ja", "verdun-battle-history-en"]
+    },
+    "schema_version": {
+      "type": "string",
+      "const": "1.0",
+      "description": "Schema version. Increment only on breaking changes."
+    },
+    "topic": {
+      "type": "string",
+      "minLength": 5,
+      "maxLength": 200,
+      "description": "Human-readable topic title. Immutable after Stage 1.",
+      "examples": ["The Mystery of Hashima Island", "The Battle of Verdun"]
+    },
+    "topic_ja": {
+      "type": "string",
+      "maxLength": 200,
+      "description": "Topic in target language, if different from English."
+    },
+    "language": {
+      "type": "string",
+      "enum": ["ja", "en", "ko", "zh-TW", "zh-CN", "vi", "fr", "de", "es", "pt-BR"],
+      "description": "BCP-47 language code for narration and output. Immutable after Stage 1."
+    },
+    "duration_minutes": {
+      "type": "number",
+      "minimum": 3,
+      "maximum": 60,
+      "multipleOf": 0.5,
+      "description": "Target video duration in minutes. Used to compute target_word_count."
+    },
+    "style": {
+      "type": "string",
+      "enum": [
+        "dark_documentary",
+        "educational",
+        "mystery",
+        "history_narrative",
+        "travel_atmospheric",
+        "true_crime",
+        "science_explainer"
+      ],
+      "description": "Tone and format style. Controls template selection and pacing rules."
+    },
+    "niche": {
+      "type": "string",
+      "enum": [
+        "japanese_mystery",
+        "world_history",
+        "true_crime_international",
+        "science_dark",
+        "travel_abandoned",
+        "general_mystery",
+        "historical_conflict"
+      ],
+      "description": "Derived from style + language + topic. Controls which template is loaded."
+    },
+    "template": {
+      "type": "string",
+      "pattern": "^[a-z0-9_-]+\\.md$",
+      "description": "Template filename loaded from templates/. Derived from niche.",
+      "examples": ["japan_template.md", "mystery_template.md"]
+    },
+    "target_word_count": {
+      "type": "integer",
+      "minimum": 100,
+      "maximum": 15000,
+      "description": "Computed as: duration_minutes × words_per_minute × language_multiplier. Immutable after Stage 3."
+    },
+    "words_per_minute": {
+      "type": "integer",
+      "default": 130,
+      "description": "Baseline words per minute for the target language (English equivalent)."
+    },
+    "language_multiplier": {
+      "type": "number",
+      "minimum": 0.5,
+      "maximum": 1.5,
+      "description": "Ratio of target language word count to English. ja=0.77, en=1.0, ko=0.85.",
+      "examples": [0.77, 1.0, 0.85]
+    },
+    "channel_name": {
+      "type": "string",
+      "maxLength": 100,
+      "description": "YouTube channel name. Optional at creation, required before export."
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "initializing",
+        "in_progress",
+        "awaiting_review",
+        "review_fixes_required",
+        "complete",
+        "failed",
+        "archived"
+      ],
+      "description": "Lifecycle state of the project."
+    },
+    "pipeline_stage": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 12,
+      "description": "Last completed pipeline stage. 0 = setup only."
+    },
+    "qa_result": {
+      "type": ["string", "null"],
+      "enum": ["PASS", "FAIL", "GO", "GO_WITH_FIXES", "NO_GO", null],
+      "description": "Result from Stage 11 QA and/or Human Review Gate. Null until QA runs."
+    },
+    "review_fixes_count": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Number of open fixes from Human Review Gate."
+    },
+    "notes": {
+      "type": "string",
+      "maxLength": 2000,
+      "description": "Free-form notes for human use. Not consumed by pipeline."
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601. Set at Stage 0. Immutable."
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601. Updated on every pipeline stage completion."
+    }
+  },
+  "examples": [
+    {
+      "project_id": "hashima-island-mystery-ja",
+      "schema_version": "1.0",
+      "topic": "The Mystery of Hashima Island",
+      "topic_ja": "端島 / 軍艦島：消えた都市の謎",
+      "language": "ja",
+      "duration_minutes": 12,
+      "style": "dark_documentary",
+      "niche": "japanese_mystery",
+      "template": "japan_template.md",
+      "target_word_count": 1201,
+      "words_per_minute": 130,
+      "language_multiplier": 0.77,
+      "channel_name": "",
+      "status": "complete",
+      "pipeline_stage": 12,
+      "qa_result": "GO_WITH_FIXES",
+      "review_fixes_count": 12,
+      "notes": "First test project for Runtime v1.",
+      "created_at": "2026-06-27T00:00:00Z",
+      "updated_at": "2026-06-27T12:00:00Z"
+    }
+  ]
+}

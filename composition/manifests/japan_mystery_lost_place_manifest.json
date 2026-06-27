@@ -1,0 +1,56 @@
+{
+  "manifest_id": "CM-2026-japan-mystery-lost-place",
+  "schema_version": "1.0",
+  "version": "1.0",
+  "display_name": "Japan Mystery — Lost Place Composition Manifest",
+  "description": "Formal composition declaration linking creator, platform, audience, and genre configuration for any video using the japan_mystery_lost_place composed template. Projects reference this manifest via composition_manifest_id in their project.json.",
+
+  "creator_profile_id": "anh_duy",
+  "platform_profile_id": "youtube_long_form",
+  "audience_profile_id": "general",
+
+  "primary_genre": "mystery",
+  "base_templates": ["documentary", "mystery"],
+  "modifiers": ["japan", "lost_place"],
+
+  "composed_template_path": "genre_templates/composed/japan_mystery_lost_place.json",
+  "composed_template_id": "japan_mystery_lost_place",
+
+  "source_files": [
+    "profiles/creator/anh_duy.json",
+    "profiles/platform/youtube_long_form.json",
+    "profiles/audience/general.json",
+    "genre_templates/base/documentary.json",
+    "genre_templates/base/mystery.json",
+    "genre_templates/modifiers/japan.json",
+    "genre_templates/modifiers/lost_place.json"
+  ],
+
+  "conflict_summary": {
+    "total_conflicts": 25,
+    "type_A_resolved": 25,
+    "type_B_no_conflict": 0,
+    "type_C_contradiction": 0,
+    "type_D_safety_violation": 0,
+    "unresolved": 0,
+    "report_file": "composition/japan_mystery_lost_place_report.md"
+  },
+
+  "composition_hash": "sha256:PENDING_RUNTIME_COMPUTE",
+  "_hash_note": "Hash should be computed by profile_composer from the concatenated content of all source_files at composition time. Placeholder until automated composer tooling is implemented.",
+
+  "effective_limits": {
+    "ai_image_max_percent": 75,
+    "min_scene_duration_seconds": 10,
+    "max_scene_duration_seconds": 90,
+    "ma_beat_duration_seconds": 40,
+    "ma_beat_duration_is_fixed": true,
+    "silence_ratio_min_percent": 30,
+    "hook_target_duration_seconds": 30,
+    "required_beats_count": 15
+  },
+
+  "generated_at": "2026-06-27T00:00:00Z",
+  "generated_by": "manual_bootstrap",
+  "status": "active"
+}

@@ -1,0 +1,117 @@
+{
+  "project_id": "hashima-island-mystery-ja",
+  "schema_version": "1.0",
+  "selected_concept_id": "THUMB_A",
+  "concepts": [
+    {
+      "concept_id": "THUMB_A",
+      "status": "selected_pending_design",
+      "is_recommended": true,
+      "ab_test_label": "A",
+      "title_overlay": "端島の謎",
+      "subtitle_overlay": "軍艦島が語る静かな歴史",
+      "background": {
+        "type": "image_plan_ref",
+        "image_id_ref": "IMG001",
+        "description": "Island silhouette in dramatic low-light against dark sea and sky. Pre-dawn atmosphere."
+      },
+      "text_style": {
+        "font": "Noto Serif JP",
+        "color": "#FFFFFF",
+        "shadow": true,
+        "outline": false,
+        "position": "bottom_center"
+      },
+      "color_grade": "dark_cinematic",
+      "dimensions": "1280x720",
+      "file_path": null,
+      "respect_check": true,
+      "respect_check_notes": "PASS. All 4 sub-checks completed. Title '端島の謎' and subtitle '軍艦島が語る静かな歴史' contain no sensational language, no false claims, and no disrespectful framing of forced labor history. '静かな歴史' (quiet history) is the most respectful possible characterization of a place where people lived, worked, and suffered — it honors gravity without exploiting it. Background reference IMG001 depicts the actual island silhouette, no fabricated imagery. Consistent with dark_documentary style and atmospheric_ruin thumbnail strategy.",
+      "sensationalism_check": true,
+      "sensationalism_check_notes": "PASS. '端島の謎' (the mystery of Hashima) uses '謎' (mystery) accurately — genuine historical complexity and unresolved questions exist at this location. '軍艦島が語る静かな歴史' (the quiet history told by Battleship Island) is understated and non-dramatic. No death counts, no horror framing, no manufactured urgency, no red-arrow sensationalism, no clickbait superlatives.",
+      "forced_labor_respect_check": true,
+      "forced_labor_respect_check_notes": "PASS. Thumbnail text makes no reference to forced labor — appropriate. The thumbnail's role is to invite curiosity, not to exploit tragedy as a hook. '静かな歴史' implicitly acknowledges that the island's history carries weight without sensationalizing what happened to Korean and Chinese workers. Framing allows viewers to discover the complexity through the video, not be shocked by it on the thumbnail.",
+      "factual_accuracy_check": true,
+      "factual_accuracy_check_notes": "PASS. '端島の謎' — Hashima IS a place of genuine historical mystery and documented complexity. '軍艦島が語る静かな歴史' — the island's history was largely unacknowledged for decades and continues to be the subject of diplomatic and academic inquiry; '静かな歴史' is factually accurate characterization. No false claims. No fabricated statistics. Background image shows the actual island, no invented imagery.",
+      "creator_value_check": true,
+      "creator_value_check_notes": "PASS on all four Anh Duy creator values. (1) Curiosity over fear: '謎' invokes curiosity, not fear — viewer wants to discover, not to be warned. (2) Trust over shock: minimal text, no shock tactics, no unverified statistics, no manufactured drama. (3) Fact-based storytelling: both text elements are factually accurate characterizations with no claims that cannot be verified. (4) Respectful tone: '静かな歴史' may be the most respectful possible thumbnail framing for this subject — it treats the island's story with the seriousness it deserves.",
+      "checks_completed_at": "2026-06-27T00:00:00Z",
+      "checks_completed_by": "blocker_resolution_round_1",
+      "notes": "SELECTED. All 4 checks passed. Concept represents the strongest alignment between: (a) creator values, (b) composed template thumbnail_strategy (atmospheric_ruin, dark_moody, face_rule:avoided, emotion:awe_or_melancholy_curiosity), (c) Japanese audience sensitivity, (d) factual accuracy. Pending: IMG001 real photography (FIX-H1) before final design render. status=selected_pending_design until image_id_ref IMG001 is replaced with a real licensed photograph."
+    },
+    {
+      "concept_id": "THUMB_C",
+      "status": "rejected",
+      "is_recommended": false,
+      "ab_test_label": "C",
+      "title_overlay": "軍艦島：なぜ一夜で捨てられた島と呼ばれるのか",
+      "subtitle_overlay": null,
+      "background": {
+        "type": "image_plan_ref",
+        "image_id_ref": "IMG020",
+        "description": "Extreme wide shot of Hashima from the sea. Wave in foreground. Island as lonely monument."
+      },
+      "text_style": {
+        "font": "Noto Sans JP Bold",
+        "color": "#FFFFFF",
+        "shadow": true,
+        "outline": true,
+        "position": "center"
+      },
+      "color_grade": "dark_cinematic",
+      "dimensions": "1280x720",
+      "file_path": null,
+      "respect_check": true,
+      "respect_check_notes": "CHECK COMPLETED — REJECTED. See rejection_reason.",
+      "sensationalism_check": false,
+      "sensationalism_check_notes": "FAIL. The phrase '一夜で捨てられた島' (island abandoned overnight) in the title_overlay perpetuates and implicitly validates the false myth that Hashima was abandoned in a single night. Even framed as a question (なぜ〜と呼ばれるのか = why is it called), thumbnail text that asks 'why is it called an overnight-abandoned island?' risks: (1) legitimizing a myth the video's script never explicitly debunks, (2) creating a hook-vs-content mismatch (viewer expects myth debunking, video delivers historical documentary), (3) satisfying clickbait criteria the creator has explicitly rejected.",
+      "forced_labor_respect_check": true,
+      "forced_labor_respect_check_notes": "PASS — the title_overlay does not reference forced labor. No respect violation on this specific check. Rejection is on factual accuracy and sensationalism grounds.",
+      "factual_accuracy_check": false,
+      "factual_accuracy_check_notes": "FAIL. '一夜で捨てられた島' (overnight-abandoned island) is factually false. The island's closure process was gradual: closure announced January 15, 1974; final residents departed April 20, 1974 — a 3-month process. This is the exact same factual violation that caused TITLE_B to be deleted (FIX-B1) and that '一夜で消えた' is listed as an off_limits expression in story_bible.json. Using this phrasing as a thumbnail hook — even as a question — violates composer absolute rule SR002 (do not imply false facts) and creator value: trust over shock.",
+      "creator_value_check": false,
+      "creator_value_check_notes": "FAIL. (1) Trust over shock: the phrase '一夜で捨てられた' is factually misleading, violating the trust-first principle. (2) Fact-based storytelling: the title implies a false premise. Rejection is based on title_overlay only.",
+      "rejection_reason": "FACTUALLY_MISLEADING_TITLE_OVERLAY: Title text '軍艦島：なぜ一夜で捨てられた島と呼ばれるのか' contains '一夜で捨てられた島' — an overnight-abandonment framing that is factually false. The island departure took 3 months (Jan 15 – Apr 20, 1974), not one night. Even as a rhetorical question this creates a misleading hook mismatched with the video's actual content (historical documentary, not myth-debunking). Same reason as TITLE_B deletion (FIX-B1) and story_bible.off_limits_expressions entry '一夜で消えた'. See: anh_duy.values.trust_over_entertainment = true.",
+      "revision_note": "Background image IMG020 (extreme wide shot from sea, wave foreground) is compositionally strong and fully aligned with the atmospheric_ruin thumbnail strategy. Background may be reused in a new concept THUMB_D with factually accurate title text. Suggested replacement title_overlay direction: '軍艦島の静かな終焉' or '端島：なぜ5,259人は消えたのか' (the latter if a question form is desired — this question is answered accurately by the video).",
+      "checks_completed_at": "2026-06-27T00:00:00Z",
+      "checks_completed_by": "blocker_resolution_round_1",
+      "notes": "REJECTED. Background image is reusable. Title_overlay must be completely replaced. Do not publish THUMB_C in its current form. See revision_note for path to THUMB_D."
+    }
+  ],
+  "deleted_concepts": [
+    {
+      "concept_id": "THUMB_B",
+      "deleted": true,
+      "deletion_reason": "Title text referenced forced labor death statistics with unverified numbers. Factually unverifiable claim. Deleted per MASTER_RULE.md Rule 2 and human_review_report.md recommendation.",
+      "deleted_at": "2026-06-27T00:00:00Z"
+    }
+  ],
+  "warnings": [
+    {
+      "warning_id": "W006",
+      "severity": "HIGH",
+      "field": "selected_concept_id",
+      "message": "No thumbnail concept has been selected yet. selected_concept_id=null. C07 pre-publish gate requires selected_concept_id to be non-null and concept.status=approved.",
+      "resolution": "RESOLVED: selected_concept_id set to 'THUMB_A'. THUMB_A status set to 'selected_pending_design'. Resolved in blocker_resolution_round_1.",
+      "resolved_at": "2026-06-27T00:00:00Z"
+    },
+    {
+      "warning_id": "W007",
+      "severity": "HIGH",
+      "field": "concepts[THUMB_C].title_overlay",
+      "message": "THUMB_C title overlay '一夜で捨てられた' is factually misleading. Island departure took 3 months (Jan 15–Apr 20, 1974), not one night.",
+      "resolution": "RESOLVED: THUMB_C marked status='rejected'. Misleading text eliminated from active consideration. THUMB_C will not be used in its current form. Background image IMG020 may be reused in a future THUMB_D with revised title. Resolved in blocker_resolution_round_1.",
+      "resolved_at": "2026-06-27T00:00:00Z"
+    },
+    {
+      "warning_id": "W008",
+      "severity": "MEDIUM",
+      "field": "concepts[*].respect_check",
+      "message": "respect_check=false on all concepts. Respect check must be performed and documented before any concept can be set to status=approved.",
+      "resolution": "RESOLVED: All concepts checked. THUMB_A: all 4 checks passed, respect_check=true. THUMB_C: checked and rejected on factual_accuracy grounds. Resolved in blocker_resolution_round_1.",
+      "resolved_at": "2026-06-27T00:00:00Z"
+    }
+  ],
+  "created_at": "2026-06-27T09:00:00Z",
+  "updated_at": "2026-06-27T00:00:00Z"
+}

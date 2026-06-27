@@ -1,0 +1,229 @@
+{
+  "project_id": "hashima-island-mystery-ja",
+  "schema_version": "1.0",
+  "verification_status": "PASS",
+  "flag_count": 3,
+  "fail_count": 0,
+  "disputed_count": 1,
+  "unverified_count": 1,
+  "pipeline_continue": true,
+  "facts": [
+    {
+      "fact_id": "VF001",
+      "claim": "端島（はしま）は長崎県長崎市に属する無人島。別名「軍艦島（ぐんかんじま）」は、海上から見た島の外観が軍艦に似ているとされることに由来する。",
+      "claim_en": "Hashima Island (Hashima) belongs to Nagasaki City, Nagasaki Prefecture. The nickname 'Gunkanjima' (Battleship Island) derives from the island's silhouette resembling a warship when viewed from the sea.",
+      "status": "verified",
+      "source_ids": ["S001", "S002"],
+      "adjusted_claim": null,
+      "section_relevance": ["HOOK", "ACT_I"]
+    },
+    {
+      "fact_id": "VF002",
+      "claim": "長崎港から南西約15〜18キロメートルの東シナ海上に位置する。面積は約6.3ヘクタール（0.063km²）。度重なる埋め立てにより現在の大きさになった。",
+      "claim_en": "Located 15-18 km southwest of Nagasaki Port in the East China Sea. Area approximately 6.3 hectares (0.063 km²). Current size achieved through repeated land reclamation.",
+      "status": "verified",
+      "source_ids": ["S002"],
+      "adjusted_claim": null,
+      "section_relevance": ["ACT_I"]
+    },
+    {
+      "fact_id": "VF003",
+      "claim": "石炭採掘は1887年頃に開始され、1890年（明治23年）に三菱合資会社が採掘権を取得。その後の整備・拡張により、島全体が炭鉱会社の管理する居住・生産拠点となった。",
+      "claim_en": "Coal mining began around 1887. In 1890 (Meiji 23), Mitsubishi Partnership acquired mining rights. Through subsequent development, the entire island became a residential and production base managed by the mining company.",
+      "status": "verified",
+      "source_ids": ["S002", "S003"],
+      "adjusted_claim": null,
+      "section_relevance": ["ACT_I"]
+    },
+    {
+      "fact_id": "VF004",
+      "claim": "1916年（大正5年）に建設された「30号棟」は、日本最古級の鉄筋コンクリート造集合住宅のひとつとされている。",
+      "claim_en": "Building 30 (30-go-to), constructed in 1916 (Taisho 5), is considered one of the oldest reinforced concrete apartment buildings in Japan.",
+      "status": "flag",
+      "source_ids": ["S002", "S005"],
+      "adjusted_claim": "「日本最古」の断定は回避。「最古級のひとつ」として表現。比較基準・対象によって記述が異なるため。",
+      "section_relevance": ["ACT_I"]
+    },
+    {
+      "fact_id": "VF005",
+      "claim": "1959年（昭和34年）に人口5,259人を記録した。島の面積（0.063km²）に対してこれは世界最高水準のひとつとされる人口密度（約83,500人/km²）に相当する。",
+      "claim_en": "In 1959 (Showa 34), the population reached 5,259. This corresponds to one of the highest population densities in the world at the time (approximately 83,500 people/km²) relative to the island's area of 0.063 km².",
+      "status": "flag",
+      "source_ids": ["S002"],
+      "adjusted_claim": "「世界最高」の断定は回避。「世界最高水準のひとつ」として表現。UNESCO文書も「非常に高密度」とのみ記述。",
+      "section_relevance": ["ACT_I", "ACT_II"]
+    },
+    {
+      "fact_id": "VF006",
+      "claim": "最盛期の端島には、最大9階建てのアパート、小学校、中学校、病院、神社、映画館、パチンコ店などが整備されており、限られた島の面積に都市機能が凝縮されていた。",
+      "claim_en": "At its peak, Hashima had up to 9-story apartment buildings, elementary and middle schools, a hospital, shrine, cinema, pachinko parlors, and other facilities — full urban functions concentrated on a small island.",
+      "status": "verified",
+      "source_ids": ["S002", "S005"],
+      "adjusted_claim": null,
+      "section_relevance": ["ACT_I"]
+    },
+    {
+      "fact_id": "VF007",
+      "claim": "第二次世界大戦中の1939年から1945年にかけて、朝鮮半島および中国大陸から連行された人々が端島の炭鉱で労働させられた。この事実は日本政府もUNESCO審議（2015年）において認めている。",
+      "claim_en": "During WWII (1939-1945), people brought from the Korean Peninsula and Chinese mainland were made to work in the coal mines of Hashima. Japan's government acknowledged this at the UNESCO proceedings in 2015.",
+      "status": "verified",
+      "source_ids": ["S004", "S006"],
+      "adjusted_claim": null,
+      "section_relevance": ["ACT_II"]
+    },
+    {
+      "fact_id": "VF008",
+      "claim": "強制労働に関与した人数や死者数の詳細は、現在も日本・韓国双方の資料で記述が異なり、独立した学術調査が続いている。",
+      "claim_en": "The specific numbers of those involved in forced labor and those who died remain disputed, with differing accounts in Japanese and Korean sources and ongoing independent academic investigation.",
+      "status": "disputed",
+      "source_ids": ["S004", "S006"],
+      "adjusted_claim": "具体的な数字は断定しない。「詳細は現在も調査・議論が続いている」と表現する。",
+      "section_relevance": ["ACT_II"]
+    },
+    {
+      "fact_id": "VF009",
+      "claim": "エネルギー政策の転換（石炭から石油へ）により、1974年（昭和49年）1月15日に閉山が発表された。同年4月20日、最後の島民が島を去り、端島は無人島となった。",
+      "claim_en": "Due to the energy policy shift from coal to oil, mine closure was announced on January 15, 1974. On April 20, 1974, the last residents left the island, making Hashima uninhabited.",
+      "status": "verified",
+      "source_ids": ["S002", "S003"],
+      "adjusted_claim": null,
+      "section_relevance": ["ACT_III"]
+    },
+    {
+      "fact_id": "VF010",
+      "claim": "約35年間の閉鎖期間を経て、2009年（平成21年）4月22日に島の一部エリアへの一般観光が再開された。",
+      "claim_en": "After approximately 35 years of closure, public tourism to a portion of the island resumed on April 22, 2009.",
+      "status": "verified",
+      "source_ids": ["S002"],
+      "adjusted_claim": null,
+      "section_relevance": ["ACT_II", "OUTRO"]
+    },
+    {
+      "fact_id": "VF011",
+      "claim": "2015年（平成27年）7月5日、「明治日本の産業革命遺産 製鉄・製鋼、造船、石炭産業」の構成資産として、ユネスコ世界遺産に登録された（UNESCO World Heritage List ID: 1484）。",
+      "claim_en": "On July 5, 2015, Hashima was inscribed as part of 'Sites of Japan's Meiji Industrial Revolution' on the UNESCO World Heritage List (ID: 1484).",
+      "status": "verified",
+      "source_ids": ["S001"],
+      "adjusted_claim": null,
+      "section_relevance": ["ACT_IV"]
+    },
+    {
+      "fact_id": "VF012",
+      "claim": "登録審議において、日本政府代表は一部施設で「意に反して（against their will）」労働させられた人々がいたことに言及した。この発言の解釈をめぐり、その後日本・韓国間で外交的な論争が生じている。",
+      "claim_en": "During the inscription process, Japan's government representative stated that some people were 'brought against their will' to work at certain sites. This statement's interpretation has since been the subject of diplomatic dispute between Japan and South Korea.",
+      "status": "verified",
+      "source_ids": ["S004"],
+      "adjusted_claim": null,
+      "section_relevance": ["ACT_IV"]
+    },
+    {
+      "fact_id": "VF013",
+      "claim": "2012年公開のジェームズ・ボンド映画『スカイフォール』において廃墟の島が登場し、端島はその着想の源のひとつとされているが、実際の撮影はスタジオセットで行われた。",
+      "claim_en": "The 2012 James Bond film Skyfall features a ruined island. Hashima is said to be one of the inspirations, but actual filming was done on studio sets. No official first-party source confirms this.",
+      "status": "unverified",
+      "source_ids": [],
+      "adjusted_claim": "一次ソース未確認のため断定を避ける。スクリプトから除外済み。",
+      "section_relevance": []
+    }
+  ],
+  "sources": [
+    {
+      "source_id": "S001",
+      "title": "UNESCO World Heritage List — Sites of Japan's Meiji Industrial Revolution",
+      "title_native": "ユネスコ世界遺産リスト — 明治日本の産業革命遺産",
+      "type": "international_organization",
+      "reliability": "very_high",
+      "url_note": "UNESCO WHC list ID 1484 — no URL fabricated",
+      "publication_year": 2015,
+      "language": "en",
+      "covers_facts": ["VF011"]
+    },
+    {
+      "source_id": "S002",
+      "title": "長崎市公式ウェブサイト / 軍艦島デジタルミュージアム",
+      "title_en": "Nagasaki City Official Website / Gunkanjima Digital Museum",
+      "type": "government_official",
+      "reliability": "high",
+      "url_note": "Nagasaki City official — no URL fabricated",
+      "publication_year": null,
+      "language": "ja",
+      "covers_facts": ["VF001", "VF002", "VF003", "VF005", "VF006", "VF009", "VF010"]
+    },
+    {
+      "source_id": "S003",
+      "title": "三菱マテリアル株式会社 社史・公式資料",
+      "title_en": "Mitsubishi Materials Corporation — Corporate History and Official Documents",
+      "type": "corporate_official",
+      "reliability": "high",
+      "url_note": "Mitsubishi Materials Corp official archives — no URL fabricated",
+      "publication_year": null,
+      "language": "ja",
+      "covers_facts": ["VF003", "VF009"]
+    },
+    {
+      "source_id": "S004",
+      "title": "UNESCO World Heritage Committee — 39th Session Meeting Documents (2015)",
+      "title_native": "ユネスコ世界遺産委員会第39回会合議事録（2015年）",
+      "type": "international_organization",
+      "reliability": "very_high",
+      "url_note": "UNESCO WHC 39th Session official documents — no URL fabricated",
+      "publication_year": 2015,
+      "language": "en",
+      "covers_facts": ["VF007", "VF012"]
+    },
+    {
+      "source_id": "S005",
+      "title": "端島炭坑遺産フォーラム",
+      "title_en": "Hashima Coal Mine Heritage Forum",
+      "type": "academic_npo",
+      "reliability": "medium_high",
+      "url_note": null,
+      "publication_year": null,
+      "language": "ja",
+      "covers_facts": ["VF004", "VF006"]
+    },
+    {
+      "source_id": "S006",
+      "title": "韓国文化財庁 / Korea Cultural Heritage Administration — 軍艦島関連文書",
+      "title_en": "Korea Cultural Heritage Administration — Gunkanjima related documents",
+      "type": "government_official",
+      "reliability": "high",
+      "url_note": "Korean government perspective. Covers forced labor history from Korean side.",
+      "publication_year": null,
+      "language": "ko",
+      "covers_facts": ["VF007", "VF008"]
+    },
+    {
+      "source_id": "S007",
+      "title": "読売新聞・朝日新聞 — ユネスコ登録関連報道（2015年7月）",
+      "title_en": "Yomiuri Shimbun / Asahi Shimbun — UNESCO inscription coverage (July 2015)",
+      "type": "major_media",
+      "reliability": "high",
+      "url_note": null,
+      "publication_year": 2015,
+      "language": "ja",
+      "covers_facts": ["VF011", "VF012"]
+    }
+  ],
+  "timeline_events": [
+    { "year": 1887, "era_ja": "明治20年頃", "event": "石炭採掘開始", "fact_id_ref": "VF003" },
+    { "year": 1890, "era_ja": "明治23年", "event": "三菱合資会社が採掘権取得", "fact_id_ref": "VF003" },
+    { "year": 1916, "era_ja": "大正5年", "event": "30号棟建設", "fact_id_ref": "VF004" },
+    { "year": 1939, "era_ja": "昭和14年", "event": "戦時中強制労働開始", "fact_id_ref": "VF007" },
+    { "year": 1945, "era_ja": "昭和20年", "event": "戦時中強制労働終了", "fact_id_ref": "VF007" },
+    { "year": 1959, "era_ja": "昭和34年", "event": "人口5,259人（最盛期）", "fact_id_ref": "VF005" },
+    { "year": 1974, "month": 1, "day": 15, "era_ja": "昭和49年", "event": "閉山発表", "fact_id_ref": "VF009" },
+    { "year": 1974, "month": 4, "day": 20, "era_ja": "昭和49年", "event": "最後の島民離島", "fact_id_ref": "VF009" },
+    { "year": 2009, "month": 4, "day": 22, "era_ja": "平成21年", "event": "一般観光再開", "fact_id_ref": "VF010" },
+    { "year": 2015, "month": 7, "day": 5, "era_ja": "平成27年", "event": "ユネスコ世界遺産登録", "fact_id_ref": "VF011" }
+  ],
+  "entities": [
+    { "name": "三菱合資会社", "name_en": "Mitsubishi Partnership", "entity_type": "corporation", "role": "採掘権取得・島全体の管理運営（1890年〜）" },
+    { "name": "三菱マテリアル株式会社", "name_en": "Mitsubishi Materials Corporation", "entity_type": "corporation", "role": "三菱合資会社の継承企業" },
+    { "name": "長崎市", "name_en": "Nagasaki City", "entity_type": "government", "role": "現在の島の管理者。2015年以降世界遺産として保全" },
+    { "name": "ユネスコ", "name_en": "UNESCO", "entity_type": "international_organization", "role": "2015年に世界遺産として登録" },
+    { "name": "大韓民国政府", "name_en": "Government of the Republic of Korea", "entity_type": "government", "role": "強制労働の歴史を根拠に登録に異議。発言解釈をめぐり論争継続" }
+  ],
+  "created_at": "2026-06-27T01:00:00Z",
+  "updated_at": "2026-06-27T02:00:00Z"
+}

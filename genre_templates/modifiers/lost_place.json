@@ -1,0 +1,165 @@
+{
+  "template_id": "lost_place",
+  "schema_version": "1.0",
+  "template_type": "modifier",
+  "inherits_from": "documentary",
+  "display_name": "Lost Place",
+  "description": "Modifier for abandoned and forgotten location content. Applies dark documentary visual language, real-location photography preference, before/after structural contrast, contemplative atmosphere, and respectful treatment of places where people lived or suffered.",
+  "applicable_primary_genres": ["mystery", "history", "documentary"],
+
+  "pacing": {
+    "hook_duration_seconds": null,
+    "hook_style": null,
+    "arc": null,
+    "cut_frequency": null,
+    "breath_point_frequency": null,
+    "silence_usage": null,
+    "guiding_principle": "Let the location breathe. The ruins speak — the narration frames, not overwhelms. Never rush past a space that deserves to be observed."
+  },
+
+  "camera_language": {
+    "preferred_shot_types": [
+      "extreme_wide_shot", "wide_shot", "aerial",
+      "medium_wide_shot", "close_up"
+    ],
+    "forbidden_shot_types": [],
+    "preferred_motion_directions": [
+      "very_slow_pan_right", "very_slow_pan_left",
+      "slow_zoom_in", "ken_burns", "static"
+    ],
+    "forbidden_motion_directions": ["parallax"],
+    "perspective_rule": "Always establish the location exterior before any interior detail shots. Wide or aerial first, then medium, then close-up. Never skip the establishing shot.",
+    "motion_intensity": "very_slow"
+  },
+
+  "editing_language": {
+    "transition_style": "dissolve_allowed",
+    "text_on_screen": {
+      "usage": "moderate",
+      "purpose": ["names", "dates", "key_facts"],
+      "style": "minimal overlays — location name and date of abandonment on establishing shot, no decorative text"
+    },
+    "motion_graphics_complexity": "moderate",
+    "color_grade": "dark_documentary",
+    "film_grain": true,
+    "speed_ramps_allowed": false,
+    "jump_cuts_allowed": false
+  },
+
+  "music_language": {
+    "role": null,
+    "intensity_arc": {
+      "establishing_shot": "ambient — real location atmosphere sound preferred over music",
+      "contemplative_exterior": "minimal music or silence — let the location speak",
+      "narrative_revelation": "moderate emotional underscore"
+    },
+    "silence_ratio_percent": null,
+    "preferred_genres": ["ambient", "drone", "orchestral_minimal"],
+    "vocals_allowed": null,
+    "tempo_guidance": null
+  },
+
+  "visual_style": {
+    "tone": "dark",
+    "saturation": "desaturated",
+    "contrast": "high",
+    "lighting_preference": "dramatic_shadows",
+    "ai_image_max_percent": null,
+    "real_footage_preference": "strongly_preferred"
+  },
+
+  "motion_grammar": {
+    "opening_motion": "very_slow_pan_right",
+    "default_motion": "very_slow_pan_right",
+    "emotional_motion_map": {
+      "abandonment_reveal": "slow_zoom_in",
+      "contemplative_exterior": "static",
+      "before_after_contrast": "very_slow_pan_right",
+      "personal_artifact_detail": "slow_zoom_in",
+      "wide_establishing": "very_slow_pan_right"
+    },
+    "forbidden_in_emotional_moments": ["parallax", "ken_burns_zoom_out"]
+  },
+
+  "scene_grammar": {
+    "required_scene_types": [],
+    "forbidden_scene_types": [],
+    "required_beats": [
+      {
+        "beat_id": "BEAT_LP_01",
+        "beat_name": "location_establishing",
+        "description": "Wide exterior or aerial shot of the abandoned location that establishes its geography, scale, and current physical state. Must come early — viewer needs to see the place before they can understand the story.",
+        "section_hint": "HOOK",
+        "required": true
+      },
+      {
+        "beat_id": "BEAT_LP_02",
+        "beat_name": "before_after_contrast",
+        "description": "Explicit reference to the location's former inhabited or operational state contrasted against its current abandoned state. Can be delivered through narration, archival imagery, historical photos, or text on screen.",
+        "section_hint": "ACT_I",
+        "required": true
+      },
+      {
+        "beat_id": "BEAT_LP_03",
+        "beat_name": "contemplative_exterior_shot",
+        "description": "Wide or aerial shot of the location with minimal or no narration — giving the viewer time to simply observe the place. This is not a Ma beat (which has its own beat ID), but a visual breathing space unique to lost-place storytelling.",
+        "section_hint": "ACT_III",
+        "required": true
+      }
+    ],
+    "scene_duration_rules": {
+      "min_scene_duration_seconds": 10,
+      "max_scene_duration_seconds": null,
+      "special_scenes": []
+    },
+    "section_structure": null
+  },
+
+  "thumbnail_strategy": {
+    "primary_style": "atmospheric_ruin",
+    "composition_rule": "wide or aerial shot of the location — full frame, no tight crops. Text overlay should be minimal and high-contrast if used.",
+    "text_overlay_rule": "optional",
+    "face_rule": "avoided",
+    "emotion_on_thumbnail": "awe or melancholy curiosity",
+    "color_palette": "dark_moody",
+    "factual_accuracy_required": true,
+    "respect_check_required": true
+  },
+
+  "narrator_guidance": {
+    "tonal_modes": {
+      "describing_the_abandonment": "measured and observational — not mournful, not dramatic",
+      "describing_former_inhabitants": "respectful and humanizing — these were real people living real lives",
+      "describing_physical_decay": "factual and visual — describe what is seen without romanticizing the destruction"
+    },
+    "forbidden_delivery_styles": [
+      "ghost_story_whispering",
+      "horror_dramatization",
+      "romanticizing_decay"
+    ],
+    "pacing_notes": "Give establishing shots time to register before narration begins. Silence over the first wide exterior shot is often more powerful than immediate narration. Let the viewer see before they are told."
+  },
+
+  "forbidden_elements": [
+    {
+      "element": "ghost_or_horror_exaggeration_unless_documented_folklore",
+      "reason": "Sensational supernatural framing misrepresents real abandoned locations and disrespects those who lived or died there. Folklore must be clearly labeled as folklore.",
+      "severity": "HIGH"
+    },
+    {
+      "element": "personal_belongings_aestheticized_as_props",
+      "reason": "Abandoned personal items belong to real people or their families. Treat them as historical artifacts, not cinematic decoration.",
+      "severity": "MEDIUM"
+    },
+    {
+      "element": "trespassing_framed_as_aspirational",
+      "reason": "Content must not encourage illegal access to protected or privately owned abandoned sites.",
+      "severity": "HIGH"
+    }
+  ],
+
+  "scoring_weights": null,
+
+  "created_at": "2026-06-27T00:00:00Z",
+  "updated_at": "2026-06-27T00:00:00Z"
+}

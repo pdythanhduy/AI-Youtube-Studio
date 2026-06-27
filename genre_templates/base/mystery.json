@@ -1,0 +1,222 @@
+{
+  "template_id": "mystery",
+  "schema_version": "1.0",
+  "template_type": "base",
+  "inherits_from": "documentary",
+  "display_name": "Mystery",
+  "description": "Primary genre template for mystery and investigation content. Inherits from documentary. Overrides documentary with curiosity-driven hooks, evidence-first structure, honest uncertainty acknowledgment, and open-loop endings. Viewer should feel like a fellow investigator, not a passive audience.",
+  "applicable_primary_genres": [],
+
+  "pacing": {
+    "hook_duration_seconds": 30,
+    "hook_style": "mystery",
+    "arc": {
+      "hook": {
+        "style": "fast and curiosity-driven",
+        "goal": "present the central mystery in a way the viewer cannot resist — they must know the answer",
+        "target_duration_percent": 5
+      },
+      "act_I": {
+        "style": "steady context-building",
+        "goal": "establish the setting, the people involved, and the stakes before the mystery deepens",
+        "target_duration_percent": 20
+      },
+      "act_II": {
+        "style": "evidence-paced — each fact lands before the next is introduced",
+        "goal": "build the case methodically, with honest acknowledgment of uncertainty where it exists",
+        "target_duration_percent": 35
+      },
+      "act_III": {
+        "style": "rising toward a conclusion that may not fully resolve",
+        "goal": "synthesize the evidence, acknowledge what remains unknown, prepare the viewer for an open ending",
+        "target_duration_percent": 25
+      },
+      "outro": {
+        "style": "reflective and curious — not anxious",
+        "goal": "leave the viewer with the central open question and a reason to keep thinking",
+        "target_duration_percent": 15
+      }
+    },
+    "cut_frequency": "moderate",
+    "breath_point_frequency": "every_60s",
+    "silence_usage": "deliberate",
+    "guiding_principle": "The viewer must feel like a fellow investigator throughout. Curiosity must survive to the last frame. Never manufacture certainty where none exists."
+  },
+
+  "camera_language": {
+    "preferred_shot_types": [
+      "extreme_wide_shot", "wide_shot", "medium_shot",
+      "close_up", "extreme_close_up", "aerial",
+      "animated_map", "text_overlay"
+    ],
+    "forbidden_shot_types": [],
+    "preferred_motion_directions": [
+      "slow_zoom_in", "slow_pan_right", "slow_pan_left",
+      "ken_burns", "very_slow_pan_right"
+    ],
+    "forbidden_motion_directions": [],
+    "perspective_rule": "Wide establishing shots for location. Slow zoom-in for key evidence or revelations. Never zoom into a person's face in a way that implies guilt or culpability.",
+    "motion_intensity": "slow"
+  },
+
+  "editing_language": {
+    "transition_style": "dissolve_allowed",
+    "text_on_screen": {
+      "usage": "moderate",
+      "purpose": ["key_facts", "names", "dates", "quotes", "callouts"],
+      "style": "clean and precise — text anchors facts and names, never used decoratively"
+    },
+    "motion_graphics_complexity": "moderate",
+    "color_grade": "natural",
+    "film_grain": false,
+    "speed_ramps_allowed": false,
+    "jump_cuts_allowed": false
+  },
+
+  "music_language": {
+    "role": "support",
+    "intensity_arc": {
+      "hook": "subtle tension — intrigue without alarm",
+      "act_I": "minimal — let facts establish themselves in silence",
+      "act_II": "moderate — rises carefully with the weight and complexity of evidence",
+      "act_III": "slightly stronger — builds emotional weight toward an unresolved conclusion",
+      "outro": "reflective — unresolved, open-ended feeling; no triumphant resolution"
+    },
+    "silence_ratio_percent": 25,
+    "preferred_genres": ["ambient", "tension_underscore", "orchestral_minimal", "drone"],
+    "vocals_allowed": false,
+    "tempo_guidance": "slow — no percussion-driven beats; tension through tone and texture, not rhythm"
+  },
+
+  "visual_style": {
+    "tone": "cinematic with atmospheric undertone",
+    "saturation": "neutral",
+    "contrast": "medium",
+    "lighting_preference": "natural to slightly dramatic",
+    "ai_image_max_percent": 75,
+    "real_footage_preference": "strongly_preferred"
+  },
+
+  "motion_grammar": {
+    "opening_motion": "slow_zoom_in",
+    "default_motion": "ken_burns",
+    "emotional_motion_map": {
+      "neutral_exposition": "slow_pan_right",
+      "tension": "slow_zoom_in",
+      "revelation": "slow_zoom_in",
+      "uncertainty": "very_slow_pan_left",
+      "reflection": "very_slow_pan_right",
+      "transition": "ken_burns"
+    },
+    "forbidden_in_emotional_moments": ["ken_burns_zoom_out"]
+  },
+
+  "scene_grammar": {
+    "required_scene_types": ["establishing_shot", "evidence_scene", "uncertainty_acknowledgment_scene"],
+    "forbidden_scene_types": [],
+    "required_beats": [
+      {
+        "beat_id": "BEAT_MYS_01",
+        "beat_name": "central_mystery_reveal",
+        "description": "The hook must clearly pose the central unanswered question the video will investigate. The viewer must know exactly what mystery is being explored within the first 30 seconds.",
+        "section_hint": "HOOK",
+        "required": true
+      },
+      {
+        "beat_id": "BEAT_MYS_02",
+        "beat_name": "evidence_trail",
+        "description": "Sequential presentation of verified evidence, each piece building meaningfully on the last. Evidence must be sourced.",
+        "section_hint": "ACT_II",
+        "required": true
+      },
+      {
+        "beat_id": "BEAT_MYS_03",
+        "beat_name": "uncertainty_acknowledgment",
+        "description": "Explicit acknowledgment of what is not known, what is disputed, or what cannot be proven. Do not resolve what history has not resolved.",
+        "section_hint": "ACT_II",
+        "required": true
+      },
+      {
+        "beat_id": "BEAT_MYS_04",
+        "beat_name": "open_question_ending",
+        "description": "The final video beat ends with at least one unresolved or forward-pointing question — sustaining viewer curiosity and creating a natural bridge to future content.",
+        "section_hint": "OUTRO",
+        "required": true
+      }
+    ],
+    "scene_duration_rules": {
+      "min_scene_duration_seconds": 8,
+      "max_scene_duration_seconds": 90,
+      "special_scenes": []
+    },
+    "section_structure": {
+      "required_sections": ["HOOK", "ACT_I", "ACT_II", "ACT_III", "OUTRO"],
+      "section_order_enforced": true
+    }
+  },
+
+  "thumbnail_strategy": {
+    "primary_style": "mystery_curiosity",
+    "composition_rule": "strong atmospheric image — wide or close-up — with concise curiosity-invoking text that asks a question or implies one",
+    "text_overlay_rule": "optional",
+    "face_rule": "optional",
+    "emotion_on_thumbnail": "intrigue or curiosity",
+    "color_palette": "natural to slightly moody",
+    "factual_accuracy_required": true,
+    "respect_check_required": true
+  },
+
+  "narrator_guidance": {
+    "tonal_modes": {
+      "neutral_facts": "calm and objective",
+      "introducing_new_evidence": "curious — as if discovering alongside the viewer, not reciting from a script",
+      "major_discovery": "measured intensity — this is significant, but never theatrical or sensational",
+      "uncertainty": "honest and direct — state clearly what is not known and why",
+      "historical_or_tragic": "respectful and restrained",
+      "open_question": "reflective and genuinely curious — not anxious or alarming"
+    },
+    "forbidden_delivery_styles": [
+      "sensational",
+      "theatrical",
+      "horror_whispering",
+      "cliffhanger_screaming",
+      "news_anchor_flat",
+      "actor_performance"
+    ],
+    "pacing_notes": "Slow down before major facts. Let revelations breathe — pause after the sentence that delivers the key information. Never rush from evidence to conclusion. The journey is the content."
+  },
+
+  "forbidden_elements": [
+    {
+      "element": "stating_unresolved_events_as_definitively_resolved",
+      "reason": "Fake certainty destroys credibility and disrespects historical truth. Mystery must be honest about what remains unknown.",
+      "severity": "CRITICAL"
+    },
+    {
+      "element": "exaggerated_claims_beyond_evidence",
+      "reason": "Mystery must be grounded in verifiable evidence. Speculation presented as fact is a factual and ethical violation.",
+      "severity": "HIGH"
+    },
+    {
+      "element": "fear_as_primary_emotion",
+      "reason": "Curiosity is the target emotion. Fear may serve the story in specific moments but must never drive the narrative.",
+      "severity": "MEDIUM"
+    },
+    {
+      "element": "manufactured_cliffhangers_with_no_payoff",
+      "reason": "Viewer trust is built on the promise that the investigation leads somewhere real. False urgency without substance damages retention long-term.",
+      "severity": "MEDIUM"
+    }
+  ],
+
+  "scoring_weights": {
+    "factual_accuracy": 0.30,
+    "emotional_impact": 0.25,
+    "retention": 0.25,
+    "visual_quality": 0.10,
+    "trust": 0.10
+  },
+
+  "created_at": "2026-06-27T00:00:00Z",
+  "updated_at": "2026-06-27T00:00:00Z"
+}

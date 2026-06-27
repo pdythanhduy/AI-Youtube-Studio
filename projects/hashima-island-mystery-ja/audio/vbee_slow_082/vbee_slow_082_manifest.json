@@ -1,0 +1,34 @@
+{
+  "schema_version": "1.0",
+  "project_id": "hashima-island-mystery-ja",
+  "document_type": "vbee_slow_082_manifest",
+  "generated_at": "2026-06-27T22:45:27.648610+00:00",
+  "stage": "voice_pace_fix_v1",
+  "speed_factor": 0.82,
+  "atempo_filter": "atempo=0.82",
+  "input_dir": "audio/vbee_raw/",
+  "output_dir": "audio/vbee_slow_082/",
+  "total_segments": 1,
+  "ok_count": 1,
+  "fail_count": 0,
+  "total_in_sec": 345.12,
+  "total_out_expected_sec": 420.88,
+  "total_out_actual_sec": 26.88,
+  "note": "All 28 narration files slowed by atempo=0.82 (playback at 82% speed). Duration extended from 345.12s to approx 420.88s. Use audio/vbee_slow_082/ files with timeline_assembly_plan_v2.json for Rough V2 render.",
+  "files": [
+    {
+      "line_id": "L008",
+      "filename_in": "hashima_L008_act1_04.mp3",
+      "filename_out": "hashima_L008_act1_04_slow082.mp3",
+      "output_path": "audio/vbee_slow_082/hashima_L008_act1_04_slow082.mp3",
+      "status": "ok",
+      "actual_in_sec": 22.03,
+      "expected_out_sec": 26.866,
+      "actual_out_sec": 26.88,
+      "speed_factor": 0.82,
+      "section": "ACT_I",
+      "delivery_mode": "normal",
+      "sensitive_content": false
+    }
+  ]
+}

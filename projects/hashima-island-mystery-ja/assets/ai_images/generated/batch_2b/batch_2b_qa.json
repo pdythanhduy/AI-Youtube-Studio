@@ -1,0 +1,282 @@
+{
+  "project_id": "hashima-island-mystery-ja",
+  "qa_id": "BATCH2B_QA_001",
+  "qa_date": "2026-06-27",
+  "batch_id": "BATCH_2B",
+  "reviewer": "batch_2b_image_qa_gate",
+
+  "total_images": 5,
+  "files_found": 5,
+  "files_expected": 5,
+  "approved": 3,
+  "approved_with_minor_notes": 1,
+  "regenerate": 1,
+  "rejected": 0,
+  "batch_complete": false,
+  "batch_complete_note": "IMG014 requires regeneration (attempt 1 of 3). All other 4 images approved.",
+
+  "images": [
+    {
+      "image_id": "IMG008",
+      "scene_id": "S009",
+      "filename": "IMG008_S009_school_interior.png",
+      "actual_path": "assets/ai_images/generated/batch_2b/IMG008_S009_school_interior.png",
+      "file_found": true,
+      "file_size_bytes": 2474837,
+
+      "classification": "APPROVED_WITH_MINOR_NOTES",
+      "approved_for_production": true,
+      "requires_post_processing": true,
+      "requires_regeneration": false,
+
+      "checks": {
+        "correct_scene_match": { "result": "PASS", "note": "Ruined school classroom — desks, chairs, blackboard, light through windows. Exact match for S009." },
+        "correct_subject": { "result": "PASS", "note": "Multiple desks and chairs, most overturned or tilted. Blackboard at front/rear. Light shafts from left-side windows." },
+        "no_people": { "result": "PASS", "note": "Zero human forms" },
+        "no_victims": { "result": "PASS" },
+        "no_forced_labor": { "result": "PASS", "note": "School context, not labor. Civilian community memory." },
+        "no_ghost_horror": { "result": "PASS", "note": "Dark and atmospheric — not sinister despite high destruction level" },
+        "no_gore_violence": { "result": "PASS" },
+        "no_modern_objects": { "result": "PASS", "note": "All furniture consistent with pre-1974 school" },
+        "no_text_logos_watermarks": { "result": "PASS", "note": "Blackboard is dark/blank — no legible chalk text visible" },
+        "suitable_16x9": { "result": "PASS" },
+        "respectful_hashima_tone": { "result": "PASS" },
+        "usable_for_slow_pan_right": { "result": "PASS", "note": "Wide classroom with depth works well for 40-second pan" }
+      },
+
+      "visual_observations": [
+        "Classroom: EXCELLENT — multiple desks and chairs in disarray, overturned and scattered",
+        "Light shafts: PRESENT — strong rays through left-side windows with vegetation visible outside",
+        "Blackboard: PRESENT — visible at rear, dark/blank. No chalk writing discernible.",
+        "Destruction level: HIGH — debris, dried leaves, exposed damage. More extreme than gradual abandonment suggests. This is acceptable for Hashima (50+ years, typhoon exposure, known to be heavily decayed).",
+        "No people: CONFIRMED",
+        "Color palette: Warm sepia-dark tones — close to dark_documentary target. Slightly warm but acceptable.",
+        "Teacher's desk visible near blackboard — adds to educational atmosphere.",
+        "Vegetation through windows adds sense of time passing (nature reclaiming the space)."
+      ],
+
+      "minor_notes": [
+        "DESTRUCTION LEVEL: The classroom is very heavily destroyed — more extreme than typical gradual abandonment. For Hashima specifically, this level of decay is factually plausible after 50+ years with typhoon access. Director should judge whether this level serves the scene's 'quiet sense of loss' narrative or feels overly violent. If overly extreme: regenerate with 'gradual decay, not catastrophic destruction' terms.",
+        "BLACKBOARD: No chalk writing is clearly visible — the scene description says 'faded chalk writing barely visible'. The prompt asked for it but the AI didn't render it. This is actually safer (no legibility issues). Minor visual match miss.",
+        "POST-PROCESSING: Light shafts are already strong. Add film grain. Slight desaturation from warm tones toward cooler documentary target. Apply slow_pan_right at 40-second duration."
+      ],
+
+      "post_process_notes": "Film grain. Slight desaturation (the warm sepia tone is slightly warmer than dark_documentary target — pull slightly cooler). Apply slow_pan_right at 40-second duration. Narration L009/L010/L011 span the full 40 seconds.",
+      "file_path": "assets/ai_images/generated/batch_2b/IMG008_S009_school_interior.png",
+      "production_status": "approved_with_notes_pending_post"
+    },
+
+    {
+      "image_id": "IMG014",
+      "scene_id": "S017",
+      "filename": "IMG014_S017_light_beams_interior.png",
+      "actual_path": "assets/ai_images/generated/batch_2b/IMG014_S017_light_beams_interior.png",
+      "file_found": true,
+      "file_size_bytes": 2223265,
+
+      "classification": "REGENERATE",
+      "approved_for_production": false,
+      "requires_regeneration": true,
+      "regeneration_attempt": 1,
+      "max_attempts": 3,
+
+      "rejection_reason": "Image reads as a NATURAL CAVE CHAMBER, not a ruined concrete building room. The walls are raw natural stone/rock. The ceiling opening has a cave arch formation, not a collapsed concrete ceiling. The floor has natural rock gravel, not concrete rubble. This fails the scene requirement (S017: 'ruined room interior of abandoned building') and risks visual collision with IMG009 (mine tunnel, ACT_II) — two cave-like spaces in the same documentary would be confusing. The corrected prompt must anchor firmly on concrete architecture to differentiate from both the mine tunnel and natural cave aesthetics.",
+
+      "checks": {
+        "correct_scene_match": { "result": "FAIL", "note": "S017 requires 'ruined room interior' of a building. This reads as a natural cave/underground chamber." },
+        "correct_subject": { "result": "FAIL", "note": "Natural rock walls, cave arch ceiling, natural gravel floor — not a concrete building room interior" },
+        "no_people": { "result": "PASS" },
+        "no_victims": { "result": "PASS" },
+        "no_forced_labor": { "result": "PASS" },
+        "no_ghost_horror": { "result": "PASS" },
+        "no_gore_violence": { "result": "PASS" },
+        "no_modern_objects": { "result": "PASS" },
+        "no_text_logos_watermarks": { "result": "PASS" },
+        "suitable_16x9": { "result": "PASS" },
+        "mine_tunnel_collision_risk": { "result": "FAIL", "note": "Cave chamber appearance creates visual collision with IMG009 (mine tunnel aesthetic in ACT_II)" },
+        "light_shafts_present": { "result": "PASS", "note": "Light beams are present and well-executed — the correct visual element, wrong setting" }
+      },
+
+      "visual_observations": [
+        "Light shafts: PRESENT and beautiful — 2-3 beams converging from ceiling opening. This is correct.",
+        "Setting: WRONG — natural cave chamber. Raw stone/rock walls, not concrete. Cave-arch ceiling, not collapsed concrete. Natural rock debris floor, not concrete rubble.",
+        "Scale: large cave, not an intimate room — fails 'room-scale intimate interior' direction",
+        "Visual collision: This image could easily be confused with IMG009 (mine tunnel section) — both have cave/underground dark-space + light aesthetics. Placing them in the same documentary creates confusion about whether we're still underground.",
+        "If reframed: the light beam quality in this image is excellent. A regeneration that places those same beams in a concrete room would likely be very strong."
+      ],
+
+      "corrected_prompt": "Ruined concrete room interior of an abandoned building, a single dramatic shaft of natural light entering through a large hole in the collapsed concrete ceiling, dust particles visible in the light beam, concrete walls clearly visible on both sides with cracks and weathering stains, concrete rubble and building debris on the concrete floor, chiaroscuro lighting, beautiful and reflective, cinematic, high contrast, dark concrete surroundings with brilliant entering light, film grain, intimate room-scale of a single abandoned residential or industrial room, former built interior space --ar 16:9 --no people, furniture, text, modern objects, logos, watermark, cave walls, natural stone walls, underground cave, cave ceiling arch, mine tunnel appearance, natural rock floor, bright colors --v 6.1 --q 2",
+
+      "corrected_negative_prompt": "people, furniture, text, modern objects, logos, watermark, cave walls, natural stone walls, underground cave appearance, cave ceiling arch, mine tunnel, natural rock floor, bright colors",
+
+      "corrected_prompt_rationale": "Key changes: (1) Explicit 'concrete walls clearly visible on both sides' — anchors architectural material, not natural rock. (2) Explicit 'concrete rubble and building debris on the concrete floor' — not natural rock gravel. (3) 'Concrete ceiling' replaces ambiguous 'collapsed ceiling'. (4) Negative prompt adds 'cave walls, natural stone walls, underground cave, cave ceiling arch, mine tunnel appearance, natural rock floor' — directly prevents the cave aesthetic that appeared in attempt 1. The light beam quality from the first generation is retained as the visual goal.",
+
+      "output_filename": "IMG014_S017_light_beams_interior_v2.png",
+      "save_to": "assets/ai_images/generated/batch_2b/",
+      "file_path": null,
+      "production_status": "regenerate_attempt_1"
+    },
+
+    {
+      "image_id": "IMG015",
+      "scene_id": "S018",
+      "filename": "IMG015_S018_storm_ruins.png",
+      "actual_path": "assets/ai_images/generated/batch_2b/IMG015_S018_storm_ruins.png",
+      "file_found": true,
+      "file_size_bytes": 2565628,
+
+      "classification": "APPROVED",
+      "approved_for_production": true,
+      "requires_post_processing": false,
+      "requires_regeneration": false,
+
+      "checks": {
+        "correct_scene_match": { "result": "PASS", "note": "Post-typhoon ruins with ocean waves at base — exact match for S018 (collapsed walls, exposed rebar, 35 years erosion, storm light)" },
+        "correct_subject": { "result": "PASS", "note": "Concrete ruin columns/walls at ocean edge, crashing waves, dark storm clouds" },
+        "no_people": { "result": "PASS", "note": "Zero human forms" },
+        "no_victims": { "result": "PASS" },
+        "no_forced_labor": { "result": "PASS", "note": "ACT_III post-closure — pure architectural/weather imagery" },
+        "no_ghost_horror": { "result": "PASS", "note": "Dramatic weather is documentary realism, not horror" },
+        "no_gore_violence": { "result": "PASS" },
+        "no_modern_objects": { "result": "PASS", "note": "No modern elements visible" },
+        "no_boats": { "result": "PASS", "note": "Open ocean only" },
+        "no_text_logos_watermarks": { "result": "PASS" },
+        "suitable_16x9": { "result": "PASS" },
+        "respectful_hashima_tone": { "result": "PASS", "note": "Weather and architectural decay — factual and respectful" },
+        "usable_for_slow_pan_right": { "result": "PASS", "note": "Wide ruin composition with depth works for 30-second pan" }
+      },
+
+      "visual_observations": [
+        "Ruins: EXCELLENT — concrete columns and wall frames standing at ocean edge, partially collapsed",
+        "Ocean waves: PRESENT — crashing dramatically at base of ruins, high energy",
+        "Storm sky: PRESENT — heavy dark clouds, dramatic overcast sky",
+        "Light quality: Cool blue-grey — correct dawn/storm light",
+        "Exposed rebar: Present in structural elements",
+        "No people, no boats: CONFIRMED",
+        "Color palette: Desaturated cool blue-grey — at dark_documentary target",
+        "The ruins have a strong compositional presence — columns frame the turbulent water below"
+      ],
+
+      "post_process_notes": "Minimal processing. Film grain. Cool palette already correct — do not warm. Apply slow_pan_right at 30-second duration. Narration L023 spans this scene.",
+      "file_path": "assets/ai_images/generated/batch_2b/IMG015_S018_storm_ruins.png",
+      "production_status": "approved_for_production"
+    },
+
+    {
+      "image_id": "IMG017",
+      "scene_id": "S021",
+      "filename": "IMG017_S021_heritage_plaque_ruin.png",
+      "actual_path": "assets/ai_images/generated/batch_2b/IMG017_S021_heritage_plaque_ruin.png",
+      "file_found": true,
+      "file_size_bytes": 2744205,
+
+      "classification": "APPROVED",
+      "approved_for_production": true,
+      "requires_post_processing": false,
+      "requires_regeneration": false,
+
+      "critical_gate_check": {
+        "gate": "Plaque inscription must be illegible",
+        "result": "PASS",
+        "detail": "The plaque surface is heavily tarnished and oxidized dark grey-black. Any inscription engravings are so worn and faded they are functionally illegible — the surface reads as heavily corroded metal texture, not readable text. No specific UNESCO language, dates, or names are visible."
+      },
+
+      "checks": {
+        "correct_scene_match": { "result": "PASS", "note": "Heritage plaque on crumbling concrete wall — exact match for S021 (contrast of official recognition with physical decay)" },
+        "correct_subject": { "result": "PASS", "note": "Rectangular metal plaque mounted on heavily weathered concrete/stone wall, ruins visible in background" },
+        "no_people": { "result": "PASS" },
+        "no_victims": { "result": "PASS" },
+        "no_forced_labor": { "result": "PASS", "note": "ACT_IV UNESCO context — not labor imagery" },
+        "no_ghost_horror": { "result": "PASS" },
+        "no_gore_violence": { "result": "PASS" },
+        "no_modern_objects": { "result": "PASS", "note": "No modern elements, no pristine surfaces" },
+        "plaque_text_illegible": { "result": "PASS", "note": "Inscription is worn beyond readability — CRITICAL GATE PASSED" },
+        "no_text_logos_watermarks": { "result": "PASS" },
+        "suitable_16x9": { "result": "PASS" },
+        "respectful_hashima_tone": { "result": "PASS", "note": "Juxtaposition of official recognition and physical decay — factual and respectful" },
+        "usable_for_slow_zoom_in": { "result": "PASS", "note": "Close-up composition with depth — plaque fills frame, ruins in background soft focus" }
+      },
+
+      "visual_observations": [
+        "Plaque: EXCELLENT — rectangular dark tarnished bronze/metal plate mounted centrally on concrete wall",
+        "Inscription: ILLEGIBLE — heavily oxidized, worn to near-illegibility. Surface texture reads as corrosion, not readable text. CRITICAL GATE PASSED.",
+        "Wall: Heavily weathered concrete with texture/staining — provides the 'decay vs recognition' contrast",
+        "Background: Blurred ruin structure visible in depth of field — adds context without distraction",
+        "No people, no logos: CONFIRMED",
+        "Color palette: Desaturated warm-cool contrast — warm metal vs cool concrete, exactly as directed",
+        "Composition: Plaque dominates frame with slight depth. Excellent for slow_zoom_in 40 seconds."
+      ],
+
+      "post_process_notes": "Minimal processing. Film grain. Consider a very slight warm toning specifically on the plaque surface to enhance the warm-metal vs cool-concrete contrast in post. Slow_zoom_in at 40-second duration. Narration L028/L029/L030 including [PAUSE:2s] spans this scene.",
+      "file_path": "assets/ai_images/generated/batch_2b/IMG017_S021_heritage_plaque_ruin.png",
+      "production_status": "approved_for_production"
+    },
+
+    {
+      "image_id": "IMG019",
+      "scene_id": "S023",
+      "filename": "IMG019_S023_tourist_ferry_approach.png",
+      "actual_path": "assets/ai_images/generated/batch_2b/IMG019_S023_tourist_ferry_approach.png",
+      "file_found": true,
+      "file_size_bytes": 2122233,
+
+      "classification": "APPROVED",
+      "approved_for_production": true,
+      "requires_post_processing": true,
+      "requires_regeneration": false,
+
+      "critical_gate_check": {
+        "gate": "No people or faces visible on vessel deck",
+        "result": "PASS",
+        "detail": "The vessel bow and deck railing are clearly visible in the foreground. No crew, no tourists, no human forms are anywhere on the vessel. Deck is completely empty. CRITICAL GATE PASSED."
+      },
+
+      "checks": {
+        "correct_scene_match": { "result": "PASS", "note": "Tourist ferry bow approaching Hashima Island — exact match for S023 (contemporary visitor's gaze, OUTRO)" },
+        "correct_subject": { "result": "PASS", "note": "White ferry bow in foreground, Hashima Island's distinctive battleship silhouette clearly visible in middle distance over calm grey water" },
+        "no_people_on_vessel": { "result": "PASS", "note": "Vessel deck completely empty — CRITICAL GATE PASSED" },
+        "no_faces": { "result": "PASS" },
+        "no_victims": { "result": "PASS" },
+        "no_forced_labor": { "result": "PASS", "note": "Contemporary OUTRO context" },
+        "no_ghost_horror": { "result": "PASS" },
+        "no_gore_violence": { "result": "PASS" },
+        "no_other_boats": { "result": "PASS" },
+        "no_text_logos_watermarks": { "result": "PASS", "note": "No visible markings on vessel" },
+        "calm_ocean": { "result": "PASS", "note": "Calm grey water — not dramatic weather" },
+        "suitable_16x9": { "result": "PASS" },
+        "respectful_hashima_tone": { "result": "PASS", "note": "Contemporary visitor framing is appropriate distance — respectful not voyeuristic" },
+        "island_visible": { "result": "PASS", "note": "Hashima Island distinctive battleship shape clearly visible and identifiable" },
+        "usable_for_slow_zoom_in": { "result": "PASS", "note": "Island grows in frame as zoom progresses — 30 second duration" }
+      },
+
+      "visual_observations": [
+        "Vessel bow: EXCELLENT — white ferry bow with railing visible in clean foreground",
+        "Vessel deck: EMPTY — no people, no crew, no tourists anywhere. CRITICAL GATE PASSED.",
+        "Hashima Island: EXCELLENT — the distinctive 'battleship' silhouette with multi-storey concrete blocks is very clearly recognizable as Hashima/Gunkanjima. This is the strongest visual confirmation of the island in the entire project.",
+        "Water: Calm grey, overcast reflections — correct",
+        "Sky: Grey overcast — correct and consistent with rest of project palette",
+        "Island in middle distance: Growing as zoom proceeds — correct for slow_zoom_in",
+        "No text, no logos: CONFIRMED",
+        "Coastline/mountains visible in far background behind island — adds geographic context"
+      ],
+
+      "director_note": "The island in IMG019 is very recognizably Hashima in its actual distinctive form. This is highly appropriate for the OUTRO — the viewer has now learned about the island and can recognize it fully. The image serves as the final 'you now know this place' visual cue before the credits.",
+
+      "post_process_notes": "Film grain. Apply subtle warm color grade relative to ACT_II/III images — the OUTRO should feel slightly warmer/more contemporary than the colder historical sections. Apply slow_zoom_in at 30-second duration (island grows in frame). L031 is B-ROLL only; L032 is spoken OUTRO.",
+      "file_path": "assets/ai_images/generated/batch_2b/IMG019_S023_tourist_ferry_approach.png",
+      "production_status": "approved_for_production"
+    }
+  ],
+
+  "batch_summary": {
+    "files_found": 5,
+    "files_expected": 5,
+    "all_files_present": true,
+    "approved": 3,
+    "approved_with_minor_notes": 1,
+    "regenerate": 1,
+    "rejected": 0,
+    "batch_complete": false,
+    "pending": "IMG014 regeneration (attempt 1 of 3) — cave chamber, not concrete room"
+  }
+}

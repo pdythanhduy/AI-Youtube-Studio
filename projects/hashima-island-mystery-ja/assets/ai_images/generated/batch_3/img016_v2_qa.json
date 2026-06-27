@@ -1,0 +1,107 @@
+{
+  "project_id": "hashima-island-mystery-ja",
+  "qa_id": "IMG016_V2_FINAL_QA",
+  "qa_date": "2026-06-27",
+  "gate": "img016_regeneration_v2_final_qa",
+  "image_id": "IMG016",
+  "scene_id": "S020",
+  "filename": "IMG016_S020_island_dusk_wide_v2.png",
+  "file_found": true,
+  "file_size_bytes": 1892650,
+  "attempt_number": 2,
+  "max_attempts": 3,
+  "classification": "APPROVED",
+  "approved_for_production": true,
+  "regeneration_closed": true,
+
+  "visual_observations": [
+    "Island: small island clearly completely surrounded by calm ocean water — CONFIRMED",
+    "Ruin structures: dense cluster of large multi-story abandoned concrete buildings covering the island — CONFIRMED",
+    "Island shape: distinctive elongated 'battleship' profile consistent with Hashima/Gunkanjima — CONFIRMED",
+    "Dusk sky: warm amber and deep orange gradient sky filling upper two-thirds of frame — CONFIRMED",
+    "Horizon glow: sun near or just below horizon, warm light emanating from horizon behind/beside the island — CONFIRMED",
+    "Sea water: calm water surrounding island on all sides, soft golden reflections from dusk sky — CONFIRMED",
+    "Three-band composition: sky (top ~60%) / island ruins (center) / reflective sea (bottom) — CONFIRMED",
+    "No people: confirmed — zero human forms anywhere",
+    "No vessels: confirmed — no boats, ships, or ferries in frame",
+    "No text/logos/watermarks: confirmed",
+    "No modern elements: confirmed"
+  ],
+
+  "qa_checks": {
+    "extreme_wide_island_view": {
+      "result": "PASS",
+      "detail": "Island appears at middle distance surrounded by sea. Not a close-up. Extreme wide perspective confirmed."
+    },
+    "ocean_clearly_visible": {
+      "result": "PASS",
+      "detail": "Calm ocean visible in foreground, flanking both sides of the island, and implied behind. Water fills approximately the lower 30% of the frame."
+    },
+    "island_surrounded_by_sea": {
+      "result": "PASS",
+      "detail": "Island is a distinct landmass in the middle of the ocean. The corrected prompt anchor 'small island completely surrounded by sea' was honoured."
+    },
+    "warm_restrained_dusk_palette": {
+      "result": "PASS",
+      "detail": "Warm amber and orange-gold tones throughout. The palette is vivid but cinematic — within documentary range for a dusk establishing shot. Minor note: slightly more saturated than 'warm desaturated' may imply. Post-processing desaturation recommended to align with dark_documentary grade (see post_process_notes)."
+    },
+    "calm_reflective_water": {
+      "result": "PASS",
+      "detail": "Sea surface is calm with soft golden reflections from the dusk sky. No waves or storm conditions."
+    },
+    "no_people": { "result": "PASS" },
+    "no_vessels": { "result": "PASS", "detail": "No boats, ships, or tourist ferries in frame." },
+    "not_building_close_up": {
+      "result": "PASS",
+      "detail": "Attempt 1 failure (building facade close-up) completely corrected. This image is a distant wide view of the entire island."
+    },
+    "not_visually_identical_to_IMG007": {
+      "result": "PASS",
+      "detail": "IMG007 (S008) is a close-up low-angle building facade in cool grey. This is an extreme wide warm-dusk sea view. Completely different in scale, color, composition, and context. No visual collision."
+    },
+    "visually_distinct_from_IMG001": {
+      "result": "PASS",
+      "detail": "IMG001 (S001 HOOK) is cold dark blue-black pre-dawn, island as dark silhouette. This is warm orange-amber dusk with illuminated ruin detail. Opposite color temperature. These two images form the visual bookends of the documentary — cold mystery at opening, warm resolution before the closing silence. Contrast is intentional and effective."
+    },
+    "visually_distinct_from_IMG020": {
+      "result": "PASS",
+      "detail": "IMG020 (S024) is a 1974 Japan Government aerial photograph, desaturated/monochrome, top-down view. This is a warm-color sea-level contemporary wide. No visual overlap."
+    },
+    "visually_distinct_from_IMG019": {
+      "result": "PASS",
+      "detail": "IMG019 (S023 OUTRO) shows a ferry bow in the foreground with the island at middle distance, cool overcast grey. This image has no vessel foreground and a warm dusk palette. Clearly distinct."
+    },
+    "suitable_before_40s_ma_silence": {
+      "result": "PASS",
+      "detail": "The warm island at dusk surrounded by calm sea is exactly the kind of image that carries a 40-second contemplative silence. Serene, majestic, vast. The image holds visual interest across 40 seconds of very_slow_pan_right through the warm sky and reflective sea."
+    },
+    "respectful_documentary_tone": {
+      "result": "PASS",
+      "detail": "Beautiful cinematic landscape. No sensationalism, no horror, no tragedy imagery. The tone is reverent and contemplative — appropriate for the UNESCO inscription narration and the approaching Ma silence."
+    },
+    "no_logos_text_watermarks": { "result": "PASS" },
+    "sixteennine_suitable": { "result": "PASS" },
+    "slow_pan_compatible": {
+      "result": "PASS",
+      "detail": "Wide horizontal composition with open sea on both sides of the island and warm sky above. The very_slow_pan_right at 40s will sweep from the island across the warm reflective sea to the right — effective cinematic motion for this scene."
+    }
+  },
+
+  "minor_notes": [
+    {
+      "note_id": "MN-01",
+      "severity": "minor",
+      "description": "Sky palette is slightly more vivid/saturated than 'warm desaturated amber' may imply. The orange is rich and cinematic but not quite documentary-neutral.",
+      "action": "POST-PROCESS: apply slight desaturation (reduce saturation by ~15-20%) to bring warm tones in line with the overall dark_documentary grade. Preserve the warm amber relative to the cold ACT_I and ACT_II scenes — do not flatten to grey. The warm vs cold contrast between S020 and earlier scenes is a deliberate narrative tool."
+    }
+  ],
+
+  "post_process_notes": "Film grain in prompt. Apply very_slow_pan_right at 40-second duration (S020 timecode 9:00–9:40). Slight desaturation in post to align with dark_documentary grade — preserve warmth relative to earlier cold scenes but reduce peak saturation. Narration L027 (UNESCO 2015 inscription) plays over this image before 40-second Ma silence begins.",
+
+  "upgrade_flag_status": "STILL VALID — not a production blocker",
+  "upgrade_flag_note": "PIXTA paid dusk photography (軍艦島 夕暮れ, ~¥5K-¥15K RF) would produce real photographic depth of field and authentic Hashima atmosphere at this position. The AI image is production-ready and sufficient to complete the pipeline. Upgrade is recommended as a pre-publish enhancement, not a gate.",
+
+  "file_path": "assets/ai_images/generated/batch_3/IMG016_S020_island_dusk_wide_v2.png",
+  "image_asset_phase_complete": true,
+  "image_asset_phase_note": "All 19 non-suppressed images are now approved or registered. IMG005 is SUPPRESSED. Image asset phase is COMPLETE."
+}

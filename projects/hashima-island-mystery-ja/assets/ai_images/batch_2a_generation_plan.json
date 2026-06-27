@@ -1,0 +1,373 @@
+{
+  "project_id": "hashima-island-mystery-ja",
+  "batch_id": "BATCH_2A",
+  "batch_name": "Low-Risk READY_WITH_REWRITE — Architecture and Texture",
+  "created_at": "2026-06-27",
+  "batch_status": "APPROVED_FOR_GENERATION",
+  "source_queue": "assets/ai_images/generation_queue.json",
+
+  "batch_criteria": {
+    "safety_status_accepted": "READY_WITH_REWRITE",
+    "human_review_required": false,
+    "mine_tunnel_excluded": true,
+    "tragedy_sensitive_excluded": false,
+    "forced_labor_scenes_excluded": true,
+    "scenes_excluded_from_this_batch": ["S011a", "S012"],
+    "note_on_img010": "IMG010 (S011b — mine rock face) is included. S011b is a pure macro geological texture. It immediately follows S011a (forced labor narration) in the edit sequence but the image itself has no historical content — only rock strata. Placement in Batch 2A is correct. Human review NOT required."
+  },
+
+  "global_generation_settings": {
+    "aspect_ratio": "16:9",
+    "target_resolution": "1920x1080",
+    "output_format": "PNG",
+    "output_directory": "assets/ai_images/generated/batch_2a/",
+    "naming_convention": "{image_id}_{scene_id}_{description}.png",
+    "tool_compatibility": ["Midjourney v6.1", "DALL-E 3", "Stable Diffusion XL", "Adobe Firefly 3"],
+    "color_grade_post": "dark_documentary",
+    "saturation_post": "desaturated",
+    "film_grain_post": true
+  },
+
+  "safety_audit_summary": {
+    "total_images_audited": 5,
+    "flag_words_found": 1,
+    "flag_words_corrected": 1,
+    "negative_prompts_expanded": 4,
+    "rewrites_required": 1,
+    "images_approved": 5,
+    "images_blocked": 0,
+    "flag_word_detail": {
+      "word": "melancholic",
+      "found_in": "IMG011",
+      "replacement": "reflective",
+      "reason": "Documentary language standard — 'melancholic' codes for sorrow which can bias AI models toward heavier imagery. 'Reflective' preserves the documentary contemplative tone without grief connotation."
+    }
+  },
+
+  "batch_2a_images": [
+    {
+      "image_id": "IMG003",
+      "scene_id": "S003",
+      "section": "HOOK",
+      "timecode": "0:25–0:40",
+      "duration_seconds": 15,
+      "shot_type": "close_up",
+      "motion_direction": "static",
+      "priority": "MEDIUM",
+
+      "safety_status": "READY_WITH_REWRITE",
+      "approved_for_batch_2a": true,
+      "human_review_required": false,
+      "historically_sensitive": false,
+      "rewrite_applied": false,
+      "negative_prompt_expanded": true,
+
+      "audit_result": {
+        "flag_words_found": [],
+        "people": "PASS — no people in prompt",
+        "victims": "PASS",
+        "suffering": "PASS",
+        "forced_labor": "PASS — architecture only",
+        "ghost_horror": "PASS",
+        "gore_violence": "PASS",
+        "misleading_historical_simulation": "PASS — no historical claim",
+        "respectful_tone": "PASS",
+        "youtube_safe": "PASS"
+      },
+
+      "reason_approved_for_batch_2a": "Pure texture/architecture close-up. Weathered wooden door with peeling paint and moss. No historical sensitivity. No human elements. Hook section visual — the scene narration (L003) describes the island in general terms, not specific historical events. Lowest risk image in this batch.",
+
+      "final_prompt": "Close-up of a weathered wooden door in a ruined concrete building, paint peeling in thick layers, moss and vines creeping across the aged wood surface, texture-focused documentary close-up, muted grey-green tones, concrete wall visible on sides, haikyo aesthetic, cinematic --ar 16:9 --no people, text, logos, bright colors, modern objects, glass, watermark",
+
+      "negative_prompt": "people, text, logos, bright colors, modern objects, glass, watermark, plastic, animals",
+
+      "midjourney_command": "/imagine Close-up of a weathered wooden door in a ruined concrete building, paint peeling in thick layers, moss and vines creeping across the aged wood surface, texture-focused documentary close-up, muted grey-green tones, concrete wall visible on sides, haikyo aesthetic, cinematic --ar 16:9 --no people, text, logos, bright colors, modern objects, glass, watermark --v 6.1 --q 2",
+
+      "dalle3_prompt": "Close-up of a weathered wooden door in a ruined concrete building. Paint peeling in thick layers. Moss and vines creeping across the aged wood surface. Texture-focused documentary close-up. Muted grey-green tones. Concrete wall visible on sides. Haikyo abandoned-building aesthetic. Cinematic composition. No people, no text, no logos, no bright colors, no modern objects, no glass, no watermarks. 16:9 aspect ratio.",
+
+      "aspect_ratio": "16:9",
+      "output_filename": "IMG003_S003_wooden_door_closeup.png",
+      "output_path": "assets/ai_images/generated/batch_2a/IMG003_S003_wooden_door_closeup.png",
+
+      "post_process_notes": "Static shot (no motion). Apply standard dark_documentary desaturation grade. Add film grain. The muted grey-green palette should already be close to target — light desaturation pass only.",
+
+      "qa_checklist": [
+        { "check": "Door is primary subject and fills most of the frame", "pass": "Door is prominent" },
+        { "check": "Paint peeling texture is visible", "pass": "Visible peeling or decay present" },
+        { "check": "No people, no human forms, no shadows of people", "pass": "Zero human presence" },
+        { "check": "No modern objects", "pass": "All elements consistent with abandoned 1974-or-earlier structure" },
+        { "check": "No bright colors", "pass": "Muted grey-green palette only" },
+        { "check": "No text or logos", "pass": "Image is text-free" },
+        { "check": "No watermark", "pass": "Clean image" },
+        { "check": "16:9 deliverable", "pass": "Confirmed" }
+      ]
+    },
+
+    {
+      "image_id": "IMG010",
+      "scene_id": "S011b",
+      "section": "ACT_II",
+      "timecode": "4:40–5:00",
+      "duration_seconds": 20,
+      "shot_type": "extreme_close_up",
+      "motion_direction": "slow_zoom_in",
+      "priority": "MEDIUM",
+
+      "safety_status": "READY_WITH_REWRITE",
+      "approved_for_batch_2a": true,
+      "human_review_required": false,
+      "historically_sensitive": false,
+      "rewrite_applied": false,
+      "negative_prompt_expanded": true,
+
+      "placement_context": "S011b immediately follows S011a (forced labor narration) in edit sequence. The scene purpose is emotional texture variation — a geological abstraction after heavy historical content. The image itself has NO historical content. It is pure rock texture macro. This placement makes the image editorially appropriate, not historically problematic.",
+
+      "also_serves_as_fallback": true,
+      "fallback_for": "IMG009 (S011a mine tunnel) — if IMG009 is rejected 3 times under FIX-M1 gate, IMG010 replaces it. Generate regardless of IMG009 outcome.",
+
+      "audit_result": {
+        "flag_words_found": [],
+        "people": "PASS — 'no people' in both positive and negative",
+        "victims": "PASS — pure geology",
+        "suffering": "PASS — no human presence possible in geological macro",
+        "forced_labor": "PASS — coal mine geology is not forced labor imagery. Rock strata ≠ suffering.",
+        "ghost_horror": "PASS",
+        "gore_violence": "PASS",
+        "misleading_historical_simulation": "PASS — geological texture makes no historical claim",
+        "respectful_tone": "PASS",
+        "youtube_safe": "PASS"
+      },
+
+      "reason_approved_for_batch_2a": "Extreme close-up of mine rock face — geological macro texture only. No people, no spatial context, no human presence. 'Dark and austere' is factual tone for documentary rock texture. The mine geology context is handled by describing strata and mineral deposits — these are scientific terms, not historical claims. The negative prompt is expanded to include silhouettes, shadows of persons, chains, shackles to ensure no incidental human-coded imagery appears in a dark mine context.",
+
+      "final_prompt": "Extreme macro close-up of rough hewn rock tunnel wall surface, jagged crevices in dark coal mine rock, geological strata visible, sparse dim light raking across the surface from one side, deep shadows in crevices, mineral deposits and sediment layers, textural abstract beauty, near-abstract composition, dark and austere, no text, no people --ar 16:9 --no people, text, modern equipment, tools, human presence, silhouettes, shadows of persons, chains, shackles, watermark, logos",
+
+      "negative_prompt": "people, text, modern equipment, tools, human presence, silhouettes, shadows of persons, chains, shackles, watermark, logos, bright colors, faces",
+
+      "midjourney_command": "/imagine Extreme macro close-up of rough hewn rock tunnel wall surface, jagged crevices in dark coal mine rock, geological strata visible, sparse dim light raking across the surface from one side, deep shadows in crevices, mineral deposits and sediment layers, textural abstract beauty, near-abstract composition, dark and austere, no text, no people --ar 16:9 --no people, text, modern equipment, tools, human presence, silhouettes, shadows of persons, chains, shackles, watermark, logos --v 6.1 --q 2",
+
+      "dalle3_prompt": "Extreme macro close-up of rough hewn rock tunnel wall surface. Jagged crevices in dark coal mine rock. Geological strata visible. Sparse dim light raking across the surface from one side. Deep shadows in crevices. Mineral deposits and sediment layers. Textural abstract beauty. Near-abstract composition. Dark and austere. No text, no people, no human forms or silhouettes, no tools, no chains, no modern equipment, no watermarks. 16:9 aspect ratio.",
+
+      "aspect_ratio": "16:9",
+      "output_filename": "IMG010_S011b_mine_rock_texture.png",
+      "output_path": "assets/ai_images/generated/batch_2a/IMG010_S011b_mine_rock_texture.png",
+
+      "post_process_notes": "Apply slow_zoom_in in post (20-second duration, very slow). Dark base tone — minimal additional processing needed. Add film grain. Ensure output is abstract enough that no human associations arise from shadow patterns.",
+
+      "qa_checklist": [
+        { "check": "Image is purely rock/geological texture — no identifiable space context", "pass": "Only rock surface visible" },
+        { "check": "No human forms, shadows, or silhouettes of any kind", "pass": "Zero human-coded shapes" },
+        { "check": "No tools, chains, shackles, or human-made objects other than the rock itself", "pass": "Geology only" },
+        { "check": "No text", "pass": "Image is text-free" },
+        { "check": "Light direction produces texture, not sinister atmosphere", "pass": "Light reads as geological — not horror" },
+        { "check": "No watermark or logos", "pass": "Clean image" },
+        { "check": "Shadow patterns in crevices do not read as human forms", "pass": "Shadows are geological only" },
+        { "check": "16:9 deliverable", "pass": "Confirmed" }
+      ]
+    },
+
+    {
+      "image_id": "IMG011",
+      "scene_id": "S013",
+      "section": "ACT_II",
+      "timecode": "5:30–6:00",
+      "duration_seconds": 30,
+      "shot_type": "wide_shot",
+      "motion_direction": "slow_pan_left",
+      "priority": "MEDIUM",
+
+      "safety_status": "READY_WITH_REWRITE",
+      "approved_for_batch_2a": true,
+      "human_review_required": false,
+      "historically_sensitive": false,
+      "rewrite_applied": true,
+      "negative_prompt_expanded": true,
+
+      "rewrite_detail": {
+        "original_phrase": "beautiful and melancholic",
+        "replacement_phrase": "beautiful and reflective",
+        "reason": "Flag word: 'melancholic' adds sorrow-bias to an architectural image. 'Reflective' preserves the contemplative documentary tone without conditioning AI toward heavier grief imagery. The UNESCO tension (S013 scene purpose) is better served by a still, factual beauty than sorrow-coded atmosphere."
+      },
+
+      "audit_result": {
+        "flag_words_found": ["melancholic — REPLACED with 'reflective'"],
+        "people": "PASS",
+        "victims": "PASS",
+        "suffering": "PASS",
+        "forced_labor": "PASS — abandoned architecture, no human element",
+        "ghost_horror": "PASS",
+        "gore_violence": "PASS",
+        "misleading_historical_simulation": "PASS — wide ruin shot makes no specific historical claim",
+        "respectful_tone": "PASS — reflective atmosphere is appropriate for UNESCO heritage tension scene",
+        "youtube_safe": "PASS"
+      },
+
+      "reason_approved_for_batch_2a": "Wide abandoned ruin with dramatic light shafts. Metaphor for the UNESCO heritage tension (the beauty of the ruins versus the unresolved history). No human elements. The negative prompt explicitly excludes the UNESCO plaque to prevent AI from generating fake heritage signage. 'Reflective' replaces 'melancholic' for safer documentary tone. Visual duplication note: IMG014 (S017) also uses light beams — vary composition angle or beam count between the two to avoid identical shots.",
+
+      "final_prompt": "Wide view of abandoned concrete ruins, dramatic shafts of natural light breaking through collapsed ceiling, dust particles visible in light beams, suggestion of former grand scale now in decay, haikyo aesthetic, chiaroscuro lighting, beautiful and reflective, cinematic, high contrast, dark surroundings with brilliant light shafts, film grain --ar 16:9 --no people, furniture, text, UNESCO plaque, modern signage, watermark, logos",
+
+      "negative_prompt": "people, furniture, text, UNESCO plaque, modern signage, watermark, logos, animals, faces",
+
+      "midjourney_command": "/imagine Wide view of abandoned concrete ruins, dramatic shafts of natural light breaking through collapsed ceiling, dust particles visible in light beams, suggestion of former grand scale now in decay, haikyo aesthetic, chiaroscuro lighting, beautiful and reflective, cinematic, high contrast, dark surroundings with brilliant light shafts, film grain --ar 16:9 --no people, furniture, text, UNESCO plaque, modern signage, watermark, logos --v 6.1 --q 2",
+
+      "dalle3_prompt": "Wide view of abandoned concrete ruins. Dramatic shafts of natural light breaking through a collapsed ceiling. Dust particles visible in the light beams. Suggestion of former grand scale now in decay. Haikyo abandoned-building aesthetic. Chiaroscuro lighting. Beautiful and reflective atmosphere. Cinematic. High contrast. Dark surroundings with brilliant light shafts. Film grain. No people, no furniture, no text, no UNESCO plaque, no modern signage, no watermarks, no logos. 16:9 aspect ratio.",
+
+      "aspect_ratio": "16:9",
+      "output_filename": "IMG011_S013_heritage_light_ruins.png",
+      "output_path": "assets/ai_images/generated/batch_2a/IMG011_S013_heritage_light_ruins.png",
+
+      "post_process_notes": "Apply slow_pan_left in post (30-second duration). Add film grain. Image should already have high contrast — apply minimal additional grading. If light beams are too brilliant/overexposed: reduce highlights. Compare against IMG014 (S017) output to ensure visual variety between the two light-beam scenes.",
+
+      "qa_checklist": [
+        { "check": "Wide architectural ruins are primary subject", "pass": "Wide interior or exterior ruin visible" },
+        { "check": "Light shaft effect is present and prominent", "pass": "Visible god-rays or light beams in dust" },
+        { "check": "No people or human forms", "pass": "Zero human presence" },
+        { "check": "No UNESCO plaque, signage, or text", "pass": "Image is text-free" },
+        { "check": "No furniture (chairs, tables) that would look like a staged set", "pass": "Empty structural ruins only" },
+        { "check": "No watermark or logos", "pass": "Clean image" },
+        { "check": "Composition is wide enough to show former-grandeur scale", "pass": "Space reads as large formerly-significant structure" },
+        { "check": "Does NOT duplicate IMG014 exactly (check after IMG014 is also generated)", "pass": "Vary angle or beam count" },
+        { "check": "16:9 deliverable", "pass": "Confirmed" }
+      ]
+    },
+
+    {
+      "image_id": "IMG012",
+      "scene_id": "S015",
+      "section": "ACT_III",
+      "timecode": "6:30–7:00",
+      "duration_seconds": 30,
+      "shot_type": "medium_shot",
+      "motion_direction": "slow_zoom_out",
+      "priority": "MEDIUM",
+
+      "safety_status": "READY_WITH_REWRITE",
+      "approved_for_batch_2a": true,
+      "human_review_required": false,
+      "historically_sensitive": false,
+      "rewrite_applied": false,
+      "negative_prompt_expanded": true,
+
+      "note_on_motion": "'slow zoom out' removed from positive prompt — this is a post-production instruction, not a generation parameter. Applied in post_process_notes instead.",
+
+      "audit_result": {
+        "flag_words_found": [],
+        "people": "PASS",
+        "victims": "PASS",
+        "suffering": "PASS — 'stillness after industrial activity ceased' is factual (mine closure 1974)",
+        "forced_labor": "PASS — abandoned dock, no human reference",
+        "ghost_horror": "PASS",
+        "gore_violence": "PASS",
+        "misleading_historical_simulation": "PASS — industrial dock is period-neutral",
+        "respectful_tone": "PASS — 'desolate tranquil' and 'stillness' are factual documentary descriptions",
+        "youtube_safe": "PASS"
+      },
+
+      "reason_approved_for_batch_2a": "Empty abandoned dock with calm water. Pure industrial architecture and seascape. No historical reference to specific people or events. 'Stillness after industrial activity ceased' accurately describes the mine closure (1974) without identifying victims. 'Desolate tranquil' is acceptable documentary language — not on the red flag list, and appropriate for a harbour/dock scene. No rewrite needed. Negative prompt expanded to include watermark and logos.",
+
+      "final_prompt": "Empty abandoned dock or pier extending over calm grey water, rusted metal railing along the side, crumbling concrete edge and bollards, overcast sky, grey-green water, no boats, desolate tranquil atmosphere, stillness after industrial activity ceased, muted color palette, cinematic medium shot, film grain --ar 16:9 --no people, text, bright sunlight, modern elements, boats, vehicles, watermark, logos",
+
+      "negative_prompt": "people, text, bright sunlight, modern elements, boats, vehicles, watermark, logos, animals, faces, bright colors",
+
+      "midjourney_command": "/imagine Empty abandoned dock or pier extending over calm grey water, rusted metal railing along the side, crumbling concrete edge and bollards, overcast sky, grey-green water, no boats, desolate tranquil atmosphere, stillness after industrial activity ceased, muted color palette, cinematic medium shot, film grain --ar 16:9 --no people, text, bright sunlight, modern elements, boats, vehicles, watermark, logos --v 6.1 --q 2",
+
+      "dalle3_prompt": "Empty abandoned dock or pier extending over calm grey water. Rusted metal railing along the side. Crumbling concrete edge and bollards. Overcast sky. Grey-green water. No boats. Desolate tranquil atmosphere. Stillness after industrial activity ceased. Muted color palette. Cinematic medium shot. Film grain. No people, no text, no bright sunlight, no modern elements, no boats, no vehicles, no watermarks, no logos. 16:9 aspect ratio.",
+
+      "aspect_ratio": "16:9",
+      "output_filename": "IMG012_S015_abandoned_dock.png",
+      "output_path": "assets/ai_images/generated/batch_2a/IMG012_S015_abandoned_dock.png",
+
+      "post_process_notes": "Apply slow_zoom_out in post (30-second duration — begin closer on dock railing, pull back to reveal the full dock and water). Desaturate to standard dark_documentary palette. The overcast grey-green palette should already be near target — light processing only. Add film grain.",
+
+      "qa_checklist": [
+        { "check": "Dock or pier is primary subject extending into water", "pass": "Dock/pier structure clearly visible" },
+        { "check": "No boats or vehicles in water", "pass": "Open water only" },
+        { "check": "No people or human forms", "pass": "Zero human presence" },
+        { "check": "Water is calm and grey-green (not stormy or tropical)", "pass": "Calm overcast water tone" },
+        { "check": "No bright sunlight or saturated colors", "pass": "Overcast/muted palette" },
+        { "check": "Rusted metal or crumbling concrete visible", "pass": "Industrial decay present" },
+        { "check": "No text or logos or watermark", "pass": "Clean image" },
+        { "check": "16:9 deliverable", "pass": "Confirmed" }
+      ]
+    },
+
+    {
+      "image_id": "IMG013",
+      "scene_id": "S016",
+      "section": "ACT_III",
+      "timecode": "7:00–7:30",
+      "duration_seconds": 30,
+      "shot_type": "close_up",
+      "motion_direction": "slow_zoom_in",
+      "priority": "HIGH",
+
+      "safety_status": "READY_WITH_REWRITE",
+      "approved_for_batch_2a": true,
+      "human_review_required": false,
+      "historically_sensitive": true,
+      "historical_sensitivity_note": "Scene depicts personal belongings of the 5,000+ civilian residents of Hashima who evacuated in 1974. This is NOT forced labor imagery — it documents the civilian community. The child's shoe and items are documented in historical accounts of the evacuation. Respectful documentary treatment confirmed.",
+      "rewrite_applied": false,
+      "negative_prompt_expanded": true,
+
+      "critical_output_qa_gate": true,
+      "critical_output_qa_instruction": "After generation: inspect the 'old photograph' prop in the image. If ANY human face is visible or partially visible in the photograph (even fictional, even blurred): REJECT immediately and regenerate. The protection phrase 'too damaged and faded to show any identifiable features' is already in the positive prompt. Negative prompt has been expanded to cover this. Max 3 regeneration attempts. If 3 attempts all produce a visible face in the photograph: remove the photograph prop from the prompt and regenerate with shoe + can only.",
+
+      "audit_result": {
+        "flag_words_found": [],
+        "people": "PASS — no people; only abandoned objects",
+        "victims": "PASS — objects document civilian residents, not victims of violence",
+        "suffering": "PASS — 'mood of memory and hasty departure' refers to 1974 evacuation, not suffering",
+        "forced_labor": "PASS — S016 is ACT_III (7:00-7:30), well after the forced labor narration section. Personal items belong to the civilian community era.",
+        "ghost_horror": "PASS — 'mood of memory' is documentary, not supernatural",
+        "gore_violence": "PASS",
+        "misleading_historical_simulation": "PASS_WITH_NOTE — the child's shoe and items are symbolic documentary props representing documented historical reality. The faded photograph must not simulate a real person. The protection language is in place.",
+        "respectful_tone": "PASS — these items represent the community, not victims. Tone is memorial, not exploitative.",
+        "youtube_safe": "PASS"
+      },
+
+      "reason_approved_for_batch_2a": "Close-up still life of abandoned personal items representing the civilian residents of Hashima (evacuated 1974). The child's shoe, faded photograph, and rusted can are documented elements of the historical record. S016 scene (ACT_III, 7:00-7:30) follows the mine closure narration — this is the 'community that lived here' moment, not a forced labor reference. The prompt contains strong built-in protection for the photograph prop ('too damaged and faded to show any identifiable features'). Negative prompt expanded to cover faces in photograph prop specifically. Critical output QA gate required.",
+
+      "final_prompt": "Abandoned personal belongings left behind in ruins, close-up still life: a weathered child's shoe with worn leather, a crumbling old photograph lying face-up but too damaged and faded to show any identifiable features, a rusted empty metal can on dusty concrete surface, dim atmospheric single light source from one side, warm amber tones against dark concrete background, mood of memory and hasty departure, still life photography aesthetic, symbolic --ar 16:9 --no people, faces, identifiable faces in photographs, human faces visible in photograph prop, recognizable features, legible photograph content, legible text, modern objects, logos, watermark, bright colors",
+
+      "negative_prompt": "people, faces, identifiable faces in photographs, human faces visible in photograph prop, recognizable features, legible photograph content, legible text, modern objects, logos, watermark, bright colors",
+
+      "midjourney_command": "/imagine Abandoned personal belongings left behind in ruins, close-up still life: a weathered child's shoe with worn leather, a crumbling old photograph lying face-up but too damaged and faded to show any identifiable features, a rusted empty metal can on dusty concrete surface, dim atmospheric single light source from one side, warm amber tones against dark concrete background, mood of memory and hasty departure, still life photography aesthetic, symbolic --ar 16:9 --no people, faces, identifiable faces in photographs, human faces visible in photograph prop, recognizable features, legible photograph content, legible text, modern objects, logos, watermark, bright colors --v 6.1 --q 2",
+
+      "dalle3_prompt": "Abandoned personal belongings left behind in ruins. Close-up still life composition. A weathered child's shoe with worn leather. A crumbling old photograph lying face-up but too damaged and faded to show any identifiable features — the photograph surface is completely obscured by damage and time. A rusted empty metal can on dusty concrete surface. Dim atmospheric single light source from one side. Warm amber tones against dark concrete background. Mood of memory. Still life photography aesthetic. Symbolic composition. No people visible. No human faces in the photograph prop — the photograph must be completely unidentifiable, just aged paper. No legible text, no modern objects, no logos, no watermarks, no bright colors. 16:9 aspect ratio.",
+
+      "aspect_ratio": "16:9",
+      "output_filename": "IMG013_S016_personal_items.png",
+      "output_path": "assets/ai_images/generated/batch_2a/IMG013_S016_personal_items.png",
+
+      "post_process_notes": "Apply slow_zoom_in in post (30-second duration, very slow push toward the child's shoe). Desaturate slightly — the warm amber tones should be retained more than other images (this is an intentionally warmer scene for emotional contrast). Add minimal film grain. If output lacks a photograph prop: acceptable — shoe + can alone is sufficient if the photograph cannot be generated safely.",
+
+      "qa_checklist": [
+        { "check": "CRITICAL: No human face visible in the 'old photograph' prop — must be completely unidentifiable", "pass": "Photograph is damaged/faded to the point of zero facial recognition", "rejection_trigger": "ANY visible face, even partial or blurred — REJECT immediately" },
+        { "check": "Child's shoe is present as primary foreground element", "pass": "Shoe visible in frame" },
+        { "check": "Rusted metal can present", "pass": "Can visible" },
+        { "check": "No people or human forms outside the photograph prop", "pass": "Zero human presence in scene" },
+        { "check": "No legible text anywhere in image", "pass": "Text-free" },
+        { "check": "No modern objects", "pass": "All items consistent with pre-1975 era" },
+        { "check": "No watermark or logos", "pass": "Clean image" },
+        { "check": "Warm amber / dark concrete palette (not cold)", "pass": "Warm amber tones present" },
+        { "check": "16:9 deliverable", "pass": "Confirmed" }
+      ],
+
+      "fallback_prompt_if_photograph_fails_3x": "Abandoned personal belongings left behind in ruins, close-up still life: a weathered child's shoe with worn leather, a rusted empty metal can on dusty concrete surface, dim atmospheric single light source from one side, warm amber tones against dark concrete background, mood of memory, still life photography aesthetic, symbolic --ar 16:9 --no people, faces, text, modern objects, logos, watermark, bright colors"
+    }
+  ],
+
+  "batch_2a_summary": {
+    "approved_image_count": 5,
+    "approved_image_ids": ["IMG003", "IMG010", "IMG011", "IMG012", "IMG013"],
+    "all_safety_checks_passed": true,
+    "flag_words_corrected": 1,
+    "negative_prompts_expanded": 4,
+    "critical_qa_gates": 1,
+    "critical_qa_gate_images": ["IMG013"],
+    "generation_may_begin": true,
+    "generation_order_recommendation": "Generate in any order. IMG013 should be reviewed immediately upon output before others — its QA gate is the most critical.",
+    "output_directory": "assets/ai_images/generated/batch_2a/",
+    "next_batch": "BATCH_2B — IMG014, IMG015, IMG017, IMG019 (remaining READY_WITH_REWRITE images)"
+  }
+}

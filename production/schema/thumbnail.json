@@ -1,0 +1,267 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://ai-youtube-studio/production/schemas/thumbnail.json",
+  "title": "Thumbnail",
+  "description": "Defines thumbnail concepts, production specifications, and approval status. Multiple concepts may be defined for A/B testing. Exactly one concept must be selected and marked status=approved before publishing. Background images reference image_plan.json by image_id.",
+  "type": "object",
+  "required": [
+    "project_id",
+    "schema_version",
+    "platform",
+    "dimensions",
+    "concepts",
+    "selected_concept_id",
+    "created_at"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "project_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9-]{2,62}[a-z0-9]$"
+    },
+    "schema_version": {
+      "type": "string",
+      "const": "1.0"
+    },
+    "platform": {
+      "type": "string",
+      "enum": ["youtube", "tiktok", "instagram_reel", "multi"],
+      "default": "youtube"
+    },
+    "dimensions": {
+      "type": "object",
+      "required": ["width_px", "height_px", "aspect_ratio"],
+      "properties": {
+        "width_px": { "type": "integer", "default": 1280 },
+        "height_px": { "type": "integer", "default": 720 },
+        "aspect_ratio": { "type": "string", "default": "16:9" },
+        "max_file_size_kb": { "type": "integer", "default": 2048 }
+      }
+    },
+    "concepts": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 5,
+      "items": {
+        "$ref": "#/definitions/thumbnail_concept"
+      }
+    },
+    "selected_concept_id": {
+      "type": ["string", "null"],
+      "description": "concept_id of the approved thumbnail. Must match a concept with status=approved. Null until a concept is approved.",
+      "examples": ["THUMB_A", null]
+    },
+    "ab_test_enabled": {
+      "type": "boolean",
+      "default": false,
+      "description": "If true, multiple concepts may be deployed for A/B testing."
+    },
+    "production_notes": {
+      "type": ["string", "null"]
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "definitions": {
+    "thumbnail_concept": {
+      "type": "object",
+      "required": [
+        "concept_id",
+        "recommended",
+        "text_primary",
+        "mood",
+        "status"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "concept_id": {
+          "type": "string",
+          "pattern": "^THUMB_[A-Z]$",
+          "examples": ["THUMB_A", "THUMB_B", "THUMB_C"]
+        },
+        "recommended": {
+          "type": "boolean",
+          "description": "Exactly one concept should have recommended=true."
+        },
+        "background": {
+          "$ref": "#/definitions/thumbnail_background"
+        },
+        "text_primary": {
+          "type": "string",
+          "maxLength": 30,
+          "description": "Main text on thumbnail. Short and high-impact. This is the hook.",
+          "examples": ["5,259人が消えた", "真実の歴史"]
+        },
+        "text_secondary": {
+          "type": ["string", "null"],
+          "maxLength": 40,
+          "description": "Subtitle text on thumbnail.",
+          "examples": ["軍艦島の真実"]
+        },
+        "text_color_hex": {
+          "type": "string",
+          "pattern": "^#[0-9A-Fa-f]{6}$",
+          "default": "#FFFFFF"
+        },
+        "text_accent_color_hex": {
+          "type": ["string", "null"],
+          "pattern": "^#[0-9A-Fa-f]{6}$",
+          "description": "Accent color for highlights, outlines, or secondary text."
+        },
+        "overlay_gradient": {
+          "type": ["string", "null"],
+          "description": "CSS-style gradient for background overlay.",
+          "examples": ["linear-gradient(to bottom, rgba(0,0,0,0) 30%, rgba(0,0,0,0.7) 100%)"]
+        },
+        "mood": {
+          "type": "string",
+          "enum": [
+            "dark_cinematic",
+            "warm_nostalgic",
+            "cold_documentary",
+            "high_contrast_drama",
+            "before_after_split",
+            "minimalist"
+          ]
+        },
+        "font_style": {
+          "type": ["string", "null"],
+          "description": "Font family recommendation.",
+          "examples": ["bold sans-serif", "dramatic serif", "condensed gothic"]
+        },
+        "respect_check": {
+          "type": "boolean",
+          "description": "Has this thumbnail been reviewed for potential disrespect to historical victims or sensitive communities?",
+          "default": false
+        },
+        "respect_check_notes": {
+          "type": ["string", "null"],
+          "description": "Notes from the respect review."
+        },
+        "status": {
+          "type": "string",
+          "enum": ["concept", "in_production", "review_pending", "approved", "rejected"],
+          "default": "concept"
+        },
+        "file_path": {
+          "type": ["string", "null"],
+          "description": "Relative path to the produced thumbnail file."
+        },
+        "ctr_score": {
+          "type": ["number", "null"],
+          "minimum": 0,
+          "maximum": 100,
+          "description": "Click-through rate score from A/B test. Null until tested."
+        }
+      }
+    },
+    "thumbnail_background": {
+      "type": "object",
+      "required": ["source_type"],
+      "properties": {
+        "source_type": {
+          "type": "string",
+          "enum": ["image_plan_ref", "ai_generate", "stock_licensed", "split_screen"]
+        },
+        "image_id_ref": {
+          "type": ["string", "null"],
+          "pattern": "^IMG[0-9]{3}[a-z]?$",
+          "description": "Reference to image_plan.json. Used when source_type=image_plan_ref."
+        },
+        "ai_prompt": {
+          "type": ["string", "null"],
+          "description": "AI prompt for thumbnail-specific generation. Used when source_type=ai_generate."
+        },
+        "split_screen_config": {
+          "type": ["object", "null"],
+          "description": "Used when source_type=split_screen.",
+          "properties": {
+            "left_image_id_ref": { "type": ["string", "null"] },
+            "right_image_id_ref": { "type": ["string", "null"] },
+            "left_label": { "type": ["string", "null"] },
+            "right_label": { "type": ["string", "null"] },
+            "left_tone": { "type": ["string", "null"] },
+            "right_tone": { "type": ["string", "null"] }
+          }
+        }
+      }
+    }
+  },
+  "examples": [
+    {
+      "project_id": "hashima-island-mystery-ja",
+      "schema_version": "1.0",
+      "platform": "youtube",
+      "dimensions": {
+        "width_px": 1280,
+        "height_px": 720,
+        "aspect_ratio": "16:9",
+        "max_file_size_kb": 2048
+      },
+      "concepts": [
+        {
+          "concept_id": "THUMB_A",
+          "recommended": true,
+          "background": {
+            "source_type": "image_plan_ref",
+            "image_id_ref": "IMG001",
+            "ai_prompt": null,
+            "split_screen_config": null
+          },
+          "text_primary": "5,259人が消えた",
+          "text_secondary": "軍艦島の真実",
+          "text_color_hex": "#FFFFFF",
+          "text_accent_color_hex": "#FF3333",
+          "overlay_gradient": "linear-gradient(to bottom, rgba(0,0,0,0) 40%, rgba(0,0,0,0.6) 100%)",
+          "mood": "dark_cinematic",
+          "font_style": "bold condensed sans-serif",
+          "respect_check": true,
+          "respect_check_notes": "「消えた」refers to 1974 economic closure. Does not imply forced labor disappearance. Acceptable.",
+          "status": "concept",
+          "file_path": null,
+          "ctr_score": null
+        },
+        {
+          "concept_id": "THUMB_C",
+          "recommended": false,
+          "background": {
+            "source_type": "split_screen",
+            "image_id_ref": null,
+            "ai_prompt": null,
+            "split_screen_config": {
+              "left_image_id_ref": "IMG005",
+              "right_image_id_ref": "IMG001",
+              "left_label": "かつて",
+              "right_label": "現在",
+              "left_tone": "warm sepia",
+              "right_tone": "cold grey"
+            }
+          },
+          "text_primary": "誰が消えたのか",
+          "text_secondary": "端島・軍艦島",
+          "text_color_hex": "#FFFFFF",
+          "text_accent_color_hex": null,
+          "overlay_gradient": null,
+          "mood": "before_after_split",
+          "font_style": "bold sans-serif",
+          "respect_check": true,
+          "respect_check_notes": "「誰が消えたのか」refers to 1974 closure. Borderline mystery framing but content clarifies within 60s. Acceptable.",
+          "status": "concept",
+          "file_path": null,
+          "ctr_score": null
+        }
+      ],
+      "selected_concept_id": null,
+      "ab_test_enabled": false,
+      "production_notes": "Option A recommended for CTR. Option C for before/after contrast. Option B (廃墟) deleted — too generic.",
+      "created_at": "2026-06-27T07:00:00Z",
+      "updated_at": "2026-06-27T07:00:00Z"
+    }
+  ]
+}

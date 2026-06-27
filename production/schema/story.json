@@ -1,0 +1,365 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://ai-youtube-studio/production/schemas/story.json",
+  "title": "Story",
+  "description": "Combined document for Stage 3 (Story Outline) and Stage 4 (Script). The outline section is written first; the script section is populated in Stage 4. Both sections reference fact_ids from research.json. The script is the primary output of the creative pipeline — all downstream visual and voice assets are derived from it.",
+  "type": "object",
+  "required": [
+    "project_id",
+    "schema_version",
+    "language",
+    "outline",
+    "script",
+    "template_compliance",
+    "created_at"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "project_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9-]{2,62}[a-z0-9]$"
+    },
+    "schema_version": {
+      "type": "string",
+      "const": "1.0"
+    },
+    "language": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string",
+      "maxLength": 200,
+      "description": "Video title in production language. May differ from SEO title."
+    },
+    "outline": {
+      "$ref": "#/definitions/outline"
+    },
+    "script": {
+      "$ref": "#/definitions/script"
+    },
+    "template_compliance": {
+      "$ref": "#/definitions/template_compliance"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "definitions": {
+    "outline": {
+      "type": "object",
+      "required": ["sections", "beats_required", "beats_present"],
+      "properties": {
+        "sections": {
+          "type": "array",
+          "minItems": 3,
+          "items": {
+            "$ref": "#/definitions/outline_section"
+          }
+        },
+        "beats_required": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Beats mandated by the template. Must all appear in beats_present.",
+          "examples": [["Cultural Context Beat", "Legend vs Reality Beat", "Japanese Silence Beat", "Ma Beat"]]
+        },
+        "beats_present": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Beats confirmed present in the outline. Must be a superset of beats_required."
+        },
+        "word_distribution": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "description": "Target word count per section. Keys are section_id values.",
+          "examples": [{ "HOOK": 80, "ACT_I": 220, "ACT_II": 280, "ACT_III": 260, "ACT_IV": 220, "OUTRO": 140 }]
+        }
+      }
+    },
+    "outline_section": {
+      "type": "object",
+      "required": ["section_id", "section_name", "role", "beats", "tone"],
+      "properties": {
+        "section_id": {
+          "type": "string",
+          "enum": ["HOOK", "ACT_I", "ACT_II", "ACT_III", "ACT_IV", "ACT_V", "OUTRO"],
+          "description": "Canonical section identifier."
+        },
+        "section_name": {
+          "type": "string",
+          "description": "Display name in target language."
+        },
+        "timecode_start": {
+          "type": "string",
+          "pattern": "^[0-9]{1,2}:[0-9]{2}$"
+        },
+        "timecode_end": {
+          "type": "string",
+          "pattern": "^[0-9]{1,2}:[0-9]{2}$"
+        },
+        "role": {
+          "type": "string",
+          "description": "Purpose of this section in the narrative."
+        },
+        "beats": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["beat_name", "description"],
+            "properties": {
+              "beat_name": { "type": "string" },
+              "description": { "type": "string" },
+              "fact_ids": {
+                "type": "array",
+                "items": { "type": "string", "pattern": "^VF[0-9]{1,3}$" }
+              }
+            }
+          }
+        },
+        "tone": {
+          "type": "string",
+          "enum": ["very_slow", "slow", "normal", "elevated", "climactic"],
+          "description": "Pacing instruction for this section."
+        },
+        "pauses_budget": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Number of [PAUSE:2s] markers allocated to this section."
+        }
+      }
+    },
+    "script": {
+      "type": "object",
+      "required": ["word_count", "target_word_count", "register", "sections", "pause_count"],
+      "properties": {
+        "word_count": {
+          "type": "integer",
+          "minimum": 50,
+          "description": "Actual word count of narration text only. Must be within ±5% of target_word_count."
+        },
+        "target_word_count": {
+          "type": "integer",
+          "description": "From project.target_word_count."
+        },
+        "word_count_delta": {
+          "type": "integer",
+          "description": "word_count minus target_word_count. Acceptable range: ±60."
+        },
+        "register": {
+          "type": "string",
+          "enum": ["desu_masu", "da_de_aru", "neutral", "informal"],
+          "description": "Grammatical register of narration. ja projects must use desu_masu."
+        },
+        "hook_word_count": {
+          "type": "integer",
+          "maximum": 65,
+          "description": "Word count of HOOK section only. Must be ≤ 65 words. No greeting or self-introduction."
+        },
+        "pause_count": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Total number of [PAUSE:2s] markers in the script."
+        },
+        "ends_with_question": {
+          "type": "boolean",
+          "description": "Required true for japanese_mystery and mystery niche."
+        },
+        "sections": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/script_section"
+          }
+        }
+      }
+    },
+    "script_section": {
+      "type": "object",
+      "required": ["section_id", "lines"],
+      "properties": {
+        "section_id": {
+          "type": "string",
+          "enum": ["HOOK", "ACT_I", "ACT_II", "ACT_III", "ACT_IV", "ACT_V", "OUTRO"]
+        },
+        "lines": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/script_line"
+          }
+        }
+      }
+    },
+    "script_line": {
+      "type": "object",
+      "required": ["line_id", "type", "content"],
+      "properties": {
+        "line_id": {
+          "type": "string",
+          "pattern": "^L[0-9]{3}$",
+          "description": "Unique within script. Format: L001, L002..."
+        },
+        "type": {
+          "type": "string",
+          "enum": ["narration", "pause", "broll_cue", "music_cue", "sfx_cue", "title_card"],
+          "description": "Only type=narration lines count toward word_count."
+        },
+        "content": {
+          "type": "string",
+          "description": "Text of the line. For non-narration types, this is a direction string."
+        },
+        "pacing": {
+          "type": ["string", "null"],
+          "enum": ["very_slow", "slow", "normal", null],
+          "description": "Overrides section default pacing for this specific line."
+        },
+        "pause_duration_seconds": {
+          "type": ["number", "null"],
+          "description": "For type=pause only. Duration in seconds."
+        },
+        "fact_ids": {
+          "type": "array",
+          "items": { "type": "string", "pattern": "^VF[0-9]{1,3}$" },
+          "description": "Which research facts this line uses. Empty array if no direct fact reference."
+        },
+        "off_limits_checked": {
+          "type": "boolean",
+          "default": false,
+          "description": "True if this narration line has been checked against story_bible off_limits_expressions."
+        }
+      }
+    },
+    "template_compliance": {
+      "type": "object",
+      "required": ["template", "required_beats_count", "present_beats_count", "pause_target", "pause_actual", "status"],
+      "properties": {
+        "template": {
+          "type": "string",
+          "description": "Template filename that was applied."
+        },
+        "required_beats_count": {
+          "type": "integer"
+        },
+        "present_beats_count": {
+          "type": "integer"
+        },
+        "pause_target": {
+          "type": "integer",
+          "description": "Number of [PAUSE:2s] required by template."
+        },
+        "pause_actual": {
+          "type": "integer"
+        },
+        "hook_no_greeting": {
+          "type": "boolean",
+          "description": "True = hook contains no greeting or self-introduction."
+        },
+        "ending_type": {
+          "type": "string",
+          "enum": ["open_question", "reflection", "call_to_action", "narrative_close"],
+          "description": "How the outro ends."
+        },
+        "status": {
+          "type": "string",
+          "enum": ["PASS", "FAIL"],
+          "description": "PASS only if all required beats are present AND pause_actual >= pause_target."
+        },
+        "failures": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "List of specific compliance failures. Empty if status=PASS."
+        }
+      }
+    }
+  },
+  "examples": [
+    {
+      "project_id": "hashima-island-mystery-ja",
+      "schema_version": "1.0",
+      "language": "ja",
+      "title": "端島 / 軍艦島：消えた都市の謎",
+      "outline": {
+        "sections": [
+          {
+            "section_id": "HOOK",
+            "section_name": "掴み",
+            "timecode_start": "0:00",
+            "timecode_end": "1:00",
+            "role": "視聴者を即座に引き込む。説明なし。映像と言葉で感覚を与える。",
+            "beats": [
+              {
+                "beat_name": "Opening image",
+                "description": "廃墟の映像と5,259人という数字の提示",
+                "fact_ids": ["VF5"]
+              }
+            ],
+            "tone": "very_slow",
+            "pauses_budget": 1
+          }
+        ],
+        "beats_required": ["Cultural Context Beat", "Legend vs Reality Beat", "Japanese Silence Beat", "Ma Beat"],
+        "beats_present": ["Cultural Context Beat", "Legend vs Reality Beat", "Japanese Silence Beat", "Ma Beat"],
+        "word_distribution": {
+          "HOOK": 80,
+          "ACT_I": 220,
+          "ACT_II": 280,
+          "ACT_III": 260,
+          "ACT_IV": 198,
+          "OUTRO": 115
+        }
+      },
+      "script": {
+        "word_count": 1201,
+        "target_word_count": 1201,
+        "word_count_delta": 0,
+        "register": "desu_masu",
+        "hook_word_count": 55,
+        "pause_count": 5,
+        "ends_with_question": true,
+        "sections": [
+          {
+            "section_id": "HOOK",
+            "lines": [
+              {
+                "line_id": "L001",
+                "type": "narration",
+                "content": "かつて、ここに5,259人が暮らしていました。",
+                "pacing": "slow",
+                "pause_duration_seconds": null,
+                "fact_ids": ["VF5"],
+                "off_limits_checked": true
+              },
+              {
+                "line_id": "L002",
+                "type": "pause",
+                "content": "[PAUSE:2s]",
+                "pacing": null,
+                "pause_duration_seconds": 2,
+                "fact_ids": [],
+                "off_limits_checked": true
+              }
+            ]
+          }
+        ]
+      },
+      "template_compliance": {
+        "template": "japan_template.md",
+        "required_beats_count": 4,
+        "present_beats_count": 4,
+        "pause_target": 5,
+        "pause_actual": 5,
+        "hook_no_greeting": true,
+        "ending_type": "open_question",
+        "status": "PASS",
+        "failures": []
+      },
+      "created_at": "2026-06-27T02:00:00Z",
+      "updated_at": "2026-06-27T04:00:00Z"
+    }
+  ]
+}

@@ -1,0 +1,180 @@
+{
+  "template_id": "japan",
+  "schema_version": "1.0",
+  "template_type": "modifier",
+  "inherits_from": "documentary",
+  "display_name": "Japan",
+  "description": "Cultural modifier for Japanese subject matter. Applies Japanese cultural respect, language accuracy, Ma beat, sensitive wartime and labor history handling, and narrative pacing appropriate for Japanese stories and general-audience viewers unfamiliar with Japanese culture.",
+  "applicable_primary_genres": ["mystery", "history", "documentary", "true_crime"],
+
+  "pacing": {
+    "hook_duration_seconds": null,
+    "hook_style": null,
+    "arc": null,
+    "cut_frequency": "slow",
+    "breath_point_frequency": "every_60s",
+    "silence_usage": "frequent",
+    "guiding_principle": "Ma (間) — silence is not the absence of content. It is the space in which meaning is felt and absorbed. Treat every silence as purposeful."
+  },
+
+  "camera_language": {
+    "preferred_shot_types": [
+      "extreme_wide_shot", "wide_shot", "medium_shot", "close_up"
+    ],
+    "forbidden_shot_types": [],
+    "preferred_motion_directions": [
+      "very_slow_pan_right", "very_slow_pan_left", "slow_zoom_in", "static"
+    ],
+    "forbidden_motion_directions": [],
+    "perspective_rule": null,
+    "motion_intensity": "very_slow"
+  },
+
+  "editing_language": {
+    "transition_style": null,
+    "text_on_screen": {
+      "usage": "moderate",
+      "purpose": ["names", "dates", "key_facts"],
+      "style": "Japanese-language name displayed first with romanization in parentheses on first mention. Historical dates use Western calendar (year only) unless Japanese calendar is contextually significant."
+    },
+    "motion_graphics_complexity": null,
+    "color_grade": null,
+    "film_grain": null,
+    "speed_ramps_allowed": null,
+    "jump_cuts_allowed": false
+  },
+
+  "music_language": {
+    "role": null,
+    "intensity_arc": {
+      "ma_beat": "silence only — no music during the Ma beat scene, ambient environmental sound only"
+    },
+    "silence_ratio_percent": 30,
+    "preferred_genres": [
+      "ambient", "orchestral_minimal", "japanese_traditional_influenced", "sparse_piano"
+    ],
+    "vocals_allowed": null,
+    "tempo_guidance": null
+  },
+
+  "visual_style": {
+    "tone": null,
+    "saturation": null,
+    "contrast": null,
+    "lighting_preference": null,
+    "ai_image_max_percent": null,
+    "real_footage_preference": null
+  },
+
+  "motion_grammar": {
+    "opening_motion": null,
+    "default_motion": "very_slow_pan_right",
+    "emotional_motion_map": {
+      "ma_beat": "static",
+      "cultural_context_explanation": "very_slow_pan_right",
+      "wartime_or_labor_history": "static",
+      "reflection": "static",
+      "historical_transition": "very_slow_pan_left"
+    },
+    "forbidden_in_emotional_moments": ["ken_burns_zoom_out", "parallax"]
+  },
+
+  "scene_grammar": {
+    "required_scene_types": [],
+    "forbidden_scene_types": [],
+    "required_beats": [
+      {
+        "beat_id": "BEAT_JPN_01",
+        "beat_name": "cultural_context",
+        "description": "Explain the Japanese cultural, geographic, or historical context that a general audience needs in order to fully understand the story. Do not assume familiarity with Japanese history, geography, or social structure.",
+        "section_hint": "ACT_I",
+        "required": true
+      },
+      {
+        "beat_id": "BEAT_JPN_02",
+        "beat_name": "ma_beat",
+        "description": "A dedicated silence scene of approximately 40 seconds with no narration, ambient environmental sound only. Positioned after the emotional or narrative peak of the video. Gives the viewer space to absorb the story before the conclusion.",
+        "section_hint": "ACT_III",
+        "required": true
+      },
+      {
+        "beat_id": "BEAT_JPN_03",
+        "beat_name": "japanese_silence",
+        "description": "At least one additional moment of purposeful silence — shorter than the Ma beat — that functions as emotional punctuation in the Japanese tradition. Can be used after a key historical revelation or before a major transition.",
+        "section_hint": null,
+        "required": true
+      }
+    ],
+    "scene_duration_rules": {
+      "min_scene_duration_seconds": null,
+      "max_scene_duration_seconds": null,
+      "special_scenes": [
+        {
+          "scene_type": "ma_beat",
+          "duration_seconds": 40,
+          "duration_is_fixed": true
+        }
+      ]
+    },
+    "section_structure": null
+  },
+
+  "thumbnail_strategy": {
+    "primary_style": null,
+    "composition_rule": null,
+    "text_overlay_rule": null,
+    "face_rule": null,
+    "emotion_on_thumbnail": null,
+    "color_palette": null,
+    "factual_accuracy_required": true,
+    "respect_check_required": true
+  },
+
+  "narrator_guidance": {
+    "tonal_modes": {
+      "japanese_place_name_first_mention": "deliberate and clear — pace slightly slower to give the viewer time to absorb an unfamiliar name",
+      "wartime_or_labor_history": "respectful and measured — acknowledge the gravity without dramatization or exaggeration",
+      "cultural_context_explanation": "educational and respectful — explain without condescension, as if sharing something genuinely interesting",
+      "sensitive_dispute": "balanced — present documented perspectives without editorial judgment"
+    },
+    "forbidden_delivery_styles": [
+      "orientalism_exoticization",
+      "tragedy_sensationalism",
+      "informal_abbreviation_of_japanese_names"
+    ],
+    "pacing_notes": "Japanese proper nouns on first mention should be read at a slightly slower pace to allow the viewer to absorb them. Never abbreviate or anglicize a Japanese place name without first introducing the full canonical form. During the Ma beat scene, no narration — allow silence and ambient sound to carry the scene completely."
+  },
+
+  "forbidden_elements": [
+    {
+      "element": "sensationalism_around_wartime_forced_labor",
+      "reason": "These are documented historical tragedies involving real people. Sensationalism disrespects the victims and risks factual distortion.",
+      "severity": "CRITICAL"
+    },
+    {
+      "element": "invented_japanese_cultural_context",
+      "reason": "Do not fabricate or assume Japanese cultural practices. Use verified sources only. Invented cultural context misrepresents Japan to general audiences.",
+      "severity": "HIGH"
+    },
+    {
+      "element": "non_canonical_japanese_place_names",
+      "reason": "Use verified canonical Japanese-language names for all places, people, and organizations. Reference the project story_bible.json for canonical name list.",
+      "severity": "HIGH"
+    },
+    {
+      "element": "narration_or_cuts_during_ma_beat_scene",
+      "reason": "The Ma beat requires uninterrupted static or very slow motion with no narration. Cutting into it or adding narration destroys its purpose.",
+      "severity": "HIGH"
+    },
+    {
+      "element": "imperial_calendar_as_sole_date_reference",
+      "reason": "General audiences are unfamiliar with the Japanese Imperial calendar. Always include the Western year. Imperial calendar reference is optional and supplementary only.",
+      "severity": "MEDIUM"
+    }
+  ],
+
+  "scoring_weights": null,
+
+  "created_at": "2026-06-27T00:00:00Z",
+  "updated_at": "2026-06-27T00:00:00Z"
+}

@@ -1,0 +1,28 @@
+image_id,scene_ref,image_type,legal_status,description_en,style_notes,ai_prompt_ref,priority
+IMG001,S001,establishing shot,AI_GENERATE — no real photo available for this angle,Hashima Island wide shot from sea level. Grey overcast sky. Concrete ruins visible above seawall. Mist on water.,Cinematic. Dark. Desaturated. Film grain. Atmospheric.,PROMPT_001,HIGH
+IMG002,S002,interior ruin,AI_GENERATE — interior cannot be accessed freely by tourists,Interior of abandoned concrete building. Broken staircase. Ceiling partially collapsed. Shafts of light. Peeling walls.,Haikyo aesthetic. High contrast. Dramatic lighting.,PROMPT_002,HIGH
+IMG003,S003,nature shot,AI_GENERATE — generic coastal wave shot,Close-up of waves crashing against concrete seawall. Spray. Texture of weathered concrete.,Slow shutter feel. Water blur. Grey palette.,PROMPT_003,MEDIUM
+IMG004,S005,archival style,AI_GENERATE — simulated Meiji era industrial scene (real archive photos legally restricted),Simulated Meiji-era industrial landscape. Black and white. Factory chimneys. Workers implied by atmosphere.,Sepia or B&W. Grainy. Period accurate atmosphere without showing specific people.,PROMPT_004,HIGH
+IMG005,S006,motion graphic,MOTION_GRAPHICS — no image needed,Animated map: Japan, Nagasaki, Hashima Island. Clean minimalist style.,N/A — handled by motion graphics team.,N/A,HIGH
+IMG006,S007,aerial CG,AI_GENERATE — aerial drone footage legally restricted without permits; real photos exist but usage rights unclear,CG or stylized aerial view of Hashima Island. Full extent of concrete buildings visible. Surrounded by ocean.,Top-down or angled aerial. Architectural detail visible. Dark cinematic treatment.,PROMPT_005,HIGH
+IMG007,S008,ruin exterior,AI_GENERATE — Building 30 exterior can be photographed from permitted zones but most close angles restricted,Exterior of large concrete apartment building in ruins. Multiple stories. Vegetation growing through cracks. Grey sky.,Architecture decay photography style. Wide angle. Somber.,PROMPT_006,HIGH
+IMG008,S010,ruin detail,AI_GENERATE — interior access restricted,Interior ruin detail. Remnant of furniture (chair or table frame). Debris. Broken window frame with sky visible beyond.,Close macro-style. Selective focus. Decay detail.,PROMPT_007,MEDIUM
+IMG009,S011,atmosphere,AI_GENERATE — underground mine interior (no public access),Dark mine tunnel atmosphere. Rock walls. Single dim light source. Sense of depth and darkness. Abstract.,Noir lighting. Narrow perspective. No people.,PROMPT_008,HIGH
+IMG010,S012,graphic,MOTION_GRAPHICS — UNESCO plaque is public domain but best as graphic treatment,Stylized UNESCO World Heritage emblem graphic. 2015 date. Minimal design.,Clean graphic. Not photographic.,N/A,MEDIUM
+IMG011,S015,atmosphere,AI_GENERATE — generic dock/harbour imagery,Empty dock or pier. Rusted metal railing. Calm water. Overcast sky. No people.,Desolate. Quiet. Muted color palette.,PROMPT_009,MEDIUM
+IMG012,S016,symbolic still,AI_GENERATE — symbolic representation only (no real items can be identified),Symbolic: weathered book on abandoned desk. Dust. Dim light. Mood of abandonment.,Still life photography aesthetic. Warm single light source against dark background.,PROMPT_010,HIGH
+IMG013,S017,light study,AI_GENERATE — interior restricted,Light streaming through collapsed ceiling of concrete ruin. Rays visible in dust. Beautiful and melancholic.,Chiaroscuro lighting. Dramatic contrast. Cinematic.,PROMPT_011,HIGH
+IMG014,S018,nature,AI_GENERATE — generic storm sea imagery,Stormy sea near concrete structure. Dark clouds. Heavy waves. Grey-green water.,Dramatic weather photography style. Wide. Powerful.,PROMPT_012,MEDIUM
+IMG015,S019,texture,AI_GENERATE — specific wall surfaces restricted access,Extreme close-up of crumbling concrete wall. Cracks. Rusted rebar exposed. Salt damage.,Macro texture photography. Abstract beauty in decay.,PROMPT_013,MEDIUM
+IMG016,S020,wide atmosphere,AI_GENERATE — best atmospheric angles require private access,Hashima Island silhouette against wide sky. Slow ocean. Golden or grey light. Contemplative.,Very wide. Landscape photography. Peaceful but haunted.,PROMPT_014,HIGH
+IMG017,S021,ruin detail,AI_GENERATE — interior restricted,Faded Japanese signage on ruin wall. Text partially illegible. Concrete backdrop.,Close-up. Documentary style. Faded typography detail.,PROMPT_015,MEDIUM
+IMG018,S022,atmosphere (Ma beat),AI_GENERATE — pure atmospheric shot for silence section,Abstract ocean waves. Slow. Minimal. Sky and sea. Island edge barely visible in frame.,Minimalist. Extreme wide. Timeless. No focus point. For Ma beat — emptiness is the subject.,PROMPT_016,HIGH
+IMG019,S023,present day,AI_GENERATE — tourist boat approaches are photographable but real footage preferred; use AI if stock unavailable,Tourist boat on calm sea approaching Hashima Island. Small vessel against large concrete structure.,Contemporary feel. Light. Slightly warmer palette than rest of video.,PROMPT_017,LOW
+IMG020,S024,final frame,AI_GENERATE — final wide establishing shot,Hashima Island full view. Ocean. Sky. No text. Final image of video.,Cinematic wide. Balanced frame. Haunting. Fade to black after.,PROMPT_018,HIGH
+
+NOTES:
+- All AI_GENERATE images: use PROMPT_00N reference in ai_image_prompts.md
+- MOTION_GRAPHICS: coordinate with editor/motion designer
+- HIGH priority = must have before edit lock; MEDIUM = preferred; LOW = optional/replaceable with stock
+- No photographs of identifiable living individuals required in this project
+- Forced labor history sections use ATMOSPHERIC/SYMBOLIC imagery only — no documentary-style depictions of suffering

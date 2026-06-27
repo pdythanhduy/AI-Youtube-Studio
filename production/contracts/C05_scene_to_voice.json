@@ -1,0 +1,244 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Contract C05: Scene List + Story → Voice",
+  "contract_id": "C05",
+  "version": "1.0",
+  "description": "Governs the transition from Stage 6 (Scene List) and Stage 4 (Script) to Stage 9 (Voice & Audio Direction). Defines how script lines are structured as voice lines, what delivery notes are required, how Ma beat silence is encoded, and what recording specifications are mandated.",
+  "upstream_stages": [
+    {
+      "stage_number": 6,
+      "stage_id": "scene_list",
+      "produces_schema": "https://ai-youtube-studio/production/schemas/scene.json"
+    },
+    {
+      "stage_number": 4,
+      "stage_id": "script",
+      "produces_schema": "https://ai-youtube-studio/production/schemas/story.json"
+    },
+    {
+      "stage_number": 5,
+      "stage_id": "story_bible",
+      "produces_schema": "https://ai-youtube-studio/production/schemas/story_bible.json"
+    }
+  ],
+  "downstream_stage": {
+    "stage_number": 9,
+    "stage_id": "voice",
+    "produces_schema": "https://ai-youtube-studio/production/schemas/voice.json"
+  },
+  "input": {
+    "description": "Fields required from upstream documents before voice.json can be produced.",
+    "required_from_story": [
+      {
+        "field": "script.lines",
+        "purpose": "Voice lines are derived 1:1 from script narration lines. Each L[0-9]{3} line_id becomes a voice_line entry."
+      },
+      {
+        "field": "script.pause_count",
+        "purpose": "All pauses from script must appear in voice.json voice_lines as pause-type entries."
+      }
+    ],
+    "required_from_scene": [
+      {
+        "field": "scenes[*].timecode_start",
+        "purpose": "Voice line estimated start times are derived from scene timecodes."
+      },
+      {
+        "field": "scenes[*].narration_present",
+        "purpose": "Scenes with narration_present=false generate voice_line entries with line_type=silence, not narration."
+      },
+      {
+        "field": "scenes[*].is_ma_beat",
+        "purpose": "Ma beat scene → voice.json must contain [NO NARRATION] silence entry. Duration must match scene duration."
+      }
+    ],
+    "required_from_story_bible": [
+      {
+        "field": "pronunciation_guide",
+        "purpose": "All pronunciation guide entries must appear in voice_direction notes. TTS SSML phonemes are set from ssml_phoneme field."
+      }
+    ],
+    "preconditions": [
+      "scene.coverage_validated === true",
+      "story.script.template_compliance.status === 'PASS'",
+      "story_bible is populated with pronunciation_guide"
+    ]
+  },
+  "output": {
+    "description": "What voice.json must contain when Stage 9 is complete.",
+    "required_fields": [
+      {
+        "field": "narrator_profile",
+        "required_subfields": ["gender_preference", "tone_style", "forbidden_styles"],
+        "purpose": "Profile constrains casting and TTS selection. forbidden_styles prevents incorrect register."
+      },
+      {
+        "field": "recording_specs",
+        "required_subfields": ["sample_rate_hz", "bit_depth", "peak_dbfs", "noise_floor_dbfs"],
+        "purpose": "Technical specs ensure recording quality is sufficient for production."
+      },
+      {
+        "field": "tts_settings",
+        "purpose": "Required if TTS is used. Specifies engine, speaking_rate, pause_tag for SSML."
+      },
+      {
+        "field": "voice_lines",
+        "minimum": 1,
+        "purpose": "Ordered list of all voice entries. Must include narration, pauses, and silence entries."
+      },
+      {
+        "field": "timed_readthrough_required",
+        "required_value": true,
+        "purpose": "Timed read-through validates that actual speaking duration matches expected video duration."
+      },
+      {
+        "field": "recording_status",
+        "initial_value": "not_started",
+        "purpose": "Tracks recording lifecycle. Must be set to 'approved' before timeline assembly."
+      }
+    ],
+    "voice_line_constraints": [
+      {
+        "constraint": "Every script.lines narration line must have a corresponding voice_line with line_id_ref = line.line_id",
+        "severity": "FAIL",
+        "purpose": "No script line may be lost in translation to voice.json."
+      },
+      {
+        "constraint": "Every script.lines pause must have a corresponding voice_line with line_type=pause",
+        "severity": "FAIL",
+        "purpose": "Pauses are production instructions, not optional."
+      },
+      {
+        "constraint": "Ma beat scene must have exactly one voice_line with line_type=silence AND pause_before_seconds matching Ma beat duration",
+        "severity": "FAIL",
+        "purpose": "Ma beat duration must be consistent between scene.json and voice.json."
+      },
+      {
+        "constraint": "voice_line.pacing must be one of: slow, very_slow, normal, fast. Default: normal.",
+        "severity": "WARNING",
+        "purpose": "Pacing guides the narrator or TTS. Japan template opening requires very_slow."
+      },
+      {
+        "constraint": "Pronunciation guide terms in voice lines must have delivery_note with SSML phoneme or katakana reading",
+        "severity": "WARNING",
+        "purpose": "Ensures narrator/TTS pronounces technical terms correctly."
+      }
+    ],
+    "ma_beat_encoding": {
+      "line_type": "silence",
+      "delivery_note": "NO NARRATION — Ma beat (間). Do not speak. Hold silence for full duration.",
+      "pause_before_seconds": "must equal scene.duration_seconds for the Ma beat scene",
+      "notes": "The Ma beat voice entry appears at the position in voice_lines that corresponds to its timecode position in the scene list."
+    },
+    "timed_readthrough_instruction": {
+      "field": "timed_readthrough_required",
+      "required_value": true,
+      "instruction": "Narrator must perform a timed read-through before final recording. Expected duration = project.duration_minutes × 60 minus Ma beat duration minus title card duration. Acceptable variance: ±3%.",
+      "note_field_for_director": "Add timed read-through note to voice_direction.recording_notes"
+    }
+  },
+  "validation": {
+    "gate": "Voice Delivery Gate (end of Stage 9)",
+    "checks": [
+      {
+        "check_id": "C05-V01",
+        "description": "All script narration line_ids appear as voice_line line_id_ref values",
+        "severity": "FAIL",
+        "action_on_fail": "Add missing voice_line entries."
+      },
+      {
+        "check_id": "C05-V02",
+        "description": "Ma beat scene has corresponding silence voice_line with correct duration",
+        "severity": "HIGH",
+        "action_on_fail": "Apply FIX-H3: synchronize Ma beat duration across scene.json and voice.json."
+      },
+      {
+        "check_id": "C05-V03",
+        "description": "timed_readthrough_required === true",
+        "severity": "HIGH",
+        "action_on_fail": "Apply FIX-M3: add timed read-through note to voice_direction.md / voice.json."
+      },
+      {
+        "check_id": "C05-V04",
+        "description": "narrator_profile.forbidden_styles does not allow エモーショナル or ドラマティック (for Japanese dark documentary)",
+        "severity": "MEDIUM",
+        "action_on_fail": "Update forbidden_styles list."
+      },
+      {
+        "check_id": "C05-V05",
+        "description": "recording_specs.peak_dbfs is in range [-3, -1]",
+        "severity": "HIGH",
+        "action_on_fail": "Correct peak_dbfs spec. Out-of-range peak causes clipping or insufficient headroom."
+      },
+      {
+        "check_id": "C05-V06",
+        "description": "All pronunciation guide terms have delivery_note set",
+        "severity": "WARNING",
+        "action_on_fail": "Add delivery_note with pronunciation for each term."
+      }
+    ]
+  },
+  "failure_conditions": [
+    {
+      "condition": "Ma beat duration in voice.json does not match scene.json",
+      "severity": "HIGH",
+      "pipeline_action": "revision_required",
+      "human_action": "Apply FIX-H3: standardize Ma beat to 40 seconds across scene.json, voice.json, and story.md."
+    },
+    {
+      "condition": "Narration lines missing from voice.json",
+      "severity": "FAIL",
+      "pipeline_action": "revision_required",
+      "human_action": "Identify missing line_ids. Add corresponding voice_line entries."
+    },
+    {
+      "condition": "timed_readthrough_required = false or absent",
+      "severity": "HIGH",
+      "pipeline_action": "flag_for_review",
+      "human_action": "Apply FIX-M3: set timed_readthrough_required = true. Add note."
+    },
+    {
+      "condition": "Forbidden narration style included in narrator_profile.tone_style",
+      "severity": "MEDIUM",
+      "pipeline_action": "flag_for_review",
+      "human_action": "Apply FIX-L1: update narrator profile phrasing."
+    }
+  ],
+  "recovery_strategy": [
+    {
+      "scenario": "Ma beat duration mismatch",
+      "strategy": "Treat scene.json as authoritative. Identify the scene with is_ma_beat=true and its duration_seconds. Update voice.json Ma beat silence entry to match. Do not adjust scene timecodes."
+    },
+    {
+      "scenario": "Missing voice lines",
+      "strategy": "Diff story.script.lines[*].line_id against voice_lines[*].line_id_ref. Generate missing voice_line entries using line text and section pacing defaults."
+    },
+    {
+      "scenario": "Narrator profile phrasing issue",
+      "strategy": "Review forbidden_styles list. Ensure it prohibits over-theatrical delivery. Prefer prescriptive language: '声は静かで、感情を抑制した語り口' over vague terms."
+    }
+  ],
+  "example": {
+    "valid_ma_beat_voice_line": {
+      "line_id": "V022",
+      "line_id_ref": null,
+      "line_type": "silence",
+      "text": "[NO NARRATION]",
+      "pacing": null,
+      "pause_before_seconds": 40,
+      "pause_after_seconds": 0,
+      "delivery_note": "Ma beat (間). 40 seconds of silence. Do not speak. Camera holds on empty corridors.",
+      "take_count_required": 1
+    },
+    "valid_narration_voice_line": {
+      "line_id": "V001",
+      "line_id_ref": "L001",
+      "line_type": "narration",
+      "text": "かつて、ここに5,259人が暮らしていました。",
+      "pacing": "very_slow",
+      "pause_before_seconds": 3,
+      "pause_after_seconds": 2,
+      "delivery_note": "HOOK LINE. Deliver with weight. Do not rush. Let the number land before silence."
+    }
+  }
+}

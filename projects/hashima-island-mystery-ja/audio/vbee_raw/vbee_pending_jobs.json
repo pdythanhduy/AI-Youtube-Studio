@@ -1,0 +1,7 @@
+{
+  "project_id": "hashima-island-mystery-ja",
+  "note": "Populated automatically when Vbee returns an async job ID instead of immediate audio. When Vbee POSTs the audio URL to your callbackUrl, download the audio, save it to audio/vbee_raw/<filename>, then remove the entry from this file (or re-run the segment to overwrite).",
+  "updated_at": "2026-06-27T16:13:04.163675+00:00",
+  "pending_count": 0,
+  "jobs": []
+}

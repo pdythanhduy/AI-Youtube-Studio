@@ -1,0 +1,159 @@
+{
+  "project_id": "hashima-island-mystery-ja",
+  "schema_version": "1.0",
+  "publish_readiness": "not_ready",
+  "selected_title_id": "TITLE_A",
+  "fixes_applied": [
+    {
+      "fix_id": "FIX-B1",
+      "description": "TITLE_B deleted. Reason: factually false. '一夜で消えた' (disappeared in one night) is false — island departure took 3 months (Jan 15 – Apr 20, 1974). This is a BLOCKER. Title B has been removed from this document.",
+      "severity": "BLOCKER",
+      "status": "applied"
+    },
+    {
+      "fix_id": "FIX-L2",
+      "description": "Tag '廃島' replaced with '廃墟島'. '廃島' is not standard Japanese vocabulary for abandoned island ruins.",
+      "severity": "LOW",
+      "status": "applied"
+    },
+    {
+      "fix_id": "FIX-L3",
+      "description": "Publish checklist structure updated to follow priority order: factual checks first, platform checks second, channel strategy last.",
+      "severity": "LOW",
+      "status": "applied"
+    },
+    {
+      "fix_id": "FIX-BR1-SEO",
+      "description": "Blocker Resolution Round 1: selected_title_id set to 'TITLE_A'. TITLE_C all 3 checks completed and passed — approved as A/B test candidate. Publish checklist items 4–7 and 11 updated to complete.",
+      "severity": "HIGH",
+      "status": "applied"
+    }
+  ],
+  "titles": [
+    {
+      "title_id": "TITLE_A",
+      "text": "端島（軍艦島）の謎：消えた都市の真実",
+      "char_count": 24,
+      "language": "ja",
+      "status": "selected",
+      "is_recommended": true,
+      "is_selected": true,
+      "factual_accuracy_check": true,
+      "factual_accuracy_notes": "Verified against research.json. '消えた都市' refers to abandonment (1974 departure completed April 20). 'の謎' and '真実' are accurate characterization. No false claims.",
+      "off_limits_check": true,
+      "off_limits_notes": "Checked against story_bible.off_limits_expressions. No forbidden terms present.",
+      "respect_check": true,
+      "respect_check_notes": "Neutral and factual title. Does not sensationalize forced labor. Does not assign guilt.",
+      "rejection_reason": null,
+      "notes": "SELECTED PRIMARY TITLE. All checks passed. Concise (24 chars). Factually clean. Preferred for initial publish. TITLE_C approved as A/B test candidate for future rotation."
+    },
+    {
+      "title_id": "TITLE_C",
+      "text": "廃墟島・端島（軍艦島）はなぜ捨てられた？世界遺産の闇と光",
+      "char_count": 38,
+      "language": "ja",
+      "status": "approved",
+      "is_recommended": false,
+      "is_selected": false,
+      "factual_accuracy_check": true,
+      "factual_accuracy_notes": "PASS. '廃墟島' — Hashima IS factually an abandoned ruin island and is widely described this way. 'はなぜ捨てられた？' — 'Why was it abandoned?' — accurate; the economic closure of the coal mines is a documented fact (VF009). '世界遺産' — UNESCO World Heritage designation confirmed 2015 (VF011). '闇と光' — metaphorical framing (shadow and light) for the dual nature of the UNESCO designation (industrial achievement + forced labor history). No false claims. No fabricated statistics.",
+      "off_limits_check": true,
+      "off_limits_notes": "PASS. Checked against story_bible.off_limits_expressions. '一夜で消えた' — NOT present. '企業城下島' — NOT present. '捨てられた' (abandoned/discarded) refers to the island, not people, and is an accurate description of the mine closure and departure. No forbidden terms present.",
+      "respect_check": true,
+      "respect_check_notes": "PASS. '闇と光' (shadow and light) is a common and respected metaphorical framing in Japanese journalism and documentary for subjects that carry both pride and shame. In this context, '闇' most naturally represents the forced labor history; '光' represents the industrial achievement and cultural significance. This is a balanced framing that does not minimize or sensationalize either dimension. It does not assign blame, does not assign specific numbers to unverified claims, and does not exploit tragedy. The question form 'はなぜ捨てられた？' invites curiosity without manufacturing false urgency. '廃墟島' is colloquial but not disrespectful — it describes the current physical state of the island, which is a ruin.",
+      "rejection_reason": null,
+      "notes": "APPROVED — A/B TEST CANDIDATE. All 3 checks completed and passed in blocker_resolution_round_1. Search-optimized (38 chars, includes '廃墟島', '世界遺産' for algorithm). Longer title format may improve CTR from keyword searches. May be used for A/B testing against TITLE_A after initial publish. Not selected as primary title — TITLE_A preferred for its conciseness and established check history."
+    }
+  ],
+  "deleted_titles": [
+    {
+      "title_id": "TITLE_B",
+      "text": "軍艦島：一夜で消えた5259人の謎",
+      "deletion_reason": "BLOCKER: FACTUALLY FALSE. '一夜で消えた' (disappeared in one night) is a lie. The island's departure was gradual: closure announced January 15, 1974; final residents departed April 20, 1974 — a 3-month process. This title would constitute factual misinformation under MASTER_RULE.md Rule 2. FIX-B1 applied. Title permanently deleted.",
+      "deleted_at": "2026-06-27T00:00:00Z"
+    }
+  ],
+  "description": {
+    "text": "端島（軍艦島）——長崎港から南西約15〜18キロメートル、東シナ海に浮かぶ0.063km²の小さな島。かつて5,259人が暮らし、今は誰も住まない廃墟の島です。\n\n明治時代から続く炭坑の歴史、戦時中の強制労働の記憶、そして1974年の閉山——「軍艦島」は、日本の近代化の誇りと、消えることのない歴史的問いを同時に抱えています。\n\n2015年、ユネスコ世界遺産に登録されたこの島を、静かに、丁寧に、記録します。\n\n【注記】本動画は、強制労働をめぐる歴史的事実について、日本・韓国双方の公式記録を参照した上で制作しています。具体的な数字については現在も学術的な検証が続いており、一方の立場を支持するものではありません。\n\n#軍艦島 #端島 #廃墟 #ユネスコ世界遺産 #日本の歴史",
+    "char_count": 320,
+    "dispute_disclosure_included": true,
+    "dispute_disclosure_text": "本動画は、強制労働をめぐる歴史的事実について、日本・韓国双方の公式記録を参照した上で制作しています。具体的な数字については現在も学術的な検証が続いており、一方の立場を支持するものではありません。",
+    "language": "ja",
+    "links": []
+  },
+  "tags": {
+    "primary": [
+      "軍艦島",
+      "端島",
+      "廃墟",
+      "ユネスコ世界遺産",
+      "日本の歴史",
+      "軍艦島 謎",
+      "端島 歴史",
+      "廃墟探索",
+      "廃墟島"
+    ],
+    "secondary": [
+      "長崎",
+      "世界遺産",
+      "明治産業革命",
+      "炭鉱",
+      "無人島",
+      "日本ドキュメンタリー",
+      "ダークツーリズム",
+      "三菱",
+      "強制労働 歴史",
+      "1974年",
+      "日本近代化",
+      "廃墟写真",
+      "ハイキョ",
+      "端島 観光",
+      "軍艦島 世界遺産"
+    ],
+    "international": [
+      "Gunkanjima",
+      "Hashima Island",
+      "Japan ruins",
+      "abandoned island Japan",
+      "UNESCO heritage Japan",
+      "battleship island documentary"
+    ],
+    "tag_changes": [
+      { "from": "廃島", "to": "廃墟島", "reason": "FIX-L2: 廃島 is non-standard. 廃墟島 is clearer and more searchable." }
+    ]
+  },
+  "content_policy": {
+    "sensitive_topics": [
+      "forced_labor",
+      "historical_violence",
+      "political_dispute"
+    ],
+    "content_declaration": "本コンテンツは、戦時中の強制労働に関する歴史的事実を含みます。描写は記録的かつ事実に基づくものであり、暴力・苦痛のグラフィック描写は含みません。日韓間の歴史的論争については、両国の公式立場を並列提示する形で扱っています。",
+    "age_restriction": false,
+    "community_guidelines_review": "pending"
+  },
+  "publishing": {
+    "channel_language": "ja",
+    "visibility": "private",
+    "scheduled_publish_utc": null,
+    "playlist_ids": [],
+    "end_screen": true,
+    "cards_enabled": false
+  },
+  "publish_checklist": [
+    { "order": 1, "item": "TITLE_A factual_accuracy_check = true", "status": "complete" },
+    { "order": 2, "item": "TITLE_A off_limits_check = true", "status": "complete" },
+    { "order": 3, "item": "TITLE_A respect_check = true", "status": "complete" },
+    { "order": 4, "item": "TITLE_C factual_accuracy_check = true", "status": "complete" },
+    { "order": 5, "item": "TITLE_C off_limits_check = true", "status": "complete" },
+    { "order": 6, "item": "TITLE_C respect_check = true", "status": "complete" },
+    { "order": 7, "item": "selected_title_id set to approved title", "status": "complete" },
+    { "order": 8, "item": "description.dispute_disclosure_included = true", "status": "complete" },
+    { "order": 9, "item": "content_policy.content_declaration populated", "status": "complete" },
+    { "order": 10, "item": "community_guidelines_review = approved", "status": "pending" },
+    { "order": 11, "item": "thumbnail selected and approved", "status": "complete" },
+    { "order": 12, "item": "publish_readiness set to approved by human producer", "status": "pending" }
+  ],
+  "created_at": "2026-06-27T09:00:00Z",
+  "updated_at": "2026-06-27T00:00:00Z"
+}

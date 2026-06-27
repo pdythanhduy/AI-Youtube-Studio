@@ -1,0 +1,268 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://ai-youtube-studio/schemas/composition_manifest.schema.json",
+  "title": "Composition Manifest Schema",
+  "description": "Records the inputs and outputs of one composition run. Captures which profiles were combined, any conflicts detected and how they were resolved, and the effective ruleset that governs the resulting video production. One manifest per project per composition run.",
+  "version": "1.0",
+  "type": "object",
+  "required": [
+    "manifest_id",
+    "schema_version",
+    "project_id",
+    "creator_profile_id",
+    "platform_profile_id",
+    "audience_profile_id",
+    "primary_genre",
+    "composed_at",
+    "effective_rules"
+  ],
+  "additionalProperties": false,
+  "properties": {
+
+    "manifest_id": {
+      "type": "string",
+      "pattern": "^CM[0-9]{4}-[a-z0-9_-]+$",
+      "description": "Unique manifest ID. Format: CM{YYYY}-{project_id}. e.g. 'CM2026-hashima-island-mystery-ja'."
+    },
+
+    "schema_version": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+$"
+    },
+
+    "project_id": {
+      "type": "string",
+      "description": "Links to the project folder in projects/."
+    },
+
+    "creator_profile_id": {
+      "type": "string",
+      "description": "ID of the Creator Profile used. Must exist in profiles/creator/."
+    },
+
+    "platform_profile_id": {
+      "type": "string",
+      "enum": [
+        "youtube_long_form",
+        "youtube_shorts",
+        "tiktok",
+        "facebook_video",
+        "instagram_reels"
+      ]
+    },
+
+    "audience_profile_id": {
+      "type": "string",
+      "enum": ["beginner", "general", "enthusiast", "expert"]
+    },
+
+    "primary_genre": {
+      "type": "string",
+      "pattern": "^[a-z0-9_-]+$",
+      "description": "ID of the primary genre template. Must exist in genre_templates/base/."
+    },
+
+    "genre_modifiers": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^[a-z0-9_-]+$"
+      },
+      "description": "Ordered list of modifier template IDs applied after the base genre. Applied in order: modifiers[0] first, modifiers[N] last. Must exist in genre_templates/modifiers/."
+    },
+
+    "composed_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp when this manifest was generated."
+    },
+
+    "profile_versions": {
+      "type": "object",
+      "description": "Records the version of each profile at composition time. Used for cache invalidation.",
+      "additionalProperties": false,
+      "properties": {
+        "creator_profile_version": { "type": ["string", "null"] },
+        "platform_profile_version": { "type": ["string", "null"] },
+        "audience_profile_version": { "type": ["string", "null"] },
+        "primary_genre_version": { "type": ["string", "null"] },
+        "modifier_versions": {
+          "type": "object",
+          "additionalProperties": { "type": "string" },
+          "description": "modifier_id → version string."
+        }
+      }
+    },
+
+    "composition_hash": {
+      "type": ["string", "null"],
+      "description": "Hash of all input profile versions. If profiles change, this hash changes and the manifest should be regenerated."
+    },
+
+    "override_log": {
+      "type": "array",
+      "description": "All conflicts detected during composition and how they were resolved.",
+      "items": {
+        "type": "object",
+        "required": ["conflict_id", "field", "winner", "loser", "resolution"],
+        "additionalProperties": false,
+        "properties": {
+          "conflict_id": {
+            "type": "string",
+            "pattern": "^OV[0-9]+$"
+          },
+          "field": {
+            "type": "string",
+            "description": "Dot-notation path to the conflicting field. e.g. 'pacing.cut_frequency'."
+          },
+          "winner": {
+            "type": "string",
+            "enum": ["safety_legal", "creator_profile", "platform_profile", "genre_template", "audience_profile"],
+            "description": "Which profile layer won the conflict per the override hierarchy."
+          },
+          "winner_value": {
+            "description": "The winning value applied to effective_rules."
+          },
+          "loser": {
+            "type": "string",
+            "enum": ["creator_profile", "platform_profile", "genre_template", "audience_profile"]
+          },
+          "loser_value": {
+            "description": "The losing value. Preserved here for traceability."
+          },
+          "resolution": {
+            "type": "string",
+            "enum": ["higher_priority_wins", "safety_absolute", "human_review_required", "manual_override"],
+            "description": "How the conflict was resolved."
+          },
+          "human_review_note": {
+            "type": ["string", "null"],
+            "description": "Required if resolution is 'human_review_required'. Explains what the human needs to decide."
+          }
+        }
+      }
+    },
+
+    "unresolved_conflicts": {
+      "type": "array",
+      "description": "Conflicts that could not be resolved automatically. Each blocks production until resolved.",
+      "items": {
+        "type": "object",
+        "required": ["conflict_id", "field", "profile_a", "value_a", "profile_b", "value_b", "reason_unresolvable"],
+        "additionalProperties": false,
+        "properties": {
+          "conflict_id": { "type": "string", "pattern": "^UC[0-9]+$" },
+          "field": { "type": "string" },
+          "profile_a": { "type": "string" },
+          "value_a": {},
+          "profile_b": { "type": "string" },
+          "value_b": {},
+          "reason_unresolvable": { "type": "string" },
+          "resolution_options": {
+            "type": "array",
+            "items": { "type": "string" }
+          }
+        }
+      }
+    },
+
+    "effective_rules": {
+      "type": "object",
+      "description": "The final merged ruleset produced by this composition. This is the single source of truth for all production decisions on this video. Fields map to the same structure as genre_template.schema.json but every field is resolved — no nulls from inheritance.",
+      "additionalProperties": false,
+      "properties": {
+
+        "absolute_rules": {
+          "type": "object",
+          "description": "From Creator Profile. Non-negotiable. Copied verbatim.",
+          "additionalProperties": false,
+          "properties": {
+            "safety_rules": { "type": "array", "items": { "type": "object" } },
+            "legal_rules": { "type": "array", "items": { "type": "object" } },
+            "ethical_rules": { "type": "array", "items": { "type": "object" } }
+          }
+        },
+
+        "pacing": {
+          "type": "object",
+          "description": "Resolved pacing rules.",
+          "additionalProperties": true
+        },
+
+        "camera_language": {
+          "type": "object",
+          "description": "Resolved camera language rules.",
+          "additionalProperties": true
+        },
+
+        "editing_language": {
+          "type": "object",
+          "description": "Resolved editing language rules.",
+          "additionalProperties": true
+        },
+
+        "music_language": {
+          "type": "object",
+          "description": "Resolved music language rules.",
+          "additionalProperties": true
+        },
+
+        "visual_style": {
+          "type": "object",
+          "description": "Resolved visual style rules.",
+          "additionalProperties": true
+        },
+
+        "motion_grammar": {
+          "type": "object",
+          "description": "Resolved motion grammar rules.",
+          "additionalProperties": true
+        },
+
+        "scene_grammar": {
+          "type": "object",
+          "description": "Resolved scene grammar rules.",
+          "additionalProperties": true
+        },
+
+        "thumbnail_strategy": {
+          "type": "object",
+          "description": "Resolved thumbnail strategy.",
+          "additionalProperties": true
+        },
+
+        "narrator_guidance": {
+          "type": "object",
+          "description": "Resolved narrator guidance. Creator Profile overrides genre defaults.",
+          "additionalProperties": true
+        },
+
+        "script_guidance": {
+          "type": "object",
+          "description": "Resolved script guidance from Audience Profile.",
+          "additionalProperties": true
+        },
+
+        "platform_constraints": {
+          "type": "object",
+          "description": "Hard technical constraints from Platform Profile. Cannot be softened by any other profile.",
+          "additionalProperties": true
+        },
+
+        "quality_standards": {
+          "type": "object",
+          "description": "From Creator Profile quality_standards.",
+          "additionalProperties": true
+        }
+      }
+    },
+
+    "composition_status": {
+      "type": "string",
+      "enum": ["complete", "partial_unresolved_conflicts", "blocked"],
+      "description": "complete = ready for production. partial = some conflicts need human review. blocked = safety or legal conflict."
+    },
+
+    "notes": { "type": ["string", "null"] }
+  }
+}

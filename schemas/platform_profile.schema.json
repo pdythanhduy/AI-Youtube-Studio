@@ -1,0 +1,257 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://ai-youtube-studio/schemas/platform_profile.schema.json",
+  "title": "Platform Profile Schema",
+  "description": "Defines the technical specifications, content constraints, and algorithmic requirements for a specific publishing platform. Platform Profiles override Genre Templates but are overridden by Creator Profile in the hierarchy.",
+  "version": "1.0",
+  "type": "object",
+  "required": [
+    "platform_id",
+    "schema_version",
+    "technical_specs",
+    "content_constraints",
+    "hook_requirements"
+  ],
+  "additionalProperties": false,
+  "properties": {
+
+    "platform_id": {
+      "type": "string",
+      "enum": [
+        "youtube_long_form",
+        "youtube_shorts",
+        "tiktok",
+        "facebook_video",
+        "instagram_reels"
+      ],
+      "description": "Canonical identifier for this platform."
+    },
+
+    "schema_version": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+$"
+    },
+
+    "display_name": {
+      "type": "string",
+      "description": "Human-readable platform name."
+    },
+
+    "profile_status": {
+      "type": "string",
+      "enum": ["draft", "active", "deprecated"]
+    },
+
+    "technical_specs": {
+      "type": "object",
+      "required": ["aspect_ratio", "resolution", "fps", "duration_range_seconds"],
+      "additionalProperties": false,
+      "properties": {
+        "aspect_ratio": {
+          "type": "string",
+          "description": "e.g. '16:9', '9:16', '1:1'"
+        },
+        "resolution": {
+          "type": "object",
+          "required": ["width", "height"],
+          "additionalProperties": false,
+          "properties": {
+            "width": { "type": "integer" },
+            "height": { "type": "integer" },
+            "preferred_width": { "type": ["integer", "null"] },
+            "preferred_height": { "type": ["integer", "null"] }
+          }
+        },
+        "fps": {
+          "type": "integer",
+          "enum": [24, 25, 30, 60]
+        },
+        "duration_range_seconds": {
+          "type": "object",
+          "required": ["min", "max"],
+          "additionalProperties": false,
+          "properties": {
+            "min": { "type": "integer" },
+            "max": { "type": ["integer", "null"], "description": "null = no hard maximum" },
+            "sweet_spot_min": { "type": ["integer", "null"], "description": "Algorithmically preferred minimum." },
+            "sweet_spot_max": { "type": ["integer", "null"], "description": "Algorithmically preferred maximum." }
+          }
+        },
+        "audio_spec": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "sample_rate_hz": { "type": "integer" },
+            "bit_depth": { "type": "integer" },
+            "channels": { "type": "string", "enum": ["mono", "stereo", "surround"] },
+            "peak_dbfs": { "type": "number" },
+            "loudness_lufs": { "type": ["number", "null"] }
+          }
+        },
+        "file_format": {
+          "type": "string",
+          "description": "Recommended export format. e.g. 'mp4_h264', 'mp4_h265'."
+        },
+        "max_file_size_gb": {
+          "type": ["number", "null"]
+        }
+      }
+    },
+
+    "content_constraints": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "chapter_markers": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "supported": { "type": "boolean" },
+            "min_chapter_count_for_activation": { "type": ["integer", "null"] },
+            "min_chapter_duration_seconds": { "type": ["integer", "null"] },
+            "first_chapter_must_be_at_zero": { "type": ["boolean", "null"] }
+          }
+        },
+        "end_screens": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "supported": { "type": "boolean" },
+            "duration_seconds": { "type": ["integer", "null"] },
+            "required_minimum_video_duration_seconds": { "type": ["integer", "null"] }
+          }
+        },
+        "cards": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "supported": { "type": "boolean" },
+            "max_cards": { "type": ["integer", "null"] }
+          }
+        },
+        "subtitles": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "required": { "type": "boolean" },
+            "auto_generated_available": { "type": "boolean" },
+            "supported_formats": {
+              "type": "array",
+              "items": { "type": "string" }
+            }
+          }
+        },
+        "age_restriction_minimum": {
+          "type": ["integer", "null"],
+          "description": "Minimum viewer age for content. null = no restriction."
+        },
+        "monetization_eligible": {
+          "type": ["boolean", "null"],
+          "description": "Whether this platform profile supports ad monetization."
+        }
+      }
+    },
+
+    "thumbnail_specs": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "required": { "type": "boolean" },
+        "dimensions": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "width": { "type": "integer" },
+            "height": { "type": "integer" }
+          }
+        },
+        "max_file_size_kb": { "type": ["integer", "null"] },
+        "supported_formats": {
+          "type": "array",
+          "items": { "type": "string", "enum": ["jpg", "png", "gif", "webp"] }
+        },
+        "text_overlay_guidelines": {
+          "type": ["string", "null"],
+          "description": "Platform-specific guidance on text in thumbnails."
+        }
+      }
+    },
+
+    "metadata_rules": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "title_max_characters": { "type": ["integer", "null"] },
+        "title_min_characters": { "type": ["integer", "null"] },
+        "description_max_characters": { "type": ["integer", "null"] },
+        "tags_max_count": { "type": ["integer", "null"] },
+        "tags_max_characters_each": { "type": ["integer", "null"] },
+        "hashtag_max_count": { "type": ["integer", "null"] },
+        "hashtag_placement": {
+          "type": ["string", "null"],
+          "enum": ["title", "description", "none", null]
+        }
+      }
+    },
+
+    "hook_requirements": {
+      "type": "object",
+      "required": ["critical_window_seconds"],
+      "additionalProperties": false,
+      "description": "Platform-specific hook rules. Override Genre Template hook rules if stronger.",
+      "properties": {
+        "critical_window_seconds": {
+          "type": "integer",
+          "description": "Seconds in which viewer decides to stay or leave. Platform algorithm watches this window."
+        },
+        "hook_style_notes": {
+          "type": ["string", "null"]
+        },
+        "auto_play_context": {
+          "type": "boolean",
+          "description": "If true, video starts without user intent (feed auto-play). First frame matters more."
+        },
+        "sound_off_common": {
+          "type": "boolean",
+          "description": "If true, a significant share of viewers watches without sound. Visual storytelling weight increases."
+        }
+      }
+    },
+
+    "algorithm_considerations": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "primary_retention_signal": {
+          "type": ["string", "null"],
+          "description": "Which retention metric the algorithm weights most. e.g. 'average_view_duration', 'click_through_rate'."
+        },
+        "click_through_rate_important": { "type": ["boolean", "null"] },
+        "comments_boost_distribution": { "type": ["boolean", "null"] },
+        "shares_boost_distribution": { "type": ["boolean", "null"] },
+        "rewatch_valued": { "type": ["boolean", "null"] },
+        "upload_frequency_signals": { "type": ["string", "null"] }
+      }
+    },
+
+    "pacing_override": {
+      "type": ["object", "null"],
+      "description": "Platform-specific pacing rules that take precedence over Genre Template pacing. null = no override, use Genre Template pacing.",
+      "additionalProperties": false,
+      "properties": {
+        "max_silence_duration_seconds": {
+          "type": ["number", "null"],
+          "description": "Platform may penalize long silences in algorithm scoring."
+        },
+        "cut_frequency_guidance": {
+          "type": ["string", "null"],
+          "enum": ["very_fast", "fast", "moderate", "slow", "very_slow", null]
+        },
+        "notes": { "type": ["string", "null"] }
+      }
+    },
+
+    "created_at": { "type": "string", "format": "date-time" },
+    "updated_at": { "type": "string", "format": "date-time" }
+  }
+}

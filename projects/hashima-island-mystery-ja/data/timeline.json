@@ -1,0 +1,91 @@
+{
+  "project_id": "hashima-island-mystery-ja",
+  "schema_version": "1.0",
+  "assembly_status": "pending",
+  "total_duration_seconds": 720,
+  "output_file_path": null,
+  "render_settings": {
+    "codec": "H.264",
+    "resolution": "1920x1080",
+    "frame_rate": 24,
+    "bitrate_kbps": 8000,
+    "audio_codec": "AAC",
+    "audio_bitrate_kbps": 192,
+    "audio_sample_rate_hz": 48000,
+    "color_profile": "Rec.709",
+    "export_format": "MP4"
+  },
+  "chapter_markers": [
+    {
+      "marker_id": "CH001",
+      "timecode": "0:00",
+      "label": "イントロ / 端島との出会い",
+      "label_en": "Intro — First Encounter with Hashima"
+    },
+    {
+      "marker_id": "CH002",
+      "timecode": "1:00",
+      "label": "明治の遺産 — 炭坑の島の誕生",
+      "label_en": "Meiji Legacy — Birth of the Coal Island"
+    },
+    {
+      "marker_id": "CH003",
+      "timecode": "3:00",
+      "label": "神話と現実 — 廃墟の向こう側",
+      "label_en": "Legend vs Reality — Beyond the Ruins"
+    },
+    {
+      "marker_id": "CH004",
+      "timecode": "6:00",
+      "label": "1974年 — 静かな終わり",
+      "label_en": "1974 — The Quiet End"
+    },
+    {
+      "marker_id": "CH005",
+      "timecode": "9:00",
+      "label": "世界遺産と記憶",
+      "label_en": "World Heritage and Memory"
+    },
+    {
+      "marker_id": "CH006",
+      "timecode": "11:00",
+      "label": "問い",
+      "label_en": "The Question"
+    }
+  ],
+  "tracks": {
+    "video": [],
+    "narration": [],
+    "music": [],
+    "sfx": [],
+    "text_overlay": [],
+    "subtitle": []
+  },
+  "music_bed": {
+    "track_title": null,
+    "license_type": null,
+    "bpm": null,
+    "key": null,
+    "duration_seconds": null,
+    "max_db_under_narration": -12,
+    "ma_beat_level_db": null,
+    "file_path": null,
+    "status": "not_selected"
+  },
+  "warnings": [
+    {
+      "warning_id": "W004",
+      "severity": "HIGH",
+      "field": "assembly_status",
+      "message": "Timeline is pending. Assembly requires: (1) approved voice recording, (2) licensed/generated images for all 20 IMG entries, (3) motion graphics for MG001-MG004, (4) music bed selection. assembly_status will change to 'draft_in_progress' when assets begin to be placed."
+    },
+    {
+      "warning_id": "W005",
+      "severity": "HIGH",
+      "field": "tracks",
+      "message": "All tracks are empty. Timeline assembly has not begun. tracks.video, tracks.narration, tracks.music must be populated before C06 contract can be validated."
+    }
+  ],
+  "created_at": "2026-06-27T08:00:00Z",
+  "updated_at": "2026-06-27T08:00:00Z"
+}

@@ -1,0 +1,268 @@
+{
+  "project_id": "hashima-island-mystery-ja",
+  "schema_version": "1.0",
+  "status": "review_fixes_required",
+  "review_decision": "GO_WITH_FIXES",
+  "review_open_fixes": 12,
+  "review_fixes_resolved": 0,
+  "reviewed_at": "2026-06-27T00:00:00Z",
+  "published_at": null,
+  "publishing_urls": {
+    "youtube": null
+  },
+  "document_registry": [
+    {
+      "document": "project.json",
+      "schema_ref": "production/schema/project.json",
+      "status": "complete",
+      "file_path": "data/project.json",
+      "warnings": []
+    },
+    {
+      "document": "research.json",
+      "schema_ref": "production/schema/research.json",
+      "status": "complete",
+      "file_path": "data/research.json",
+      "warnings": []
+    },
+    {
+      "document": "story.json",
+      "schema_ref": "production/schema/story.json",
+      "status": "complete",
+      "file_path": "data/story.json",
+      "warnings": []
+    },
+    {
+      "document": "story_bible.json",
+      "schema_ref": "production/schema/story_bible.json",
+      "status": "complete",
+      "file_path": "data/story_bible.json",
+      "warnings": []
+    },
+    {
+      "document": "scene.json",
+      "schema_ref": "production/schema/scene.json",
+      "status": "complete",
+      "file_path": "data/scene.json",
+      "warnings": []
+    },
+    {
+      "document": "image_plan.json",
+      "schema_ref": "production/schema/image_plan.json",
+      "status": "fixes_required",
+      "file_path": "data/image_plan.json",
+      "warnings": ["W001", "W002"]
+    },
+    {
+      "document": "voice.json",
+      "schema_ref": "production/schema/voice.json",
+      "status": "pending_recording",
+      "file_path": "data/voice.json",
+      "warnings": []
+    },
+    {
+      "document": "subtitle.json",
+      "schema_ref": "production/schema/subtitle.json",
+      "status": "pending_recording",
+      "file_path": "data/subtitle.json",
+      "warnings": ["W003"]
+    },
+    {
+      "document": "timeline.json",
+      "schema_ref": "production/schema/timeline.json",
+      "status": "pending_assembly",
+      "file_path": "data/timeline.json",
+      "warnings": ["W004", "W005"]
+    },
+    {
+      "document": "thumbnail.json",
+      "schema_ref": "production/schema/thumbnail.json",
+      "status": "selected_pending_design",
+      "file_path": "data/thumbnail.json",
+      "warnings": [],
+      "resolution_note": "W006, W007, W008 all resolved in blocker_resolution_round_1. THUMB_A selected and all checks passed. THUMB_C rejected for misleading title_overlay."
+    },
+    {
+      "document": "seo.json",
+      "schema_ref": "production/schema/seo.json",
+      "status": "complete",
+      "file_path": "data/seo.json",
+      "warnings": [],
+      "resolution_note": "selected_title_id set to TITLE_A. TITLE_C all checks completed and approved as A/B candidate. Publish checklist items 4-7 and 11 now complete. Resolved in blocker_resolution_round_1."
+    },
+    {
+      "document": "export.json",
+      "schema_ref": "production/schema/export.json",
+      "status": "active",
+      "file_path": "data/export.json",
+      "warnings": []
+    }
+  ],
+  "warnings": [
+    {
+      "warning_id": "W001",
+      "severity": "HIGH",
+      "source_document": "image_plan.json",
+      "field": "ai_overuse_percent",
+      "message": "AI-generated image rate is 85% (17/20), exceeding the 75% limit defined in contract C04. FIX-H1 curation complete — 19 candidates curated. Awaiting: human license review (CC BY-SA), image download, and image_plan.json source_type update from AI_GENERATE to REAL_PHOTO_LICENSED for 5 scenes.",
+      "fix_command": "FIX-H1",
+      "fix_status": "s007_s024_downloaded_registered_ai_75pct_s001_s008_s020_pending_legal_or_paid"
+    },
+    {
+      "warning_id": "W002",
+      "severity": "MEDIUM",
+      "source_document": "image_plan.json",
+      "field": "images[IMG009].mandatory_human_review",
+      "message": "IMG009 (mine scene, PROMPT_008) requires mandatory human review before AI generation. Sensitive historical content. No people rule is CRITICAL. If rejected 3 times, use fallback IMG010.",
+      "fix_command": "FIX-M1",
+      "fix_status": "pending"
+    },
+    {
+      "warning_id": "W003",
+      "severity": "MEDIUM",
+      "source_document": "subtitle.json",
+      "field": "entries",
+      "message": "Subtitle file contains only placeholder entry. Requires voice recording completion before subtitles can be generated.",
+      "fix_command": null,
+      "fix_status": "blocked_on_recording"
+    },
+    {
+      "warning_id": "W004",
+      "severity": "HIGH",
+      "source_document": "timeline.json",
+      "field": "assembly_status",
+      "message": "Timeline assembly has not begun. Requires: approved voice recording, all images generated/licensed, motion graphics completed, music bed selected.",
+      "fix_command": null,
+      "fix_status": "blocked_on_assets"
+    },
+    {
+      "warning_id": "W005",
+      "severity": "HIGH",
+      "source_document": "timeline.json",
+      "field": "tracks",
+      "message": "All timeline tracks are empty. Assembly required.",
+      "fix_command": null,
+      "fix_status": "blocked_on_assets"
+    },
+    {
+      "warning_id": "W006",
+      "severity": "HIGH",
+      "source_document": "thumbnail.json",
+      "field": "selected_concept_id",
+      "message": "No thumbnail selected. C07 pre-publish gate blocks on null selected_concept_id.",
+      "fix_command": null,
+      "fix_status": "resolved",
+      "resolution": "selected_concept_id set to 'THUMB_A'. THUMB_A status set to 'selected_pending_design'. All 4 checks (sensationalism, forced_labor_respect, factual_accuracy, creator_value) completed and passed. Resolved in blocker_resolution_round_1.",
+      "resolved_at": "2026-06-27T00:00:00Z"
+    },
+    {
+      "warning_id": "W007",
+      "severity": "HIGH",
+      "source_document": "thumbnail.json",
+      "field": "concepts[THUMB_C].title_overlay",
+      "message": "THUMB_C title overlay '一夜で捨てられた' is factually misleading (departure took 3 months, Jan 15–Apr 20 1974). Must be revised before THUMB_C can be approved.",
+      "fix_command": null,
+      "fix_status": "resolved",
+      "resolution": "THUMB_C marked status='rejected'. The misleading title_overlay is eliminated from active consideration. Background image IMG020 noted as reusable for a future THUMB_D with accurate title text. COMP-004 resolved. Resolved in blocker_resolution_round_1.",
+      "resolved_at": "2026-06-27T00:00:00Z"
+    },
+    {
+      "warning_id": "W008",
+      "severity": "MEDIUM",
+      "source_document": "thumbnail.json",
+      "field": "concepts[*].respect_check",
+      "message": "Respect check not completed on any thumbnail concept. Required before approval.",
+      "fix_command": null,
+      "fix_status": "resolved",
+      "resolution": "All concepts fully checked. THUMB_A: respect_check=true, all 4 sub-checks passed with documentation. THUMB_C: fully checked and rejected on factual_accuracy and sensationalism grounds. No unchecked concepts remain. Resolved in blocker_resolution_round_1.",
+      "resolved_at": "2026-06-27T00:00:00Z"
+    }
+  ],
+  "stage_record": [
+    { "stage": 0, "name": "project_init", "status": "complete", "completed_at": "2026-06-27T00:00:00Z" },
+    { "stage": 1, "name": "research", "status": "complete", "completed_at": "2026-06-27T01:00:00Z" },
+    { "stage": 2, "name": "research_verification", "status": "complete", "completed_at": "2026-06-27T01:30:00Z" },
+    { "stage": 3, "name": "story_outline", "status": "complete", "completed_at": "2026-06-27T02:00:00Z" },
+    { "stage": 4, "name": "script", "status": "complete", "completed_at": "2026-06-27T03:00:00Z" },
+    { "stage": 5, "name": "story_bible", "status": "complete", "completed_at": "2026-06-27T04:00:00Z" },
+    { "stage": 6, "name": "scene_list", "status": "complete", "completed_at": "2026-06-27T05:00:00Z" },
+    { "stage": 7, "name": "image_plan", "status": "complete", "completed_at": "2026-06-27T06:00:00Z" },
+    { "stage": 8, "name": "ai_image_prompts", "status": "complete", "completed_at": "2026-06-27T06:30:00Z" },
+    { "stage": 9, "name": "voice_script", "status": "complete", "completed_at": "2026-06-27T07:00:00Z" },
+    { "stage": 10, "name": "seo", "status": "complete", "completed_at": "2026-06-27T07:30:00Z" },
+    { "stage": 11, "name": "qa_report", "status": "complete", "completed_at": "2026-06-27T08:00:00Z" },
+    { "stage": 12, "name": "human_review_gate", "status": "complete", "completed_at": "2026-06-27T09:00:00Z" },
+    { "stage": 13, "name": "data_model_conversion", "status": "complete", "completed_at": "2026-06-27T12:00:00Z" },
+    { "stage": 14, "name": "composition_architecture_migration", "status": "complete", "completed_at": "2026-06-27T00:00:00Z" },
+    { "stage": 15, "name": "blocker_resolution_round_1", "status": "complete", "completed_at": "2026-06-27T00:00:00Z" },
+    { "stage": 16, "name": "fix_h1_round_2_decision_matrix", "status": "complete", "completed_at": "2026-06-27T00:00:00Z" },
+    { "stage": 17, "name": "fix_h1_round_3_download_register", "status": "complete", "completed_at": "2026-06-27T00:00:00Z" },
+    { "stage": 18, "name": "ai_image_generation_readiness_gate", "status": "complete", "completed_at": "2026-06-27T00:00:00Z" },
+    { "stage": 19, "name": "ai_generation_queue_cleanup_batch_1_plan", "status": "complete", "completed_at": "2026-06-27T00:00:00Z" },
+    { "stage": 20, "name": "batch_1_image_qa", "status": "complete", "completed_at": "2026-06-27T00:00:00Z" },
+    { "stage": 21, "name": "batch_2a_generation_plan", "status": "complete", "completed_at": "2026-06-27T00:00:00Z" },
+    { "stage": 22, "name": "batch_2a_image_qa", "status": "complete", "completed_at": "2026-06-27T00:00:00Z" },
+    { "stage": 23, "name": "batch_2b_generation_plan", "status": "complete", "completed_at": "2026-06-27T00:00:00Z" },
+    { "stage": 24, "name": "batch_2b_image_qa_and_img013_regen_qa", "status": "complete", "completed_at": "2026-06-27T00:00:00Z" },
+    { "stage": 25, "name": "img014_regen_v2_qa_and_img009_fix_m1_gate", "status": "complete", "completed_at": "2026-06-27T00:00:00Z" },
+    { "stage": 26, "name": "legal_hold_image_decision_round", "status": "complete", "completed_at": "2026-06-27T00:00:00Z" },
+    { "stage": 27, "name": "batch_3_image_qa", "status": "complete", "completed_at": "2026-06-27T00:00:00Z" },
+    { "stage": 28, "name": "img016_v2_final_qa_image_asset_phase_complete", "status": "complete", "completed_at": "2026-06-27T00:00:00Z" },
+    { "stage": 29, "name": "fix_m3_timed_readthrough_preparation", "status": "in_progress", "completed_at": null, "notes": "Simulated timing audit COMPLETE. IMG009 renamed. timed_readthrough_plan.md and timing_plan.json created. Director live read-through still required before voice session." },
+    { "stage": 30, "name": "vbee_voice_export_package", "status": "complete", "completed_at": "2026-06-27T00:00:00Z", "notes": "Vbee export package complete. 6 files created in voice/vbee_export/. 28 narration segments. Text sourced from voice.json (FIX-M2 and FIX-M4 applied). 40s Ma beat documented as editor silence (not Vbee). L008 placement at 2:37 and L028 placement at 9:35 documented in segmented script and pause plan. Next action: director live read-through (FIX-M3 gate), then Vbee export session." },
+    { "stage": 31, "name": "vbee_api_export_automation_setup", "status": "complete", "completed_at": "2026-06-28T00:00:00Z", "notes": "API automation setup complete. tools/vbee_export_segments.py created. tools/vbee_check_audio_manifest.py created. .env.example created. audio/vbee_raw/ initialized with manifest stub. Credentials loaded from C:/youtubeAI/.env (EXPO_PUBLIC_VBEE_* fallback supported). API not called yet — pending FIX-M3 live read-through gate." },
+    { "stage": 32, "name": "vbee_callback_payload_fix", "status": "complete", "completed_at": "2026-06-28T00:00:00Z", "notes": "callbackUrl payload fix applied. Auth test returned 400 (callbackUrl required) — auth was correct, payload was missing required async callback field. VBEE_CALLBACK_URL and VBEE_CALLBACK_FIELD added to config. _build_request() now includes callbackUrl in every payload. Async response handling added: _call_vbee() returns ('audio', bytes) or ('pending', dict). _save_pending_job() writes vbee_pending_jobs.json for async jobs. _require_callback_url() guard added to auth-test and export. print_config() updated to show callback status. production/vbee_callback_payload_fix_report.md created. --auth-test now validates callbackUrl before API call." },
+    { "stage": 33, "name": "vbee_inputtext_payload_fix", "status": "complete", "completed_at": "2026-06-28T00:00:00Z", "notes": "inputText field fix applied. Auth test returned 400 (inputText required) — payload used snake_case 'text' but Vbee expects camelCase 'inputText'. All four payload field names made configurable via VBEE_TEXT_FIELD (inputText), VBEE_VOICE_FIELD (voiceCode), VBEE_SPEED_FIELD (speed), VBEE_FORMAT_FIELD (audioType). _build_request() updated. _diagnose_400() added for field-level 400 hints. _FIELD_ENV_MAP lookup table added. print_config() and _print_request_debug() updated to show field names. .env.example updated. production/vbee_inputtext_payload_fix_report.md created." },
+    { "stage": 34, "name": "vbee_speed_field_fix", "status": "complete", "completed_at": "2026-06-28T00:00:00Z", "notes": "Speed field fix applied. Auth test returned 400 (speed not allowed) — Vbee rejects speed parameter at /api/v1/tts. speed removed from default payload. VBEE_INCLUDE_SPEED=false added (default). bit_rate also removed (unconfirmed field). _diagnose_400() fixed to parse details array instead of response envelope keys — previous version misidentified status/error_code/error_message as missing payload fields. print_config() updated to show speed exclusion status. production/vbee_speed_field_fix_report.md created." },
+    { "stage": 37, "name": "vbee_full_export_qa", "status": "complete", "completed_at": "2026-06-28T00:00:00Z", "notes": "Full export QA complete. 28/28 files present. Total audio: 345.1s. All segments at speed_rate=1 (VBEE_INCLUDE_SPEED=false) — content complete but pacing faster than planned targets. Status: 13 OK, 12 NEEDS_TIMELINE_ADJUSTMENT (extended visual silence), 3 TOO_SHORT (L003/L020/L034 — director listen required). Critical timing: PASS (L008=22.03s at 2:37, L028=20.42s Ma beat chain completes at 10:12 with 7.85s buffer before 10:20). Ma beat 10:20-11:00 intact. Human listening required: L001 L003 L008 L013 L014 L028. Sensitive content review: L013 L014 L015 L016. production/vbee_full_export_qa_report.md and audio/vbee_raw/vbee_full_export_qa.json created." },
+    { "stage": 36, "name": "vbee_callback_result_url_template_fix", "status": "complete", "completed_at": "2026-06-28T00:00:00Z", "notes": "URL template fix applied. fetch-result was calling GET /callback-result?request_id=<id> but Vbee requires /tts/{request_id}/callback-result (path substitution). _resolve_result_url() added: replaces {request_id} in URL path (URL-encoded), falls back to query param if absent. Default RESULT_API_URL updated to https://vbee.vn/api/v1/tts/{request_id}/callback-result. error_code 1005 now classified as 'not_found' with actionable hints. 'audio' kind renamed to 'audio_bytes'. print_config() shows result URL template and mode. .env.example updated. production/vbee_callback_result_url_template_fix_report.md created." },
+    { "stage": 35, "name": "vbee_async_result_fetcher", "status": "complete", "completed_at": "2026-06-28T00:00:00Z", "notes": "Async result fetcher added. Auth test returned 200 with async job: result.request_id=ab850041, result.status=IN_PROGRESS, result.speed_rate=1. Fixed: _extract_job_id() now searches nested result key. Fixed: _call_vbee() unwraps result wrapper and detects async from IN_PROGRESS. Fixed: _interpret_test_response() shows correct job ID and next step. Added: _find_audio_url() helper (8+ field name variants). Added: _fetch_result(), _fetch_and_save(), run_fetch_pending(), run_fetch_request(), run_auth_test_fetch(), _patch_manifest_after_fetch(). Added CLI: --auth-test-fetch, --fetch-pending, --fetch-request. Added RESULT_API_URL/RESULT_REQUEST_ID_FIELD/RESULT_METHOD config. .env.example updated. production/vbee_async_result_fetcher_report.md created." },
+    { "stage": 38, "name": "timeline_assembly_plan_v1", "status": "complete", "completed_at": "2026-06-28T00:00:00Z", "notes": "Timeline Assembly Plan v1 complete. Per-scene audio placement using actual Vbee durations (345.12s total). Timeline math: 345.12s narration + 12s pauses + 40s Ma beat + 322.88s visual silence = 720s exactly. Critical anchors confirmed: L008 at 2:37 (sec=157, spans S007/S008 cut), L028 at 9:35 (sec=575, spans S020/S021 cut). Ma beat 10:20-11:00 (40s, S022) INTACT. 2 image gaps: S010 and S019 have no image assigned (image_id_ref=null in scene.json) — fallback or new generation required before NLE assembly. 5 post-processing jobs: IMG002/IMG004/IMG008/IMG011/IMG016. IMG009 (S011a) requires human producer review. Risk flags: RF-004 and RF-010 (HIGH, image gaps), RF-013 (CRITICAL, Ma beat inviolable), RF-005/RF-006/RF-008 (HIGH, sensitive content). Attribution required: IMG006 CC BY 2.0, IMG020 Japan Govt 1974. Files created: timeline/timeline_assembly_plan.md, data/timeline_assembly_plan.json, production/timeline_assembly_plan_report.md." },
+    { "stage": 39, "name": "pre_assembly_blocking_fix", "status": "complete", "completed_at": "2026-06-28T00:00:00Z", "notes": "Pre-assembly blocking fix complete. S010 image gap: IMG003 (wooden door/vines close-up, batch_1) assigned as REUSE_ALTERNATE_CROP — crop to vines/concrete edge, slow_zoom_in motion, cooler grade. 3-minute gap from primary S003 use. S019 image gap: IMG010 (mine rock macro, batch_1) assigned as REUSE_ALTERNATE_CROP — crop to moss/rust mineral surface edges, static hold, +15deg warm color shift. 3:30-minute gap from primary S011b use. No new image generation required. AI% unchanged at 75%. scene.json image_id_ref updated: S010→IMG003, S019→IMG010. image_plan.json dual-use fields added to IMG003 and IMG010. timeline_assembly_plan.json RF-004 and RF-010 resolved. Timeline assembly blocker CLEARED. Files updated: data/scene.json, data/image_plan.json, data/timeline_assembly_plan.json, data/export.json, composition/composition_compliance.json. File created: production/pre_assembly_blocking_fix_report.md." },
+    { "stage": 40, "name": "rough_assembly_v1_pipeline", "status": "complete", "completed_at": "2026-06-28T00:00:00Z", "notes": "Rough assembly v1 RENDERED AND VERIFIED. hashima_rough_v1.mp4 at export/rough/ — 720.00s, 63.3 MB, 1920x1080 h264 + AAC 192k. 8/8 verification checks pass: file exists, duration 720.00s (target 720s delta=0.00s), video h264 1920x1080, audio aac 44100Hz 2ch, Ma beat window [620-660s] narration-free, L008 at 157.0s (2:37) delta=0.0s, L028 at 575.0s (9:35) delta=0.0s, 25 scenes. Pipeline: 25 scene clips in render_cache/, video_raw.mp4 concat, audio mix via adelay+apad=whole_dur=720 filter_complex (-/filter_complex file syntax for ffmpeg 7.1.1), final mux AAC. Known rough-cut limitations: MG001-MG004 are drawtext placeholders, no music/ambience, no subtitles, color grades are eq approximations (not LUT). Verification report: production/rough_video_v1_verification_report.md. Scripts: tools/render/render_rough_video.py, tools/render/verify_rough_timeline.py." },
+    { "stage": 41, "name": "voice_pace_fix_v1", "status": "deprecated_superseded_by_stage42", "completed_at": null, "notes": "Voice Pace Fix v1 (atempo=0.82). DEPRECATED: Human review found 0.82x voice sounds too slow/AI-dragging. Superseded by Stage 42 (atempo=0.90). Files preserved: audio/vbee_slow_082/, data/timeline_assembly_plan_v2.json, timeline/timeline_assembly_plan_v2.md. Do not use for final render. See production/voice_pace_comparison_report.md." },
+    { "stage": 42, "name": "voice_pace_fix_v2_090", "status": "audio_complete_render_pending", "completed_at": null, "notes": "Voice Pace Fix v2 (atempo=0.90). AUDIO COMPLETE: 28/28 files in audio/vbee_slow_090/ verified. Actual total: 383.88s (expected 383.47s, delta +0.41s — normal atempo variance, PASS). Ma beat buffer: ~4.54s (comfortable). Manifest: audio/vbee_slow_090/vbee_slow_090_manifest.json. Check report: production/vbee_slow_090_manifest_check_report.md. Next step: python tools/render/render_rough_video.py --timeline data/timeline_assembly_plan_v2_090.json --concat-only" },
+    { "stage": 43, "name": "rough_v3_tight_cut_plan", "status": "plan_complete_render_pending", "completed_at": null, "notes": "Rough V3 Tight Cut Plan. TARGET: 556s (9:16) vs 720s V2. Narration unchanged (383.88s, 0.90x). Silence: 143.12s (25.7%) vs 284s (39.5%) in V2 — 50% reduction. Ma beat: 17s at 8:22-8:39 (was 40s at 10:20-11:00). L008/L028 anchors REMOVED — fresh layout. Files created: data/timeline_assembly_plan_v3_tight.json, timeline/timeline_assembly_plan_v3_tight.md, production/rough_v3_tight_cut_plan_report.md. Script updates: render_rough_video.py --output flag added, verify_rough_timeline.py --timeline flag + dynamic Ma beat/duration + audio file check. Render: python tools/render/render_rough_video.py --timeline data/timeline_assembly_plan_v3_tight.json --output export/rough/hashima_rough_v3_tight.mp4. Verify: python tools/render/verify_rough_timeline.py --timeline data/timeline_assembly_plan_v3_tight.json --video export/rough/hashima_rough_v3_tight.mp4" }
+  ],
+  "open_fix_list": [
+    { "fix_id": "FIX-B1", "severity": "BLOCKER", "description": "Title B deleted — APPLIED. BLOCKER resolved.", "status": "resolved" },
+    { "fix_id": "FIX-H1", "severity": "HIGH", "description": "Round 3 complete. S007 DOWNLOADED (1600x1200, 991.7 KB, CC BY 2.0) → downloaded/S007_IMG006_Battle-Ship_Island_Nagasaki_Japan.jpg. S024 DOWNLOADED AND CROPPED (original 1900x2100 → 1900x1069 16:9, 422.9 KB) → processed/S024_IMG020_Cku-74-20_c45_6_hashima_16x9.jpg. AI%=75% — at limit, COMP-001 resolved. Remaining: S001/S008/S020 — Decision A (CC BY-SA legal review, all 3) or Decision B (paid PIXTA/Getty). See assets/real_images/human_approval_required.md.", "status": "partially_resolved_s007_s024_complete" },
+    { "fix_id": "FIX-H2", "severity": "HIGH", "description": "Motion directions added to all 25 scenes — APPLIED.", "status": "resolved" },
+    { "fix_id": "FIX-H2a", "severity": "HIGH", "description": "S011 split into S011a/S011b — APPLIED.", "status": "resolved" },
+    { "fix_id": "FIX-H3", "severity": "HIGH", "description": "S022 standardized to 40 seconds — APPLIED in scene.json and voice.json.", "status": "resolved" },
+    { "fix_id": "FIX-M1", "severity": "MEDIUM", "description": "IMG009 mandatory human review gate. CLEARED on attempt 1. All 13 FIX-M1 safety checks passed. Empty mine tunnel, wooden support timbers, zero human forms. Austere industrial atmosphere confirmed. Human producer final review still required before assembly. RENAME COMPLETE (2026-06-27): file is now IMG009_S011a_mine_tunnel_approved.png.", "status": "cleared_rename_complete" },
+    { "fix_id": "FIX-M2", "severity": "MEDIUM", "description": "「企業城下島」replaced — APPLIED in story.json and voice.json.", "status": "resolved" },
+    { "fix_id": "FIX-M3", "severity": "MEDIUM", "description": "Timed read-through required before talent session. Simulated timing audit COMPLETE (2026-06-27). IMG009 renamed. timed_readthrough_plan.md and timing_plan.json created. Timing flags: TF-001 (L008 start at 2:37), TF-002 (L028 start at 9:35 for full 40s Ma beat). Director live read-through and DAW markers pending before voice session.", "status": "simulated_complete_live_readthrough_pending" },
+    { "fix_id": "FIX-M4", "severity": "MEDIUM", "description": "Distance 15km→15〜18km — APPLIED in story.json, voice.json, seo description.", "status": "resolved" },
+    { "fix_id": "FIX-L1", "severity": "LOW", "description": "Narrator profile gender framing softened — APPLIED in voice.json.", "status": "resolved" },
+    { "fix_id": "FIX-L2", "severity": "LOW", "description": "Tag 廃島→廃墟島 — APPLIED in seo.json.", "status": "resolved" },
+    { "fix_id": "FIX-L3", "severity": "LOW", "description": "Publish checklist reorganized to priority order — APPLIED in seo.json.", "status": "resolved" },
+    { "fix_id": "FIX-BR1", "severity": "HIGH", "description": "Blocker Resolution Round 1 — APPLIED. Resolved: COMP-002 (thumbnail selected: THUMB_A), COMP-003 (respect checks completed on all concepts), COMP-004 (THUMB_C rejected for misleading title), COMP-005 (selected_title_id=TITLE_A, TITLE_C approved as A/B candidate). Remaining BLOCKER: COMP-001 (FIX-H1 AI image overuse).", "status": "resolved" }
+  ],
+  "metrics": {
+    "total_fixes_required": 13,
+    "fixes_resolved": 11,
+    "fixes_pending": 2,
+    "review_open_fixes": 2,
+    "scene_count": 25,
+    "image_count": 20,
+    "ai_image_count": 15,
+    "stock_image_count": 2,
+    "ai_overuse_percent": 75,
+    "voice_line_count": 35,
+    "word_count": 1201,
+    "video_duration_seconds": 720,
+    "fact_count": 13,
+    "verified_fact_count": 9,
+    "flagged_fact_count": 3,
+    "disputed_fact_count": 1,
+    "unverified_fact_count": 1,
+    "fail_count": 0,
+    "composition_compliance_score": 85,
+    "composition_blockers_remaining": 0,
+    "composition_high_remaining": 2
+  },
+  "next_production_action": "STAGE 43 COMPLETE. Rough V3 Tight Cut Plan ready. Render: python tools/render/render_rough_video.py --timeline data/timeline_assembly_plan_v3_tight.json --output export/rough/hashima_rough_v3_tight.mp4. Verify: python tools/render/verify_rough_timeline.py --timeline data/timeline_assembly_plan_v3_tight.json --video export/rough/hashima_rough_v3_tight.mp4. Target: 556s (9:16), Ma beat 17s at 8:22-8:39, silence 25.7%. Human review V3 to confirm: (1) pacing not rushed, (2) Ma beat 17s feels intentional, (3) S014/S016 short scenes feel complete. If Ma beat too brief, extend S022 in JSON to 20-22s.",
+  "created_at": "2026-06-27T12:00:00Z",
+  "updated_at": "2026-06-28T12:00:00Z"
+}

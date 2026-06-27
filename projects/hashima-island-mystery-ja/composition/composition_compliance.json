@@ -1,0 +1,927 @@
+{
+  "project_id": "hashima-island-mystery-ja",
+  "composition_manifest_id": "CM-2026-japan-mystery-lost-place",
+  "composed_template_id": "japan_mystery_lost_place",
+  "audit_date": "2026-06-27T00:00:00Z",
+  "auditor": "phase3_migration",
+
+  "overall_compliance_score": 85,
+  "composition_ready": false,
+  "composition_ready_reason": "0 BLOCKERs. COMP-001 resolved — AI% at 75% limit (S007 and S024 real images downloaded). Remaining: 2 HIGH issues (COMP-006 timeline, COMP-007 community_guidelines_review). Further AI% improvement to 60% pending S001/S008/S020 legal review or paid stock.",
+  "last_updated_by": "rough_v3_tight_cut_plan_stage43",
+  "last_updated_at": "2026-06-28T12:00:00Z",
+  "voice_asset_status": {
+    "stage": 42,
+    "updated_at": "2026-06-28T12:00:00Z",
+    "files_expected": 28,
+    "files_complete": 28,
+    "total_duration_sec": 345.12,
+    "total_duration_slowed_sec": 383.88,
+    "speed_factor": 0.90,
+    "pace_fix_status": "AUDIO_COMPLETE — 28/28 verified, 383.88s actual. Render pending.",
+    "pace_fix_v1_status": "DEPRECATED (0.82x human review: too slow/AI-dragging)",
+    "pace_fix_v2_status": "ACTIVE (0.90x) — 28/28 files in audio/vbee_slow_090/",
+    "critical_timing_pass": true,
+    "ma_beat_integrity": "INTACT — V3 Ma beat at 8:22-8:39 (17s). Pre-Ma silence: 16.24s in S021.",
+    "human_listening_pending": ["L001", "L003", "L008", "L013", "L014", "L028"],
+    "sensitive_content_review_pending": ["L013", "L014", "L015", "L016"],
+    "pacing_note": "atempo=0.90 applied to all 28 segments. Files in audio/vbee_slow_090/. V3 tight cut plan targets 556s (9:16). Use timeline_assembly_plan_v3_tight.json for V3 render.",
+    "qa_report": "production/vbee_slow_090_manifest_check_report.md",
+    "qa_json": "audio/vbee_slow_090/vbee_slow_090_manifest.json",
+    "v3_timeline": "data/timeline_assembly_plan_v3_tight.json",
+    "v3_manifest": "audio/vbee_slow_090/vbee_slow_090_manifest.json"
+  },
+
+  "timeline_assembly_plan": {
+    "stage": 43,
+    "updated_at": "2026-06-28T12:00:00Z",
+    "status": "v3_plan_complete_render_pending",
+    "v1_total_video_sec": 720,
+    "v3_total_video_sec": 556,
+    "v3_total_video_timecode": "9:16",
+    "total_narration_sec": 383.88,
+    "total_pauses_sec": 12,
+    "v3_total_ma_beat_sec": 17,
+    "v3_ma_beat_position": "8:22-8:39 (502-519s)",
+    "v3_total_visual_silence_sec": 143.12,
+    "v3_silence_percent": 25.7,
+    "v2_silence_percent": 39.5,
+    "silence_reduction_pct": 50,
+    "l008_v3": "1:47 (sec=107) — S008 clean start, no bridge",
+    "l028_v3": "7:25 (sec=445.5) — S021 entry",
+    "ma_beat_v3": "8:22-8:39 (17s) S022 — REDUCED from 40s",
+    "only_bridge_v3": "L012 spans S010/S011a cut (195.0s→220.42s)",
+    "image_gaps": "RESOLVED (Stage 39) — S010→IMG003 (alt crop), S019→IMG010 (alt crop+color).",
+    "post_processing_required": ["IMG002", "IMG004 (caption overlay)", "IMG008", "IMG011", "IMG016"],
+    "producer_review_required": ["IMG009 (S011a)"],
+    "human_listen_required": ["L001", "L003", "L008", "L013", "L014", "L028"],
+    "plan_files": {
+      "markdown_v3": "timeline/timeline_assembly_plan_v3_tight.md",
+      "json_v3": "data/timeline_assembly_plan_v3_tight.json",
+      "report_v3": "production/rough_v3_tight_cut_plan_report.md",
+      "markdown_v1": "timeline/timeline_assembly_plan.md",
+      "json_v1": "data/timeline_assembly_plan.json"
+    },
+    "render_command": "python tools/render/render_rough_video.py --timeline data/timeline_assembly_plan_v3_tight.json --output export/rough/hashima_rough_v3_tight.mp4",
+    "verify_command": "python tools/render/verify_rough_timeline.py --timeline data/timeline_assembly_plan_v3_tight.json --video export/rough/hashima_rough_v3_tight.mp4"
+  },
+
+  "dimension_scores": {
+    "creator_anh_duy": {
+      "score": 88,
+      "weight": 0.20,
+      "weighted": 17.6,
+      "notes": "Fact-based storytelling, respectful tone, curiosity over fear — all substantially met. AI% now at 75% limit (compliant after FIX-H1 Round 3). Remaining deduction: hook atmospheric-only framing (60s vs 30s target)."
+    },
+    "platform_youtube_long_form": {
+      "score": 78,
+      "weight": 0.20,
+      "weighted": 15.6,
+      "notes": "Duration (12 min) and aspect ratio (16:9) correct. THUMB_A selected (pending design). TITLE_A selected. TITLE_C approved as A/B candidate. Remaining deductions: chapter markers not assembled (requires timeline), community_guidelines_review pending."
+    },
+    "audience_general": {
+      "score": 88,
+      "weight": 0.10,
+      "weighted": 8.8,
+      "notes": "Script in conversational desu/masu register. Cultural context provided in ACT_I. Terminology mostly accessible. Minor technical vocabulary (鉄筋コンクリート, 採掘権) present but contextually clear."
+    },
+    "genre_documentary": {
+      "score": 80,
+      "weight": 0.15,
+      "weighted": 12.0,
+      "notes": "13 verified facts (VF001-VF013). Disputed content explicitly flagged (L016). Emotional arc clear. AI% now compliant at 75% (FIX-H1 Round 3). Remaining deduction: 3 scenes (S001/S008/S020) still AI — completion to 60% pending legal/paid stock."
+    },
+    "genre_mystery": {
+      "score": 82,
+      "weight": 0.15,
+      "weighted": 12.3,
+      "notes": "Evidence-first structure (ACT_II), uncertainty acknowledged (L016), open question ending (L034). Deduction: hook is 60s vs 30s target; central mystery question not explicitly posed within first 30 seconds."
+    },
+    "modifier_japan": {
+      "score": 92,
+      "weight": 0.10,
+      "weighted": 9.2,
+      "notes": "Strongest dimension. Japanese naturalness, Ma beat (S022, 40s, correct), canonical place names, sensitive history handled carefully, Japanese sources cited, FIX-B1 removed sensational title."
+    },
+    "modifier_lost_place": {
+      "score": 80,
+      "weight": 0.10,
+      "weighted": 8.0,
+      "notes": "Establishing shots present, map present, before/after contrast present, abandonment atmosphere. Deductions: opening motion mismatch (S001 slow vs very_slow), BEAT_LP_03 gap (no contemplative exterior without narration distinct from Ma beat)."
+    }
+  },
+
+  "issues": [
+    {
+      "issue_id": "COMP-001",
+      "severity": "BLOCKER",
+      "status": "resolved_at_limit",
+      "resolved_at": "2026-06-27T00:00:00Z",
+      "resolved_by": "fix_h1_round_3",
+      "category": "visual_compliance",
+      "rule_source": "composed_template.visual_style.ai_image_max_percent",
+      "rule_value": 75,
+      "actual_value": 75,
+      "previous_actual_value": 85,
+      "file": "data/image_plan.json",
+      "field": "ai_image_max_percent",
+      "description": "Current AI image usage is 85% of total video duration (610s of 720s). Composed template hard limit is 75% (540s max). Overage: 70 seconds of AI-generated imagery must be replaced with real footage or motion graphics.",
+      "fix": "FIX-H1 Round 3 applied. S007 (C007-A, CC BY 2.0, 1600x1200) and S024 (C024-B, Japan Govt 1974, cropped 1900x1069) downloaded and registered. ai_generate_count: 17→15. AI%: 85%→75% (at limit). Remaining: S001/S008/S020 pending CC BY-SA legal review or paid stock brings AI% to 60%.",
+      "resolution": "S007 and S024 real images downloaded and registered in image_plan.json. AI% reduced from 85% to 75% (exactly at contract limit). COMP-001 resolved. Further reduction to 60% pending Decision A (legal review) or Decision B (paid stock) for S001/S008/S020.",
+      "blocked_by": null,
+      "blocks": null
+    },
+    {
+      "issue_id": "COMP-002",
+      "severity": "BLOCKER",
+      "category": "platform_compliance",
+      "rule_source": "platform_profile.thumbnail_required",
+      "rule_value": true,
+      "actual_value": null,
+      "file": "data/thumbnail.json",
+      "field": "selected_concept_id",
+      "description": "No thumbnail concept has been selected. selected_concept_id is null. YouTube requires a thumbnail for all published videos. The pre-publish gate (C07) also blocks on this field.",
+      "fix": "Complete THUMB_A respect_check, then set selected_concept_id='THUMB_A' and status='approved'. THUMB_A is the recommended concept.",
+      "blocked_by": "COMP-003",
+      "blocks": "publish"
+    },
+    {
+      "issue_id": "COMP-003",
+      "severity": "BLOCKER",
+      "category": "creator_compliance",
+      "rule_source": "composed_template.thumbnail_strategy.respect_check_required",
+      "rule_value": true,
+      "actual_value": false,
+      "file": "data/thumbnail.json",
+      "field": "concepts[*].respect_check",
+      "description": "respect_check = false on all thumbnail concepts (THUMB_A, THUMB_C). Composed template requires respect_check = true before any concept can be approved. This blocks COMP-002.",
+      "fix": "Human producer must review THUMB_A: (1) Does it sensationalize? (2) Does it imply false certainty about the island's history? (3) Does it respect the victims of forced labor? Then set respect_check=true and respect_check_notes. Do the same for THUMB_C if it is to be considered.",
+      "blocked_by": null,
+      "blocks": "COMP-002"
+    },
+    {
+      "issue_id": "COMP-004",
+      "severity": "HIGH",
+      "category": "platform_compliance",
+      "rule_source": "platform_profile.title_factuality",
+      "rule_value": "factual_accuracy_required",
+      "actual_value": "factually_misleading",
+      "file": "data/thumbnail.json",
+      "field": "concepts[THUMB_C].title_overlay",
+      "description": "THUMB_C title overlay '軍艦島：なぜ一夜で捨てられた島と呼ばれるのか' references the '一夜で捨てられた' (abandoned in one night) framing even as a question. Even as a rhetorical question this risks validating the myth. The actual departure took 3 months (Jan 15 – Apr 20, 1974). This is already tracked as W007.",
+      "fix": "Revise THUMB_C title to remove '一夜で捨てられた' framing entirely. Replace with factually accurate phrasing, e.g. '軍艦島：なぜ人々は消えたのか' or similar. Do not use THUMB_C until revised.",
+      "blocked_by": null,
+      "blocks": "THUMB_C_approval"
+    },
+    {
+      "issue_id": "COMP-005",
+      "severity": "HIGH",
+      "category": "platform_compliance",
+      "rule_source": "platform_profile.title_required",
+      "rule_value": true,
+      "actual_value": null,
+      "file": "data/seo.json",
+      "field": "selected_title_id",
+      "description": "selected_title_id is null. No title has been finalized. TITLE_A is approved but not selected. TITLE_C has pending factual, off_limits, and respect checks.",
+      "fix": "Set selected_title_id='TITLE_A' immediately (all checks passed). Complete TITLE_C checks as a parallel task for A/B test consideration.",
+      "blocked_by": null,
+      "blocks": "publish_checklist"
+    },
+    {
+      "issue_id": "COMP-006",
+      "severity": "HIGH",
+      "category": "platform_compliance",
+      "rule_source": "platform_profile.chapter_markers.min_chapter_count_for_activation",
+      "rule_value": 3,
+      "actual_value": "rough_v3_tight_plan_complete_render_pending",
+      "file": "export/rough/hashima_rough_v3_tight.mp4",
+      "field": "timeline_status",
+      "description": "Stage 40: Rough v1 rendered 720s (V1 raw). Stage 42: 0.90x audio complete. Stage 43: V3 Tight Cut plan complete — target 556s (9:16), Ma beat 17s at 8:22-8:39. Render command: python tools/render/render_rough_video.py --timeline data/timeline_assembly_plan_v3_tight.json --output export/rough/hashima_rough_v3_tight.mp4. Chapter markers CH001-CH006 require final V3 timecodes after render.",
+      "fix": "Render V3 tight. Human review rough V3 (production/rough_v3_tight_cut_plan_report.md checklist). Confirm CH001-CH006 chapter timecodes align with V3 positions and update YouTube description after fine cut.",
+      "blocked_by": null,
+      "blocks": "chapter_validation"
+    },
+    {
+      "issue_id": "COMP-007",
+      "severity": "HIGH",
+      "category": "platform_compliance",
+      "rule_source": "platform_profile.content_policy",
+      "rule_value": "community_guidelines_review",
+      "actual_value": "pending",
+      "file": "data/seo.json",
+      "field": "content_policy.community_guidelines_review",
+      "description": "community_guidelines_review is 'pending'. The video contains sensitive_topics: forced_labor, historical_violence, political_dispute. YouTube requires sensitive content to be reviewed and declared before publishing. The content_declaration is present and well-formed, but the review itself has not been completed.",
+      "fix": "Human producer must complete community guidelines review. The content_declaration in seo.json provides the basis for the declaration. Set community_guidelines_review='approved' when done.",
+      "blocked_by": null,
+      "blocks": "publish"
+    },
+    {
+      "issue_id": "COMP-008",
+      "severity": "HIGH",
+      "category": "platform_compliance",
+      "rule_source": "platform_profile.title_factuality",
+      "rule_value": "all_checks_required",
+      "actual_value": "all_checks_pending",
+      "file": "data/seo.json",
+      "field": "titles[TITLE_C]",
+      "description": "TITLE_C '廃墟島・端島（軍艦島）はなぜ捨てられた？世界遺産の闇と光' has factual_accuracy_check=false, off_limits_check=false, respect_check=false. The word '闇' (darkness) requires respect review — while metaphorical, it could be perceived as sensationalizing the forced labor history.",
+      "fix": "Complete all 3 checks for TITLE_C. Pay specific attention to '闇と光' phrasing relative to forced labor history. Cannot use as A/B title until all checks pass.",
+      "blocked_by": null,
+      "blocks": "title_ab_test"
+    },
+    {
+      "issue_id": "COMP-009",
+      "severity": "HIGH",
+      "category": "genre_compliance",
+      "rule_source": "composed_template.pacing.hook_duration_seconds",
+      "rule_value": 30,
+      "actual_value": 60,
+      "file": "data/story.json",
+      "field": "outline.sections[HOOK].duration_seconds",
+      "description": "Template hook target is 30 seconds (arc.hook.target_duration_percent = 5% of 720s = 36s). The current HOOK section runs 60 seconds (0:00–1:00). Additionally, no explicit investigative question is posed within the first 30 seconds — L001-L003 are atmospheric scene-setting rather than a direct mystery question. BEAT_MYS_01 requires the mystery to be clearly posed within 30 seconds.",
+      "fix": "Content issue — do not rewrite. Report only. Human producer should evaluate whether the atmospheric approach is intentional (aligns with Japan modifier's very_slow pacing principle) or whether it risks viewer drop-off in the critical 30-second window. Consider adding an explicit mystery question as L003.5 or revising L003 from 'すべてが消えました' to a question form.",
+      "blocked_by": null,
+      "blocks": null
+    },
+    {
+      "issue_id": "COMP-010",
+      "severity": "MEDIUM",
+      "category": "genre_compliance",
+      "rule_source": "composed_template.motion_grammar.opening_motion",
+      "rule_value": "very_slow_pan_right",
+      "actual_value": "slow_pan_right",
+      "file": "data/scene.json",
+      "field": "scenes[S001].motion_direction",
+      "description": "Opening scene S001 uses 'slow_pan_right'. The composed template requires opening_motion: 'very_slow_pan_right' and the emotional_motion_map entry 'wide_establishing' also maps to 'very_slow_pan_right'. This is a metadata-only field — no visual content change required, only the motion_direction label.",
+      "fix": "METADATA-SAFE FIX: Change scene.json S001.motion_direction from 'slow_pan_right' to 'very_slow_pan_right'. This instructs the compositor to apply a slower pan speed. No image regeneration needed.",
+      "blocked_by": null,
+      "blocks": null
+    },
+    {
+      "issue_id": "COMP-011",
+      "severity": "MEDIUM",
+      "category": "genre_compliance",
+      "rule_source": "composed_template.scene_grammar.required_beats[BEAT_LP_03]",
+      "rule_value": "contemplative_exterior_shot_with_minimal_or_no_narration",
+      "actual_value": "no_qualifying_scene",
+      "file": "data/scene.json",
+      "field": "scenes[*]",
+      "description": "BEAT_LP_03 requires a wide or aerial exterior shot with minimal or no narration — distinct from the Ma beat (BEAT_JPN_02). S022 (Ma beat) satisfies BEAT_JPN_02 but cannot double as BEAT_LP_03. S020 is extreme_wide_shot but has active narration (L027). S024 is extreme_wide_shot with narration (L033-L034). No scene currently qualifies as a narration-free or minimal-narration contemplative exterior distinct from S022.",
+      "fix": "Content issue — do not rewrite. Report only. Consider extending S020 or S024 to have a brief narration-free segment, or adding a dedicated 15-20 second contemplative exterior cutaway. This beat adds emotional breathing space aligned with the lost_place modifier's atmosphere philosophy.",
+      "blocked_by": null,
+      "blocks": null
+    },
+    {
+      "issue_id": "COMP-012",
+      "severity": "MEDIUM",
+      "category": "production_readiness",
+      "rule_source": "voice.json",
+      "rule_value": "timed_readthrough_completed=true",
+      "actual_value": false,
+      "file": "data/voice.json",
+      "field": "timed_readthrough_completed",
+      "description": "Timed read-through has not been completed. This is FIX-M3. Voice talent session cannot be booked until the timed read-through confirms the script runs 12 minutes ±30 seconds at target pace.",
+      "fix": "Complete timed read-through at deliberate_slow pace. Target: 12 min ±30 sec. Update voice.json: timed_readthrough_completed=true with notes.",
+      "blocked_by": null,
+      "blocks": "voice_recording"
+    },
+    {
+      "issue_id": "COMP-013",
+      "severity": "MEDIUM",
+      "category": "production_readiness",
+      "rule_source": "voice.json",
+      "rule_value": "recording_status=completed",
+      "actual_value": "tts_export_complete",
+      "file": "data/voice.json",
+      "field": "recording_status",
+      "description": "Vbee TTS export complete. 28/28 audio segments exported to audio/vbee_raw/. This project uses TTS (not human voice talent). Human listening review of L001/L003/L008/L013/L014/L028 is the next gate. See audio/vbee_raw/vbee_full_export_qa.json.",
+      "fix": "Complete human listening review (see voice_asset_status.human_listening_pending). If pacing accepted, proceed to COMP-006 (timeline assembly). If pacing too fast, re-export slow/very_slow segments with INCLUDE_SPEED=true.",
+      "blocked_by": "COMP-012",
+      "blocks": "timeline_assembly"
+    },
+    {
+      "issue_id": "COMP-014",
+      "severity": "MEDIUM",
+      "category": "safety_compliance",
+      "rule_source": "composed_template.forbidden_elements[graphic_imagery] + scene mandatory_human_review",
+      "rule_value": "human_review_completed",
+      "actual_value": "pending",
+      "file": "data/scene.json",
+      "field": "scenes[S011a].notes",
+      "description": "S011a (IMG009) is flagged MANDATORY_HUMAN_REVIEW for sensitive content (coal mine tunnel evoking forced labor + AI_GENERATE). This is FIX-M1. The scene must be reviewed before image generation to ensure it does not visually approach graphic suffering, human depiction, or sensationalization of forced labor conditions.",
+      "fix": "Human producer reviews S011a visual_description and PROMPT_008. Confirm: (1) No human figures present, (2) Tunnel aesthetic does not sensationalize labor conditions, (3) Scene is clearly observational not sensational. Sign off in image_plan.json IMG009.human_review_status.",
+      "blocked_by": null,
+      "blocks": "image_generation"
+    },
+    {
+      "issue_id": "COMP-015",
+      "severity": "MEDIUM",
+      "category": "platform_compliance",
+      "rule_source": "platform_profile.subtitles.auto_generated_available",
+      "rule_value": "recommended",
+      "actual_value": "placeholder_only",
+      "file": "data/subtitle.json (not read in this audit)",
+      "field": "entries",
+      "description": "Subtitle file has placeholder entry only (W003). Subtitles are recommended (not required) per platform profile but strongly recommended for Japanese-language content about sensitive history.",
+      "fix": "Generate subtitles after voice recording is complete. Auto-generated subtitles via YouTube are available but manual review recommended given forced labor historical content.",
+      "blocked_by": "COMP-013",
+      "blocks": null
+    },
+    {
+      "issue_id": "COMP-016",
+      "severity": "MEDIUM",
+      "category": "genre_compliance",
+      "rule_source": "composed_template.forbidden_elements[personal_belongings_aestheticized_as_props]",
+      "rule_value": "documentary_historical_artifact_framing",
+      "actual_value": "borderline_cinematic_close_up",
+      "file": "data/scene.json",
+      "field": "scenes[S016]",
+      "description": "S016 is a close-up of abandoned personal items: child's shoe, photograph, rusted can. The visual_description says 'evidence of hasty departure' (documentary framing) but the shot is a dedicated close-up on personal belongings. The composed template forbids 'personal_belongings_aestheticized_as_props'. The scene notes do enforce 'no identifiable faces in photographs' — showing awareness. This is a borderline case.",
+      "fix": "Content issue — do not rewrite. Human review of the generated image (when produced): confirm the items appear as historical artifacts rather than cinematic decoration. Narration context (L020: 'last residents boarded a ship') provides documentary framing. If generated image feels exploitative, replace with a wide shot that includes personal items in context rather than isolated close-up.",
+      "blocked_by": null,
+      "blocks": null
+    },
+    {
+      "issue_id": "COMP-017",
+      "severity": "LOW",
+      "category": "genre_compliance",
+      "rule_source": "composed_template.camera_language.preferred_motion_directions",
+      "rule_value": ["very_slow_pan_right", "very_slow_pan_left", "slow_zoom_in", "slow_pan_right", "slow_pan_left", "ken_burns", "static"],
+      "actual_value": "ken_burns_zoom_in",
+      "file": "data/scene.json",
+      "field": "scenes[S002, S008].motion_direction",
+      "description": "S002 and S008 use 'ken_burns_zoom_in'. This value is a valid enum but is not in the composed template's preferred_motion_directions list. It is also not in forbidden_motion_directions or forbidden_in_emotional_moments. Minor preference violation only.",
+      "fix": "Optional: change S002 and S008 to 'slow_zoom_in' (preferred) at compositor discretion. Not a content issue.",
+      "blocked_by": null,
+      "blocks": null
+    },
+    {
+      "issue_id": "COMP-018",
+      "severity": "LOW",
+      "category": "structural_alignment",
+      "rule_source": "composed_template.scene_grammar.section_structure",
+      "rule_value": ["HOOK", "ACT_I", "ACT_II", "ACT_III", "OUTRO"],
+      "actual_value": ["HOOK", "ACT_I", "ACT_II", "ACT_III", "ACT_IV", "OUTRO"],
+      "file": "data/story.json + data/scene.json",
+      "field": "outline.sections[*].section_id",
+      "description": "The project uses 6 sections (ACT_IV added for Ma Beat and UNESCO content) while the composed template defines 5 minimum required sections. Having more sections is not a violation. However, BEAT_JPN_02 section_hint = 'ACT_III' while the Ma beat is in ACT_IV in the project. This is a documentation mismatch, not a compliance failure.",
+      "fix": "INFO-level alignment fix: no content change needed. Accept ACT_IV as a permitted extension of the minimum section structure. Document in migration_notes.md that the project's ACT_IV corresponds to the template's ACT_III synthesis role.",
+      "blocked_by": null,
+      "blocks": null
+    },
+    {
+      "issue_id": "COMP-019",
+      "severity": "LOW",
+      "category": "genre_compliance",
+      "rule_source": "composed_template.scene_grammar.required_beats[BEAT_MYS_01] + story.json.template_compliance",
+      "rule_value": "legacy_template_reference",
+      "actual_value": "japan_template",
+      "file": "data/story.json",
+      "field": "outline.template",
+      "description": "story.json references 'japan_template' as the outline template. This is the pre-architecture system reference. The template_compliance checks are also from the legacy system (4 beats vs 15 required by composed template).",
+      "fix": "Metadata-only: update story.json outline.template from 'japan_template' to 'japan_mystery_lost_place'. Update template_compliance block to reference the composed template beats and new compliance results. This is bookkeeping only — the content itself is compliant.",
+      "blocked_by": null,
+      "blocks": null
+    },
+    {
+      "issue_id": "COMP-020",
+      "severity": "LOW",
+      "category": "genre_compliance",
+      "rule_source": "composed_template.forbidden_elements[fabricated_facts]",
+      "rule_value": "fact_ids_required",
+      "actual_value": "no_fact_id",
+      "file": "data/story.json",
+      "field": "script.lines[L011].fact_ids_referenced",
+      "description": "L011: '映画のロケ地のモデルとされ' (said to be the model for a movie location) has no fact_id reference. This is a commonly cited cultural claim about Hashima's influence on post-apocalyptic film aesthetics, but no source is cited in research.json.",
+      "fix": "Either add a source to research.json and reference it in L011, or reframe the claim as 'しばしばそう言われています' (it is often said) to clearly mark it as widespread cultural perception rather than a specific documented claim.",
+      "blocked_by": null,
+      "blocks": null
+    },
+    {
+      "issue_id": "COMP-021",
+      "severity": "INFO",
+      "category": "structural_alignment",
+      "rule_source": "composed_template._composition_metadata (removed)",
+      "rule_value": "metadata_in_manifest",
+      "actual_value": "clean",
+      "file": "genre_templates/composed/japan_mystery_lost_place.json",
+      "field": "_composition_metadata",
+      "description": "The _composition_metadata block was successfully removed from the composed template in Phase 3 Task 1. Metadata is now canonical in composition/manifests/japan_mystery_lost_place_manifest.json. Schema validation should now pass without additionalProperties:false exception.",
+      "fix": "None — resolved.",
+      "blocked_by": null,
+      "blocks": null
+    },
+    {
+      "issue_id": "COMP-022",
+      "severity": "INFO",
+      "category": "production_readiness",
+      "rule_source": "composed_template.scene_grammar.required_beats[BEAT_JPN_02]",
+      "rule_value": "section_hint: ACT_III",
+      "actual_value": "Ma beat is in project section ACT_IV",
+      "file": "data/scene.json",
+      "field": "scenes[S022].section_id",
+      "description": "The composed template defines BEAT_JPN_02.section_hint='ACT_III' but the project places the Ma beat (S022) in section ACT_IV. The beat is correctly implemented (40s, static, no narration) — only the section label differs. ACT_IV functionally corresponds to the template's ACT_III synthesis role.",
+      "fix": "No action required. Document in migration_notes.md.",
+      "blocked_by": null,
+      "blocks": null
+    },
+    {
+      "issue_id": "COMP-023",
+      "severity": "INFO",
+      "category": "production_readiness",
+      "rule_source": "voice.json tts_settings",
+      "rule_value": "not_cross_referenced_in_template",
+      "actual_value": "speaking_rate=0.875",
+      "file": "data/voice.json",
+      "field": "tts_settings.speaking_rate",
+      "description": "TTS speaking_rate=0.875 is not validated against any composed template constraint. The composed template defines pacing as 'very_slow' but does not specify a speaking_rate value. The rate appears reasonable for deliberate_slow Japanese narration. No action required.",
+      "fix": "No action required. Note for future template versions: add optional tts_speaking_rate_guidance field to narrator_guidance.",
+      "blocked_by": null,
+      "blocks": null
+    }
+  ],
+
+  "beat_compliance": {
+    "BEAT_DOC_01": "PASS",
+    "BEAT_DOC_02": "PASS",
+    "BEAT_DOC_03": "PASS",
+    "BEAT_DOC_04": "PASS",
+    "BEAT_DOC_05": "PASS",
+    "BEAT_MYS_01": "PARTIAL",
+    "BEAT_MYS_02": "PASS",
+    "BEAT_MYS_03": "PASS",
+    "BEAT_MYS_04": "PASS",
+    "BEAT_JPN_01": "PASS",
+    "BEAT_JPN_02": "PASS",
+    "BEAT_JPN_03": "PASS",
+    "BEAT_LP_01": "PASS",
+    "BEAT_LP_02": "PASS",
+    "BEAT_LP_03": "PARTIAL"
+  },
+
+  "issue_count_by_severity": {
+    "BLOCKER": 0,
+    "HIGH": 2,
+    "MEDIUM": 7,
+    "LOW": 4,
+    "INFO": 3,
+    "RESOLVED_THIS_ROUND": 5,
+    "TOTAL_ACTIVE": 16,
+    "TOTAL_ORIGINAL": 23,
+    "_resolved_ids": ["COMP-001", "COMP-002", "COMP-003", "COMP-004", "COMP-005"]
+  },
+
+  "next_actions_priority_order": [
+    "STAGE 43 RENDER [IMMEDIATE]: python tools/render/render_rough_video.py --timeline data/timeline_assembly_plan_v3_tight.json --output export/rough/hashima_rough_v3_tight.mp4. Then verify: python tools/render/verify_rough_timeline.py --timeline data/timeline_assembly_plan_v3_tight.json --video export/rough/hashima_rough_v3_tight.mp4. Target: 556s (9:16), Ma beat 17s at 8:22-8:39, silence 25.7%.",
+    "ROUGH V3 HUMAN REVIEW [HIGH]: Watch Rough V3 (0.90x, 9:16) — confirm: (1) pacing not rushed, (2) Ma beat 17s at 8:22 feels intentional not frozen, (3) S014 date card 11s sufficient, (4) S016 personal items 11s not rushed, (5) pre-Ma quiet in S021 feels like build. If Ma beat too short, extend S022 to 20-22s in JSON.",
+    "VOICE QA [HIGH]: Human listen to L001, L003, L008, L013, L014, L028 — confirm pacing, completeness, and sensitive content tone. L003 flagged TOO_SHORT.",
+    "IMG009 PRODUCER REVIEW [HIGH]: Human producer must review IMG009 (S011a) before fine cut. FIX-M1 safety cleared but producer signoff outstanding.",
+    "FINE CUT TASKS [HIGH]: Replace MG001-MG004 placeholders with actual motion graphics. Add music bed + ambience. Refine S010/S019 crop framing. Add IMG004 caption overlay. Apply final color grade.",
+    "COMP-007 [HIGH]: Sensitive content tone review L013-L016 before YouTube publication. community_guidelines_review must pass.",
+    "COMP-006 [HIGH]: After rough cut review, verify CH001-CH006 chapter timecodes align with final video. Update YouTube description.",
+    "COMP-010 [MEDIUM]: Change S001 motion_direction from 'slow_pan_right' to 'very_slow_pan_right' (metadata-only).",
+    "COMP-019 [LOW]: Update story.json outline.template from 'japan_template' to 'japan_mystery_lost_place' (metadata-only)."
+  ],
+
+  "fix_h1_round_2_scenarios": {
+    "generated_at": "2026-06-27T00:00:00Z",
+    "baseline": { "ai_percent": 85, "status": "VIOLATION" },
+    "scenario_a_s007_only": {
+      "description": "Only S007 approved (C007-A, CC BY 2.0)",
+      "ai_percent": 80, "comp_001_status": "STILL_VIOLATING"
+    },
+    "scenario_b_s007_plus_all_ccbysa_approved": {
+      "description": "S007 + S001/S008/S020/S024 all via CC BY-SA with legal clearance",
+      "ai_percent": 60, "comp_001_status": "RESOLVED",
+      "legal_prerequisite": "Written legal clearance that CC BY-SA B-roll in commercial YouTube documentary does not require whole-video SA adoption"
+    },
+    "scenario_c_s007_plus_paid_stock": {
+      "description": "S007 + remaining 4 via paid stock (PIXTA/Getty)",
+      "ai_percent": 60, "comp_001_status": "RESOLVED",
+      "cost_note": "PIXTA and/or Getty license required"
+    },
+    "scenario_d_s007_only_rest_ai": {
+      "description": "Only S007 approved, remaining 4 stay AI fallback",
+      "ai_percent": 80, "comp_001_status": "STILL_VIOLATING"
+    },
+    "scenario_e_bonus_s007_plus_s024_immediate": {
+      "description": "S007 (CC BY 2.0) + S024 (Japan Govt 1974) — both downloadable now, zero legal review",
+      "ai_percent": 75.0, "comp_001_status": "TECHNICALLY_RESOLVED_MARGINAL",
+      "notes": "75.0% exactly meets the limit. Zero buffer. Recommended as immediate partial resolution while legal/paid stock proceeds for S001/S008/S020."
+    }
+  },
+
+  "ai_image_generation_readiness_gate": {
+    "gate_date": "2026-06-27",
+    "last_updated_by": "ai_image_generation_readiness_gate",
+    "total_ai_images": 18,
+    "READY": 3,
+    "READY_WITH_REWRITE": 9,
+    "HUMAN_REVIEW_REQUIRED": 4,
+    "BLOCKED": 2,
+    "generation_may_begin": true,
+    "img009_status": "HUMAN_REVIEW_REQUIRED_PROMPT_REWRITE_COMPLETE",
+    "critical_data_error_found": true,
+    "data_errors_corrected": [
+      "IMG008: PROMPT_008 (mine tunnel) → PROMPT_S009_SCHOOL (school interior). Corrected in image_plan.json.",
+      "IMG005: Status set to BLOCKED_DATA_ERROR. Aerial CG prompt for school interior scene is invalid. Pending resolution.",
+      "PROMPT_019: Does not exist. IMG019 (S023) must use PROMPT_017 content. Documented in generation_queue.json."
+    ],
+    "prompt_safety_audit_ref": "assets/ai_images/prompt_safety_audit.json",
+    "generation_queue_ref": "assets/ai_images/generation_queue.json",
+    "readiness_report_ref": "production/ai_image_generation_readiness_report.md"
+  },
+
+  "ai_generation_queue_cleanup": {
+    "cleanup_date": "2026-06-27",
+    "last_updated_by": "ai_generation_queue_cleanup_batch_1_plan",
+    "total_active_ai_images": 17,
+    "suppressed": 1,
+    "READY": 3,
+    "READY_WITH_REWRITE": 10,
+    "HUMAN_REVIEW_REQUIRED": 4,
+    "BLOCKED": 0,
+    "queue_clean": true,
+    "batch_1_approved": true,
+    "batch_1_images": ["IMG002", "IMG004", "IMG018"],
+    "batch_1_generation_may_begin": true,
+    "resolutions_applied": [
+      "IMG005: SUPPRESSED (orphaned aerial slot — S007 has real photo IMG006). No generation.",
+      "IMG008: UNBLOCKED → READY_WITH_REWRITE (corrected to PROMPT_S009_SCHOOL). Scheduled for Batch 2.",
+      "PROMPT_008 mine tunnel: isolated to IMG009 only. Safety gate intact."
+    ],
+    "cleanup_report_ref": "production/ai_generation_queue_cleanup_report.md",
+    "batch_1_plan_ref": "assets/ai_images/batch_1_generation_plan.json",
+    "block_resolution_ref": "assets/ai_images/blocked_prompt_resolution_plan.json"
+  },
+
+  "batch_1_image_qa": {
+    "qa_date": "2026-06-27",
+    "last_updated_by": "batch_1_image_qa_gate",
+    "images_reviewed": 3,
+    "APPROVED": 1,
+    "APPROVED_WITH_MINOR_NOTES": 2,
+    "REGENERATE": 0,
+    "REJECTED": 0,
+    "all_passed": true,
+    "batch_2_may_begin": true,
+    "results": {
+      "IMG002": { "classification": "APPROVED_WITH_MINOR_NOTES", "key_note": "Post-process desaturation required; frame motion away from right-side exterior view" },
+      "IMG004": { "classification": "APPROVED_WITH_MINOR_NOTES", "key_note": "MANDATORY: 'illustrative archival simulation' label required in edit" },
+      "IMG018": { "classification": "APPROVED", "key_note": "Excellent Ma beat image; confirm AI provenance; minimal post needed" }
+    },
+    "qa_report_ref": "production/batch_1_image_qa_report.md",
+    "qa_json_ref": "assets/ai_images/generated/batch_1/batch_1_qa.json"
+  },
+
+  "batch_2a_image_qa": {
+    "qa_date": "2026-06-27",
+    "last_updated_by": "batch_2a_image_qa_gate",
+    "images_reviewed": 5,
+    "APPROVED": 3,
+    "APPROVED_WITH_MINOR_NOTES": 1,
+    "REGENERATE": 1,
+    "REJECTED": 0,
+    "all_passed": false,
+    "batch_2b_may_begin": true,
+    "folder_note": "Images found in batch_1/ folder — batch_2a/ subfolder was not created by user",
+    "results": {
+      "IMG003": { "classification": "APPROVED", "key_note": "Excellent door texture, already desaturated, minimal post" },
+      "IMG010": { "classification": "APPROVED", "key_note": "Pure coal/shale macro, zero human-coded shapes, confirmed fallback for IMG009" },
+      "IMG011": { "classification": "APPROVED_WITH_MINOR_NOTES", "key_note": "Frame slow_pan_left to interior light shafts; compare with IMG014 for variety" },
+      "IMG012": { "classification": "APPROVED", "key_note": "Strongest image in batch — natural desaturation, dock receding into water" },
+      "IMG013": { "classification": "REGENERATE", "key_note": "CRITICAL GATE: photograph prop shows group of people. Corrected prompt: photograph face-down. Attempt 1 of 3." }
+    },
+    "qa_report_ref": "production/batch_2a_image_qa_report.md",
+    "qa_json_ref": "assets/ai_images/generated/batch_1/batch_2a_qa.json"
+  },
+
+  "batch_2b_generation_plan": {
+    "plan_date": "2026-06-27",
+    "last_updated_by": "batch_2b_generation_plan_gate",
+    "images_planned": 5,
+    "flag_words_corrected": 1,
+    "all_approved": true,
+    "generation_may_begin": true,
+    "status": {
+      "IMG008": "READY_WITH_REWRITE → APPROVED (school interior, no changes needed)",
+      "IMG014": "READY_WITH_REWRITE → APPROVED (melancholic→reflective; duplication guard vs IMG011 added)",
+      "IMG015": "READY_WITH_REWRITE → APPROVED (storm ruins, negative expanded)",
+      "IMG017": "READY_WITH_REWRITE → APPROVED (heritage plaque, text illegibility strengthened)",
+      "IMG019": "READY_WITH_REWRITE → APPROVED (tourist ferry, vessel-people guard added)"
+    },
+    "parallel_track": "IMG013 regeneration attempt 1 of 3 (face-down photograph prompt)",
+    "critical_qa_gates": [
+      "IMG017: plaque inscription must be illegible — any legible text → REGENERATE",
+      "IMG019: vessel deck must be empty — any person/face on deck → REGENERATE",
+      "IMG014: must be room-scale intimate, not wide-grand — compare vs IMG011 for visual variety"
+    ],
+    "plan_report_ref": "production/batch_2b_generation_plan_report.md",
+    "plan_json_ref": "assets/ai_images/batch_2b_generation_plan.json"
+  },
+
+  "batch_2b_image_qa": {
+    "qa_date": "2026-06-27",
+    "last_updated_by": "batch_2b_image_qa_gate",
+    "images_reviewed": 6,
+    "includes_img013_regen_qa": true,
+    "APPROVED": 4,
+    "APPROVED_WITH_MINOR_NOTES": 1,
+    "REGENERATE": 1,
+    "REJECTED": 0,
+    "all_passed": false,
+    "results": {
+      "IMG013_v2": { "classification": "APPROVED", "key_note": "Regeneration closed — photograph face-down, blank paper only, critical gate cleared" },
+      "IMG008": { "classification": "APPROVED_WITH_MINOR_NOTES", "key_note": "School interior with desks/light shafts. High destruction level acceptable; no chalk visible (safer). Post: slight desaturation." },
+      "IMG014": { "classification": "REGENERATE", "key_note": "Cave chamber, not concrete room. Conflicts with S017 scene and risks visual collision with IMG009 mine. Corrected prompt anchors concrete architecture." },
+      "IMG015": { "classification": "APPROVED", "key_note": "Storm ruins at ocean — excellent. Crashing waves, columns, dark clouds, cool palette." },
+      "IMG017": { "classification": "APPROVED", "key_note": "Heritage plaque — inscription illegible (critical gate passed). Warm-cool contrast correct." },
+      "IMG019": { "classification": "APPROVED", "key_note": "Ferry bow + empty deck (critical gate passed). Hashima battleship silhouette excellent." }
+    },
+    "total_confirmed_images": 14,
+    "remaining_ai_images": {
+      "IMG014": "REGENERATE attempt 1",
+      "IMG009": "FIX-M1 gate — may begin",
+      "IMG001": "HUMAN_REVIEW_REQUIRED legal hold",
+      "IMG007": "HUMAN_REVIEW_REQUIRED legal hold",
+      "IMG016": "HUMAN_REVIEW_REQUIRED legal hold"
+    },
+    "qa_report_ref": "production/batch_2b_image_qa_report.md",
+    "qa_json_ref": "assets/ai_images/generated/batch_2b/batch_2b_qa.json",
+    "img013_regen_ref": "assets/ai_images/generated/batch_2a/img013_regeneration_qa.json"
+  },
+  "img014_regen_v2_and_img009_fix_m1_qa": {
+    "qa_date": "2026-06-27",
+    "last_updated_by": "img014_img009_qa_gate",
+    "gates_applied": ["IMG014_regeneration_v2", "FIX-M1_mandatory_human_review"],
+    "images_reviewed": 2,
+    "APPROVED": 2,
+    "REGENERATE": 0,
+    "REJECTED": 0,
+    "all_passed": true,
+    "results": {
+      "IMG014_v2": {
+        "classification": "APPROVED",
+        "regeneration_attempt": 2,
+        "regeneration_closed": true,
+        "key_note": "Concrete walls confirmed (plastered), collapsed concrete ceiling, doorway visible. Not a cave. Single light shaft, room-scale intimate. Visual duplication with IMG011 eliminated — different scale and composition."
+      },
+      "IMG009_attempt1": {
+        "classification": "APPROVED",
+        "fix_m1_gate": "PASSED",
+        "fix_m1_checks_passed": 13,
+        "fix_m1_checks_failed": 0,
+        "human_producer_review_required": true,
+        "rename_required": true,
+        "rename_from": "IMG009_S010_mine_gate_attempt1.png",
+        "rename_to": "IMG009_S011a_mine_tunnel_approved.png",
+        "key_note": "Empty mine tunnel with authentic wooden support timbers. Zero human forms, silhouettes, or human-coded shadows. Austere industrial atmosphere — not horror. The emptiness is the statement."
+      }
+    },
+    "total_confirmed_images": 16,
+    "remaining_images": {
+      "IMG001": "HUMAN_REVIEW_REQUIRED — legal hold (Decision A/B)",
+      "IMG007": "HUMAN_REVIEW_REQUIRED — legal hold (Decision A/B)",
+      "IMG016": "HUMAN_REVIEW_REQUIRED — legal hold (Decision A/B)",
+      "IMG005": "SUPPRESSED"
+    },
+    "production_gate": "legal_hold_decision_AB_may_proceed",
+    "qa_report_ref": "production/img014_img009_qa_report.md",
+    "qa_json_ref": "assets/ai_images/generated/mine_gate/img009_mine_gate_qa.json"
+  },
+  "legal_hold_image_decision_round": {
+    "decision_date": "2026-06-27",
+    "last_updated_by": "legal_hold_image_decision_gate",
+    "slots_resolved": 3,
+    "decision_method": "C_AI_FALLBACK_all_three",
+    "decisions": {
+      "IMG001_S001": {
+        "decision": "C",
+        "reason": "C001-A CC BY-SA blocked. C001-C creates visual repeat with S007. AI produces unique pre-dawn sea-level island wide.",
+        "output_filename": "IMG001_S001_island_establishing_predawn.png"
+      },
+      "IMG007_S008": {
+        "decision": "C",
+        "reason": "C008-A CC BY-SA blocked AND structurally wrong (mine hoistroom ≠ Building 30). AI writes to correct scene spec.",
+        "structure_mismatch_resolved": true,
+        "output_filename": "IMG007_S008_building30_exterior.png"
+      },
+      "IMG016_S020": {
+        "decision": "C",
+        "reason": "C020-A CC BY-SA blocked. C020-C creates visual repeat with S007. AI produces unique dusk warm-palette wide.",
+        "upgrade_flag": true,
+        "upgrade_note": "PIXTA dusk photo recommended before publish. AI sufficient for production pipeline.",
+        "output_filename": "IMG016_S020_island_dusk_wide.png"
+      }
+    },
+    "ai_percent_before": 75.0,
+    "ai_percent_after": 75.0,
+    "ai_percent_change": "none",
+    "flag_words_found": 0,
+    "all_prompts_safe": true,
+    "confirmed_images_total": 16,
+    "pending_batch_3_generation": 3,
+    "suppressed": 1,
+    "image_asset_phase_can_complete": true,
+    "image_asset_phase_completion_condition": "Batch 3 (IMG001/IMG007/IMG016) generates and passes QA",
+    "generation_plan_ref": "assets/ai_images/legal_hold_fallback_generation_plan.json",
+    "decision_report_ref": "production/legal_hold_image_decision_report.md"
+  },
+  "batch_3_image_qa": {
+    "qa_date": "2026-06-27",
+    "last_updated_by": "batch_3_image_qa_gate",
+    "images_reviewed": 3,
+    "APPROVED": 2,
+    "REGENERATE": 1,
+    "REJECTED": 0,
+    "all_passed": false,
+    "results": {
+      "IMG001": {
+        "classification": "APPROVED",
+        "key_note": "Pre-dawn island silhouette from sea level. Cold blue-black palette. Mist at water. Hashima profile recognizable. No people, no vessels. Exceptional HOOK image."
+      },
+      "IMG007": {
+        "classification": "APPROVED",
+        "key_note": "9-story concrete residential facade, low-angle, rust/moss/crumbling windows. Correct Building 30 character. Structure mismatch with C008-A fully resolved."
+      },
+      "IMG016": {
+        "classification": "REGENERATE",
+        "regeneration_attempt": 1,
+        "key_note": "AI generated building facade close-up (cool grey, no sea) instead of island dusk extreme wide. Four critical failures: wrong scene type, wrong palette, no sea, visual collision with IMG007. Corrected prompt forces three-band composition (sky/island/sea) and warm dusk palette."
+      }
+    },
+    "total_confirmed_images": 18,
+    "remaining": {
+      "IMG016": "REGENERATE attempt 1 — corrected prompt in batch_3_image_qa_report.md",
+      "IMG005": "SUPPRESSED"
+    },
+    "image_asset_phase_complete": false,
+    "image_asset_phase_completion_condition": "IMG016 v2 must generate and pass QA",
+    "qa_report_ref": "production/batch_3_image_qa_report.md",
+    "qa_json_ref": "assets/ai_images/generated/batch_3/batch_3_qa.json"
+  },
+  "img016_v2_final_qa": {
+    "qa_date": "2026-06-27",
+    "last_updated_by": "img016_v2_final_qa_gate",
+    "image_id": "IMG016",
+    "scene_id": "S020",
+    "classification": "APPROVED",
+    "regeneration_attempt": 2,
+    "regeneration_closed": true,
+    "key_note": "Island completely surrounded by calm sea, warm amber dusk sky, three-band composition (sky/island/sea), Hashima profile recognizable. No people, no vessels. Opposite color temperature to IMG001 (cold pre-dawn) — visual arc complete. MN-01: slight post-process desaturation recommended.",
+    "all_qa_checks_passed": 16,
+    "minor_notes": 1,
+    "image_asset_phase_complete": true,
+    "image_asset_phase_note": "All 19 non-suppressed images confirmed. IMG005 suppressed. AI%=75%. Image asset phase is COMPLETE.",
+    "confirmed_images_total": 19,
+    "suppressed": 1,
+    "qa_report_ref": "production/img016_v2_final_qa_report.md",
+    "qa_json_ref": "assets/ai_images/generated/batch_3/img016_v2_qa.json"
+  },
+  "fix_m3_timed_readthrough": {
+    "stage_date": "2026-06-27",
+    "last_updated_by": "fix_m3_timed_readthrough_preparation",
+    "status": "simulated_complete_live_readthrough_pending",
+    "img009_rename_completed": true,
+    "img009_rename_from": "IMG009_S010_mine_gate_attempt1.png",
+    "img009_rename_to": "IMG009_S011a_mine_tunnel_approved.png",
+    "img009_rename_date": "2026-06-27",
+    "timing_audit_result": {
+      "total_video_seconds": 720,
+      "total_narration_speaking_seconds": 423,
+      "total_pauses_and_gaps_seconds": 101,
+      "total_narrated_content_seconds": 524,
+      "visual_silence_seconds": 196,
+      "ma_beat_seconds": 40,
+      "hook_landing_timecode": "0:24",
+      "hook_within_30s": true,
+      "target_12_minutes_achievable": true,
+      "effective_pacing_morae_per_min": 170
+    },
+    "timing_flags": [
+      {
+        "flag_id": "TF-001",
+        "severity": "WARNING",
+        "scene": "S008",
+        "line": "L008",
+        "issue": "S008 window 15s; L008 narration 22s — overflow 7s",
+        "resolution": "Begin L008 at 2:37 within S007. Spans scene cut. Ends at 2:59.",
+        "action_required": true,
+        "status": "pending_director_daw_mark"
+      },
+      {
+        "flag_id": "TF-002",
+        "severity": "WARNING",
+        "scene": "S022",
+        "line": "L028",
+        "issue": "L028 standard start at 9:40 yields only ~35s Ma silence within S022",
+        "resolution": "Begin L028 at 9:35 for full 40s Ma beat at 10:20-11:00",
+        "action_required": true,
+        "status": "pending_director_daw_mark"
+      },
+      {
+        "flag_id": "TF-003",
+        "severity": "INFO",
+        "lines": ["L011", "L012", "L014", "L015"],
+        "issue": "Four ACT_II lines span scene cuts",
+        "resolution": "No action — normal in documentary audio production",
+        "action_required": false,
+        "status": "noted"
+      }
+    ],
+    "documents_created": [
+      "voice/timed_readthrough_plan.md",
+      "data/timing_plan.json",
+      "production/fix_m3_timed_readthrough_report.md"
+    ],
+    "live_readthrough_complete": false,
+    "daw_markers_set": false,
+    "fix_m3_gate_cleared": false,
+    "fix_m3_gate_cleared_by": null,
+    "fix_m3_gate_cleared_date": null,
+    "next_action": "Director performs live read-through at Japanese documentary pace. Confirm ≤450s speaking. Set DAW markers L008@2:37 and L028@9:35. Confirm 40s Ma beat. Then voice session."
+  },
+
+  "vbee_voice_export_package": {
+    "stage_date": "2026-06-27",
+    "last_updated_by": "vbee_voice_export_package",
+    "status": "complete",
+    "text_source": "data/voice.json (authoritative — FIX-M2 and FIX-M4 applied). voice_script.txt NOT used (contains pre-fix text).",
+    "total_segments": 28,
+    "narration_segments": 28,
+    "pause_events_editor_only": 7,
+    "ma_beat_handling": "40s Ma beat (L031) is editor-created silence. NOT generated in Vbee. Documented in vbee_pause_plan.md.",
+    "export_mode_recommended": "segmented",
+    "audio_save_folder": "audio/vbee_raw/",
+    "naming_convention": "hashima_[LineID]_[section]_[sequence].mp3",
+    "timeline_placement_flags": {
+      "L008": { "place_at": "2:37", "note": "Begins in S007, spans cut to S008. TF-001." },
+      "L028": { "place_at": "9:35", "note": "Begins 5s before S021 in S020 visual silence. Ensures Ma beat at 10:20. TF-002." }
+    },
+    "sensitive_content_lines": ["L013", "L014", "L015", "L016"],
+    "sensitive_content_requirement": "Factual delivery only. No horror tone. No emotional heightening. FIX-M1 compliance required for L014.",
+    "documents_created": [
+      "voice/vbee_export/vbee_full_script_clean.txt",
+      "voice/vbee_export/vbee_segmented_script.json",
+      "voice/vbee_export/vbee_segmented_script.md",
+      "voice/vbee_export/vbee_pause_plan.md",
+      "voice/vbee_export/vbee_export_instructions.md",
+      "voice/vbee_export/vbee_quality_checklist.md"
+    ],
+    "vbee_session_gate": "FIX-M3 live read-through must complete before Vbee export session begins.",
+    "next_action": "Director completes live read-through (FIX-M3 gate). Then: Vbee export session using voice/vbee_export/vbee_segmented_script.md. 28 segments to export. Save to audio/vbee_raw/. Run vbee_quality_checklist.md. Then: timeline assembly."
+  },
+
+  "vbee_api_export_automation": {
+    "stage_date": "2026-06-28",
+    "last_updated_by": "vbee_api_export_automation_setup",
+    "status": "setup_complete_export_pending",
+    "env_file": "C:/youtubeAI/.env (EXPO_PUBLIC_VBEE_* variables detected)",
+    "env_example_created": true,
+    "env_example_path": ".env.example",
+    "export_script": "tools/vbee_export_segments.py",
+    "checker_script": "tools/vbee_check_audio_manifest.py",
+    "manifest_stub": "audio/vbee_raw/vbee_export_manifest.json",
+    "setup_report": "production/vbee_api_export_setup_report.md",
+    "api_called": false,
+    "gate_condition": "FIX-M3 live read-through must pass before running export",
+    "key_safety": {
+      "hardcoded_in_source": false,
+      "printed_in_logs": false,
+      "saved_in_reports": false,
+      "loaded_from": ".env via python-dotenv (upward search)"
+    },
+    "commands": {
+      "dry_run":     "python tools/vbee_export_segments.py --dry-run",
+      "print_config":"python tools/vbee_export_segments.py --print-config",
+      "auth_test":   "python tools/vbee_export_segments.py --auth-test",
+      "export":      "python tools/vbee_export_segments.py",
+      "check":       "python tools/vbee_check_audio_manifest.py",
+      "one_line":    "python tools/vbee_export_segments.py --segment L001"
+    },
+    "next_action": "Add VBEE_CALLBACK_URL to .env → run --auth-test → director live read-through (FIX-M3) → run export script → run checker → review report → timeline assembly."
+  },
+
+  "vbee_callback_payload_fix": {
+    "stage_date": "2026-06-28",
+    "last_updated_by": "vbee_callback_payload_fix",
+    "status": "complete",
+    "problem": "400 Validation Failed — callbackUrl is required in every Vbee TTS request",
+    "root_cause": "Vbee API is async — requires callback URL for audio delivery. Payload was missing the field.",
+    "fix_report": "production/vbee_callback_payload_fix_report.md",
+    "changes": [
+      "VBEE_CALLBACK_URL and VBEE_CALLBACK_FIELD added to .env.example",
+      "_build_request() includes payload[CALLBACK_FIELD] = CALLBACK_URL",
+      "_require_callback_url() guard added — aborts before API call if not set",
+      "_call_vbee() returns ('audio', bytes) or ('pending', dict) — async response handled",
+      "_save_pending_job() writes audio/vbee_raw/vbee_pending_jobs.json for async jobs",
+      "print_config() shows callback URL (set yes/no) and callback field name",
+      "run_auth_test() validates callback URL before call, shows URL in output",
+      "Manifest adds callback_field, callback_url_set, pending_async_segments fields"
+    ],
+    "pending_jobs_file": "audio/vbee_raw/vbee_pending_jobs.json",
+    "async_response_fields_detected": ["request_id", "requestId", "task_id", "taskId", "job_id", "jobId", "id"],
+    "callback_field_name": "callbackUrl",
+    "callback_field_configurable_via": "VBEE_CALLBACK_FIELD"
+  }
+}

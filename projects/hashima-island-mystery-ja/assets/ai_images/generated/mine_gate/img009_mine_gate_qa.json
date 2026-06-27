@@ -1,0 +1,73 @@
+{
+  "project_id": "hashima-island-mystery-ja",
+  "qa_id": "IMG009_MINE_GATE_QA_001",
+  "qa_date": "2026-06-27",
+  "gate": "FIX-M1_mandatory_human_review_gate",
+  "image_id": "IMG009",
+  "scene_id": "S011a",
+  "filename_as_saved": "IMG009_S010_mine_gate_attempt1.png",
+  "filename_note": "NAMING ERROR — file was saved as S010 but scene is S011a. RENAME COMPLETED 2026-06-27: now IMG009_S011a_mine_tunnel_approved.png.",
+  "filename_current": "IMG009_S011a_mine_tunnel_approved.png",
+  "rename_completed": true,
+  "rename_completed_date": "2026-06-27",
+  "actual_path": "assets/ai_images/generated/mine_gate/IMG009_S011a_mine_tunnel_approved.png",
+  "file_found": true,
+  "file_size_bytes": 2462965,
+  "attempt_number": 1,
+  "max_attempts": 3,
+  "fallback_image_id": "IMG010",
+
+  "fix_m1_gate": {
+    "gate_triggered": true,
+    "gate_status": "PASSED",
+    "reviewer": "human_producer_required",
+    "human_review_note": "FIX-M1 mandates human producer review of every output before production use. This QA report provides the automated pre-screening. Final approval authority is the human producer.",
+    "prompt_used": "PROMPT_008_SAFE_REWRITTEN"
+  },
+
+  "classification": "APPROVED",
+  "approved_for_production": true,
+  "fix_m1_cleared": true,
+  "gate_closed": false,
+  "gate_closed_note": "Gate is not 'closed' — any future regeneration of this image still requires full human review. This approval applies to attempt 1 only.",
+
+  "fix_m1_safety_checks": {
+    "no_people": { "result": "PASS", "detail": "Zero human forms visible anywhere in the image" },
+    "no_silhouettes": { "result": "PASS", "detail": "No human silhouettes in the tunnel passage or background. The vanishing point at the far end shows only tunnel structure and the distant light source." },
+    "no_human_shadows": { "result": "PASS", "detail": "Shadows present are cast by structural wooden support timbers — rectangular/geometric shapes, not human-coded. No shadow reads as a person." },
+    "no_faces": { "result": "PASS" },
+    "no_victims": { "result": "PASS" },
+    "no_suffering_depiction": { "result": "PASS", "detail": "Empty tunnel passage. No implied suffering, confinement of persons, or distress." },
+    "no_forced_labor_depiction": { "result": "PASS", "detail": "The space evokes industrial atmosphere without depicting any labor activity or human presence." },
+    "no_chains": { "result": "PASS" },
+    "no_shackles": { "result": "PASS" },
+    "no_injury": { "result": "PASS" },
+    "no_gore": { "result": "PASS" },
+    "no_horror_framing": { "result": "PASS", "detail": "Dark and atmospheric but reads as 'austere industrial' — not horror movie. The wooden support timbers and structural elements create documentary authenticity. No supernatural elements." },
+    "no_ghost_framing": { "result": "PASS" },
+    "empty_industrial_space": { "result": "PASS", "detail": "Mine tunnel passage with wooden support beams. Visually correct for an uninhabited coal mine tunnel interior." },
+    "austere_industrial_atmosphere": { "result": "PASS", "detail": "'Oppressive atmosphere' was replaced with 'austere industrial' in PROMPT_008_SAFE — the image reflects this: factual, structural, not emotionally loaded." },
+    "respectful_documentary_tone": { "result": "PASS", "detail": "The image shows an empty space. It evokes the memory of the mine without depicting any human experience within it." }
+  },
+
+  "visual_observations": [
+    "Tunnel passage: CONFIRMED — rectangular tunnel extending into darkness with clear perspective vanishing point",
+    "Wooden support timbers: PRESENT — wooden beams running along ceiling and sides of tunnel. Authentic historical coal mine construction. These are structural, not human-shaped.",
+    "Stone/rock walls: PRESENT — dark rough-hewn rock walls on both sides",
+    "Stone/gravel floor: PRESENT — natural stone floor surface",
+    "Distant light source: PRESENT — small dim light visible at the far end of the tunnel. No human forms around or in front of the light.",
+    "Shadows: ALL STRUCTURAL — rectangular beam shadows only. No shadow reads as a person.",
+    "No people anywhere: CONFIRMED — full tunnel scan, zero human forms at all depths",
+    "No chains, tools, or labor objects: CONFIRMED",
+    "Atmosphere: Dark, austere, documentary. Not horror. The timber supports give authentic industrial character.",
+    "Color: Near-monochrome dark grey-brown. Correctly desaturated."
+  ],
+
+  "naming_action_required": "COMPLETED — File renamed from IMG009_S010_mine_gate_attempt1.png to IMG009_S011a_mine_tunnel_approved.png on 2026-06-27. The S010 in the original filename was a user entry error — scene is S011a.",
+
+  "post_process_notes": "Minimal processing. Film grain. Palette is already near-monochrome dark — do not brighten. Apply slow_zoom_in at 30-second duration (S011a timecode 4:10–4:40). Narration L013/L014 — about forced labor memory — will play over this empty tunnel. The emptiness IS the statement.",
+
+  "file_path_current": "assets/ai_images/generated/mine_gate/IMG009_S011a_mine_tunnel_approved.png",
+  "file_path_recommended": "assets/ai_images/generated/mine_gate/IMG009_S011a_mine_tunnel_approved.png",
+  "production_status": "approved_for_production"
+}

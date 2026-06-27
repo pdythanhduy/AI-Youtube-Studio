@@ -1,0 +1,103 @@
+{
+  "platform_id": "youtube_long_form",
+  "schema_version": "1.0",
+  "display_name": "YouTube Long Form",
+  "profile_status": "active",
+
+  "technical_specs": {
+    "aspect_ratio": "16:9",
+    "resolution": {
+      "width": 1920,
+      "height": 1080,
+      "preferred_width": 3840,
+      "preferred_height": 2160
+    },
+    "fps": 30,
+    "duration_range_seconds": {
+      "min": 180,
+      "max": null,
+      "sweet_spot_min": 480,
+      "sweet_spot_max": 1200
+    },
+    "audio_spec": {
+      "sample_rate_hz": 48000,
+      "bit_depth": 24,
+      "channels": "stereo",
+      "peak_dbfs": -3,
+      "loudness_lufs": -14
+    },
+    "file_format": "mp4_h264",
+    "max_file_size_gb": 128
+  },
+
+  "content_constraints": {
+    "chapter_markers": {
+      "supported": true,
+      "min_chapter_count_for_activation": 3,
+      "min_chapter_duration_seconds": 10,
+      "first_chapter_must_be_at_zero": true
+    },
+    "end_screens": {
+      "supported": true,
+      "duration_seconds": 20,
+      "required_minimum_video_duration_seconds": 25
+    },
+    "cards": {
+      "supported": true,
+      "max_cards": 5
+    },
+    "subtitles": {
+      "required": false,
+      "auto_generated_available": true,
+      "supported_formats": ["srt", "vtt", "sbv"]
+    },
+    "age_restriction_minimum": null,
+    "monetization_eligible": true
+  },
+
+  "thumbnail_specs": {
+    "required": true,
+    "dimensions": {
+      "width": 1280,
+      "height": 720
+    },
+    "max_file_size_kb": 2048,
+    "supported_formats": ["jpg", "png"],
+    "text_overlay_guidelines": "Text must be legible at small sizes (search results, mobile). Avoid more than 5-6 words. Title text must be factually accurate — exaggerated or false claims in thumbnails violate YouTube policies and creator standards."
+  },
+
+  "metadata_rules": {
+    "title_max_characters": 100,
+    "title_min_characters": 10,
+    "description_max_characters": 5000,
+    "tags_max_count": 500,
+    "tags_max_characters_each": 30,
+    "hashtag_max_count": 3,
+    "hashtag_placement": "description"
+  },
+
+  "hook_requirements": {
+    "critical_window_seconds": 30,
+    "hook_style_notes": "The first 30 seconds must establish the central question or mystery and give the viewer a clear reason to continue. The hook does not need to be fast — it needs to be compelling. For documentary content, compelling often means surprising, counterintuitive, or deeply curious.",
+    "auto_play_context": false,
+    "sound_off_common": false
+  },
+
+  "algorithm_considerations": {
+    "primary_retention_signal": "average_view_duration",
+    "click_through_rate_important": true,
+    "comments_boost_distribution": true,
+    "shares_boost_distribution": true,
+    "rewatch_valued": false,
+    "upload_frequency_signals": "consistent upload schedule is rewarded; irregular uploads reduce channel velocity"
+  },
+
+  "pacing_override": {
+    "max_silence_duration_seconds": null,
+    "cut_frequency_guidance": null,
+    "notes": "YouTube Long Form does not impose pacing constraints beyond the hook window. Genre Template and Creator Profile pacing rules apply. Avoid mid-video silence longer than 60 seconds — not for algorithmic reasons but because long-form viewer attention requires periodic re-engagement even in reflective content."
+  },
+
+  "created_at": "2026-06-27T00:00:00Z",
+  "updated_at": "2026-06-27T00:00:00Z"
+}

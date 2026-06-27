@@ -1,0 +1,210 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Contract C01: Project → Research",
+  "contract_id": "C01",
+  "version": "1.0",
+  "description": "Governs the transition from Stage 0 (Project Setup) to Stage 1 (Research). Defines what project.json must contain before research begins, what research.json must produce at minimum, and how failures are handled.",
+  "upstream_stage": {
+    "stage_number": 0,
+    "stage_id": "project_setup",
+    "produces_schema": "https://ai-youtube-studio/production/schemas/project.json"
+  },
+  "downstream_stage": {
+    "stage_number": 1,
+    "stage_id": "research",
+    "produces_schema": "https://ai-youtube-studio/production/schemas/research.json"
+  },
+  "input": {
+    "description": "Fields from project.json that Stage 1 (Research) requires before it can begin.",
+    "required_fields": [
+      {
+        "field": "project_id",
+        "schema_path": "project.project_id",
+        "purpose": "Used as the primary identifier for all research documents and log entries."
+      },
+      {
+        "field": "topic",
+        "schema_path": "project.topic",
+        "purpose": "The subject of research. Research agent generates facts and sources about this topic."
+      },
+      {
+        "field": "language",
+        "schema_path": "project.language",
+        "purpose": "Determines language of narration facts and source reliability expectations."
+      },
+      {
+        "field": "duration_minutes",
+        "schema_path": "project.duration_minutes",
+        "purpose": "Used to calculate minimum fact density. A 12-min video needs deeper research than a 5-min video."
+      },
+      {
+        "field": "style",
+        "schema_path": "project.style",
+        "purpose": "dark_documentary style → research must include historical context, human stories, dispute disclosures."
+      },
+      {
+        "field": "niche",
+        "schema_path": "project.niche",
+        "purpose": "Niche drives template selection (e.g. japanese_mystery → japan_template.md) which sets required beats."
+      }
+    ],
+    "optional_fields": [
+      {
+        "field": "target_word_count",
+        "schema_path": "project.target_word_count",
+        "purpose": "If present, research agent uses it to calibrate fact count. Calculated as duration_minutes × 130 × language_multiplier."
+      }
+    ],
+    "preconditions": [
+      "project.status must be 'initializing' or 'in_progress'",
+      "project.pipeline_stage must be 0",
+      "project.topic must not be empty or null"
+    ]
+  },
+  "output": {
+    "description": "What research.json must contain when Stage 1 delivers its output to Stage 2.",
+    "required_fields": [
+      {
+        "field": "facts",
+        "minimum": 5,
+        "purpose": "Each fact must have a fact_id (VF[0-9]+), claim, status, and at least one source_id."
+      },
+      {
+        "field": "sources",
+        "minimum": 3,
+        "purpose": "Each source must have a source_id (S[0-9]+), title, and reliability enum."
+      },
+      {
+        "field": "verification_status",
+        "allowed_values": ["NEEDS_REVISION", "PASS"],
+        "purpose": "PASS only when fail_count = 0 and flag adjustments are complete. Stage 2 (source_verification) sets this field."
+      },
+      {
+        "field": "flag_count",
+        "type": "integer",
+        "minimum": 0,
+        "purpose": "Count of facts with status=flag. Language adjustments required for each."
+      },
+      {
+        "field": "fail_count",
+        "type": "integer",
+        "purpose": "Must be 0 after Stage 2 adjustment pass. Any fail_count > 0 halts the pipeline."
+      },
+      {
+        "field": "pipeline_continue",
+        "type": "boolean",
+        "purpose": "False if fail_count > 0 or if a critical rule violation exists. Stage 3 must not start if false."
+      }
+    ],
+    "constraints": [
+      "All fact_id values must match pattern ^VF[0-9]{1,3}$",
+      "All source_id values must match pattern ^S[0-9]{1,3}$",
+      "Facts with status=fail may not appear in story.json. pipeline_continue must be false.",
+      "Facts with status=flag must have language adjusted before leaving Stage 2. Adjusted claim stored in adjusted_claim field.",
+      "No fabricated URLs in any source.url field (MASTER_RULE Rule 2)",
+      "Disputed facts must have both sides of dispute described in claim or notes"
+    ]
+  },
+  "validation": {
+    "gate": "Source Verification Gate (Stage 2)",
+    "checks": [
+      {
+        "check_id": "C01-V01",
+        "description": "facts array has at least 5 items",
+        "severity": "FAIL",
+        "action_on_fail": "Halt pipeline. Return to Stage 1 with instruction to expand research."
+      },
+      {
+        "check_id": "C01-V02",
+        "description": "sources array has at least 3 items",
+        "severity": "FAIL",
+        "action_on_fail": "Halt pipeline."
+      },
+      {
+        "check_id": "C01-V03",
+        "description": "fail_count === 0",
+        "severity": "FAIL",
+        "action_on_fail": "Halt pipeline. pipeline_continue = false."
+      },
+      {
+        "check_id": "C01-V04",
+        "description": "All FLAG items have adjusted_claim populated",
+        "severity": "FAIL",
+        "action_on_fail": "Halt pipeline."
+      },
+      {
+        "check_id": "C01-V05",
+        "description": "No source has a fabricated or non-verifiable URL",
+        "severity": "FAIL",
+        "action_on_fail": "Mark source as unverified. Remove URL field."
+      },
+      {
+        "check_id": "C01-V06",
+        "description": "Each fact references at least one valid source_id",
+        "severity": "WARNING",
+        "action_on_fail": "Mark fact as unverified. Flag for human review."
+      }
+    ]
+  },
+  "failure_conditions": [
+    {
+      "condition": "fail_count > 0 after Stage 2",
+      "severity": "CRITICAL",
+      "pipeline_action": "halt",
+      "human_action": "Review flagged facts. Either find verifiable replacement claims or delete the facts."
+    },
+    {
+      "condition": "facts array length < 5",
+      "severity": "CRITICAL",
+      "pipeline_action": "halt",
+      "human_action": "Re-run Stage 1 with expanded research prompt."
+    },
+    {
+      "condition": "All primary sources have reliability=low",
+      "severity": "HIGH",
+      "pipeline_action": "flag_for_review",
+      "human_action": "Add at least one high or medium reliability source before proceeding."
+    },
+    {
+      "condition": "Topic produces zero verifiable facts",
+      "severity": "CRITICAL",
+      "pipeline_action": "halt",
+      "human_action": "Reconsider topic or source strategy."
+    }
+  ],
+  "recovery_strategy": [
+    {
+      "scenario": "fail_count > 0",
+      "strategy": "For each fact with status=fail: (1) attempt to find verifiable replacement claim from a different source; (2) if not found, delete the fact; (3) if fact is load-bearing (referenced by outline section), replace with a weaker, verified claim; (4) re-run Stage 2 verification."
+    },
+    {
+      "scenario": "flag_count > 0",
+      "strategy": "Apply language softening to adjusted_claim: superlatives → qualifiers; absolute statements → probabilistic statements. Do not change meaning. Update the fact.claim field."
+    },
+    {
+      "scenario": "Insufficient facts",
+      "strategy": "Re-run Stage 1 with explicit instruction to expand research scope. Add secondary search vectors: academic papers, government records, UNESCO documents."
+    }
+  ],
+  "example": {
+    "valid_input": {
+      "project_id": "hashima-island-mystery-ja",
+      "topic": "The Mystery of Hashima Island",
+      "language": "ja",
+      "duration_minutes": 12,
+      "style": "dark_documentary",
+      "niche": "japanese_mystery",
+      "target_word_count": 1201
+    },
+    "valid_output_summary": {
+      "facts_count": 14,
+      "sources_count": 9,
+      "verified_count": 11,
+      "flag_count": 3,
+      "fail_count": 0,
+      "verification_status": "NEEDS_REVISION",
+      "pipeline_continue": true,
+      "note": "NEEDS_REVISION because 3 FLAG items require language adjustments. pipeline_continue=true because fail_count=0 and adjustments are pending (not failed)."
+    }
+  }
+}

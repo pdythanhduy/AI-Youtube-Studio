@@ -1,0 +1,230 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Pipeline Map",
+  "description": "Master DAG for the AI-Youtube-Studio production pipeline v1.0. Defines all stages, their dependencies, which documents they consume and produce, and which contracts govern each stage transition. This file is the authoritative source for pipeline topology — do not define stage ordering anywhere else.",
+  "version": "1.0",
+  "pipeline_name": "AI-Youtube-Studio Production Pipeline",
+  "schema_namespace": "https://ai-youtube-studio/production/schemas/",
+  "contract_namespace": "https://ai-youtube-studio/production/contracts/",
+  "stages": [
+    {
+      "stage_number": 0,
+      "stage_id": "project_setup",
+      "label": "Project Setup",
+      "description": "Initialize project record. Set topic, language, duration, style, niche. Derive language_multiplier and target_word_count. Create project directory.",
+      "depends_on": [],
+      "produces": ["project"],
+      "consumes": [],
+      "schema_output": "project.json",
+      "contract_downstream": ["C01_project_to_research.json"]
+    },
+    {
+      "stage_number": 1,
+      "stage_id": "research",
+      "label": "Research",
+      "description": "Generate facts (VF[0-9]+), identify primary and secondary sources (S[0-9]+). Apply MASTER_RULE.md Rule 2: no fabricated facts, no fake URLs. Tag disputed and unverified facts.",
+      "depends_on": [0],
+      "produces": ["research"],
+      "consumes": ["project"],
+      "schema_output": "research.json",
+      "contract_upstream": ["C01_project_to_research.json"],
+      "contract_downstream": ["C02_research_to_story.json"]
+    },
+    {
+      "stage_number": 2,
+      "stage_id": "source_verification",
+      "label": "Source Verification",
+      "description": "Verify each source. Apply FLAG/FAIL logic. Adjust language for FLAG items. Fail pipeline if fail_count > 0. Outputs verified research.json.",
+      "depends_on": [1],
+      "produces": ["research"],
+      "consumes": ["research"],
+      "schema_output": "research.json",
+      "contract_upstream": [],
+      "contract_downstream": ["C02_research_to_story.json"],
+      "notes": "Stage 2 is an in-place verification pass on Stage 1 output. Updates research.json in-place with verification_status set."
+    },
+    {
+      "stage_number": 3,
+      "stage_id": "story_outline",
+      "label": "Story Outline",
+      "description": "Build section structure from research.json. Apply template beats. Allocate word counts. Validate required beats are present.",
+      "depends_on": [2],
+      "produces": ["story"],
+      "consumes": ["research", "project"],
+      "schema_output": "story.json",
+      "contract_upstream": ["C02_research_to_story.json"],
+      "contract_downstream": ["C03_story_to_scene.json"]
+    },
+    {
+      "stage_number": 4,
+      "stage_id": "script",
+      "label": "Script",
+      "description": "Write full narration in target language. Enforce register, word count, hook, pause count. Apply story_bible constraints once written in Stage 5.",
+      "depends_on": [3],
+      "produces": ["story"],
+      "consumes": ["story", "research"],
+      "schema_output": "story.json",
+      "contract_upstream": [],
+      "contract_downstream": [],
+      "notes": "Stage 4 extends story.json by adding the script object. story.json contains both outline and script."
+    },
+    {
+      "stage_number": 5,
+      "stage_id": "story_bible",
+      "label": "Story Bible",
+      "description": "Codify canonical names, dates, numbers. Define off-limits expressions with replacements. Add pronunciation guide.",
+      "depends_on": [4],
+      "produces": ["story_bible"],
+      "consumes": ["story", "research"],
+      "schema_output": "story_bible.json",
+      "contract_upstream": [],
+      "contract_downstream": []
+    },
+    {
+      "stage_number": 6,
+      "stage_id": "scene_list",
+      "label": "Scene List",
+      "description": "Break script into ordered scenes. Assign timecodes, shot types, motion directions. Validate total duration. Mark Ma beat. All scenes >5s must have motion.",
+      "depends_on": [4, 5],
+      "produces": ["scene_list"],
+      "consumes": ["story", "story_bible", "project"],
+      "schema_output": "scene.json",
+      "contract_upstream": ["C03_story_to_scene.json"],
+      "contract_downstream": ["C04_scene_to_image_plan.json", "C05_scene_to_voice.json"]
+    },
+    {
+      "stage_number": 7,
+      "stage_id": "image_plan",
+      "label": "Image Plan",
+      "description": "Map scenes to images. Define source_type, legal_status, priority. Flag sensitive images for mandatory review. Set fallback_image_id for AI-generated images.",
+      "depends_on": [6],
+      "produces": ["image_plan"],
+      "consumes": ["scene_list", "project"],
+      "schema_output": "image_plan.json",
+      "contract_upstream": ["C04_scene_to_image_plan.json"],
+      "contract_downstream": ["C06_assets_to_timeline.json"]
+    },
+    {
+      "stage_number": 8,
+      "stage_id": "ai_image_prompts",
+      "label": "AI Image Prompts",
+      "description": "Write Midjourney/Flux prompts for AI_GENERATE images. Include positive, negative, style_suffix. Flag PROMPT_008 for mandatory human review.",
+      "depends_on": [7],
+      "produces": ["image_plan"],
+      "consumes": ["image_plan", "story_bible"],
+      "schema_output": "image_plan.json",
+      "contract_upstream": [],
+      "contract_downstream": [],
+      "notes": "Stage 8 fills the ai_prompt field of image_plan.json entries where source_type=AI_GENERATE."
+    },
+    {
+      "stage_number": 9,
+      "stage_id": "voice",
+      "label": "Voice & Audio Direction",
+      "description": "Write voice lines with pacing, pause, delivery notes. Define narrator profile, recording specs, TTS settings.",
+      "depends_on": [6, 5],
+      "produces": ["voice"],
+      "consumes": ["story", "scene_list", "story_bible"],
+      "schema_output": "voice.json",
+      "contract_upstream": ["C05_scene_to_voice.json"],
+      "contract_downstream": ["C06_assets_to_timeline.json"]
+    },
+    {
+      "stage_number": 10,
+      "stage_id": "seo",
+      "label": "SEO Metadata",
+      "description": "Write titles, description, tags. Check all titles against story_bible.off_limits_expressions and research.json. Select and validate final title.",
+      "depends_on": [4, 5],
+      "produces": ["seo", "thumbnail"],
+      "consumes": ["story", "story_bible", "research"],
+      "schema_output": "seo.json",
+      "contract_upstream": [],
+      "contract_downstream": []
+    },
+    {
+      "stage_number": 11,
+      "stage_id": "qa",
+      "label": "QA Report",
+      "description": "Run 20-point QA checklist. Each check: PASS/FAIL/WARNING. Any FAIL = pipeline_continue=false. Zero FAIL required to proceed.",
+      "depends_on": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+      "produces": ["export_manifest"],
+      "consumes": ["project", "research", "story", "story_bible", "scene_list", "image_plan", "voice", "seo"],
+      "schema_output": "export.json",
+      "contract_upstream": [],
+      "contract_downstream": []
+    },
+    {
+      "stage_number": 12,
+      "stage_id": "export",
+      "label": "Export & Manifest",
+      "description": "Finalize export_manifest.json. Mark all documents. Trigger Human Review Gate. Update pipeline status.",
+      "depends_on": [11],
+      "produces": ["export_manifest"],
+      "consumes": ["all"],
+      "schema_output": "export.json",
+      "contract_upstream": [],
+      "contract_downstream": ["C07_timeline_to_export.json"]
+    }
+  ],
+  "post_pipeline_stages": [
+    {
+      "stage_id": "human_review_gate",
+      "label": "Human Review Gate",
+      "description": "Human producer reviews all outputs. Issues classified as BLOCKER/HIGH/MEDIUM/LOW. Decision: GO / GO_WITH_FIXES / NO_GO.",
+      "depends_on": [12],
+      "triggers": ["C07_timeline_to_export.json"]
+    },
+    {
+      "stage_id": "production",
+      "label": "Production (Images / Recording / Edit)",
+      "description": "Generate AI images, record narration, assemble timeline.json, render video.",
+      "depends_on": ["human_review_gate"],
+      "produces": ["image_plan", "voice", "timeline"],
+      "schema_output": "timeline.json"
+    },
+    {
+      "stage_id": "publish",
+      "label": "Publish",
+      "description": "Upload to YouTube. Populate publishing_urls in export.json. Set status=published.",
+      "depends_on": ["production"]
+    }
+  ],
+  "schema_index": {
+    "project": "project.json",
+    "research": "research.json",
+    "story": "story.json",
+    "story_bible": "story_bible.json",
+    "scene_list": "scene.json",
+    "image_plan": "image_plan.json",
+    "voice": "voice.json",
+    "subtitle": "subtitle.json",
+    "timeline": "timeline.json",
+    "thumbnail": "thumbnail.json",
+    "seo": "seo.json",
+    "export_manifest": "export.json"
+  },
+  "contract_index": {
+    "C01": "C01_project_to_research.json",
+    "C02": "C02_research_to_story.json",
+    "C03": "C03_story_to_scene.json",
+    "C04": "C04_scene_to_image_plan.json",
+    "C05": "C05_scene_to_voice.json",
+    "C06": "C06_assets_to_timeline.json",
+    "C07": "C07_timeline_to_export.json"
+  },
+  "id_namespaces": {
+    "fact_id": "VF[0-9]{1,3} (e.g. VF001)",
+    "source_id": "S[0-9]{1,3} (e.g. S001)",
+    "line_id": "L[0-9]{3} (e.g. L001)",
+    "scene_id": "S[0-9]{3}[a-z]? (e.g. S001, S011a)",
+    "image_id": "IMG[0-9]{3}[a-z]? (e.g. IMG001)",
+    "clip_id_video": "VID[0-9]{3}",
+    "clip_id_audio": "AUD[0-9]{3}",
+    "clip_id_text": "TXT[0-9]{3}",
+    "warning_id": "W[0-9]{3}",
+    "error_id": "E[0-9]{3}",
+    "title_id": "TITLE_[A-Z]",
+    "thumbnail_id": "THUMB_[A-Z]",
+    "subtitle_index": "integer starting at 1"
+  }
+}

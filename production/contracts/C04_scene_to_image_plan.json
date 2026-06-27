@@ -1,0 +1,229 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Contract C04: Scene List → Image Plan",
+  "contract_id": "C04",
+  "version": "1.0",
+  "description": "Governs the transition from Stage 6 (Scene List) to Stage 7 (Image Plan). Defines how scenes are mapped to images or video sources, source type decisions, legal status requirements, AI overuse limits, and mandatory human review triggers.",
+  "upstream_stage": {
+    "stage_number": 6,
+    "stage_id": "scene_list",
+    "produces_schema": "https://ai-youtube-studio/production/schemas/scene.json"
+  },
+  "downstream_stage": {
+    "stage_number": 7,
+    "stage_id": "image_plan",
+    "produces_schema": "https://ai-youtube-studio/production/schemas/image_plan.json"
+  },
+  "input": {
+    "description": "Fields from scene.json required before image_plan.json production begins.",
+    "required_fields": [
+      {
+        "field": "scenes",
+        "purpose": "Each scene becomes at least one image_plan entry. Scenes with multiple shot types may require multiple images."
+      },
+      {
+        "field": "coverage_validated",
+        "required_value": true,
+        "purpose": "Image plan requires complete scene coverage. Cannot plan images for an incomplete scene list."
+      },
+      {
+        "field": "scenes[*].source_type",
+        "purpose": "scene.source_type is the primary decision signal for image_plan.source_type. Mapping: STOCK_LICENSED → STOCK_LICENSED; AI_GENERATE → AI_GENERATE; ARCHIVE_PUBLIC_DOMAIN → ARCHIVE_PUBLIC_DOMAIN; etc."
+      },
+      {
+        "field": "scenes[*].visual_description.text_en",
+        "purpose": "English visual description is used as seed text for AI image prompts."
+      }
+    ],
+    "preconditions": [
+      "scene.coverage_validated === true",
+      "scene.total_duration_seconds matches project.duration_minutes × 60 (±5s)",
+      "All scenes have valid scene_id"
+    ]
+  },
+  "output": {
+    "description": "What image_plan.json must contain when Stage 7 is complete.",
+    "required_fields": [
+      {
+        "field": "images",
+        "minimum": 1,
+        "purpose": "One image entry per unique visual. Multiple scenes may reference the same image (via scene_refs array)."
+      },
+      {
+        "field": "global_style",
+        "purpose": "Color palette, aspect ratio, film grain, negative prompts applied to all AI-generated images for visual consistency."
+      },
+      {
+        "field": "images[*].legal_status",
+        "purpose": "Every image must have a declared legal status. Unchecked legal status is not allowed."
+      },
+      {
+        "field": "images[*].approval_status",
+        "purpose": "Starts as 'pending'. Changes to 'approved', 'rejected', or 'needs_replacement' during production."
+      }
+    ],
+    "ai_overuse_limit": {
+      "maximum_ai_percentage": 75,
+      "description": "No more than 75% of images may be AI-generated. Above this threshold signals insufficient archival/stock research and increases legal and quality risk.",
+      "current_hashima_value": 85,
+      "current_hashima_status": "HIGH — exceeds limit. Review FIX-H1 mandates adding stock_footage_fallback for 5 scenes.",
+      "calculation": "ai_count / images.length"
+    },
+    "mandatory_human_review_triggers": [
+      {
+        "trigger": "sensitive_content = true AND source_type = AI_GENERATE",
+        "field_to_set": "mandatory_human_review = true",
+        "reason": "AI-generated images of sensitive historical events may misrepresent reality. PROMPT_008 rule applies."
+      },
+      {
+        "trigger": "scene depicts forced labor, wartime abuse, or death",
+        "field_to_set": "mandatory_human_review = true",
+        "human_review_criteria": "Does the image imply graphic violence, dehumanize victims, or fabricate a historical scene that was not photographed?"
+      },
+      {
+        "trigger": "image depicts recognizable real individuals",
+        "field_to_set": "mandatory_human_review = true"
+      }
+    ],
+    "fallback_requirements": [
+      {
+        "rule": "Every AI_GENERATE image with priority=HIGH must have fallback_image_id set",
+        "fallback_types_allowed": ["STOCK_LICENSED", "MOTION_GRAPHICS", "ARCHIVE_PUBLIC_DOMAIN"],
+        "reason": "If AI generation fails or produces unusable output, production must not block."
+      }
+    ],
+    "legal_status_constraints": [
+      {
+        "status": "PUBLIC_DOMAIN",
+        "requirement": "Must have source documentation (government archive, post-copyright date). Do not assume public domain."
+      },
+      {
+        "status": "CREATIVE_COMMONS",
+        "requirement": "Must document specific CC license version and attribution requirement."
+      },
+      {
+        "status": "STOCK_LICENSED",
+        "requirement": "Must document agency and confirm license type covers YouTube commercial use."
+      },
+      {
+        "status": "AI_GENERATE",
+        "requirement": "Legal status depends on generation tool's terms. Must note tool name in ai_prompt.generation_tool."
+      },
+      {
+        "status": "REQUIRES_VERIFICATION",
+        "requirement": "Must be resolved before final export. No image with status=REQUIRES_VERIFICATION may appear in approved export."
+      }
+    ]
+  },
+  "validation": {
+    "gate": "Image Plan Delivery Gate (end of Stage 7 + Stage 8 prompts)",
+    "checks": [
+      {
+        "check_id": "C04-V01",
+        "description": "All scenes are referenced by at least one image",
+        "severity": "FAIL",
+        "action_on_fail": "Identify uncovered scenes. Add images."
+      },
+      {
+        "check_id": "C04-V02",
+        "description": "AI image percentage ≤ 75%",
+        "severity": "HIGH",
+        "action_on_fail": "Add stock or archive alternatives for non-sensitive scenes. Prioritize scenes where real photographs exist."
+      },
+      {
+        "check_id": "C04-V03",
+        "description": "All HIGH priority AI images have fallback_image_id",
+        "severity": "HIGH",
+        "action_on_fail": "Identify HIGH priority images without fallback. Assign MOTION_GRAPHICS or stock alternatives."
+      },
+      {
+        "check_id": "C04-V04",
+        "description": "sensitive_content=true AND AI_GENERATE → mandatory_human_review=true",
+        "severity": "FAIL",
+        "action_on_fail": "Set mandatory_human_review=true for all such images."
+      },
+      {
+        "check_id": "C04-V05",
+        "description": "No image has legal_status=REQUIRES_VERIFICATION in final export",
+        "severity": "FAIL",
+        "action_on_fail": "Resolve all REQUIRES_VERIFICATION items. Replace if unresolvable."
+      },
+      {
+        "check_id": "C04-V06",
+        "description": "global_style is populated with at least color_palette and global_negative_prompt",
+        "severity": "WARNING",
+        "action_on_fail": "Add global_style. Without it, AI images may lack visual consistency."
+      }
+    ]
+  },
+  "failure_conditions": [
+    {
+      "condition": "AI image count > 75% of total images",
+      "severity": "HIGH",
+      "pipeline_action": "revision_required",
+      "human_action": "Apply FIX-H1: add stock_footage_fallback column. Research stock for 5 scenes. Reduce AI dependency."
+    },
+    {
+      "condition": "Sensitive scene with AI_GENERATE lacks mandatory_human_review flag",
+      "severity": "FAIL",
+      "pipeline_action": "revision_required",
+      "human_action": "Apply FIX-M1: Add PROMPT_008 mandatory human review gate text to prompt."
+    },
+    {
+      "condition": "Scene with no image coverage",
+      "severity": "FAIL",
+      "pipeline_action": "halt",
+      "human_action": "Add image entry for uncovered scene. Choose appropriate source_type."
+    },
+    {
+      "condition": "Image legal status unresolved at export",
+      "severity": "FAIL",
+      "pipeline_action": "halt",
+      "human_action": "Resolve legal status. If unresolvable, replace with AI_GENERATE or MOTION_GRAPHICS."
+    }
+  ],
+  "recovery_strategy": [
+    {
+      "scenario": "AI overuse (>75%)",
+      "strategy": "Review scene_list for scenes depicting geographic context (maps, satellite imagery), statistical data (motion graphics), or well-documented historical events (government archive photos). Convert these to non-AI source types. Target: reduce AI count to ≤70% for safety margin."
+    },
+    {
+      "scenario": "Sensitive AI image without review flag",
+      "strategy": "Identify all images where sensitive_content=true and source_type=AI_GENERATE. Set mandatory_human_review=true. Add human_review_criteria specific to the scene's historical event. Do not generate these images until human approval."
+    },
+    {
+      "scenario": "High priority image lacks fallback",
+      "strategy": "For each HIGH priority AI image: (1) check if scene topic has stock photography from major agencies; (2) if stock is available, add stock_agencies list and set legal_status=STOCK_LICENSED; (3) if no stock, create a motion_graphics alternative with data visualization or title card; (4) set fallback_image_id to reference the alternative."
+    }
+  ],
+  "source_type_decision_guide": {
+    "STOCK_LICENSED": "Prefer for: exterior shots of real locations, aerial views, contemporary footage of accessible places",
+    "AI_GENERATE": "Use for: historical reconstruction, interior views of inaccessible ruins, atmospheric establishing shots, symbolic imagery",
+    "MOTION_GRAPHICS": "Use for: statistics, timelines, maps, population density visualizations, data that needs to be drawn",
+    "ARCHIVE_PUBLIC_DOMAIN": "Use for: pre-1928 photographs, government-produced materials in public domain, openly licensed museum collections",
+    "ARCHIVE_LICENSED": "Use for: 20th century historical photographs from press agencies (AP, Reuters, Keystone) — requires licensing",
+    "USER_PROVIDED": "Use for: channel owner's original footage"
+  },
+  "example": {
+    "valid_image_entry": {
+      "image_id": "IMG008",
+      "scene_refs": ["S016"],
+      "legal_status": "AI_GENERATE",
+      "source_type": "AI_GENERATE",
+      "priority": "HIGH",
+      "sensitive_content": true,
+      "mandatory_human_review": true,
+      "human_review_criteria": "Does image depict forced labor in a way that is accurate but not graphic? Does it avoid showing identifiable individuals? Does it avoid fabricating specific historical scenes that were not documented?",
+      "fallback_image_id": "IMG008b",
+      "approval_status": "pending"
+    },
+    "invalid_image_entry": {
+      "image_id": "IMG010",
+      "scene_refs": ["S018"],
+      "legal_status": "AI_GENERATE",
+      "sensitive_content": true,
+      "mandatory_human_review": false,
+      "violation": "C04-V04: sensitive_content=true with AI_GENERATE requires mandatory_human_review=true"
+    }
+  }
+}

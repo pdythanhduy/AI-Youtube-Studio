@@ -1,0 +1,313 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://ai-youtube-studio/schemas/creator_profile.schema.json",
+  "title": "Creator Profile Schema",
+  "description": "Defines the stable identity, values, and non-negotiable standards of a channel creator. Does not contain pacing rules, motion grammar, or genre-specific production rules — those belong to Genre Templates.",
+  "version": "1.0",
+  "type": "object",
+  "required": [
+    "creator_id",
+    "schema_version",
+    "identity",
+    "values",
+    "storytelling_philosophy",
+    "quality_standards",
+    "business_goals",
+    "absolute_rules"
+  ],
+  "additionalProperties": false,
+  "properties": {
+
+    "creator_id": {
+      "type": "string",
+      "description": "Unique identifier for this creator profile.",
+      "pattern": "^[a-z0-9_-]+$"
+    },
+
+    "schema_version": {
+      "type": "string",
+      "description": "Version of this schema.",
+      "pattern": "^[0-9]+\\.[0-9]+$"
+    },
+
+    "profile_status": {
+      "type": "string",
+      "enum": ["draft", "active", "archived"],
+      "default": "draft"
+    },
+
+    "interview_completeness_percent": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 100,
+      "description": "How complete the creator interview is. Fields below may be null until interview is complete."
+    },
+
+    "identity": {
+      "type": "object",
+      "required": ["channel_name", "primary_language", "primary_niche"],
+      "additionalProperties": false,
+      "properties": {
+        "channel_name": { "type": ["string", "null"] },
+        "channel_languages": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "All languages this channel publishes in."
+        },
+        "primary_language": { "type": "string" },
+        "primary_niche": { "type": ["string", "null"] },
+        "secondary_niches": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "style_label": {
+          "type": ["string", "null"],
+          "description": "Short human-readable style description. e.g. 'cinematic investigative documentary'."
+        },
+        "style_references": {
+          "type": "array",
+          "description": "Named influences. What to take, what to reject.",
+          "items": {
+            "type": "object",
+            "required": ["name"],
+            "additionalProperties": false,
+            "properties": {
+              "name": { "type": "string" },
+              "what_to_take": {
+                "type": "array",
+                "items": { "type": "string" }
+              },
+              "what_to_reject": {
+                "type": "array",
+                "items": { "type": "string" }
+              },
+              "confidence": {
+                "type": "string",
+                "enum": ["HIGH", "MEDIUM", "LOW", "ASSUMED"]
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "values": {
+      "type": "object",
+      "required": ["what_we_stand_for", "what_we_reject"],
+      "additionalProperties": false,
+      "properties": {
+        "what_we_stand_for": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string" },
+          "description": "Core values the channel embodies. e.g. 'factual accuracy', 'respect for real events'."
+        },
+        "what_we_reject": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string" },
+          "description": "What the channel actively avoids. e.g. 'shock value', 'sensationalism'."
+        },
+        "trust_over_entertainment": {
+          "type": "boolean",
+          "description": "If true, factual trust is never sacrificed for entertainment value."
+        },
+        "content_policy_notes": {
+          "type": ["string", "null"],
+          "description": "Free-text notes on content policy that do not fit into structured fields."
+        }
+      }
+    },
+
+    "storytelling_philosophy": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "primary_emotional_goal": {
+          "type": ["string", "null"],
+          "description": "The single most important emotion the viewer should feel at the end of every video."
+        },
+        "secondary_emotional_goals": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "explicitly_avoided_emotions": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "priority_order": {
+          "type": "array",
+          "description": "What comes first when there is a tradeoff. e.g. ['entertainment', 'education', 'tension'].",
+          "items": { "type": "string" }
+        },
+        "signature_narrative_devices": {
+          "type": "array",
+          "description": "Recurring storytelling devices used across all videos. e.g. 'ends with one unanswered question'.",
+          "items": { "type": "string" }
+        },
+        "narrator_persona": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "archetype": {
+              "type": ["string", "null"],
+              "description": "e.g. 'calm intelligent investigator', 'passionate teacher', 'skeptical journalist'."
+            },
+            "explicitly_rejected_archetypes": {
+              "type": "array",
+              "items": { "type": "string" }
+            },
+            "key_qualities": {
+              "type": "array",
+              "items": { "type": "string" }
+            },
+            "audience_relationship": {
+              "type": ["string", "null"],
+              "description": "How the narrator relates to the viewer. e.g. 'trusted guide', 'fellow explorer'."
+            }
+          }
+        },
+        "silence_philosophy": {
+          "type": ["string", "null"],
+          "description": "How silence is used as a storytelling tool."
+        },
+        "music_philosophy": {
+          "type": ["string", "null"],
+          "description": "The creator's overarching philosophy on music's role."
+        }
+      }
+    },
+
+    "quality_standards": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "fact_checking_level": {
+          "type": "string",
+          "enum": ["strict", "standard", "relaxed"],
+          "description": "How rigorously facts must be verified before publish."
+        },
+        "source_citation_required": { "type": "boolean" },
+        "disputed_fact_handling": {
+          "type": "string",
+          "enum": ["present_both_sides", "present_strongest_evidence", "omit_disputed", "flag_and_include"],
+          "description": "What to do when a fact is disputed."
+        },
+        "respect_standards": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Specific respect requirements. e.g. 'never speculate about guilt of living individuals'."
+        },
+        "ai_image_max_percent": {
+          "type": ["integer", "null"],
+          "minimum": 0,
+          "maximum": 100,
+          "description": "Maximum percentage of images that may be AI-generated. null = not yet defined."
+        },
+        "real_footage_preference": {
+          "type": ["string", "null"],
+          "enum": ["strongly_preferred", "preferred", "neutral", "avoided", null]
+        }
+      }
+    },
+
+    "business_goals": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "primary_goal": {
+          "type": ["string", "null"],
+          "description": "e.g. 'viewer retention and channel loyalty', 'subscriber growth', 'ad revenue'."
+        },
+        "secondary_goals": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "cta_strategy": {
+          "type": ["string", "null"],
+          "description": "How calls to action are used. e.g. 'minimal, only subscribe', 'aggressive', 'none'."
+        },
+        "channel_growth_model": {
+          "type": ["string", "null"],
+          "description": "How the channel is expected to grow. e.g. 'viral hooks', 'deep niche loyalty', 'SEO-driven'."
+        },
+        "publishing_frequency": {
+          "type": ["string", "null"],
+          "description": "e.g. 'weekly', 'bi-weekly', 'monthly'."
+        },
+        "content_series_strategy": {
+          "type": ["string", "null"],
+          "description": "Whether videos are standalone or part of series."
+        }
+      }
+    },
+
+    "absolute_rules": {
+      "type": "object",
+      "description": "Non-negotiable rules that override ALL other configuration including Genre Templates and Platform Profiles. These are the top of the override hierarchy.",
+      "required": ["safety_rules", "legal_rules"],
+      "additionalProperties": false,
+      "properties": {
+        "safety_rules": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": ["rule_id", "rule", "severity"],
+            "additionalProperties": false,
+            "properties": {
+              "rule_id": { "type": "string", "pattern": "^SR[0-9]+$" },
+              "rule": { "type": "string" },
+              "severity": { "type": "string", "enum": ["CRITICAL", "HIGH"] },
+              "overridable_by": {
+                "type": "string",
+                "enum": ["nobody", "creator_only"],
+                "default": "nobody"
+              }
+            }
+          }
+        },
+        "legal_rules": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": ["rule_id", "rule", "severity"],
+            "additionalProperties": false,
+            "properties": {
+              "rule_id": { "type": "string", "pattern": "^LR[0-9]+$" },
+              "rule": { "type": "string" },
+              "severity": { "type": "string", "enum": ["CRITICAL", "HIGH"] },
+              "overridable_by": {
+                "type": "string",
+                "enum": ["nobody", "creator_only"],
+                "default": "nobody"
+              }
+            }
+          }
+        },
+        "ethical_rules": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["rule_id", "rule", "severity"],
+            "additionalProperties": false,
+            "properties": {
+              "rule_id": { "type": "string", "pattern": "^ER[0-9]+$" },
+              "rule": { "type": "string" },
+              "severity": { "type": "string", "enum": ["CRITICAL", "HIGH", "MEDIUM"] },
+              "overridable_by": {
+                "type": "string",
+                "enum": ["nobody", "creator_only"],
+                "default": "creator_only"
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "created_at": { "type": "string", "format": "date-time" },
+    "updated_at": { "type": "string", "format": "date-time" }
+  }
+}

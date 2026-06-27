@@ -1,0 +1,433 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://ai-youtube-studio/production/schemas/seo.json",
+  "title": "SEO",
+  "description": "YouTube (and multi-platform) SEO metadata. Produced at Stage 10. Defines all metadata fields required for publishing. Titles, descriptions, and tags are derived from story.json and research.json. All titles must be validated against story_bible.off_limits_expressions. The selected_title must be set and all titles with status=rejected must be removed before export.",
+  "type": "object",
+  "required": [
+    "project_id",
+    "schema_version",
+    "platform",
+    "language",
+    "titles",
+    "selected_title_id",
+    "description",
+    "tags",
+    "category",
+    "content_policy",
+    "publish_readiness",
+    "created_at"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "project_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9-]{2,62}[a-z0-9]$"
+    },
+    "schema_version": {
+      "type": "string",
+      "const": "1.0"
+    },
+    "platform": {
+      "type": "string",
+      "enum": ["youtube", "tiktok", "instagram", "multi"],
+      "default": "youtube"
+    },
+    "language": {
+      "type": "string",
+      "description": "BCP-47 language code of the primary metadata."
+    },
+    "titles": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 5,
+      "description": "Title options. At least one must have status=approved before publishing.",
+      "items": {
+        "$ref": "#/definitions/title_option"
+      }
+    },
+    "selected_title_id": {
+      "type": ["string", "null"],
+      "description": "title_id of the chosen title. Must match a title with status=approved. Null until decided.",
+      "examples": ["TITLE_A", null]
+    },
+    "description": {
+      "$ref": "#/definitions/description"
+    },
+    "tags": {
+      "$ref": "#/definitions/tags"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "education",
+        "news_politics",
+        "science_technology",
+        "travel_events",
+        "film_animation",
+        "people_blogs",
+        "entertainment"
+      ],
+      "description": "YouTube category."
+    },
+    "language_code": {
+      "type": "string",
+      "description": "YouTube video language metadata. BCP-47.",
+      "examples": ["ja", "en"]
+    },
+    "keywords": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/keyword"
+      }
+    },
+    "content_policy": {
+      "$ref": "#/definitions/content_policy"
+    },
+    "publishing": {
+      "$ref": "#/definitions/publishing"
+    },
+    "publish_readiness": {
+      "type": "string",
+      "enum": ["not_ready", "ready", "approved"],
+      "description": "not_ready = missing required fields. ready = all fields present. approved = human sign-off complete.",
+      "default": "not_ready"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "definitions": {
+    "title_option": {
+      "type": "object",
+      "required": ["title_id", "text", "character_count", "strategy", "status"],
+      "additionalProperties": false,
+      "properties": {
+        "title_id": {
+          "type": "string",
+          "pattern": "^TITLE_[A-Z]$",
+          "examples": ["TITLE_A", "TITLE_B"]
+        },
+        "text": {
+          "type": "string",
+          "minLength": 5,
+          "maxLength": 100,
+          "description": "Title text exactly as it will appear on YouTube."
+        },
+        "character_count": {
+          "type": "integer",
+          "description": "Byte/character count of text. Must be ≤100."
+        },
+        "strategy": {
+          "type": "string",
+          "enum": ["ctr_optimized", "search_optimized", "brand_narrative", "question_hook"],
+          "description": "Optimization strategy this title was designed for."
+        },
+        "factual_accuracy_check": {
+          "type": "boolean",
+          "description": "Has this title been checked against research.json for factual accuracy?",
+          "default": false
+        },
+        "off_limits_check": {
+          "type": "boolean",
+          "description": "Has this title been checked against story_bible.off_limits_expressions?",
+          "default": false
+        },
+        "respect_check": {
+          "type": "boolean",
+          "description": "Has this title been reviewed for potential disrespect to sensitive communities or historical events?",
+          "default": false
+        },
+        "factual_issue": {
+          "type": ["string", "null"],
+          "description": "If factual_accuracy_check failed, describe the error here."
+        },
+        "status": {
+          "type": "string",
+          "enum": ["draft", "approved", "rejected"],
+          "description": "rejected titles must be removed from the array before export."
+        },
+        "rejection_reason": {
+          "type": ["string", "null"],
+          "description": "Required when status=rejected."
+        }
+      }
+    },
+    "description": {
+      "type": "object",
+      "required": ["text", "character_count"],
+      "properties": {
+        "text": {
+          "type": "string",
+          "minLength": 50,
+          "maxLength": 5000,
+          "description": "Full description text. First 150 characters visible without expanding."
+        },
+        "character_count": {
+          "type": "integer",
+          "description": "Character count of text. Must be ≤5000."
+        },
+        "hook_character_count": {
+          "type": "integer",
+          "description": "Character count of the first paragraph (visible without 'show more'). Should be ≤150.",
+          "maximum": 200
+        },
+        "source_attribution_included": {
+          "type": "boolean",
+          "description": "True if description includes source attribution section.",
+          "default": false
+        },
+        "dispute_disclosure_included": {
+          "type": "boolean",
+          "description": "Required true if any fact in research.json has status=disputed.",
+          "default": false
+        },
+        "chapter_timestamps_included": {
+          "type": "boolean",
+          "description": "True if description includes YouTube chapter timestamps.",
+          "default": false
+        },
+        "links": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["label", "url"],
+            "properties": {
+              "label": { "type": "string" },
+              "url": { "type": "string", "format": "uri" },
+              "link_type": { "type": "string", "enum": ["source", "channel", "related_video", "social", "affiliate"] }
+            }
+          }
+        }
+      }
+    },
+    "tags": {
+      "type": "object",
+      "required": ["primary", "secondary"],
+      "properties": {
+        "primary": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 5,
+          "items": { "type": "string", "maxLength": 30 },
+          "description": "Most important tags. Placed first."
+        },
+        "secondary": {
+          "type": "array",
+          "items": { "type": "string", "maxLength": 30 },
+          "description": "Supporting tags."
+        },
+        "international": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "English or other-language tags for international reach."
+        },
+        "total_character_count": {
+          "type": "integer",
+          "maximum": 500,
+          "description": "YouTube tag character limit is 500 total. Must be ≤500."
+        },
+        "validation_notes": {
+          "type": ["string", "null"],
+          "description": "Notes on tag quality (non-standard terms, estimated volume, etc.)."
+        }
+      }
+    },
+    "keyword": {
+      "type": "object",
+      "required": ["term", "search_volume_estimate", "competition_level", "priority"],
+      "properties": {
+        "term": { "type": "string" },
+        "language": { "type": "string" },
+        "search_volume_estimate": {
+          "type": "string",
+          "enum": ["very_high", "high", "medium", "low", "unknown"]
+        },
+        "competition_level": {
+          "type": "string",
+          "enum": ["very_high", "high", "medium", "low", "unknown"]
+        },
+        "priority": {
+          "type": "string",
+          "enum": ["PRIMARY", "SECONDARY", "TERTIARY", "INTERNATIONAL"]
+        },
+        "in_title": { "type": "boolean", "default": false },
+        "in_description": { "type": "boolean", "default": false },
+        "in_tags": { "type": "boolean", "default": false }
+      }
+    },
+    "content_policy": {
+      "type": "object",
+      "required": ["age_restriction", "made_for_kids", "sensitive_topics"],
+      "properties": {
+        "age_restriction": {
+          "type": "string",
+          "enum": ["none", "13_plus", "18_plus"],
+          "default": "13_plus"
+        },
+        "made_for_kids": {
+          "type": "boolean",
+          "default": false
+        },
+        "sensitive_topics": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "historical_violence",
+              "forced_labor",
+              "war_conflict",
+              "death_mortality",
+              "political_dispute",
+              "graphic_imagery",
+              "adult_content"
+            ]
+          },
+          "description": "Sensitive topic flags. Each present flag increases review risk on YouTube."
+        },
+        "monetization_eligible": {
+          "type": ["boolean", "null"],
+          "description": "Whether this video is expected to be eligible for ad monetization."
+        },
+        "content_declaration": {
+          "type": "string",
+          "description": "Brief policy declaration for internal records.",
+          "examples": ["Factual historical documentary. No graphic imagery. Sensitive topics handled with attribution and balanced framing."]
+        }
+      }
+    },
+    "publishing": {
+      "type": "object",
+      "properties": {
+        "visibility": {
+          "type": "string",
+          "enum": ["public", "unlisted", "private", "scheduled"],
+          "default": "private"
+        },
+        "scheduled_publish_utc": {
+          "type": ["string", "null"],
+          "format": "date-time"
+        },
+        "premiere_mode": {
+          "type": "boolean",
+          "default": false,
+          "description": "Channel strategy choice — not a production requirement."
+        },
+        "notify_subscribers": {
+          "type": "boolean",
+          "default": true
+        },
+        "playlist_ids": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "YouTube playlist IDs to add this video to."
+        },
+        "end_screen_template": {
+          "type": ["string", "null"]
+        },
+        "cards": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "timecode": { "type": "string" },
+              "card_type": { "type": "string", "enum": ["video", "playlist", "link", "poll"] },
+              "target": { "type": "string" }
+            }
+          }
+        }
+      }
+    }
+  },
+  "examples": [
+    {
+      "project_id": "hashima-island-mystery-ja",
+      "schema_version": "1.0",
+      "platform": "youtube",
+      "language": "ja",
+      "selected_title_id": null,
+      "titles": [
+        {
+          "title_id": "TITLE_A",
+          "text": "軍艦島の真実：5,259人が消えた日【端島の謎】",
+          "character_count": 24,
+          "strategy": "ctr_optimized",
+          "factual_accuracy_check": true,
+          "off_limits_check": true,
+          "respect_check": true,
+          "factual_issue": null,
+          "status": "approved",
+          "rejection_reason": null
+        },
+        {
+          "title_id": "TITLE_C",
+          "text": "端島（軍艦島）完全解説：炭鉱の誕生から廃墟化まで12分で語る歴史の謎",
+          "character_count": 38,
+          "strategy": "search_optimized",
+          "factual_accuracy_check": true,
+          "off_limits_check": true,
+          "respect_check": true,
+          "factual_issue": null,
+          "status": "approved",
+          "rejection_reason": null
+        }
+      ],
+      "description": {
+        "text": "長崎港から南西15キロ——東シナ海に浮かぶ小さなコンクリートの島に、かつて5,259人が暮らしていました。\n\n端島。通称「軍艦島」。\n\n1890年、三菱が採掘権を握ったこの島は、日本の近代化を支えた炭鉱の最前線でした。\n\n#軍艦島 #端島 #廃墟",
+        "character_count": 820,
+        "hook_character_count": 68,
+        "source_attribution_included": true,
+        "dispute_disclosure_included": true,
+        "chapter_timestamps_included": true,
+        "links": []
+      },
+      "tags": {
+        "primary": ["軍艦島", "端島", "廃墟", "日本の歴史", "ユネスコ世界遺産"],
+        "secondary": ["廃墟探索", "ハイキョ", "軍艦島の歴史", "端島炭鉱", "明治産業革命遺産"],
+        "international": ["Hashima Island", "Gunkanjima", "abandoned island", "Japan history documentary"],
+        "total_character_count": 285,
+        "validation_notes": "Tag 「廃島」replaced with「廃墟島」per review FIX-L2."
+      },
+      "category": "education",
+      "language_code": "ja",
+      "keywords": [
+        {
+          "term": "軍艦島",
+          "language": "ja",
+          "search_volume_estimate": "high",
+          "competition_level": "high",
+          "priority": "PRIMARY",
+          "in_title": true,
+          "in_description": true,
+          "in_tags": true
+        }
+      ],
+      "content_policy": {
+        "age_restriction": "13_plus",
+        "made_for_kids": false,
+        "sensitive_topics": ["historical_violence", "forced_labor", "political_dispute"],
+        "monetization_eligible": true,
+        "content_declaration": "Factual historical documentary. Forced labor history sourced from UNESCO and government records. No graphic imagery. Disputed numbers presented as disputed."
+      },
+      "publishing": {
+        "visibility": "private",
+        "scheduled_publish_utc": null,
+        "premiere_mode": false,
+        "notify_subscribers": true,
+        "playlist_ids": [],
+        "end_screen_template": null,
+        "cards": [
+          { "timecode": "6:00", "card_type": "video", "target": "related_video_id_placeholder" }
+        ]
+      },
+      "publish_readiness": "not_ready",
+      "created_at": "2026-06-27T07:30:00Z",
+      "updated_at": "2026-06-27T07:30:00Z"
+    }
+  ]
+}

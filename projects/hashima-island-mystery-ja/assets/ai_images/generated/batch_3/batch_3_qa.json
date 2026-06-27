@@ -1,0 +1,158 @@
+{
+  "project_id": "hashima-island-mystery-ja",
+  "qa_id": "BATCH_3_QA_001",
+  "qa_date": "2026-06-27",
+  "gate": "batch_3_legal_hold_fallback_qa",
+  "images_reviewed": 3,
+  "APPROVED": 2,
+  "APPROVED_WITH_MINOR_NOTES": 0,
+  "REGENERATE": 1,
+  "REJECTED": 0,
+  "all_passed": false,
+
+  "results": [
+
+    {
+      "image_id": "IMG001",
+      "scene_id": "S001",
+      "filename": "IMG001_S001_island_establishing_predawn.png",
+      "file_found": true,
+      "file_size_bytes": 2216267,
+      "classification": "APPROVED",
+      "approved_for_production": true,
+
+      "visual_observations": [
+        "Sea-level perspective looking across calm dark water toward the island — CONFIRMED",
+        "Island: dense mass of ruin structures and multi-story buildings visible as dark silhouette — CONFIRMED",
+        "Pre-dawn: deep blue-grey sky with faint horizon glow behind the island — CONFIRMED",
+        "Mist: low mist layer at water surface around the island base — CONFIRMED",
+        "Palette: cold dark blue-black throughout, deeply desaturated — CONFIRMED",
+        "Water: calm, dark sea surface in foreground — CONFIRMED",
+        "No people: confirmed, zero human forms",
+        "No vessels: confirmed, no boats or ships anywhere in frame",
+        "16:9 composition: CONFIRMED — island centered, sea in foreground, sky above"
+      ],
+
+      "qa_checks": {
+        "pre_dawn_palette": { "result": "PASS", "detail": "Deep blue-grey cold palette. Faint horizon glow. Pre-dawn correct." },
+        "island_establishing_shot": { "result": "PASS", "detail": "Island mass fills center of frame, surrounded by sea. Strongly distinctive silhouette." },
+        "sea_level_perspective": { "result": "PASS", "detail": "Viewer appears to be at water level looking across to island. Not aerial." },
+        "no_people": { "result": "PASS" },
+        "no_vessels": { "result": "PASS", "detail": "No boats, ships, or ferries in frame." },
+        "visual_differentiation_IMG006": { "result": "PASS", "detail": "IMG006 is a daytime aerial real photograph (CC BY 2.0). This is sea-level pre-dawn AI. Opposite altitude, palette, time of day." },
+        "visual_differentiation_IMG020": { "result": "PASS", "detail": "IMG020 is a 1974 aerial government photograph with specific crop. This is contemporary sea-level pre-dawn. No overlap." },
+        "visual_differentiation_IMG019": { "result": "PASS", "detail": "IMG019 shows ferry bow in foreground with island at middle distance. This image has no vessel foreground — island dominates the frame directly." },
+        "hook_suitable": { "result": "PASS", "detail": "Exceptional hook image. The Hashima silhouette is distinctively recognizable, the mist at water surface is cinematically powerful, the first 10 seconds will immediately establish the documentary's visual register." },
+        "documentary_tone": { "result": "PASS", "detail": "Atmospheric and cinematic but firmly documentary. No supernatural elements. Reads as 'real place, real darkness' not horror fiction." },
+        "no_logos_text_watermarks": { "result": "PASS" },
+        "slow_pan_right_compatible": { "result": "PASS", "detail": "Wide horizontal composition with island and sea. Sufficient visual breadth for slow_pan_right at 10 seconds." }
+      },
+
+      "post_process_notes": "Film grain already in prompt. Cold dark palette correct — do not warm. Apply slow_pan_right at 10-second duration (HOOK timecode 0:00-0:10). Narration L001 (かつて、ここに5,259人が暮らしていました。) delivers maximum weight over this dark, still image.",
+      "file_path": "assets/ai_images/generated/batch_3/IMG001_S001_island_establishing_predawn.png"
+    },
+
+    {
+      "image_id": "IMG007",
+      "scene_id": "S008",
+      "filename": "IMG007_S008_building30_exterior.png",
+      "file_found": true,
+      "file_size_bytes": 2613326,
+      "classification": "APPROVED",
+      "approved_for_production": true,
+
+      "visual_observations": [
+        "Large multi-story concrete residential building facade — CONFIRMED",
+        "Low-angle view looking upward — conveys monumental scale effectively",
+        "Multiple floors of open empty window frames — grid pattern consistent with residential block character",
+        "Heavy rust staining on concrete facade — reddish-brown streaks cascading down",
+        "Moss and vines colonizing window frames and facade surfaces",
+        "Several window frames partially crumbling or losing structural integrity",
+        "Overcast grey sky above",
+        "Scale is immense — approximately 7-8 floors visible in frame, more implied above the crop",
+        "No people: confirmed",
+        "No modern elements: confirmed — no signage, vehicles, modern objects",
+        "Building reads as RESIDENTIAL apartment block — correct for Building 30 / 30号棟"
+      ],
+
+      "qa_checks": {
+        "nine_story_concrete_residential_facade": { "result": "PASS", "detail": "Large multi-story concrete block with grid of window openings. Scale consistent with 9-story residential building. 7-8 floors visible plus more above." },
+        "building_30_character": { "result": "PASS", "detail": "This reads as a large concrete residential apartment block — the correct character for Building 30 (30号棟, Japan's oldest reinforced concrete apartment complex). NOT a mine hoistroom or industrial structure." },
+        "structure_mismatch_resolved": { "result": "PASS", "detail": "C008-A (mine hoistroom) was the wrong candidate. This AI image correctly depicts a residential apartment block facade. Structural mismatch with scene.json S008 is fully resolved." },
+        "no_people": { "result": "PASS" },
+        "no_victims_suffering": { "result": "PASS", "detail": "Empty building facade. No human content of any kind." },
+        "no_horror_ghost_framing": { "result": "PASS", "detail": "Dark and atmospheric but documentary in nature. Moss and vegetation give 'nature reclaims' quality, not supernatural. Reads as legitimate architecture documentation." },
+        "respectful_documentary_tone": { "result": "PASS", "detail": "Factual visual of architectural decay. Moss/rust shows passage of time without sensationalism." },
+        "no_logos_text_watermarks": { "result": "PASS" },
+        "visual_differentiation_IMG009": { "result": "PASS", "detail": "IMG009 is an underground mine tunnel (dark passage, wooden timbers). IMG007 is an above-ground residential facade. Completely different type and setting." },
+        "visual_differentiation_IMG008": { "result": "PASS", "detail": "IMG008 is an interior school classroom. IMG007 is an exterior apartment building. Interior vs exterior, different architecture type." },
+        "visual_differentiation_IMG016": { "result": "PENDING_REGENERATION", "detail": "IMG016 in current failed attempt shows a similar building facade. REGENERATION is required for IMG016 to eliminate this visual overlap. See IMG016 entry." },
+        "ken_burns_zoom_in_compatible": { "result": "PASS", "detail": "Building fills the upper frame. Slow zoom into the upper floors conveys increasing scale — effective for 15-second ken_burns_zoom_in." }
+      },
+
+      "post_process_notes": "Film grain in prompt. Desaturated grey-green palette confirmed. Apply ken_burns_zoom_in at 15-second duration (ACT_I timecode 2:45-3:00). Zoom toward upper floors to emphasize monumental scale — reinforces L008 narration about Building 30 as one of Japan's oldest reinforced concrete apartments.",
+      "file_path": "assets/ai_images/generated/batch_3/IMG007_S008_building30_exterior.png"
+    },
+
+    {
+      "image_id": "IMG016",
+      "scene_id": "S020",
+      "filename": "IMG016_S020_island_dusk_wide.png",
+      "file_found": true,
+      "file_size_bytes": 2439263,
+      "classification": "REGENERATE",
+      "approved_for_production": false,
+      "regeneration_attempt": 1,
+      "max_attempts": 3,
+
+      "visual_observations": [
+        "Image shows: a large abandoned multi-story concrete building facade, low-angle upward view",
+        "Multiple floors of empty window frames visible, moss and weathering on facade",
+        "Overcast COOL GREY sky — NOT warm/dusk",
+        "NO sea or ocean visible anywhere in frame",
+        "NO island-wide view — this is a building close-up/facade shot",
+        "Palette: cold grey/dark grey — NOT amber or warm dusk tones",
+        "No people, no text — those checks pass",
+        "CRITICAL PROBLEM: Image is nearly identical in character to IMG007 (S008)"
+      ],
+
+      "rejection_reasons": [
+        "WRONG SCENE TYPE: Scene S020 requires 'Hashima Island at dusk or dawn. Sky, sea, and ruins. Quiet and majestic. Extreme wide.' This image shows a building facade close-up — no island, no sea, no wide view.",
+        "WRONG PALETTE: Scene and prompt require warm amber/golden dusk light. Image is cool grey throughout. Dusk conditions not rendered.",
+        "NO SEA VISIBLE: Scene requires sea surrounding the island to be visible. The image is framed entirely on a building with no water anywhere.",
+        "NOT EXTREME WIDE: Shot type required is extreme_wide_shot. This is medium-wide at best, framing only a building facade.",
+        "VISUAL COLLISION WITH IMG007: The character of this image — large abandoned concrete building facade, low-angle upward view, moss, grey sky — is nearly identical to IMG007 (S008, Building 30). Placing these at 2:45 and 9:00 in the same video creates a strong visual repeat and weakens the ACT_IV emotional climax.",
+        "NOT SUITABLE FOR 40s MA SILENCE PRECURSOR: The scene immediately precedes the 40-second Ma beat. A building close-up in cool grey does not carry the 'quiet and majestic' weight required for this position."
+      ],
+
+      "corrected_prompt": "Extreme wide panoramic view looking across calm ocean toward a small island completely surrounded by sea, the island topped with large clusters of abandoned concrete ruin structures and multi-story block buildings, warm amber and golden dusk light illuminating the ruins against a glowing gradient sunset sky of orange and deep amber, the calm sea surface reflects the warm sky colors in soft golden tones, island sits in center-to-left of the wide frame, large expanse of calm water in the foreground, wide sky fills upper third of frame, serene and vast, no vessels, no people, quiet majestic atmosphere, 35mm wide angle cinematic, warm desaturated amber and sienna and grey palette, film grain",
+      "corrected_negative_prompt": "people, human figures, boats, vessels, tourists, text, logos, watermark, cool blue tones, cold grey sky, building close-up, interior, facade only, nighttime darkness, rain, storm, neon, modern structures, bright saturated orange, harsh sunlight",
+      "corrected_midjourney_command": "/imagine Extreme wide panoramic view looking across calm ocean toward a small island completely surrounded by sea, the island topped with large clusters of abandoned concrete ruin structures and multi-story block buildings, warm amber and golden dusk light illuminating the ruins against a glowing gradient sunset sky of orange and deep amber, the calm sea surface reflects the warm sky colors in soft golden tones, island sits in center-to-left of the wide frame, large expanse of calm water in the foreground, wide sky fills upper third of frame, serene and vast, no vessels, no people, quiet majestic atmosphere, 35mm wide angle cinematic, warm desaturated amber and sienna and grey palette, film grain --ar 16:9 --no people, human figures, boats, vessels, tourists, text, logos, watermark, cool blue tones, cold grey sky, building close-up, interior, facade only, nighttime darkness, rain, storm, neon, modern structures, bright saturated orange, harsh sunlight --v 6.1 --q 2",
+      "corrected_output_filename": "IMG016_S020_island_dusk_wide_v2.png",
+      "corrected_output_folder": "assets/ai_images/generated/batch_3/",
+
+      "key_prompt_changes": [
+        "Added 'small island completely surrounded by sea' — anchors that the island must be visible from the water, not a close-up",
+        "Added 'large expanse of calm water in the foreground' — forces sea into the foreground",
+        "Added 'wide sky fills upper third of frame' — forces a three-band composition: sky / island / sea",
+        "Changed 'golden amber light' to 'warm amber and golden dusk light illuminating the ruins against a glowing gradient sunset sky of orange and deep amber' — more specific dusk language",
+        "Added 'calm sea surface reflects the warm sky colors in soft golden tones' — reinforces warm palette in water too",
+        "Added to negative: 'building close-up, interior, facade only, cold grey sky, cool blue tones' — blocks the close-up building outcome"
+      ],
+
+      "if_attempt_2_fails": "Try: 'Aerial or distant sea-level panoramic of a dense island covered in ruins at sunset, island surrounded by calm sea, three-layer composition of glowing sky / ruined island / reflecting sea.' If 3 attempts fail: upgrade directly to PIXTA paid stock (軍艦島 夕暮れ / Gunkanjima dusk, Royalty-Free, ~¥5K-¥15K). This scene precedes the 40s Ma silence — paid stock is the natural fallback and an improvement regardless.",
+
+      "file_path": null
+    }
+
+  ],
+
+  "confirmed_after_this_qa": 18,
+  "confirmed_breakdown": {
+    "note": "16 previously confirmed + IMG001 APPROVED + IMG007 APPROVED = 18 of 20",
+    "pending_regeneration": ["IMG016 — attempt 1 of 3"],
+    "suppressed": ["IMG005"]
+  },
+  "image_asset_phase_complete": false,
+  "image_asset_phase_completion_condition": "IMG016 regeneration attempt 2 must generate and pass QA"
+}

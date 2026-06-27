@@ -1,0 +1,77 @@
+{
+  "project_id": "hashima-island-mystery-ja",
+  "qa_id": "IMG013_REGEN_QA_001",
+  "qa_date": "2026-06-27",
+  "gate": "img013_regeneration_qa",
+  "image_id": "IMG013",
+  "scene_id": "S016",
+  "regeneration_attempt": 2,
+  "filename": "IMG013_S016_personal_items_v2.png",
+  "actual_path": "assets/ai_images/generated/batch_2a/IMG013_S016_personal_items_v2.png",
+  "file_found": true,
+  "file_size_bytes": 2365267,
+
+  "regeneration_history": {
+    "attempt_1_original": {
+      "filename": "IMG013_S016_personal_items.png",
+      "result": "REJECTED",
+      "rejection_reason": "Photograph prop showed group of people in a legible formal group portrait — critical gate triggered",
+      "location": "batch_1/"
+    },
+    "attempt_2_corrected": {
+      "filename": "IMG013_S016_personal_items_v2.png",
+      "strategy": "Photograph turned face-down — only yellowed blank paper back visible",
+      "result": "APPROVED",
+      "location": "batch_2a/"
+    }
+  },
+
+  "classification": "APPROVED",
+  "approved_for_production": true,
+  "regeneration_closed": true,
+  "attempts_used": 2,
+  "max_attempts": 3,
+
+  "critical_gate_check": {
+    "gate": "No face or human figure visible in photograph prop",
+    "result": "PASS",
+    "detail": "The paper/photograph prop is lying FACE-DOWN. Only the blank yellowed aged paper back is visible. No photographic content, no faces, no human figures, no group portrait visible. Critical gate corrective strategy succeeded on attempt 2."
+  },
+
+  "objects_present": {
+    "child_shoe": { "present": true, "detail": "Dark leather Mary-Jane style shoe with buckle strap, heavily worn and distressed, centre-left of frame — excellent" },
+    "rusted_can": { "present": true, "detail": "Cylindrical metal can lying on its side to the right, heavily rusted — correct" },
+    "paper_photograph": { "present": true, "face_down": true, "detail": "Single aged yellowed piece of paper lying face-down on ground, only blank paper back visible, edges showing age/wear — CRITICAL GATE PASSED" }
+  },
+
+  "checks": {
+    "photograph_face_down_or_blank": "PASS — paper is face-down, only blank yellowed surface visible",
+    "no_visible_family_portrait": "PASS — no portrait content visible",
+    "no_visible_faces": "PASS",
+    "no_identifiable_people": "PASS",
+    "no_legible_personal_information": "PASS",
+    "no_modern_objects": "PASS — all items consistent with pre-1974 era",
+    "tone_quiet_respectful": "PASS — dark, quiet, evocative of memory without exploitation",
+    "no_ghost_horror": "PASS — contemplative, not sinister",
+    "no_gore_violence": "PASS",
+    "correct_scene_match": "PASS — child's shoe, aged paper/photo face-down, rusted can on concrete floor",
+    "suitable_16x9": "PASS",
+    "no_text_logos_watermarks": "PASS",
+    "usable_for_slow_zoom_in": "PASS — still life detail rewards slow push in 30 seconds"
+  },
+
+  "visual_observations": [
+    "Shoe: EXCELLENT — dark aged leather with buckle, correctly worn and distressed",
+    "Can: PRESENT — horizontal rusted cylinder, correct",
+    "Paper: FACE-DOWN — only blank yellowed aged paper back visible. No photographic content at all. Strategy worked.",
+    "Setting: Dark concrete floor with gravel/fine debris. Rear concrete wall at back corner.",
+    "Lighting: Dim atmospheric side light from upper-left. Warm/dark palette correct.",
+    "Color palette: Near-monochrome dark browns and near-blacks. Paper provides warm aged-yellow accent.",
+    "No modern objects anywhere: CONFIRMED",
+    "No people, no faces: CONFIRMED"
+  ],
+
+  "post_process_notes": "Minimal processing needed. Film grain. Color is already near dark_documentary target. Slow_zoom_in at 30-second duration. Warm paper tones against dark concrete creates the needed emotional pocket.",
+  "file_path": "assets/ai_images/generated/batch_2a/IMG013_S016_personal_items_v2.png",
+  "production_status": "approved_for_production"
+}

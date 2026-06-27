@@ -1,0 +1,199 @@
+{
+  "project_id": "hashima-island-mystery-ja",
+  "schema_version": "1.0",
+  "canonical_names": [
+    {
+      "name": "端島",
+      "reading": "はしま",
+      "entity_type": "place",
+      "preferred_spelling": "端島",
+      "alternate_spellings": ["Hashima", "端しま"],
+      "source_fact_id": "VF001",
+      "notes": "法的・公式名称。長崎県長崎市に属する。"
+    },
+    {
+      "name": "軍艦島",
+      "reading": "ぐんかんじま",
+      "entity_type": "place",
+      "preferred_spelling": "軍艦島",
+      "alternate_spellings": ["Gunkanjima"],
+      "source_fact_id": "VF001",
+      "notes": "愛称。ナレーションで使用可。正式名称は端島。"
+    },
+    {
+      "name": "三菱合資会社",
+      "reading": "みつびしごうしかいしゃ",
+      "entity_type": "organization",
+      "preferred_spelling": "三菱合資会社",
+      "alternate_spellings": ["Mitsubishi Partnership"],
+      "source_fact_id": "VF003",
+      "notes": "歴史的正式名称（1890年当時）。現在の継承企業は三菱マテリアル株式会社。"
+    },
+    {
+      "name": "三菱マテリアル株式会社",
+      "reading": "みつびしまてりあるかぶしきがいしゃ",
+      "entity_type": "organization",
+      "preferred_spelling": "三菱マテリアル株式会社",
+      "alternate_spellings": ["Mitsubishi Materials Corporation"],
+      "source_fact_id": "VF003",
+      "notes": "三菱合資会社の現在の継承企業。現代的文脈で言及する際はこちらを使用。"
+    },
+    {
+      "name": "30号棟",
+      "reading": "さんじゅうごうとう",
+      "entity_type": "place",
+      "preferred_spelling": "30号棟",
+      "alternate_spellings": ["Building 30", "30-go-to"],
+      "source_fact_id": "VF004",
+      "notes": "1916年建設の鉄筋コンクリート集合住宅。「最古」の断定は避け「最古級のひとつ」と表現。"
+    },
+    {
+      "name": "長崎市",
+      "reading": "ながさきし",
+      "entity_type": "government",
+      "preferred_spelling": "長崎市",
+      "alternate_spellings": ["Nagasaki City"],
+      "source_fact_id": "VF001",
+      "notes": "現在の島の管理自治体。2015年以降、世界遺産として保全。"
+    },
+    {
+      "name": "ユネスコ",
+      "reading": "ゆねすこ",
+      "entity_type": "organization",
+      "preferred_spelling": "ユネスコ",
+      "alternate_spellings": ["UNESCO", "国際連合教育科学文化機関"],
+      "source_fact_id": "VF011",
+      "notes": "UNESCO = 国際連合教育科学文化機関。カタカナ「ユネスコ」で表記統一。"
+    },
+    {
+      "name": "明治日本の産業革命遺産",
+      "reading": "めいじにほんのさんぎょうかくめいいさん",
+      "entity_type": "concept",
+      "preferred_spelling": "明治日本の産業革命遺産 製鉄・製鋼、造船、石炭産業",
+      "alternate_spellings": ["Sites of Japan's Meiji Industrial Revolution"],
+      "source_fact_id": "VF011",
+      "notes": "世界遺産登録名称（正式）。略称「明治産業革命遺産」も使用可。"
+    }
+  ],
+  "canonical_dates": [
+    { "event": "石炭採掘開始", "date": "1887年頃", "era_ja": "明治20年頃", "precision": "approximate", "source_fact_id": "VF003" },
+    { "event": "三菱採掘権取得", "date": "1890年", "era_ja": "明治23年", "precision": "year", "source_fact_id": "VF003" },
+    { "event": "30号棟建設", "date": "1916年", "era_ja": "大正5年", "precision": "year", "source_fact_id": "VF004" },
+    { "event": "人口最盛期", "date": "1959年", "era_ja": "昭和34年", "precision": "year", "source_fact_id": "VF005" },
+    { "event": "強制労働期間（開始）", "date": "1939年", "era_ja": "昭和14年", "precision": "year", "source_fact_id": "VF007" },
+    { "event": "強制労働期間（終了）", "date": "1945年", "era_ja": "昭和20年", "precision": "year", "source_fact_id": "VF007" },
+    { "event": "閉山発表", "date": "1974年1月15日", "era_ja": "昭和49年", "precision": "exact", "source_fact_id": "VF009" },
+    { "event": "全島民離島", "date": "1974年4月20日", "era_ja": "昭和49年", "precision": "exact", "source_fact_id": "VF009" },
+    { "event": "観光再開", "date": "2009年4月22日", "era_ja": "平成21年", "precision": "exact", "source_fact_id": "VF010" },
+    { "event": "世界遺産登録", "date": "2015年7月5日", "era_ja": "平成27年", "precision": "exact", "source_fact_id": "VF011" }
+  ],
+  "canonical_numbers": [
+    {
+      "item": "端島の面積",
+      "value": "0.063",
+      "unit": "km²",
+      "display": "約6.3ヘクタール",
+      "precision_qualifier": "approximate",
+      "notes": "埋め立て後の最終的な面積",
+      "source_fact_id": "VF002"
+    },
+    {
+      "item": "長崎港からの距離",
+      "value": "15〜18",
+      "unit": "km",
+      "display": "南西約15〜18キロメートル",
+      "precision_qualifier": "range",
+      "notes": "測定点により異なる。VF002 FLAG調整済み。FIX-M4適用。",
+      "source_fact_id": "VF002"
+    },
+    {
+      "item": "最盛期人口",
+      "value": "5259",
+      "unit": "人",
+      "display": "5,259人",
+      "precision_qualifier": "exact",
+      "notes": "1959年の記録。文中では「5,259人」と表記（カンマ区切り）",
+      "source_fact_id": "VF005"
+    },
+    {
+      "item": "人口密度",
+      "value": "83500",
+      "unit": "人/km²",
+      "display": "約83,500人/km²",
+      "precision_qualifier": "approximate",
+      "notes": "「世界最高」の断定不可。「世界最高水準のひとつ」として表現。FLAG調整済み。",
+      "source_fact_id": "VF005"
+    },
+    {
+      "item": "UNESCO World Heritage ID",
+      "value": "1484",
+      "unit": null,
+      "display": "ID 1484",
+      "precision_qualifier": "exact",
+      "notes": "UNESCO公式ID",
+      "source_fact_id": "VF011"
+    }
+  ],
+  "off_limits_expressions": [
+    {
+      "forbidden": "日本最古",
+      "replacement": "日本最古級のひとつ",
+      "reason": "比較基準・対象によって記述が異なる。断定不可。",
+      "source_fact_id": "VF004"
+    },
+    {
+      "forbidden": "世界最高の人口密度",
+      "replacement": "世界最高水準のひとつとされる人口密度",
+      "reason": "UNESCO文書も「非常に高密度」とのみ記述。測定方法・時期で異なる。",
+      "source_fact_id": "VF005"
+    },
+    {
+      "forbidden": "強制労働の具体的死者数（断定）",
+      "replacement": "詳細は現在も調査・議論が続いている",
+      "reason": "日韓両政府の公式数字が異なる。独立学術検証が困難。",
+      "source_fact_id": "VF008"
+    },
+    {
+      "forbidden": "スカイフォールのモデルとなった（断定）",
+      "replacement": "着想の源のひとつとされている",
+      "reason": "公式一次ソース未確認。UNVERIFIED（VF013）。スクリプトからは除外済み。",
+      "source_fact_id": "VF013"
+    },
+    {
+      "forbidden": "〜が正しい（日韓論争の一方支持）",
+      "replacement": "両国の見解が異なっている",
+      "reason": "本プロジェクトは一方の立場を支持しない。両政府の記録を並列提示する。",
+      "source_fact_id": null
+    },
+    {
+      "forbidden": "企業城下島",
+      "replacement": "ひとつの企業によって管理される、前代未聞の島",
+      "reason": "「企業城下島」は一般的な日本語ではない造語。視聴者に混乱を招く。FIX-M2適用。",
+      "source_fact_id": null
+    }
+  ],
+  "pronunciation_guide": [
+    { "term": "端島（はしま）", "reading": "ha-shi-ma", "ssml_phoneme": "haɕima", "notes": "「橋」ではなく「端（はし）」" },
+    { "term": "軍艦島（ぐんかんじま）", "reading": "gun-kan-ji-ma", "ssml_phoneme": "ɡunkandʑima", "notes": "4拍。各音節を均等に" },
+    { "term": "三菱（みつびし）", "reading": "mi-tsu-bi-shi", "ssml_phoneme": "mitsɨbiɕi", "notes": "4拍" },
+    { "term": "炭坑（たんこう）", "reading": "tan-kō", "ssml_phoneme": "taŋkoː", "notes": "長音に注意" },
+    { "term": "埋め立て（うめたて）", "reading": "u-me-ta-te", "ssml_phoneme": "ɯmetate", "notes": "4拍" },
+    { "term": "閉山（へいざん）", "reading": "hei-zan", "ssml_phoneme": "heːzan", "notes": "「へいさん」ではない" },
+    { "term": "徴用（ちょうよう）", "reading": "chō-yō", "ssml_phoneme": "tɕoːjoː", "notes": "長音×2" },
+    { "term": "産業革命（さんぎょうかくめい）", "reading": "san-gyō-ka-ku-mei", "ssml_phoneme": "saŋɡjoːkakɨmeː", "notes": "5拍" },
+    { "term": "護岸（ごがん）", "reading": "go-gan", "ssml_phoneme": "ɡoɡan", "notes": "2拍" },
+    { "term": "間（ま）", "reading": "ma", "ssml_phoneme": "ma", "notes": "単音。「かん」ではなく「ま」" },
+    { "term": "もののあわれ", "reading": "mo-no-no-a-wa-re", "ssml_phoneme": "mononoaware", "notes": "6拍。ゆっくり" },
+    { "term": "廃墟（はいきょ）", "reading": "hai-kyo", "ssml_phoneme": "haikʲo", "notes": "2拍" },
+    { "term": "遺産（いさん）", "reading": "i-san", "ssml_phoneme": "isan", "notes": "2拍" }
+  ],
+  "thematic_keywords": [
+    { "term": "間（ま）", "reading": "ma", "meaning": "余白・沈黙・空白の美学。japan_template核心概念" },
+    { "term": "もののあわれ", "reading": "mono no aware", "meaning": "無常感。廃墟の美学と連結" },
+    { "term": "廃墟（はいきょ）", "reading": "haikyo", "meaning": "廃墟探索文化" },
+    { "term": "産業遺産", "reading": "さんぎょういさん", "meaning": "公式的な世界遺産の分類" },
+    { "term": "記憶", "reading": "きおく", "meaning": "このビデオの主題：誰の記憶か？" }
+  ],
+  "created_at": "2026-06-27T04:00:00Z",
+  "updated_at": "2026-06-27T04:00:00Z"
+}

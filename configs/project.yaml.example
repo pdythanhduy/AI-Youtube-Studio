@@ -1,0 +1,158 @@
+# Project Configuration — AI YouTube Studio OS
+# This file shows all available project-level configuration options.
+# Copy this to projects/{project_slug}/input/project.yaml and fill in your values.
+# All keys are optional unless marked REQUIRED.
+
+# ─────────────────────────────────────────────
+# REQUIRED: Core production inputs
+# ─────────────────────────────────────────────
+
+project:
+  topic: "The Disappearance of Elisa Lam"   # REQUIRED: Video topic
+  language: "en"                             # REQUIRED: ISO 639-1 code (en / ja / vi)
+  video_length_minutes: 12                   # REQUIRED: Integer 5–60
+  style: "dark_documentary"                  # REQUIRED: dark_documentary / reddit_narration / mystery_investigation / japanese_mystery
+
+  # Optional: derived automatically from style if omitted
+  niche: "internet_mystery"                  # internet_mystery / reddit_mystery / japanese_mystery / google_maps_mystery / unexplained_events / lost_places
+
+  # Optional: used in SEO description but never in narration
+  channel_name: "Mystery Archive"
+
+  # Optional: extra instructions for the Director AI
+  notes: ""
+
+
+# ─────────────────────────────────────────────
+# PIPELINE CONTROL
+# ─────────────────────────────────────────────
+
+pipeline:
+  # Start from a specific stage (for resume runs — normally leave at 0)
+  start_stage: 0
+
+  # Stop after a specific stage (for testing — normally leave at 12)
+  stop_after_stage: 12
+
+  # Retry policy for auto-retryable failures
+  max_retries_per_stage: 1
+
+  # Whether to continue if advisory (WARN) checks fail
+  halt_on_advisory: false
+
+
+# ─────────────────────────────────────────────
+# CONTENT QUALITY
+# ─────────────────────────────────────────────
+
+quality:
+  # Acceptable word count deviation from target (default: 0.10 = ±10%)
+  word_count_tolerance: 0.10
+
+  # Minimum verified facts required in research
+  min_verified_facts: 5
+
+  # Minimum sources required in research
+  min_sources: 3
+
+  # Require source_report Overall Status to be PASS (not just NEEDS_REVISION)
+  require_source_pass: false
+
+
+# ─────────────────────────────────────────────
+# MODEL ROUTING OVERRIDES
+# ─────────────────────────────────────────────
+
+models:
+  # Default model for primary content stages (1, 2, 3, 4, 9, 10, 11, 12)
+  # Default: claude-opus-4-8
+  primary: "claude-opus-4-8"
+
+  # Cheaper model for structural/formatting stages (5, 6, 7, 8)
+  # Default: claude-sonnet-4-6
+  secondary: "claude-sonnet-4-6"
+
+  # Per-stage overrides (rarely needed — use model IDs exactly)
+  stage_overrides:
+    # stage_04: "claude-opus-4-8"    # example: force opus for script writing
+
+
+# ─────────────────────────────────────────────
+# IMAGE POLICY OVERRIDES
+# ─────────────────────────────────────────────
+
+images:
+  # Maximum percentage of visual beats that can use AI-generated images
+  # If exceeded, a warning is raised (not a failure)
+  max_ai_escalation_rate: 0.50
+
+  # Minimum license quality required for real images
+  # Options: public_domain / cc0 / cc_by / cc_by_sa / cc_by_nc / stock_standard / fair_use
+  minimum_license: "cc_by"
+
+  # Whether to allow fair use images in the image plan
+  allow_fair_use: true
+
+
+# ─────────────────────────────────────────────
+# VOICE DIRECTION OVERRIDES
+# ─────────────────────────────────────────────
+
+voice:
+  # ElevenLabs voice ID (not stored in the system — fill in per channel)
+  elevenlabs_voice_id: ""
+
+  # Override the default pacing marker budget for this style
+  # Default: defined in configs/style_profiles.md
+  # pause_2s_max: 3
+  # pause_3s_count: 1
+
+
+# ─────────────────────────────────────────────
+# SEO OVERRIDES
+# ─────────────────────────────────────────────
+
+seo:
+  # Target tag count range
+  tag_count_min: 15
+  tag_count_max: 30
+
+  # Force a specific title option (1, 2, or 3) — human selects after review
+  # preferred_title_option: 1
+
+  # Additional keywords to include in tags (appended to AI-generated tags)
+  extra_tags: []
+
+
+# ─────────────────────────────────────────────
+# EXPORT SETTINGS
+# ─────────────────────────────────────────────
+
+export:
+  # Whether to copy final assets to export/ subfolder
+  bundle_export_assets: true
+
+  # Include the director_run_log in the export bundle
+  include_run_log: true
+
+  # Whether to generate a human-readable editor handoff document
+  generate_editor_handoff: true
+
+
+# ─────────────────────────────────────────────
+# ANALYTICS
+# ─────────────────────────────────────────────
+
+analytics:
+  # Whether to track this project in the knowledge database after completion
+  write_to_memory: true
+
+  # Project tags for analytics grouping (not YouTube tags)
+  project_tags: []
+
+
+# ─────────────────────────────────────────────
+# SCHEMA VERSION
+# ─────────────────────────────────────────────
+
+schema_version: "1.0"

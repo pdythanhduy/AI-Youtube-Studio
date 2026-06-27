@@ -1,0 +1,58 @@
+{
+  "audience_id": "general",
+  "schema_version": "1.0",
+  "display_name": "General Audience",
+  "description": "Educated but non-specialist viewers who are curious about the world and comfortable with documentary content. They bring no domain expertise but are capable of engaging with complex ideas when explained clearly.",
+
+  "demographic_signals": {
+    "age_range_min": 18,
+    "age_range_max": 55,
+    "typical_prior_exposure": "casual — aware the subject may exist but has not studied it",
+    "cultural_context_assumption": "low"
+  },
+
+  "knowledge_profile": {
+    "assumed_knowledge_level": "basic",
+    "jargon_tolerance": "low",
+    "explanation_depth": "moderate",
+    "citation_expectation": "light",
+    "nuance_tolerance": "medium"
+  },
+
+  "language_profile": {
+    "vocabulary_level": "conversational",
+    "sentence_complexity": "moderate",
+    "analogy_reliance": "medium",
+    "recap_frequency": "moderate"
+  },
+
+  "engagement_profile": {
+    "attention_span_model": "moderate",
+    "hook_sensitivity": "high",
+    "trust_building_requirement": "earned_quickly",
+    "engagement_triggers": [
+      "surprising or counterintuitive facts",
+      "human stories behind historical events",
+      "mystery and unanswered questions",
+      "clear visual context — maps, timelines, comparative images",
+      "feeling of learning something most people do not know"
+    ],
+    "emotional_range": "moderate",
+    "comment_likelihood": "medium"
+  },
+
+  "pacing_preference": {
+    "overall_pace": "moderate",
+    "tolerance_for_silence": "medium",
+    "tolerance_for_repetition": "low"
+  },
+
+  "script_guidance": {
+    "assume_prior_videos_seen": false,
+    "self_contained_required": true,
+    "outro_cta_style": "soft suggestion — embed the next video idea naturally in the final question or observation"
+  },
+
+  "created_at": "2026-06-27T00:00:00Z",
+  "updated_at": "2026-06-27T00:00:00Z"
+}

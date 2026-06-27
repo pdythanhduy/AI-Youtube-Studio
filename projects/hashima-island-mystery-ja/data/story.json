@@ -1,0 +1,414 @@
+{
+  "project_id": "hashima-island-mystery-ja",
+  "schema_version": "1.0",
+  "outline": {
+    "template": "japan_template",
+    "niche": "japanese_mystery",
+    "total_duration_seconds": 720,
+    "sections": [
+      {
+        "section_id": "HOOK",
+        "label": "掴み / Hook",
+        "timecode_start": "0:00",
+        "timecode_end": "1:00",
+        "duration_seconds": 60,
+        "word_count_target": 80,
+        "tone": "very_slow",
+        "purpose": "視聴者を即座に島の世界に引き込む。挨拶なし。説明なし。映像と言葉で感覚を与える。"
+      },
+      {
+        "section_id": "ACT_I",
+        "label": "文化的背景 / Cultural Context",
+        "timecode_start": "1:00",
+        "timecode_end": "3:00",
+        "duration_seconds": 120,
+        "word_count_target": 220,
+        "tone": "documentary_informational",
+        "purpose": "日本の近代化と端島の位置付けを示す。構造的な文脈を与える。"
+      },
+      {
+        "section_id": "ACT_II",
+        "label": "神話と現実 / Legend vs Reality",
+        "timecode_start": "3:00",
+        "timecode_end": "6:00",
+        "duration_seconds": 180,
+        "word_count_target": 280,
+        "tone": "contrasting",
+        "purpose": "「軍艦島」という魅力的なイメージと、その内側に埋もれた歴史の対比を提示する。"
+      },
+      {
+        "section_id": "ACT_III",
+        "label": "沈黙 / Japanese Silence",
+        "timecode_start": "6:00",
+        "timecode_end": "9:00",
+        "duration_seconds": 180,
+        "word_count_target": 260,
+        "tone": "very_slow",
+        "purpose": "1974年の離島という「終わり」を、感傷ではなく「静寂」として描く。"
+      },
+      {
+        "section_id": "ACT_IV",
+        "label": "間 / Ma Beat",
+        "timecode_start": "9:00",
+        "timecode_end": "11:00",
+        "duration_seconds": 120,
+        "word_count_target": 220,
+        "tone": "contemplative",
+        "purpose": "情報ではなく、余白を届ける。問いを残す。答えを与えない。"
+      },
+      {
+        "section_id": "OUTRO",
+        "label": "締め / Outro",
+        "timecode_start": "11:00",
+        "timecode_end": "12:00",
+        "duration_seconds": 60,
+        "word_count_target": 140,
+        "tone": "reflective",
+        "purpose": "視聴者に問いを持ち帰らせる。チャンネルへの誘導は最小限。"
+      }
+    ],
+    "beats_required": [
+      "cultural_context",
+      "legend_vs_reality",
+      "japanese_silence",
+      "ma_beat"
+    ],
+    "beats_present": [
+      "cultural_context",
+      "legend_vs_reality",
+      "japanese_silence",
+      "ma_beat"
+    ],
+    "beats_missing": [],
+    "template_compliance": {
+      "status": "PASS",
+      "checks": [
+        { "check": "cultural_context beat in ACT_I", "result": "PASS" },
+        { "check": "legend_vs_reality beat in ACT_II", "result": "PASS" },
+        { "check": "japanese_silence beat in ACT_III", "result": "PASS" },
+        { "check": "ma_beat in ACT_IV", "result": "PASS" },
+        { "check": "very_slow opening (HOOK)", "result": "PASS" },
+        { "check": "5x [PAUSE:2s]", "result": "PASS" },
+        { "check": "no greeting or introduction at opening", "result": "PASS" },
+        { "check": "ends with question, not conclusion", "result": "PASS" }
+      ]
+    }
+  },
+  "script": {
+    "word_count": 1201,
+    "word_count_target": 1201,
+    "register": "desu_masu",
+    "hook_word_count": 55,
+    "pause_count": 5,
+    "ends_with_question": true,
+    "template_compliance": {
+      "status": "PASS",
+      "issues": []
+    },
+    "fixes_applied": [
+      {
+        "fix_id": "FIX-M2",
+        "description": "「企業城下島」replaced with 「ひとつの企業によって管理される、前代未聞の島」",
+        "severity": "MEDIUM"
+      },
+      {
+        "fix_id": "FIX-M4",
+        "description": "「約15キロメートル」changed to 「約15〜18キロメートル」to match VF002",
+        "severity": "MEDIUM"
+      },
+      {
+        "fix_id": "FIX-H3",
+        "description": "Ma beat B-ROLL note updated from 10秒 to 40秒",
+        "severity": "HIGH"
+      }
+    ],
+    "lines": [
+      {
+        "line_id": "L001",
+        "section_id": "HOOK",
+        "type": "narration",
+        "text": "かつて、ここに5,259人が暮らしていました。",
+        "pacing": "very_slow",
+        "fact_ids_referenced": ["VF005"]
+      },
+      {
+        "line_id": "L002",
+        "section_id": "HOOK",
+        "type": "narration",
+        "text": "子どもが走り回る声。石炭を掘る男たちの息遣い。夜には映画館の明かりが灯っていました。",
+        "pacing": "very_slow",
+        "fact_ids_referenced": ["VF006"]
+      },
+      {
+        "line_id": "L003",
+        "section_id": "HOOK",
+        "type": "narration",
+        "text": "そして、ある日——すべてが消えました。",
+        "pacing": "very_slow",
+        "fact_ids_referenced": []
+      },
+      {
+        "line_id": "L004",
+        "section_id": "HOOK",
+        "type": "pause",
+        "text": "[PAUSE:2s]",
+        "pacing": null,
+        "fact_ids_referenced": []
+      },
+      {
+        "line_id": "L005",
+        "section_id": "ACT_I",
+        "type": "narration",
+        "text": "明治時代、日本は急速な近代化の道を歩んでいました。その原動力となったのが石炭です。工場が動き、船が走り、鉄道が敷かれる——その背後には、地下深くから掘り出される黒いエネルギーがありました。",
+        "pacing": "normal",
+        "fact_ids_referenced": ["VF003"]
+      },
+      {
+        "line_id": "L006",
+        "section_id": "ACT_I",
+        "type": "narration",
+        "text": "1887年頃、長崎港から南西に約15〜18キロメートル離れた小さな岩礁で、石炭の採掘が始まりました。端島——後に「軍艦島」と呼ばれることになるこの島です。",
+        "pacing": "normal",
+        "fact_ids_referenced": ["VF002", "VF003"],
+        "fix_applied": "FIX-M4: 約15キロ→約15〜18キロ"
+      },
+      {
+        "line_id": "L007",
+        "section_id": "ACT_I",
+        "type": "narration",
+        "text": "1890年、三菱合資会社がこの島の採掘権を取得しました。以来、島全体がひとつの企業によって管理される、前代未聞の島となりました。",
+        "pacing": "slow",
+        "fact_ids_referenced": ["VF003"],
+        "fix_applied": "FIX-M2: 「企業城下島」replaced"
+      },
+      {
+        "line_id": "L008",
+        "section_id": "ACT_I",
+        "type": "narration",
+        "text": "度重なる埋め立て工事により、島の面積は元の岩礁から約6倍に拡張されました。そして1916年——大正5年——コンクリートの集合住宅「30号棟」が建設されます。当時の日本における最古級の鉄筋コンクリート造集合住宅のひとつとされる建物です。",
+        "pacing": "normal",
+        "fact_ids_referenced": ["VF002", "VF004"]
+      },
+      {
+        "line_id": "L009",
+        "section_id": "ACT_I",
+        "type": "narration",
+        "text": "狭い島の上に、高層のコンクリート建築が積み上がっていく。学校、病院、神社、映画館、パチンコ店。人口密度は増し続け、1959年には5,259人——世界最高水準のひとつとされる人口密度に達しました。島民はここで生まれ、学び、働き、結婚し、子どもを産みました。端島は、彼らにとって、日本そのものでした。",
+        "pacing": "normal",
+        "fact_ids_referenced": ["VF005", "VF006"]
+      },
+      {
+        "line_id": "L010",
+        "section_id": "ACT_I",
+        "type": "pause",
+        "text": "[PAUSE:2s]",
+        "pacing": null,
+        "fact_ids_referenced": []
+      },
+      {
+        "line_id": "L011",
+        "section_id": "ACT_II",
+        "type": "narration",
+        "text": "「軍艦島」という名前を、あなたはどこかで聞いたことがあるかもしれません。廃墟写真家に愛され、映画のロケ地のモデルとされ、世界中の観光客が訪れる——この島はいつの間にか、「かっこいい廃墟」のシンボルになっていました。",
+        "pacing": "normal",
+        "fact_ids_referenced": []
+      },
+      {
+        "line_id": "L012",
+        "section_id": "ACT_II",
+        "type": "narration",
+        "text": "2009年、35年間封鎖されていた島の一部が観光向けに再開されました。コンクリートが朽ち、自然に侵食された廃墟の景観は、独特の美しさを持っています。廃墟写真文化、いわゆる「廃墟探索（ハイキョ）」の世界において、端島は最も象徴的な場所のひとつです。",
+        "pacing": "normal",
+        "fact_ids_referenced": ["VF010"]
+      },
+      {
+        "line_id": "L013",
+        "section_id": "ACT_II",
+        "type": "narration",
+        "text": "しかし、同じこの島の、もう少し深いところに目を向けると——別の物語が見えてきます。",
+        "pacing": "slow",
+        "fact_ids_referenced": []
+      },
+      {
+        "line_id": "L014",
+        "section_id": "ACT_II",
+        "type": "narration",
+        "text": "1939年から1945年にかけて、太平洋戦争の時代。朝鮮半島および中国大陸から連行された人々が、この炭坑の地下深くで働かされました。",
+        "pacing": "slow",
+        "fact_ids_referenced": ["VF007"]
+      },
+      {
+        "line_id": "L015",
+        "section_id": "ACT_II",
+        "type": "narration",
+        "text": "この事実は、日本政府もユネスコの審議の場で認めています。2015年の世界遺産登録審議において、日本政府代表は、一部の施設において人々が「意に反して」労働させられたことに言及しました。",
+        "pacing": "normal",
+        "fact_ids_referenced": ["VF007", "VF012"]
+      },
+      {
+        "line_id": "L016",
+        "section_id": "ACT_II",
+        "type": "narration",
+        "text": "強制労働に関与した具体的な人数、そして命を落とした人数については——現在も、日本と韓国の双方で資料の記述が異なっています。歴史の検証は続いています。",
+        "pacing": "normal",
+        "fact_ids_referenced": ["VF008"]
+      },
+      {
+        "line_id": "L017",
+        "section_id": "ACT_II",
+        "type": "narration",
+        "text": "端島が世界遺産に登録されたのは、明治の産業革命を象徴する遺産としてです。しかしその同じ場所で、同じ時代に、別の人々が異なる経験をしていた——そのことを、世界遺産という称号はどのように扱うべきでしょうか。",
+        "pacing": "slow",
+        "fact_ids_referenced": ["VF011"]
+      },
+      {
+        "line_id": "L018",
+        "section_id": "ACT_III",
+        "type": "narration",
+        "text": "1974年1月15日、閉山が発表されました。",
+        "pacing": "slow",
+        "fact_ids_referenced": ["VF009"]
+      },
+      {
+        "line_id": "L019",
+        "section_id": "ACT_III",
+        "type": "narration",
+        "text": "理由はシンプルでした。石炭の時代が終わったのです。日本は石油へと舵を切り、端島の炭坑は経済的な意味を失いました。",
+        "pacing": "slow",
+        "fact_ids_referenced": ["VF009"]
+      },
+      {
+        "line_id": "L020",
+        "section_id": "ACT_III",
+        "type": "narration",
+        "text": "同年4月20日。最後の島民が、船に乗りました。",
+        "pacing": "slow",
+        "fact_ids_referenced": ["VF009"]
+      },
+      {
+        "line_id": "L021",
+        "section_id": "ACT_III",
+        "type": "narration",
+        "text": "5,259人が暮らした場所から、一人、また一人と人が去っていきました。そしてその日以降——端島は無人島になりました。",
+        "pacing": "very_slow",
+        "fact_ids_referenced": ["VF005", "VF009"]
+      },
+      {
+        "line_id": "L022",
+        "section_id": "ACT_III",
+        "type": "pause",
+        "text": "[PAUSE:2s]",
+        "pacing": null,
+        "fact_ids_referenced": []
+      },
+      {
+        "line_id": "L023",
+        "section_id": "ACT_III",
+        "type": "narration",
+        "text": "家具は残されたまま。教科書は机の上に。子どもの玩具は、廊下の片隅に。急いで去らなければならなかった人たちの痕跡が、至るところに残されました。",
+        "pacing": "slow",
+        "fact_ids_referenced": []
+      },
+      {
+        "line_id": "L024",
+        "section_id": "ACT_III",
+        "type": "narration",
+        "text": "それから35年間、島は封鎖されました。台風が来るたびに、壁が崩れました。海水が基礎を侵食しました。誰も修復しませんでした。",
+        "pacing": "slow",
+        "fact_ids_referenced": []
+      },
+      {
+        "line_id": "L025",
+        "section_id": "ACT_III",
+        "type": "narration",
+        "text": "コンクリートだけが残り、かつての生活の痕跡だけが——静かに、しかし確実に、失われていきました。",
+        "pacing": "very_slow",
+        "fact_ids_referenced": []
+      },
+      {
+        "line_id": "L026",
+        "section_id": "ACT_III",
+        "type": "pause",
+        "text": "[PAUSE:2s]",
+        "pacing": null,
+        "fact_ids_referenced": []
+      },
+      {
+        "line_id": "L027",
+        "section_id": "ACT_IV",
+        "type": "narration",
+        "text": "2015年7月5日、端島は「明治日本の産業革命遺産」の構成資産として、ユネスコ世界遺産に登録されました。",
+        "pacing": "slow",
+        "fact_ids_referenced": ["VF011"]
+      },
+      {
+        "line_id": "L028",
+        "section_id": "ACT_IV",
+        "type": "narration",
+        "text": "登録は、日本の産業化の歴史に対する国際的な評価です。しかし同時に、登録審議の場では、強制労働という歴史への言及が行われました。その後、その発言の解釈をめぐって、日本と韓国の間で外交的な論争が生じています。",
+        "pacing": "normal",
+        "fact_ids_referenced": ["VF011", "VF012"]
+      },
+      {
+        "line_id": "L029",
+        "section_id": "ACT_IV",
+        "type": "narration",
+        "text": "産業の誇りと、強制の記憶——どちらも、この島では本物の出来事でした。どちらかを選ぶ必要はないかもしれません。しかし、どちらも忘れることは——できないのかもしれません。",
+        "pacing": "slow",
+        "fact_ids_referenced": []
+      },
+      {
+        "line_id": "L030",
+        "section_id": "ACT_IV",
+        "type": "pause",
+        "text": "[PAUSE:2s]",
+        "pacing": null,
+        "fact_ids_referenced": []
+      },
+      {
+        "line_id": "L031",
+        "section_id": "ACT_IV",
+        "type": "broll_cue",
+        "text": "[B-ROLL: 映像のみ。音楽のみ。波の音。40秒間。完全な沈黙。]",
+        "pacing": null,
+        "fact_ids_referenced": [],
+        "notes": "Ma beat — 40 seconds. FIX-H3 applied: updated from 10秒 to 40秒."
+      },
+      {
+        "line_id": "L032",
+        "section_id": "OUTRO",
+        "type": "narration",
+        "text": "今日も、観光客が端島を訪れます。船の上から廃墟を眺め、写真を撮り、帰っていきます。",
+        "pacing": "normal",
+        "fact_ids_referenced": ["VF010"]
+      },
+      {
+        "line_id": "L033",
+        "section_id": "OUTRO",
+        "type": "narration",
+        "text": "端島は、今もそこにあります。崩れながら、波に打たれながら——何かを、語り続けています。",
+        "pacing": "slow",
+        "fact_ids_referenced": []
+      },
+      {
+        "line_id": "L034",
+        "section_id": "OUTRO",
+        "type": "narration",
+        "text": "この島が、あなたに問いかけているものは——何でしょうか。",
+        "pacing": "slow",
+        "fact_ids_referenced": [],
+        "notes": "Final line. Ends with question as required by japan_template."
+      },
+      {
+        "line_id": "L035",
+        "section_id": "OUTRO",
+        "type": "pause",
+        "text": "[PAUSE:2s]",
+        "pacing": null,
+        "fact_ids_referenced": []
+      }
+    ]
+  },
+  "created_at": "2026-06-27T03:00:00Z",
+  "updated_at": "2026-06-27T05:00:00Z"
+}

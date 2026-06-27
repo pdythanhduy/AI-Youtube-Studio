@@ -1,0 +1,23 @@
+# Audio binaries
+projects/*/audio/vbee_raw/*.mp3
+projects/*/audio/vbee_slow_*/*.mp3
+
+# Video renders and render cache
+projects/*/export/rough/*.mp4
+projects/*/timeline/render_cache/*.mp4
+projects/*/timeline/render_cache/*.wav
+projects/*/timeline/render_cache/concat.txt
+projects/*/timeline/render_cache/audio_filter.txt
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# Environment files (credentials)
+.env
+*.env
+
+# OS
+.DS_Store
+Thumbs.db

@@ -1,0 +1,235 @@
+{
+  "project_id": "hashima-island-mystery-ja",
+  "plan_id": "legal_hold_fallback_batch_3",
+  "created_at": "2026-06-27",
+  "created_by": "legal_hold_image_decision_gate",
+  "purpose": "AI fallback generation plan for 3 scenes that were on CC BY-SA legal hold. Decision: replace with safe documentary AI illustrations. Legal risk: zero. AI% impact: none (these slots were already counted as AI in the 75% total).",
+
+  "ai_percent_impact": {
+    "before": 75.0,
+    "after": 75.0,
+    "delta": 0,
+    "note": "IMG001/IMG007/IMG016 were already source_type=AI_GENERATE in image_plan.json metrics. Generating AI images for these slots does not change the AI count or the 75% compliance position."
+  },
+
+  "flag_word_scan": {
+    "flag_words": ["haunting", "oppressive", "terrifying", "horror", "ghostly", "nightmare", "cursed", "melancholic"],
+    "found_in_any_prompt": false,
+    "scan_result": "CLEAN — all three prompts are free of flag words"
+  },
+
+  "images": [
+
+    {
+      "image_id": "IMG001",
+      "scene_id": "S001",
+      "section": "HOOK",
+      "timecode": "0:00-0:10",
+      "duration_seconds": 10,
+      "shot_type": "extreme_wide_shot",
+      "motion_direction": "slow_pan_right",
+      "narration_line": "L001",
+      "narration_text_ja": "かつて、ここに5,259人が暮らしていました。",
+      "narration_text_en": "Once, 5,259 people lived here.",
+
+      "decision": "C — safe AI documentary illustration",
+      "decision_rationale": "C001-A (CC BY-SA 4.0) blocked by legal hold. C001-C (CC BY 2.0, aerial) is legally clean but creates visual repetition with IMG006 (S007) which appears ~2:35 later using the same source file. AI fallback produces a unique sea-level pre-dawn island image that: (1) avoids visual repeat, (2) precisely matches the scene's 'pre-dawn mist' descriptor, (3) carries zero legal risk, (4) adds no AI% overhead (already counted). Legal hold on CC BY-SA images is NOT lifted — this closes the slot without licensing risk.",
+      "legal_risk": "NONE",
+
+      "visual_differentiation": {
+        "vs_IMG006_S007": "IMG006 is an aerial daytime photograph (CC BY 2.0, real photo). IMG001 will be sea-level, pre-dawn, dark silhouette. Color temperature is opposite: IMG001 = cold blue-black; IMG006 = daylight aerial. These are visually distinct.",
+        "vs_IMG019_S023": "IMG019 shows ferry bow in foreground, island at middle distance, overcast grey. IMG001 is extreme wide, no vessel foreground, pre-dawn darkness, island fills frame as silhouette. Clearly distinct.",
+        "vs_IMG016_S020": "IMG016 will be dusk/warm palette (amber/gold). IMG001 is pre-dawn cold palette (dark blue-black). Opposite time of day. Narrative arc contrast: mystery opening vs contemplative resolution."
+      },
+
+      "prompt": "Extreme wide shot of a ruined uninhabited island at pre-dawn, dark silhouette of large concrete tower blocks and ruin structures rising from calm black sea water, faint deep blue predawn light on the horizon behind the island, low mist drifting at water surface level, island fills the center of frame as a dark architectural mass, no vessels, no people, bare desolate seascape, documentary wide establishing shot, deeply desaturated cold blue-black palette, 35mm film, film grain, cinematic",
+      "negative_prompt": "people, human figures, boats, vessels, tourists, modern structures, text, logos, watermark, warm tones, bright colors, sunlight, orange, red, golden hour, color saturation",
+      "midjourney_command": "/imagine Extreme wide shot of a ruined uninhabited island at pre-dawn, dark silhouette of large concrete tower blocks and ruin structures rising from calm black sea water, faint deep blue predawn light on the horizon behind the island, low mist drifting at water surface level, island fills the center of frame as a dark architectural mass, no vessels, no people, bare desolate seascape, documentary wide establishing shot, deeply desaturated cold blue-black palette, 35mm film, film grain, cinematic --ar 16:9 --no people, human figures, boats, vessels, tourists, modern structures, text, logos, watermark, warm tones, bright colors, sunlight, orange, red, golden hour, color saturation --v 6.1 --q 2",
+      "output_filename": "IMG001_S001_island_establishing_predawn.png",
+      "output_folder": "assets/ai_images/generated/batch_3/",
+
+      "flag_word_check": {
+        "haunting": false, "oppressive": false, "terrifying": false, "horror": false,
+        "ghostly": false, "nightmare": false, "cursed": false, "melancholic": false,
+        "result": "CLEAN"
+      },
+
+      "safety_audit": {
+        "no_people": true,
+        "no_victims": true,
+        "no_suffering": true,
+        "no_forced_labor": true,
+        "no_horror_framing": true,
+        "no_ghost_framing": true,
+        "no_sensational_imagery": true,
+        "documentary_tone": true,
+        "realistic_architecture": true,
+        "result": "SAFE TO GENERATE"
+      },
+
+      "qa_checklist": [
+        "Extreme wide shot: island must fill the frame horizontally",
+        "Pre-dawn darkness: sky must be dark blue or near-black, NOT daylight",
+        "Island silhouette: concrete structures visible as dark mass",
+        "Calm sea: water level visible, no dramatic waves",
+        "No people anywhere in frame",
+        "No vessels, boats, or ferry in frame",
+        "Cold desaturated palette: blues and blacks, no warmth",
+        "No text, logos, watermarks",
+        "No modern elements"
+      ],
+
+      "post_process_notes": "Film grain already in prompt. Dark_documentary palette confirmed. Apply slow_pan_right at 10-second duration. No color warming — scene calls for dark and still.",
+      "max_generation_attempts": 3,
+      "fallback_if_fails": "Use C001-C (Battle-Ship_Island_Nagasaki_Japan.jpg, CC BY 2.0) cropped differently from S007 — legal, aerial, visual match 7/10. Only if all 3 AI attempts fail."
+    },
+
+    {
+      "image_id": "IMG007",
+      "scene_id": "S008",
+      "section": "ACT_I",
+      "timecode": "2:45-3:00",
+      "duration_seconds": 15,
+      "shot_type": "medium_wide_shot",
+      "motion_direction": "ken_burns_zoom_in",
+      "narration_line": "L008",
+      "narration_text_ja": "度重なる埋め立て工事により、島の面積は元の岩礁から約6倍に拡張されました。そして1916年——大正5年——コンクリートの集合住宅「30号棟」が建設されます。当時の日本における最古級の鉄筋コンクリート造集合住宅のひとつとされる建物です。",
+      "narration_text_en": "Through repeated land reclamation, the island's area expanded to approximately six times the original reef. And in 1916 — the 5th year of Taisho — the concrete apartment complex 'Building 30' was constructed. It is considered one of the oldest reinforced concrete apartment buildings in Japan.",
+
+      "decision": "C — safe AI documentary illustration",
+      "decision_rationale": "Two separate problems resolved by AI fallback: (1) C008-A (CC BY-SA 4.0) is legally blocked by the same SA concern as C001-A/C020-A. (2) CRITICAL: scene.json S008 confirms 'Exterior of Building 30 (30-go-to). 9-story concrete apartment complex.' — but C008-A shows the Fourth Mine Pit Hoistroom (industrial infrastructure), a DIFFERENT structure. C008-A is both legally blocked AND architecturally mismatched. AI fallback simultaneously resolves both: no legal exposure, and the prompt can precisely specify the correct Building 30 character (9-story residential concrete block, rust and moss, crumbling window frames). Getty/PIXTA '30号棟 端島' would also resolve this but is deferred per production policy.",
+      "legal_risk": "NONE",
+      "structure_mismatch_resolved": true,
+      "structure_mismatch_resolution_note": "C008-A (mine hoistroom) was the wrong candidate for S008 (Building 30 residential). AI fallback writes directly to the scene spec: '9-story concrete apartment complex, rust and moss, crumbling window frames.' Mismatch is closed.",
+
+      "visual_differentiation": {
+        "vs_IMG008_S009": "IMG008 is an interior of a school classroom (desks, blackboard). IMG007 is an EXTERIOR of a residential apartment block. Interior vs exterior, different architecture type. Clearly distinct.",
+        "vs_IMG009_S011a": "IMG009 is a coal mine tunnel passage (underground, dark, narrow). IMG007 is an exterior above-ground building facade (large, vertical scale). No overlap.",
+        "vs_IMG015_S018": "IMG015 is ocean-edge ruins at stormy waterfront. IMG007 is a building facade mid-shot. Different composition, different context."
+      },
+
+      "prompt": "Exterior facade of a massive abandoned 9-story concrete residential apartment block, looking slightly upward at the weathered concrete facade with rows of empty window frames across all floors, heavy rust staining cascading down the grey concrete surface, moss and small vegetation colonizing cracks in the walls, several window frames crumbling and partially collapsed, scale is immense against the overcast sky, medium-wide angle shot, abandoned and desolate, no people, early 20th century reinforced concrete construction in advanced decay, dark documentary style, deeply desaturated grey-green palette, film grain, cinematic",
+      "negative_prompt": "people, human figures, modern signage, modern buildings, text, logos, watermark, bright colors, glass windows intact, scaffolding, construction equipment, vehicles, cars, colorful facades",
+      "midjourney_command": "/imagine Exterior facade of a massive abandoned 9-story concrete residential apartment block, looking slightly upward at the weathered concrete facade with rows of empty window frames across all floors, heavy rust staining cascading down the grey concrete surface, moss and small vegetation colonizing cracks in the walls, several window frames crumbling and partially collapsed, scale is immense against the overcast sky, medium-wide angle shot, abandoned and desolate, no people, early 20th century reinforced concrete construction in advanced decay, dark documentary style, deeply desaturated grey-green palette, film grain, cinematic --ar 16:9 --no people, human figures, modern signage, modern buildings, text, logos, watermark, bright colors, glass windows intact, scaffolding, construction equipment, vehicles, cars, colorful facades --v 6.1 --q 2",
+      "output_filename": "IMG007_S008_building30_exterior.png",
+      "output_folder": "assets/ai_images/generated/batch_3/",
+
+      "flag_word_check": {
+        "haunting": false, "oppressive": false, "terrifying": false, "horror": false,
+        "ghostly": false, "nightmare": false, "cursed": false, "melancholic": false,
+        "result": "CLEAN"
+      },
+
+      "safety_audit": {
+        "no_people": true,
+        "no_victims": true,
+        "no_suffering": true,
+        "no_forced_labor": true,
+        "no_horror_framing": true,
+        "no_ghost_framing": true,
+        "no_sensational_imagery": true,
+        "documentary_tone": true,
+        "realistic_architecture": true,
+        "result": "SAFE TO GENERATE"
+      },
+
+      "qa_checklist": [
+        "Exterior building facade: must be clearly an exterior shot, not interior",
+        "Multi-story scale: must read as a large multi-storey structure (9 floors implied)",
+        "Concrete material: material must read as concrete, not brick or steel",
+        "Rust staining: rust or weathering marks on concrete surface",
+        "Window frames: rows of windows visible, some crumbling or missing",
+        "No people anywhere in frame",
+        "No modern elements (no signs, vehicles, modern structures visible)",
+        "Overcast or dark sky",
+        "Desaturated grey-green palette",
+        "No legible text or logos"
+      ],
+
+      "post_process_notes": "Film grain in prompt. Desaturated palette confirmed. Apply ken_burns_zoom_in at 15-second duration — slow zoom in toward upper floors to convey monumental scale.",
+      "max_generation_attempts": 3,
+      "fallback_if_fails": "Use Getty RF (905 Gunkanjima images, Royalty-Free). Search: Gunkanjima residential building, Hashima Building 30, 30号棟 端島. Confirm online video commercial use at checkout. This is the only paid-stock fallback with Building 30 specific coverage."
+    },
+
+    {
+      "image_id": "IMG016",
+      "scene_id": "S020",
+      "section": "ACT_IV",
+      "timecode": "9:00-9:40",
+      "duration_seconds": 40,
+      "shot_type": "extreme_wide_shot",
+      "motion_direction": "very_slow_pan_right",
+      "narration_line": "L027",
+      "narration_text_ja": "2015年7月5日、端島は「明治日本の産業革命遺産」の構成資産として、ユネスコ世界遺産に登録されました。",
+      "narration_text_en": "On July 5, 2015, Hashima Island was inscribed as a UNESCO World Heritage Site as a component of 'Sites of Japan's Meiji Industrial Revolution.'",
+
+      "decision": "C — safe AI documentary illustration",
+      "decision_rationale": "C020-A (CC BY-SA 4.0) blocked by legal hold. C020-C fallback (same aerial as S007 CC BY 2.0) creates visual repetition with IMG006 and asset_decision_matrix flags it as 'last resort only.' AI fallback produces a unique dusk/golden-hour extreme wide that: (1) matches the scene's 'quiet and majestic' descriptor, (2) differentiates from S001's cold pre-dawn by using warm amber palette, (3) holds for 40 seconds of very_slow_pan_right, (4) carries zero legal risk. UPGRADE FLAG: This scene precedes the 40-second Ma beat silence — it has the highest emotional stakes in the video. PIXTA paid dusk photography would outperform AI here. AI fallback completes the production pipeline. Paid upgrade is recommended before final publish, not as a blocker.",
+      "legal_risk": "NONE",
+      "upgrade_flag": true,
+      "upgrade_flag_note": "AI fallback is sufficient for production pipeline completion. Before final publish, consider PIXTA dusk/golden-hour photograph (軍艦島 夕暮れ / Gunkanjima dusk) as upgrade. Real dusk photography at this position (9:00, before 40s Ma silence) would increase emotional impact. Purchase cost: ~¥5,000-¥15,000 PIXTA standard. Not a blocker — AI completes the pipeline.",
+
+      "visual_differentiation": {
+        "vs_IMG001_S001": "IMG001 is pre-dawn, cold dark blue-black, dramatic silhouette, 10 seconds. IMG016 is dusk, warm amber/golden, quieter detail of ruins visible, 40 seconds. Opposite color temperature. 9-minute gap in video. These reinforce the emotional arc: cold mystery (opening) to warm resolution (act IV).",
+        "vs_IMG006_S007": "IMG006 is a real aerial daytime photograph, neutral palette. IMG016 is warm dusk extreme wide. Different time of day, color, and altitude of viewpoint.",
+        "vs_IMG019_S023": "IMG019 shows ferry bow approach, cool overcast grey, island at middle distance. IMG016 is extreme wide with warm dusk light, no vessel, island dominant. Clearly distinct."
+      },
+
+      "prompt": "Extreme wide panoramic shot of a ruined uninhabited island at dusk, golden amber light of late afternoon casting warm tones across weathered concrete ruin structures, large concrete tower blocks and collapsed buildings reflected in calm still sea water, wide sky with soft clouds catching the golden light, island occupies center-to-left of the wide frame with expanse of calm sea visible, serene and vast, no vessels, no people, quiet reflective atmosphere, documentary wide shot, warm desaturated amber and grey palette, film grain, 35mm cinematic",
+      "negative_prompt": "people, human figures, boats, vessels, tourists, text, logos, watermark, bright saturated colors, rain, dark storm clouds, neon, modern structures, cold blue tones, nighttime",
+      "midjourney_command": "/imagine Extreme wide panoramic shot of a ruined uninhabited island at dusk, golden amber light of late afternoon casting warm tones across weathered concrete ruin structures, large concrete tower blocks and collapsed buildings reflected in calm still sea water, wide sky with soft clouds catching the golden light, island occupies center-to-left of the wide frame with expanse of calm sea visible, serene and vast, no vessels, no people, quiet reflective atmosphere, documentary wide shot, warm desaturated amber and grey palette, film grain, 35mm cinematic --ar 16:9 --no people, human figures, boats, vessels, tourists, text, logos, watermark, bright saturated colors, rain, dark storm clouds, neon, modern structures, cold blue tones, nighttime --v 6.1 --q 2",
+      "output_filename": "IMG016_S020_island_dusk_wide.png",
+      "output_folder": "assets/ai_images/generated/batch_3/",
+
+      "flag_word_check": {
+        "haunting": false, "oppressive": false, "terrifying": false, "horror": false,
+        "ghostly": false, "nightmare": false, "cursed": false, "melancholic": false,
+        "result": "CLEAN"
+      },
+
+      "safety_audit": {
+        "no_people": true,
+        "no_victims": true,
+        "no_suffering": true,
+        "no_forced_labor": true,
+        "no_horror_framing": true,
+        "no_ghost_framing": true,
+        "no_sensational_imagery": true,
+        "documentary_tone": true,
+        "realistic_architecture": true,
+        "result": "SAFE TO GENERATE"
+      },
+
+      "qa_checklist": [
+        "Extreme wide panoramic: island must occupy the frame broadly with sea on at least one side",
+        "Dusk/golden hour: sky must show warm amber/golden light, NOT cold blue pre-dawn",
+        "Island ruins visible: concrete structures identifiable (not just silhouette — some detail in warm light)",
+        "Calm sea: flat or near-flat water, ideally with sky reflection",
+        "No people anywhere in frame",
+        "No vessels, boats, or ferry in frame",
+        "Warm desaturated palette: amber/gold/grey, not bright saturated orange",
+        "No text, logos, watermarks",
+        "No modern elements",
+        "Wide enough horizontal composition to support 40s very_slow_pan_right"
+      ],
+
+      "post_process_notes": "Film grain in prompt. Warm amber palette already specified. Apply very_slow_pan_right at 40-second duration — the longest motion in the video. Ensure the image has sufficient horizontal width to pan without running out of frame.",
+      "max_generation_attempts": 3,
+      "fallback_if_fails": "Use PIXTA paid dusk shot (軍艦島 夕暮れ / Gunkanjima dusk, Royalty-Free, confirm commercial video use). This fallback is actually PREFERRED over AI for this slot — see upgrade_flag. If 3 AI attempts fail, this is a natural upgrade opportunity, not a crisis."
+    }
+
+  ],
+
+  "batch_summary": {
+    "batch_id": "batch_3_legal_hold_fallback",
+    "images_in_batch": 3,
+    "output_folder": "assets/ai_images/generated/batch_3/",
+    "generation_may_begin": true,
+    "ai_percent_before": 75.0,
+    "ai_percent_after": 75.0,
+    "ai_percent_change": "none — these slots were already counted as AI",
+    "legal_risk": "NONE — zero CC BY-SA content in any prompt",
+    "flag_words_found": 0,
+    "all_prompts_safe": true
+  }
+}

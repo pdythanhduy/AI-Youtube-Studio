@@ -1,0 +1,299 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Contract C02: Research → Story",
+  "contract_id": "C02",
+  "version": "1.0",
+  "description": "Governs the transition from Stage 2 (Source Verification) to Stages 3–5 (Story Outline, Script, Story Bible). Defines what verified research.json must contain before story work begins, what story.json must produce, and how template requirements are enforced.",
+  "upstream_stage": {
+    "stage_number": 2,
+    "stage_id": "source_verification",
+    "produces_schema": "https://ai-youtube-studio/production/schemas/research.json"
+  },
+  "downstream_stages": [
+    {
+      "stage_number": 3,
+      "stage_id": "story_outline",
+      "produces_schema": "https://ai-youtube-studio/production/schemas/story.json"
+    },
+    {
+      "stage_number": 4,
+      "stage_id": "script",
+      "extends_schema": "https://ai-youtube-studio/production/schemas/story.json"
+    },
+    {
+      "stage_number": 5,
+      "stage_id": "story_bible",
+      "produces_schema": "https://ai-youtube-studio/production/schemas/story_bible.json"
+    }
+  ],
+  "input": {
+    "description": "Fields from research.json that Stages 3–5 require before proceeding.",
+    "required_fields": [
+      {
+        "field": "verification_status",
+        "required_value": "PASS",
+        "purpose": "Only a fully verified research document feeds the story. NEEDS_REVISION halts Stage 3."
+      },
+      {
+        "field": "fail_count",
+        "required_value": 0,
+        "purpose": "No failed facts may feed the story."
+      },
+      {
+        "field": "pipeline_continue",
+        "required_value": true,
+        "purpose": "Explicit gate — story stages check this field before proceeding."
+      },
+      {
+        "field": "facts",
+        "purpose": "Script must reference at least 5 verified facts by fact_id. Template beats may require specific fact types (timeline events, canonical numbers)."
+      },
+      {
+        "field": "entities",
+        "purpose": "Named entities in research feed story_bible.canonical_names. At least 3 distinct named entities required."
+      },
+      {
+        "field": "timeline_events",
+        "purpose": "If present, at least 2 events required for a documentary with historical_context beat."
+      }
+    ],
+    "preconditions": [
+      "research.verification_status === 'PASS'",
+      "research.fail_count === 0",
+      "research.pipeline_continue === true",
+      "All FLAG items have adjusted_claim set and original claim is not used in story"
+    ]
+  },
+  "output": {
+    "description": "What story.json must contain when Stages 3–5 complete.",
+    "outline_required_fields": [
+      {
+        "field": "outline.sections",
+        "minimum_sections": 4,
+        "purpose": "Minimum: INTRO, ACT_I, ACT_II, OUTRO. Additional sections for longer videos."
+      },
+      {
+        "field": "outline.beats_required",
+        "purpose": "List of template beats required by the niche. Must all appear in beats_present."
+      },
+      {
+        "field": "outline.beats_present",
+        "purpose": "Must be a superset of beats_required. Missing beats = FAIL."
+      },
+      {
+        "field": "outline.word_distribution",
+        "purpose": "Each section must have a word_count_target. Sum must equal story.script.word_count_target."
+      }
+    ],
+    "script_required_fields": [
+      {
+        "field": "script.word_count",
+        "tolerance": 0.05,
+        "purpose": "Must be within 5% of target_word_count. Calculated as duration_minutes × 130 × language_multiplier."
+      },
+      {
+        "field": "script.register",
+        "purpose": "Must match the register defined for the language profile (e.g. desu_masu for Japanese)."
+      },
+      {
+        "field": "script.hook_word_count",
+        "maximum": 65,
+        "purpose": "Hook must be ≤65 words. Hooks exceeding this lose viewer attention before visual hook lands."
+      },
+      {
+        "field": "script.pause_count",
+        "minimum_by_duration": {
+          "description": "5× [PAUSE:2s] minimum for a 12-minute video. Scales proportionally."
+        },
+        "purpose": "Pauses are required for pacing. For japanese_mystery template: minimum 5."
+      },
+      {
+        "field": "script.ends_with_question",
+        "required_value": true,
+        "purpose": "Dark documentary outro ends with a reflective question to the viewer (japan_template requirement)."
+      },
+      {
+        "field": "script.lines",
+        "purpose": "Each line has line_id (L[0-9]{3}), type, text, section_id. Narration lines carry the word count."
+      },
+      {
+        "field": "script.template_compliance.status",
+        "required_value": "PASS",
+        "purpose": "Template compliance check must pass before story.json is delivered to Stage 6."
+      }
+    ],
+    "story_bible_required_fields": [
+      {
+        "field": "canonical_names",
+        "purpose": "Every named entity from research.entities must appear in canonical_names with preferred_spelling."
+      },
+      {
+        "field": "canonical_dates",
+        "purpose": "At least one canonical date required. Dates must match research.timeline_events."
+      },
+      {
+        "field": "canonical_numbers",
+        "purpose": "All population/quantity facts in research must be canonicalized with precision qualifier."
+      },
+      {
+        "field": "off_limits_expressions",
+        "purpose": "At least one entry required. Forbidden phrases must have replacement and reason."
+      }
+    ],
+    "constraints": [
+      "Script must not use any expression in story_bible.off_limits_expressions.forbidden",
+      "Script must not use adjusted_claim verbatim — apply language from adjusted_claim into narration",
+      "Script may not assert facts with status=unverified as definitive — must hedge with 'とされています' or similar",
+      "Script may not reference facts with status=fail at all",
+      "All canonical numbers in script must match research.facts exactly (no rounding up to round numbers)",
+      "Hook must be in the language specified by project.language"
+    ]
+  },
+  "validation": {
+    "gate": "Story Delivery Gate (end of Stage 5)",
+    "checks": [
+      {
+        "check_id": "C02-V01",
+        "description": "research.verification_status === 'PASS'",
+        "severity": "FAIL",
+        "action_on_fail": "Stage 3 must not start. Return to Stage 2."
+      },
+      {
+        "check_id": "C02-V02",
+        "description": "All beats in outline.beats_required are present in outline.beats_present",
+        "severity": "FAIL",
+        "action_on_fail": "Return to Stage 3. Identify which beat is missing. Add section."
+      },
+      {
+        "check_id": "C02-V03",
+        "description": "script.word_count within 5% of target_word_count",
+        "severity": "FAIL",
+        "action_on_fail": "Return to Stage 4. Expand or trim narration."
+      },
+      {
+        "check_id": "C02-V04",
+        "description": "script.ends_with_question === true",
+        "severity": "FAIL",
+        "action_on_fail": "Return to Stage 4. Rewrite OUTRO section last line as a reflective question."
+      },
+      {
+        "check_id": "C02-V05",
+        "description": "script.template_compliance.status === 'PASS'",
+        "severity": "FAIL",
+        "action_on_fail": "Return to Stage 4. Resolve all template_compliance.issues."
+      },
+      {
+        "check_id": "C02-V06",
+        "description": "No off_limits_expressions.forbidden phrase appears in script.lines[*].text",
+        "severity": "FAIL",
+        "action_on_fail": "Return to Stage 4. Replace forbidden phrase with story_bible replacement."
+      },
+      {
+        "check_id": "C02-V07",
+        "description": "script.hook_word_count ≤ 65",
+        "severity": "WARNING",
+        "action_on_fail": "Flag for review. Recommend shortening."
+      },
+      {
+        "check_id": "C02-V08",
+        "description": "script.register matches project language profile",
+        "severity": "FAIL",
+        "action_on_fail": "Return to Stage 4. Re-register all narration lines."
+      }
+    ]
+  },
+  "failure_conditions": [
+    {
+      "condition": "Template beat missing from outline",
+      "severity": "HIGH",
+      "pipeline_action": "revision_required",
+      "human_action": "Identify which section should contain the missing beat. Add or expand section."
+    },
+    {
+      "condition": "Word count deviation > 5%",
+      "severity": "HIGH",
+      "pipeline_action": "revision_required",
+      "human_action": "If too long: identify which sections are overweight. Trim filler. If too short: expand factual sections."
+    },
+    {
+      "condition": "Forbidden expression used in script",
+      "severity": "HIGH",
+      "pipeline_action": "revision_required",
+      "human_action": "Search script for forbidden phrase. Apply story_bible.replacement."
+    },
+    {
+      "condition": "Failed facts cited in script",
+      "severity": "CRITICAL",
+      "pipeline_action": "halt",
+      "human_action": "Identify which lines cite failed facts. Remove or replace with verified alternative."
+    }
+  ],
+  "recovery_strategy": [
+    {
+      "scenario": "Missing template beat",
+      "strategy": "Identify the section that logically contains the missing beat by comparing beat purpose against section themes. If no existing section fits, insert a new section between the two closest thematic sections. Adjust word distribution to accommodate. Re-validate template_compliance."
+    },
+    {
+      "scenario": "Word count too high",
+      "strategy": "Identify sections with highest word density relative to their time allocation. Trim descriptive language. Prefer removing low-information-density sentences over cutting factual claims. Target: reach 5% tolerance before cutting factual content."
+    },
+    {
+      "scenario": "Word count too low",
+      "strategy": "Identify sections with lowest word density. Expand with verified facts from research.json not yet used in script. Add sensory/atmospheric description that does not assert unverified facts."
+    },
+    {
+      "scenario": "Register violation",
+      "strategy": "Scan all narration lines for non-register verb forms. For Japanese desu_masu: convert plain form verbs to polite form. Do not change meaning."
+    }
+  ],
+  "template_beat_definitions": {
+    "japan_template": {
+      "required_beats": [
+        {
+          "beat_id": "cultural_context",
+          "description": "Contextualizes the subject within Japanese cultural or historical framework. Not generic — must name specific Japanese cultural concept.",
+          "example": "企業城下町 (company castle town) concept for Hashima."
+        },
+        {
+          "beat_id": "legend_vs_reality",
+          "description": "Contrasts popular myth/media image with historical truth. Must explicitly name the myth source (e.g. 'James Bond film') and the factual correction.",
+          "example": "Skyfall image vs actual departure records."
+        },
+        {
+          "beat_id": "japanese_silence",
+          "description": "Acknowledges what Japanese sources tend not to say directly. Does not speculate — notes official silences and what they mean structurally.",
+          "example": "Japanese government's Meiji industrial heritage framing vs. labor history omission."
+        },
+        {
+          "beat_id": "ma_beat",
+          "description": "Dedicated silence moment (間). No narration. Visual only. Minimum 10 seconds. Maximum 60 seconds. Must be a genuine contemplative pause — not a transition.",
+          "example": "40-second shot of empty corridors, no narration, ambient sound only."
+        }
+      ],
+      "pacing_requirements": {
+        "opening_style": "very_slow",
+        "minimum_pauses": 5,
+        "pause_type": "[PAUSE:2s]"
+      }
+    }
+  },
+  "example": {
+    "precondition_check": {
+      "research_verification_status": "PASS",
+      "research_fail_count": 0,
+      "research_pipeline_continue": true,
+      "result": "PROCEED to Stage 3"
+    },
+    "output_validation": {
+      "beats_required": ["cultural_context", "legend_vs_reality", "japanese_silence", "ma_beat"],
+      "beats_present": ["cultural_context", "legend_vs_reality", "japanese_silence", "ma_beat"],
+      "beats_missing": [],
+      "word_count": 1201,
+      "word_count_target": 1201,
+      "word_count_delta": 0,
+      "ends_with_question": true,
+      "template_compliance_status": "PASS",
+      "result": "PASS — deliver to Stage 6"
+    }
+  }
+}

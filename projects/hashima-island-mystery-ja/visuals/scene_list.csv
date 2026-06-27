@@ -1,0 +1,25 @@
+scene_id,timecode_start,timecode_end,section,visual_description_ja,visual_description_en,shot_type,source_type,notes
+S001,0:00,0:10,HOOK,海上から見た端島の遠景。灰色の波。霧の中に浮かぶコンクリートの島のシルエット,Wide shot of Hashima Island from the sea. Grey waves. Silhouette of concrete island emerging from mist,extreme wide shot,AI_GENERATE,Opening atmosphere. Dark. Slow pan.
+S002,0:10,0:25,HOOK,廃墟の内部。朽ちた階段。崩れた天井から光が差し込む,Interior of ruin. Decayed staircase. Light filtering through collapsed ceiling,medium shot,AI_GENERATE,No people. Decay aesthetic.
+S003,0:25,0:40,HOOK,波が島の護岸に打ちつける映像。防波堤のコンクリートに砕ける白波,Waves crashing against the island's seawall. White foam breaking on concrete,close-up,AI_GENERATE,Loop-friendly shot for rhythm.
+S004,0:40,1:00,HOOK,タイトルカード「端島 / 軍艦島」。暗い背景。白い文字,Title card: 端島 / 軍艦島 on dark background. White typography,title card,MOTION_GRAPHICS,2s pause after title.
+S005,1:00,1:40,ACT1,明治時代のモノクロ工業風景。蒸気機関車。製鉄所。煙突から煙が上がる工場,Meiji era monochrome industrial scene. Steam locomotive. Ironworks. Factory chimneys with smoke,archival style,AI_GENERATE,Sepia or B&W treatment. Simulated archive.
+S006,1:40,2:10,ACT1,地図上で端島の位置を示すアニメーション。長崎港から島へのルートを示す,Animated map showing location of Hashima Island. Route from Nagasaki Port to island,animated map,MOTION_GRAPHICS,Simple clean animation.
+S007,2:10,2:45,ACT1,端島の航空写真または再現CG。島全体のコンクリート構造が俯瞰で見える,Aerial view or CG reconstruction of Hashima Island. Full concrete structure visible from above,aerial / CG,AI_GENERATE,Show scale of concrete structures on tiny island.
+S008,2:45,3:00,ACT1,30号棟の現在の外観。廃墟化したコンクリート集合住宅。崩れた壁,Exterior of Building 30 today. Ruined concrete apartment block. Crumbling walls,medium wide shot,AI_GENERATE,2s pause follows.
+S009,3:00,3:40,ACT2,現代の観光船から見た端島。観光客がカメラを向ける,Hashima Island from a modern tourist boat. Tourists taking photographs,medium shot,AI_GENERATE,Contrast: tourists vs. ruins.
+S010,3:40,4:10,ACT2,廃墟内部の詳細。朽ちた家具の断片。剥がれた壁。窓から見える空,Details inside the ruin. Fragments of decayed furniture. Peeling walls. Sky visible through window,close-up,AI_GENERATE,Haikyo aesthetic.
+S011,4:10,5:00,ACT2,島の地下をイメージした暗い映像。狭い坑道。薄明かり。岩と闇,Dark imagery suggesting underground mine. Narrow tunnel. Dim light. Rock and darkness,close-up / atmosphere,AI_GENERATE,Do not show people in distress. Abstract/atmospheric only.
+S012,5:00,5:30,ACT2,ユネスコ世界遺産プレート（または登録証イメージ）。2015年の登録を示すグラフィック,UNESCO World Heritage plaque or certificate graphic. Indicates 2015 registration,close-up / graphic,MOTION_GRAPHICS,Can be stylized graphic treatment.
+S013,5:30,6:00,ACT2,再び廃墟の全景。沈黙。問いを残す映像,Wide shot of ruins again. Silence. Lingering question.,wide shot,AI_GENERATE,Transition to ACT III.
+S014,6:00,6:30,ACT3,1974年のテロップと廃墟映像の重なり,Year 1974 text overlay on ruin footage,text overlay,MOTION_GRAPHICS,Somber. Minimal.
+S015,6:30,7:00,ACT3,空の船着き場のイメージ。錆びた手すり。静かな海,Empty dock. Rusted railing. Calm sea.,medium shot,AI_GENERATE,Emptiness is the subject.
+S016,7:00,7:30,ACT3,廃墟内部の個人的遺留品（演出）。机の上の本。廊下の片隅の物,Personal items left behind (stylized). Books on a desk. Object in corner of corridor.,close-up,AI_GENERATE,No specific faces or names. Symbolic.
+S017,7:30,8:00,ACT3,崩れた天井から差し込む光。廃墟の美しさと喪失,Light streaming through collapsed ceiling. Beauty and loss of ruins.,medium shot,AI_GENERATE,2s pause follows.
+S018,8:00,8:30,ACT3,台風のイメージ（嵐の海、荒れた波）,Storm imagery. Rough sea. Strong waves.,wide shot,AI_GENERATE,Time passage. Isolation.
+S019,8:30,9:00,ACT3,廃墟の壁。コンクリートのひび割れ。海水の侵食跡,Ruin wall. Concrete cracks. Marks of seawater erosion.,extreme close-up,AI_GENERATE,2s pause follows.
+S020,9:00,9:40,ACT4,非常にゆっくりとした波の映像。廃墟の遠景。空,Very slow wave footage. Distant ruins. Sky.,extreme wide shot,AI_GENERATE,Ma beat begins. Very slow movement.
+S021,9:40,10:20,ACT4,廃墟の壁。消えかけた看板。読めない文字,Ruin wall. Faded sign. Illegible text.,close-up,AI_GENERATE,Memory fading.
+S022,10:20,11:00,ACT4,映像のみ。音楽のみ。波の音。10秒の完全な沈黙区間,Video only. Music only. Sound of waves. 10 seconds of silence.,wide shot,AI_GENERATE,MA BEAT: No narration. Pure atmosphere. Critical to japan_template.
+S023,11:00,11:30,OUTRO,観光船が端島に近づいていく映像,Tourist boat approaching Hashima Island.,medium shot,AI_GENERATE,Return to present day.
+S024,11:30,12:00,OUTRO,端島の全景。海。空。最後のショット,Full view of Hashima Island. Sea. Sky. Final shot.,extreme wide shot,AI_GENERATE,End card follows. 2s pause before end card.

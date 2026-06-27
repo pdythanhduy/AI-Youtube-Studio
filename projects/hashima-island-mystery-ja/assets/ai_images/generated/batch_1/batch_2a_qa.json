@@ -1,0 +1,263 @@
+{
+  "project_id": "hashima-island-mystery-ja",
+  "qa_id": "BATCH2A_QA_001",
+  "qa_date": "2026-06-27",
+  "batch_id": "BATCH_2A",
+  "reviewer": "batch_2a_image_qa_gate",
+  "folder_note": "Files saved in batch_1/ folder instead of batch_2a/. Actual paths: assets/ai_images/generated/batch_1/. QA proceeds as normal — folder discrepancy is organisational only.",
+
+  "total_images": 5,
+  "files_found": 5,
+  "files_expected": 5,
+  "approved": 3,
+  "approved_with_minor_notes": 1,
+  "regenerate": 1,
+  "rejected": 0,
+  "batch_2b_may_begin": true,
+  "batch_2b_note": "Batch 2B may begin for remaining READY_WITH_REWRITE images. IMG013 regeneration (attempt 1 of 3) should be completed in parallel.",
+
+  "images": [
+    {
+      "image_id": "IMG003",
+      "scene_id": "S003",
+      "filename": "IMG003_S003_wooden_door_closeup.png",
+      "actual_path": "assets/ai_images/generated/batch_1/IMG003_S003_wooden_door_closeup.png",
+      "file_found": true,
+      "file_size_kb": 2486,
+
+      "classification": "APPROVED",
+      "approved_for_production": true,
+      "requires_post_processing": false,
+      "requires_regeneration": false,
+
+      "checks": {
+        "correct_scene_match": { "result": "PASS", "note": "Close-up of weathered wooden door with peeling paint and vines — exact match for S003 visual description" },
+        "correct_subject": { "result": "PASS", "note": "Door fills most of frame. Paint heavily peeled. Wood grain exposed. Ivy/vines creeping across surface. Rusted door handle present." },
+        "no_people": { "result": "PASS", "note": "Zero human forms" },
+        "no_victims": { "result": "PASS" },
+        "no_forced_labor": { "result": "PASS" },
+        "no_ghost_horror": { "result": "PASS", "note": "Dark and atmospheric, not sinister or supernatural" },
+        "no_gore_violence": { "result": "PASS" },
+        "no_modern_objects": { "result": "PASS", "note": "All elements consistent with aged pre-1974 structure" },
+        "no_text_logos_watermarks": { "result": "PASS" },
+        "suitable_16x9": { "result": "PASS" },
+        "respectful_hashima_tone": { "result": "PASS" },
+        "usable_for_motion": { "result": "PASS", "note": "Static scene — no motion applied. Composition fills frame well." }
+      },
+
+      "visual_observations": [
+        "Door: EXCELLENT — heavily textured, authentic aged wood, paint peeling in layers",
+        "Vines: PRESENT — ivy growing across left side and top of door",
+        "Rusted hardware: PRESENT — door handle/latch visible center-right",
+        "Color palette: ALREADY NEAR TARGET — dark grey-green, deeply desaturated. Minimal post needed.",
+        "Atmosphere: Appropriate haikyo mood. Not horror — genuinely abandoned."
+      ],
+
+      "post_process_notes": "Minimal processing needed. Add standard film grain. Color is already near dark_documentary target. Static hold for 15 seconds.",
+      "file_path": "assets/ai_images/generated/batch_1/IMG003_S003_wooden_door_closeup.png",
+      "production_status": "approved_for_production"
+    },
+
+    {
+      "image_id": "IMG010",
+      "scene_id": "S011b",
+      "filename": "IMG010_S011b_mine_rock_texture.png",
+      "actual_path": "assets/ai_images/generated/batch_1/IMG010_S011b_mine_rock_texture.png",
+      "file_found": true,
+      "file_size_kb": 2752,
+
+      "classification": "APPROVED",
+      "approved_for_production": true,
+      "requires_post_processing": false,
+      "requires_regeneration": false,
+
+      "checks": {
+        "correct_scene_match": { "result": "PASS", "note": "Extreme macro of coal mine rock surface — matches S011b (extreme close-up, geological texture)" },
+        "correct_subject": { "result": "PASS", "note": "Pure coal/rock surface. Geological strata visible. Jagged crevices. Amber mineral deposits." },
+        "no_people": { "result": "PASS", "note": "Zero human forms. No shadows readable as human." },
+        "no_victims": { "result": "PASS" },
+        "no_forced_labor": { "result": "PASS", "note": "Pure geology — no human reference possible in this macro" },
+        "no_ghost_horror": { "result": "PASS" },
+        "no_gore_violence": { "result": "PASS" },
+        "no_modern_objects": { "result": "PASS", "note": "No tools, chains, shackles, or equipment present" },
+        "no_text_logos_watermarks": { "result": "PASS" },
+        "suitable_16x9": { "result": "PASS" },
+        "respectful_hashima_tone": { "result": "PASS", "note": "Geological abstraction is appropriate after forced labor narration — serves as emotional exhale" },
+        "usable_for_motion": { "result": "PASS", "note": "Works for slow_zoom_in (20 seconds). Texture is detailed enough to reward a slow push." }
+      },
+
+      "visual_observations": [
+        "Rock surface: EXCELLENT — true coal/shale texture, very dark with wet sheen",
+        "Mineral deposits: PRESENT — warm amber highlights in crevices, geological interest",
+        "Raking light: PRESENT — side light creates texture relief across the surface",
+        "Human-coded shadows: NONE detected — crevices read as geological only",
+        "No chains, tools, human traces: CONFIRMED",
+        "Image is very dark — this is correct for deep mine rock surface. Will work with the slow_zoom_in motion.",
+        "Also confirmed viable as fallback for IMG009 if mine tunnel is rejected."
+      ],
+
+      "post_process_notes": "Minimal processing. Add film grain. The very dark palette is already correct for this scene — do not brighten. Apply slow_zoom_in at 20-second duration.",
+      "file_path": "assets/ai_images/generated/batch_1/IMG010_S011b_mine_rock_texture.png",
+      "production_status": "approved_for_production"
+    },
+
+    {
+      "image_id": "IMG011",
+      "scene_id": "S013",
+      "filename": "IMG011_S013_heritage_light_ruins.png",
+      "actual_path": "assets/ai_images/generated/batch_1/IMG011_S013_heritage_light_ruins.png",
+      "file_found": true,
+      "file_size_kb": 2274,
+
+      "classification": "APPROVED_WITH_MINOR_NOTES",
+      "approved_for_production": true,
+      "requires_post_processing": true,
+      "requires_regeneration": false,
+
+      "checks": {
+        "correct_scene_match": { "result": "PASS", "note": "Wide view of collapsed concrete ruin with dramatic light shafts — matches S013 scene purpose (UNESCO heritage tension, grand-scale ruin)" },
+        "correct_subject": { "result": "PASS", "note": "Collapsed multi-storey interior. Light beams cutting through dust and debris. Former grand scale evident." },
+        "no_people": { "result": "PASS", "note": "Zero human forms in frame" },
+        "no_victims": { "result": "PASS" },
+        "no_forced_labor": { "result": "PASS" },
+        "no_ghost_horror": { "result": "PASS", "note": "Light shafts are beautiful and contemplative, not sinister" },
+        "no_gore_violence": { "result": "PASS" },
+        "no_modern_objects": { "result": "PASS" },
+        "no_text_logos_watermarks": { "result": "PASS", "note": "No UNESCO plaque generated — correct" },
+        "suitable_16x9": { "result": "PASS" },
+        "respectful_hashima_tone": { "result": "PASS", "note": "The scale of ruin and the quality of light is appropriately respectful and poetic" },
+        "usable_for_motion": { "result": "PASS", "note": "Works for slow_pan_left (30 seconds). Strong light shafts from centre provide compositional anchor." }
+      },
+
+      "visual_observations": [
+        "Light shafts: EXCELLENT — strong god-rays through collapsed ceiling, highly cinematic",
+        "Scale: CONFIRMED — the space reads as large and formerly significant",
+        "Rubble: PRESENT — debris on floor reinforces abandonment",
+        "External ruins visible through collapse: SAME CONCERN as IMG002/Batch1 — through the collapsed back wall, external destroyed building facades are visible. This gives the image a war-zone quality (urban catastrophic destruction) in addition to industrial haikyo. For S013 (UNESCO tension — grand scale of ruin) this is less problematic than for the Hook, but the director should frame the slow_pan_left to favour the interior light shaft and avoid dwelling on the external ruins in the background.",
+        "No people, no text, no plaque: CONFIRMED"
+      ],
+
+      "minor_notes": [
+        "DIRECTOR FRAMING — slow_pan_left: begin on the strongest light shaft (centre-left of frame) and pan to reveal more interior structure. Avoid ending the pan with the external ruins filling the background.",
+        "POST-PROCESSING: image is already close to dark_documentary target. Slight contrast boost to deepen the shadows around the light shafts will increase the chiaroscuro effect.",
+        "VISUAL DUPLICATION NOTE: Compare against IMG014 (S017, Batch 2B) when generated. Both use light shaft imagery. Ensure sufficient compositional variety — S013 should feel wide-and-grand, S017 should feel intimate and room-scale."
+      ],
+
+      "post_process_notes": "Slight contrast boost (deepen shadows). Film grain. Apply slow_pan_left 30 seconds. Frame to favour interior light shaft over external ruins in background.",
+      "file_path": "assets/ai_images/generated/batch_1/IMG011_S013_heritage_light_ruins.png",
+      "production_status": "approved_with_notes_pending_post"
+    },
+
+    {
+      "image_id": "IMG012",
+      "scene_id": "S015",
+      "filename": "IMG012_S015_abandoned_dock.png",
+      "actual_path": "assets/ai_images/generated/batch_1/IMG012_S015_abandoned_dock.png",
+      "file_found": true,
+      "file_size_kb": 2169,
+
+      "classification": "APPROVED",
+      "approved_for_production": true,
+      "requires_post_processing": false,
+      "requires_regeneration": false,
+
+      "checks": {
+        "correct_scene_match": { "result": "PASS", "note": "Industrial dock/pier over calm grey water — exactly matches S015 (abandoned dock, stillness contrasting former bustle)" },
+        "correct_subject": { "result": "PASS", "note": "Dock extending over water. Rusted mooring bollards. Crumbling concrete edge. Building ruins on left. Overcast sky. Calm water." },
+        "no_people": { "result": "PASS", "note": "Zero human forms" },
+        "no_victims": { "result": "PASS" },
+        "no_forced_labor": { "result": "PASS" },
+        "no_ghost_horror": { "result": "PASS" },
+        "no_gore_violence": { "result": "PASS" },
+        "no_modern_objects": { "result": "PASS", "note": "All elements period-appropriate. No modern vessels." },
+        "no_text_logos_watermarks": { "result": "PASS" },
+        "no_boats": { "result": "PASS", "note": "Open water only. No vessels." },
+        "suitable_16x9": { "result": "PASS" },
+        "respectful_hashima_tone": { "result": "PASS", "note": "Quiet, factual, appropriately still" },
+        "usable_for_motion": { "result": "PASS", "note": "Excellent for slow_zoom_out. The dock extending into distance provides strong depth axis for the pull-back." }
+      },
+
+      "visual_observations": [
+        "Dock composition: EXCELLENT — pier receding into grey water provides perfect depth for slow_zoom_out",
+        "Bollards: PRESENT — rusted mooring posts add industrial authenticity",
+        "Building ruin (left): PRESENT — adds context of surrounding industrial abandonment",
+        "Distant landmass (right background): A faint island or coastline visible across the water. This anchors the geographic context (Nagasaki coast or nearby islands). Acceptable — enhances realism.",
+        "Color palette: NATURALLY DESATURATED — overcast grey-blue, already at documentary target. Minimal post needed.",
+        "No boats: CONFIRMED. Open calm water.",
+        "Strongest image in Batch 2A — most authentic and compositionally balanced."
+      ],
+
+      "post_process_notes": "Minimal processing. Film grain. Apply slow_zoom_out at 30-second duration — begin closer to bollards, pull back to reveal full dock and water. The natural desaturation is already correct.",
+      "file_path": "assets/ai_images/generated/batch_1/IMG012_S015_abandoned_dock.png",
+      "production_status": "approved_for_production"
+    },
+
+    {
+      "image_id": "IMG013",
+      "scene_id": "S016",
+      "filename": "IMG013_S016_personal_items.png",
+      "actual_path": "assets/ai_images/generated/batch_1/IMG013_S016_personal_items.png",
+      "file_found": true,
+      "file_size_kb": 2269,
+
+      "classification": "REGENERATE",
+      "approved_for_production": false,
+      "requires_post_processing": false,
+      "requires_regeneration": true,
+      "regeneration_attempt": 1,
+      "max_attempts": 3,
+
+      "critical_gate_triggered": true,
+      "critical_gate_reason": "The 'old photograph' prop in the image shows a GROUP OF PEOPLE in a formal posed portrait. Multiple human figures are identifiable in the photograph — adults standing together in a group composition. The photograph is aged/sepia-toned but the human figures are unmistakably present. This directly triggers the mandatory rejection gate: 'If ANY human face or figure is visible in the photograph (even fictional, even blurred): REJECT immediately.' The positive prompt phrase 'too damaged and faded to show any identifiable features' was insufficient — the AI generated a legible group portrait despite the instruction.",
+
+      "checks": {
+        "correct_scene_match": { "result": "PASS", "note": "Child's shoe, rusted can, old photograph — all three elements present and correctly staged" },
+        "correct_subject": { "result": "PASS", "note": "Still life composition is correct. Lighting and palette are excellent." },
+        "no_people_in_scene": { "result": "PASS", "note": "No people present IN the scene itself" },
+        "no_victims": { "result": "PASS" },
+        "no_forced_labor": { "result": "PASS" },
+        "no_ghost_horror": { "result": "PASS" },
+        "no_gore_violence": { "result": "PASS" },
+        "no_modern_objects": { "result": "PASS" },
+        "no_text_logos_watermarks": { "result": "PASS" },
+        "suitable_16x9": { "result": "PASS" },
+        "photograph_prop_check": { "result": "FAIL — REJECTION TRIGGER", "note": "Photograph prop shows multiple identifiable human figures in a group portrait. Critical gate triggered." }
+      },
+
+      "visual_observations": [
+        "Child's shoe: EXCELLENT — aged leather with buckle strap, correctly weathered",
+        "Rusted metal can: PRESENT and correct",
+        "Photograph prop: CRITICAL FAIL — the aged photograph lying in front of the shoe clearly shows a group of multiple people in a formal posed portrait. The figures are small but recognizable as human forms standing together. The sepia aging does not sufficiently obscure the content.",
+        "Overall composition and lighting: Very good — warm amber tones, single side light, correct still-life aesthetic",
+        "If the photograph prop could be removed or shown face-down, the rest of the image quality is APPROVED-level"
+      ],
+
+      "corrected_prompt": "Abandoned personal belongings left behind in ruins, close-up still life: a weathered child's shoe with worn leather buckle strap, a rusted empty metal can lying on dusty crumbling concrete surface, an aged photograph turned face-down so only its yellowed blank paper back is visible with edges curling and yellowed with age, dim atmospheric single light source from one side, warm amber tones against dark concrete background, mood of memory and quiet departure, still life photography aesthetic, symbolic --ar 16:9 --no people, faces, human figures, photographs showing content, photographs facing up, legible photograph content, identifiable subjects in photographs, legible text, modern objects, logos, watermark, bright colors",
+
+      "corrected_negative_prompt": "people, faces, human figures, photographs showing content, photographs facing up, legible photograph content, identifiable subjects in photographs, legible text, modern objects, logos, watermark, bright colors",
+
+      "corrected_prompt_rationale": "Primary change: the photograph is now explicitly stated to be 'turned face-down' — only the aged paper back is visible. This eliminates any possibility of the AI generating photograph content (faces, figures, scenes). 'Face-down' is a compositional direction the AI can follow precisely. Negative prompt expanded to cover all photograph-content variants. The child's shoe and rusted can remain as the primary emotional anchors.",
+
+      "fallback_prompt_if_attempt_2_fails": "Abandoned personal belongings left behind in ruins, close-up still life: a weathered child's shoe with worn leather buckle strap, a rusted empty metal can lying on its side on dusty crumbling concrete surface, scattered dust and small debris, dim atmospheric single light source from one side, warm amber tones against dark concrete background, mood of memory and quiet departure, still life photography aesthetic, symbolic --ar 16:9 --no people, faces, photographs, paper, text, modern objects, logos, watermark, bright colors",
+
+      "fallback_prompt_rationale": "If the face-down photograph still fails (attempt 2), remove the photograph entirely. Shoe + can only. This eliminates all photograph-related risk. The emotional content (memory, departure) is preserved by the shoe and can alone.",
+
+      "file_path": null,
+      "production_status": "regenerate_attempt_1"
+    }
+  ],
+
+  "batch_summary": {
+    "files_found": 5,
+    "files_expected": 5,
+    "all_files_present": true,
+    "folder_location": "batch_1/ (not batch_2a/ — organisational note only)",
+    "approved": 3,
+    "approved_with_minor_notes": 1,
+    "regenerate": 1,
+    "rejected": 0,
+    "corrected_prompts_provided": 1,
+    "batch_2b_may_begin": true,
+    "pending": "IMG013 regeneration (attempt 1 of 3) — run in parallel with Batch 2B"
+  }
+}

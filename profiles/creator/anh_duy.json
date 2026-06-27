@@ -1,0 +1,187 @@
+{
+  "creator_id": "anh_duy",
+  "schema_version": "1.0",
+  "profile_status": "draft",
+  "interview_completeness_percent": 35,
+
+  "identity": {
+    "channel_name": null,
+    "channel_languages": ["ja", "vi", "en"],
+    "primary_language": "ja",
+    "primary_niche": "documentary_mystery",
+    "secondary_niches": ["lost_place", "history", "japanese_mystery"],
+    "style_label": "cinematic investigative documentary",
+    "style_references": [
+      {
+        "name": "Lemmino",
+        "what_to_take": ["deep narrative structure", "visual explanations", "narrative satisfaction", "methodical evidence building"],
+        "what_to_reject": [],
+        "confidence": "HIGH"
+      },
+      {
+        "name": "Johnny Harris",
+        "what_to_take": ["engaging modern pacing", "making complex topics accessible to general audiences"],
+        "what_to_reject": [],
+        "confidence": "HIGH"
+      },
+      {
+        "name": "MagnatesMedia",
+        "what_to_take": ["documentary-style narration", "retention structure until the final minute"],
+        "what_to_reject": [],
+        "confidence": "HIGH"
+      },
+      {
+        "name": "Neo",
+        "what_to_take": ["clean visual design", "animated maps", "timelines", "motion graphics clarity"],
+        "what_to_reject": [],
+        "confidence": "HIGH"
+      },
+      {
+        "name": "MrBallen",
+        "what_to_take": ["strong hook structure", "suspense pacing"],
+        "what_to_reject": ["horror tone", "excessive fear as primary emotion", "sensationalism"],
+        "confidence": "HIGH"
+      }
+    ]
+  },
+
+  "values": {
+    "what_we_stand_for": [
+      "factual accuracy above all — every claim must be verifiable",
+      "curiosity as the primary driver of storytelling",
+      "respect for real people, real history, and real tragedy",
+      "trust between the channel and the viewer is non-negotiable",
+      "education through entertainment, not entertainment through fear"
+    ],
+    "what_we_reject": [
+      "shock value as a storytelling device",
+      "sensationalism around real tragedies",
+      "fabricated or exaggerated facts for engagement",
+      "fear as a primary emotional target",
+      "manipulation of the viewer's emotions"
+    ],
+    "trust_over_entertainment": true,
+    "content_policy_notes": "Every video must leave the viewer feeling smarter and more curious. The channel's long-term value is built on trust, not on viral moments. A viewer who trusts the channel will return; a viewer who feels manipulated will not."
+  },
+
+  "storytelling_philosophy": {
+    "primary_emotional_goal": "curiosity",
+    "secondary_emotional_goals": ["satisfaction_of_learning", "wonder", "respect_for_the_subject"],
+    "explicitly_avoided_emotions": ["fear", "shock", "disgust", "manipulation", "artificial_sadness"],
+    "priority_order": ["entertainment", "education", "tension"],
+    "signature_narrative_devices": [
+      "every_video_ends_with_one_unanswered_question_leading_to_next",
+      "viewer_positioned_as_fellow_investigator_not_passive_audience",
+      "I_have_never_heard_this_story_before_feeling"
+    ],
+    "narrator_persona": {
+      "archetype": "calm intelligent investigator",
+      "explicitly_rejected_archetypes": ["actor", "news_anchor", "horror_host", "hype_man"],
+      "key_qualities": [
+        "calm and confident at all times",
+        "objective when presenting established facts",
+        "genuinely curious when introducing new evidence",
+        "slightly more intense during major findings — never theatrical",
+        "respectful and restrained when discussing real people or historical tragedy"
+      ],
+      "audience_relationship": "trusted guide — the narrator has spent months with this story and is now carefully sharing what they found. The viewer trusts the narrator because the narrator has earned that trust through precision."
+    },
+    "silence_philosophy": "Silence is never empty space. It is a deliberate storytelling tool with distinct purposes: creating space for curiosity after a key fact, building tension during uncertainty, and communicating respect during emotional or historical moments. Every silence must earn its place.",
+    "music_philosophy": "Music exists to quietly guide the viewer's emotions — never to draw attention to itself. The viewer should remember the story, not the soundtrack. Music changes with the emotional arc of the video, but never fills silence for the sake of filling it. Silence is sometimes more powerful than any music."
+  },
+
+  "quality_standards": {
+    "fact_checking_level": "strict",
+    "source_citation_required": true,
+    "disputed_fact_handling": "present_both_sides",
+    "respect_standards": [
+      "never speculate about the guilt of living individuals as if speculation were fact",
+      "if a fact cannot be verified, label it clearly as unverified",
+      "if a claim is disputed, present both sides",
+      "real events must be described accurately — dramatization is allowed in tone, not in fact",
+      "do not show, describe, or generate graphic imagery of violence, death, or abuse",
+      "never use the suffering of real people as entertainment without acknowledging their humanity"
+    ],
+    "ai_image_max_percent": null,
+    "real_footage_preference": null
+  },
+
+  "business_goals": {
+    "primary_goal": "build a scalable YouTube documentary channel with loyal repeat viewers",
+    "secondary_goals": [
+      "establish channel authority in documentary mystery niche",
+      "grow subscriber base through trust and quality — not viral tactics",
+      "create content that improves with time as production systems mature"
+    ],
+    "cta_strategy": "minimal and natural — subscribe suggestion woven into outro, not aggressive",
+    "channel_growth_model": "deep niche loyalty — viewers return because they trust the channel, not because a single video went viral",
+    "publishing_frequency": null,
+    "content_series_strategy": "standalone videos that connect thematically — each video complete in itself, but part of a discoverable body of work"
+  },
+
+  "absolute_rules": {
+    "safety_rules": [
+      {
+        "rule_id": "SR001",
+        "rule": "Do not show, describe, or generate graphic imagery of violence, death, or abuse.",
+        "severity": "CRITICAL",
+        "overridable_by": "nobody"
+      },
+      {
+        "rule_id": "SR002",
+        "rule": "Do not invent facts, statistics, names, dates, or quotes. If a fact cannot be verified from a credible source, it must not be presented as established truth.",
+        "severity": "CRITICAL",
+        "overridable_by": "nobody"
+      },
+      {
+        "rule_id": "SR003",
+        "rule": "Do not speculate about the guilt, intent, or criminal conduct of living individuals and present that speculation as fact.",
+        "severity": "CRITICAL",
+        "overridable_by": "nobody"
+      }
+    ],
+    "legal_rules": [
+      {
+        "rule_id": "LR001",
+        "rule": "Verify image license before any image is used in commercial video. CC BY-SA images require legal review before use in monetized content due to the ShareAlike clause.",
+        "severity": "CRITICAL",
+        "overridable_by": "creator_only"
+      },
+      {
+        "rule_id": "LR002",
+        "rule": "Do not use copyrighted music, footage, or images without a confirmed license for commercial YouTube use.",
+        "severity": "CRITICAL",
+        "overridable_by": "nobody"
+      },
+      {
+        "rule_id": "LR003",
+        "rule": "SEO titles and thumbnail text must be factually accurate. Titles that are demonstrably false are both an ethical violation and a potential legal risk.",
+        "severity": "HIGH",
+        "overridable_by": "creator_only"
+      }
+    ],
+    "ethical_rules": [
+      {
+        "rule_id": "ER001",
+        "rule": "If a claim is disputed among credible sources, present both sides — do not cherry-pick the more dramatic version.",
+        "severity": "HIGH",
+        "overridable_by": "creator_only"
+      },
+      {
+        "rule_id": "ER002",
+        "rule": "Unverified information must be clearly labeled. Use formulations like 'unconfirmed reports suggest' or 'some accounts claim — though this has not been verified.'",
+        "severity": "HIGH",
+        "overridable_by": "creator_only"
+      },
+      {
+        "rule_id": "ER003",
+        "rule": "Do not sensationalize the suffering or death of real people. Acknowledge the human cost of historical events with respect, not as dramatic flair.",
+        "severity": "HIGH",
+        "overridable_by": "creator_only"
+      }
+    ]
+  },
+
+  "created_at": "2026-06-27T00:00:00Z",
+  "updated_at": "2026-06-27T00:00:00Z"
+}

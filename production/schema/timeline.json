@@ -1,0 +1,448 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://ai-youtube-studio/production/schemas/timeline.json",
+  "title": "Timeline",
+  "description": "Master edit timeline. Assembles all production assets — video, narration, music, SFX, text overlays — into an ordered, timecoded edit structure. Produced after all upstream assets (scene.json, image_plan.json, voice.json) are approved. This document is consumed by the editor and can be serialized to NLE formats (Premiere, DaVinci, Final Cut, CapCut) or rendered via code.",
+  "type": "object",
+  "required": [
+    "project_id",
+    "schema_version",
+    "total_duration_seconds",
+    "fps",
+    "resolution",
+    "tracks",
+    "assembly_status",
+    "created_at"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "project_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9-]{2,62}[a-z0-9]$"
+    },
+    "schema_version": {
+      "type": "string",
+      "const": "1.0"
+    },
+    "total_duration_seconds": {
+      "type": "number",
+      "minimum": 60
+    },
+    "fps": {
+      "type": "number",
+      "enum": [24, 25, 29.97, 30, 60]
+    },
+    "resolution": {
+      "type": "object",
+      "required": ["width", "height"],
+      "properties": {
+        "width": { "type": "integer", "enum": [1280, 1920, 2560, 3840] },
+        "height": { "type": "integer", "enum": [720, 1080, 1440, 2160] },
+        "label": { "type": "string", "enum": ["720p", "1080p", "1440p", "4K"], "default": "1080p" }
+      }
+    },
+    "color_space": {
+      "type": "string",
+      "enum": ["sRGB", "Rec.709", "Rec.2020", "DCI-P3"],
+      "default": "Rec.709"
+    },
+    "tracks": {
+      "$ref": "#/definitions/tracks"
+    },
+    "chapter_markers": {
+      "type": "array",
+      "description": "YouTube chapter markers. Each entry appears in the video description.",
+      "items": {
+        "$ref": "#/definitions/chapter_marker"
+      }
+    },
+    "render_settings": {
+      "$ref": "#/definitions/render_settings"
+    },
+    "assembly_status": {
+      "type": "string",
+      "enum": ["pending", "in_progress", "draft_complete", "review_pending", "approved", "rendered"],
+      "description": "Current state of the edit assembly."
+    },
+    "review_notes": {
+      "type": ["string", "null"],
+      "description": "Editor or director review notes on the current cut."
+    },
+    "output_file_path": {
+      "type": ["string", "null"],
+      "description": "Relative path to the rendered output file. Null until rendered."
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "definitions": {
+    "tracks": {
+      "type": "object",
+      "required": ["video", "narration", "music"],
+      "properties": {
+        "video": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/video_clip" }
+        },
+        "narration": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/audio_clip" }
+        },
+        "music": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/audio_clip" }
+        },
+        "sfx": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/audio_clip" }
+        },
+        "text_overlay": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/text_clip" }
+        },
+        "subtitle": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/subtitle_clip" }
+        }
+      }
+    },
+    "video_clip": {
+      "type": "object",
+      "required": ["clip_id", "track", "in_point", "out_point", "source_ref", "source_type"],
+      "additionalProperties": false,
+      "properties": {
+        "clip_id": {
+          "type": "string",
+          "pattern": "^VID[0-9]{3}$"
+        },
+        "track": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Video track number. Track 1 = primary. Higher tracks = overlays."
+        },
+        "in_point": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Start point in timeline in seconds."
+        },
+        "out_point": {
+          "type": "number",
+          "description": "End point in timeline in seconds."
+        },
+        "duration_seconds": {
+          "type": "number",
+          "description": "Must equal out_point minus in_point."
+        },
+        "source_ref": {
+          "type": "string",
+          "description": "Reference to image_plan.image_id or external file path."
+        },
+        "source_type": {
+          "type": "string",
+          "enum": ["image", "video_clip", "motion_graphic", "title_card"]
+        },
+        "scene_id_ref": {
+          "type": ["string", "null"],
+          "pattern": "^S[0-9]{3}[a-z]?$"
+        },
+        "motion_effect": {
+          "type": ["string", "null"],
+          "enum": ["slow_pan_left", "slow_pan_right", "slow_zoom_in", "slow_zoom_out", "ken_burns", "ken_burns_zoom_in", "ken_burns_zoom_out", "parallax", "none", null]
+        },
+        "motion_strength": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "0 = no movement; 1 = maximum defined movement. Typically 0.1-0.3 for subtle documentary motion."
+        },
+        "opacity": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "default": 1
+        },
+        "transition_in": {
+          "type": "object",
+          "properties": {
+            "type": { "type": "string", "enum": ["cut", "dissolve", "fade_in", "fade_from_black", "cross_fade"] },
+            "duration_seconds": { "type": "number", "minimum": 0 }
+          }
+        },
+        "transition_out": {
+          "type": "object",
+          "properties": {
+            "type": { "type": "string", "enum": ["cut", "dissolve", "fade_out", "fade_to_black", "cross_fade"] },
+            "duration_seconds": { "type": "number", "minimum": 0 }
+          }
+        },
+        "color_grade": {
+          "type": ["string", "null"],
+          "description": "Color grading preset to apply.",
+          "examples": ["dark_documentary_v1", "warm_sepia", "cold_grey"]
+        }
+      }
+    },
+    "audio_clip": {
+      "type": "object",
+      "required": ["clip_id", "track_type", "in_point", "out_point"],
+      "additionalProperties": false,
+      "properties": {
+        "clip_id": {
+          "type": "string",
+          "pattern": "^AUD[0-9]{3}$"
+        },
+        "track_type": {
+          "type": "string",
+          "enum": ["narration", "music", "sfx", "ambience"]
+        },
+        "in_point": {
+          "type": "number",
+          "minimum": 0
+        },
+        "out_point": {
+          "type": "number"
+        },
+        "duration_seconds": {
+          "type": "number"
+        },
+        "source_file": {
+          "type": ["string", "null"],
+          "description": "Relative path to audio file."
+        },
+        "volume_db": {
+          "type": "number",
+          "minimum": -60,
+          "maximum": 6,
+          "default": 0
+        },
+        "fade_in_seconds": {
+          "type": "number",
+          "minimum": 0,
+          "default": 0
+        },
+        "fade_out_seconds": {
+          "type": "number",
+          "minimum": 0,
+          "default": 0
+        },
+        "line_id_ref": {
+          "type": ["string", "null"],
+          "pattern": "^L[0-9]{3}$",
+          "description": "For narration clips: which voice.json line this clip contains."
+        },
+        "music_track_title": {
+          "type": ["string", "null"],
+          "description": "For music clips: track title for licensing records."
+        },
+        "license_type": {
+          "type": ["string", "null"],
+          "enum": ["royalty_free", "creative_commons", "licensed_sync", "original", null]
+        }
+      }
+    },
+    "text_clip": {
+      "type": "object",
+      "required": ["clip_id", "in_point", "out_point", "text", "style"],
+      "additionalProperties": false,
+      "properties": {
+        "clip_id": {
+          "type": "string",
+          "pattern": "^TXT[0-9]{3}$"
+        },
+        "in_point": { "type": "number", "minimum": 0 },
+        "out_point": { "type": "number" },
+        "text": { "type": "string" },
+        "style": {
+          "type": "string",
+          "enum": ["title_card_primary", "title_card_secondary", "lower_third", "year_stamp", "source_credit", "end_card"]
+        },
+        "position": {
+          "type": "string",
+          "enum": ["center", "top_center", "bottom_center", "bottom_left", "top_left"],
+          "default": "center"
+        },
+        "font_size_pt": { "type": "integer" },
+        "color_hex": { "type": "string", "pattern": "^#[0-9A-Fa-f]{6}$" },
+        "fade_in_seconds": { "type": "number", "default": 0 },
+        "fade_out_seconds": { "type": "number", "default": 0 }
+      }
+    },
+    "subtitle_clip": {
+      "type": "object",
+      "required": ["subtitle_file_ref", "language", "format"],
+      "additionalProperties": false,
+      "properties": {
+        "subtitle_file_ref": { "type": "string" },
+        "language": { "type": "string" },
+        "format": { "type": "string", "enum": ["webvtt", "srt"] },
+        "burn_in": {
+          "type": "boolean",
+          "default": false,
+          "description": "False = soft subtitle track (toggleable). True = burned into video pixels."
+        }
+      }
+    },
+    "chapter_marker": {
+      "type": "object",
+      "required": ["timecode", "label"],
+      "properties": {
+        "timecode": {
+          "type": "string",
+          "pattern": "^[0-9]{1,2}:[0-9]{2}$",
+          "description": "Must be in MM:SS format. First chapter must be 0:00."
+        },
+        "label": {
+          "type": "string",
+          "maxLength": 100,
+          "description": "Chapter label shown in YouTube timeline."
+        }
+      }
+    },
+    "render_settings": {
+      "type": "object",
+      "properties": {
+        "codec_video": {
+          "type": "string",
+          "enum": ["h264", "h265", "vp9", "av1", "prores"],
+          "default": "h264"
+        },
+        "codec_audio": {
+          "type": "string",
+          "enum": ["aac", "mp3", "opus", "pcm"],
+          "default": "aac"
+        },
+        "bitrate_video_mbps": {
+          "type": "number",
+          "minimum": 1,
+          "default": 8
+        },
+        "bitrate_audio_kbps": {
+          "type": "integer",
+          "default": 192
+        },
+        "container": {
+          "type": "string",
+          "enum": ["mp4", "mov", "webm", "mkv"],
+          "default": "mp4"
+        },
+        "output_filename_pattern": {
+          "type": "string",
+          "description": "Pattern for output filename. {project_id} is replaced at render time.",
+          "examples": ["{project_id}_final.mp4", "{project_id}_v1.mp4"]
+        }
+      }
+    }
+  },
+  "examples": [
+    {
+      "project_id": "hashima-island-mystery-ja",
+      "schema_version": "1.0",
+      "total_duration_seconds": 720,
+      "fps": 30,
+      "resolution": { "width": 1920, "height": 1080, "label": "1080p" },
+      "color_space": "Rec.709",
+      "assembly_status": "pending",
+      "chapter_markers": [
+        { "timecode": "0:00", "label": "端島の謎" },
+        { "timecode": "1:00", "label": "炭鉱の誕生" },
+        { "timecode": "3:00", "label": "廃墟の神話と歴史の現実" },
+        { "timecode": "6:00", "label": "1974年の沈黙" },
+        { "timecode": "9:00", "label": "世界遺産と論争" },
+        { "timecode": "11:00", "label": "この島が問いかけるもの" }
+      ],
+      "render_settings": {
+        "codec_video": "h264",
+        "codec_audio": "aac",
+        "bitrate_video_mbps": 8,
+        "bitrate_audio_kbps": 192,
+        "container": "mp4",
+        "output_filename_pattern": "{project_id}_final.mp4"
+      },
+      "tracks": {
+        "video": [
+          {
+            "clip_id": "VID001",
+            "track": 1,
+            "in_point": 0,
+            "out_point": 10,
+            "duration_seconds": 10,
+            "source_ref": "IMG001",
+            "source_type": "image",
+            "scene_id_ref": "S001",
+            "motion_effect": "slow_pan_right",
+            "motion_strength": 0.15,
+            "opacity": 1,
+            "transition_in": { "type": "fade_from_black", "duration_seconds": 1.5 },
+            "transition_out": { "type": "cut", "duration_seconds": 0 },
+            "color_grade": "dark_documentary_v1"
+          }
+        ],
+        "narration": [
+          {
+            "clip_id": "AUD001",
+            "track_type": "narration",
+            "in_point": 3,
+            "out_point": 8,
+            "duration_seconds": 5,
+            "source_file": "voice/narration_final.wav",
+            "volume_db": 0,
+            "fade_in_seconds": 0,
+            "fade_out_seconds": 0,
+            "line_id_ref": "L001",
+            "music_track_title": null,
+            "license_type": null
+          }
+        ],
+        "music": [
+          {
+            "clip_id": "AUD002",
+            "track_type": "music",
+            "in_point": 0,
+            "out_point": 720,
+            "duration_seconds": 720,
+            "source_file": "assets/music/dark_documentary_theme.wav",
+            "volume_db": -18,
+            "fade_in_seconds": 3,
+            "fade_out_seconds": 5,
+            "line_id_ref": null,
+            "music_track_title": "Dark Documentary Theme",
+            "license_type": "royalty_free"
+          }
+        ],
+        "sfx": [],
+        "text_overlay": [
+          {
+            "clip_id": "TXT001",
+            "in_point": 40,
+            "out_point": 60,
+            "text": "端島 / 軍艦島",
+            "style": "title_card_primary",
+            "position": "center",
+            "font_size_pt": 48,
+            "color_hex": "#FFFFFF",
+            "fade_in_seconds": 0.5,
+            "fade_out_seconds": 0.5
+          }
+        ],
+        "subtitle": [
+          {
+            "subtitle_file_ref": "voice/subtitles_ja.vtt",
+            "language": "ja",
+            "format": "webvtt",
+            "burn_in": false
+          }
+        ]
+      },
+      "review_notes": null,
+      "output_file_path": null,
+      "created_at": "2026-06-27T09:00:00Z",
+      "updated_at": "2026-06-27T09:00:00Z"
+    }
+  ]
+}

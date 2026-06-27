@@ -1,0 +1,223 @@
+{
+  "project_id": "hashima-island-mystery-ja",
+  "batch_id": "BATCH_1",
+  "batch_name": "Safe Establishing Shots — Architecture and Atmosphere",
+  "created_at": "2026-06-27",
+  "batch_status": "APPROVED_FOR_GENERATION",
+
+  "batch_criteria": {
+    "safety_status_required": "READY",
+    "human_review_required": false,
+    "blocked_excluded": true,
+    "mine_tunnel_excluded": true,
+    "tragedy_sensitive_excluded": true,
+    "forced_labor_scenes_excluded": true,
+    "scenes_excluded": ["S011a", "S011b", "S016", "S012"],
+    "rationale": "Batch 1 contains only the cleanest, safest, highest-confidence prompts. These are architecturally-focused or atmospheric scenes with no historical sensitivity. No rewrites required. No human review required. All 11 safety dimensions passed in prompt_safety_audit.json."
+  },
+
+  "global_generation_settings": {
+    "aspect_ratio": "16:9",
+    "target_resolution": "1920x1080",
+    "color_grade_post": "dark_documentary",
+    "saturation_post": "desaturated",
+    "film_grain_post": true,
+    "output_format": "JPG",
+    "output_quality": 95,
+    "output_directory": "assets/ai_images/generated/batch_1/",
+    "naming_convention": "{image_id}_{scene_id}_{description}.jpg",
+    "tool_compatibility": ["Midjourney v6", "DALL-E 3", "Stable Diffusion XL", "Adobe Firefly 3", "Ideogram v2"]
+  },
+
+  "batch_1_images": [
+    {
+      "image_id": "IMG002",
+      "scene_id": "S002",
+      "section": "HOOK",
+      "timecode": "0:10–0:25",
+      "duration_seconds": 15,
+      "shot_type": "medium_shot",
+      "motion_direction": "ken_burns_zoom_in",
+      "priority": "HIGH",
+      "safety_status": "READY",
+      "human_review_required": false,
+      "approved_for_batch_1": true,
+
+      "reason_approved_for_batch_1": "Interior ruin with broken staircase and natural light. No historical sensitivity. No forced labor context. No identifiable real location that would be factually disputed. Pure atmospheric haikyo imagery. All 11 safety dimensions PASS in prompt_safety_audit.json. No rewrite needed.",
+
+      "final_prompt": "Interior of abandoned multi-story concrete building, broken staircase leading into darkness, partially collapsed ceiling with shafts of natural light breaking through, peeling walls, exposed rebar, debris on floor, haikyo aesthetic, high contrast dramatic lighting, cinematic, desaturated with warm dust tones, film grain --ar 16:9 --no people, animals, furniture, modern objects, bright colors",
+
+      "negative_prompt": "people, animals, furniture, modern objects, bright colors, watermark, logo, text, watermark, signatures, borders",
+
+      "midjourney_command": "/imagine Interior of abandoned multi-story concrete building, broken staircase leading into darkness, partially collapsed ceiling with shafts of natural light breaking through, peeling walls, exposed rebar, debris on floor, haikyo aesthetic, high contrast dramatic lighting, cinematic, desaturated with warm dust tones, film grain --ar 16:9 --no people, animals, furniture, modern objects, bright colors --v 6.1 --q 2",
+
+      "dalle3_prompt": "Interior of abandoned multi-story concrete building. Broken staircase leading into darkness. Partially collapsed ceiling with shafts of natural light breaking through. Peeling walls, exposed rebar, debris on floor. Haikyo abandoned Japanese building aesthetic. High contrast dramatic lighting. Cinematic style. Desaturated color palette with warm dust tones. Film grain texture. No people, no animals, no furniture, no modern objects, no bright colors. 16:9 aspect ratio.",
+
+      "aspect_ratio": "16:9",
+      "output_filename": "IMG002_S002_interior_ruin.jpg",
+      "output_path": "assets/ai_images/generated/batch_1/IMG002_S002_interior_ruin.jpg",
+
+      "scene_visual_description_en": "Crumbling concrete corridor. Rusted railing. Light filtering through broken windows. Remnants of daily life — a chair left behind.",
+      "scene_visual_description_ja": "崩れたコンクリートの廊下。錆びた手すり。窓から差し込む光。かつての生活の痕跡。",
+
+      "qa_checklist": {
+        "required_checks_before_approval": [
+          { "check": "No human forms, silhouettes, or faces visible anywhere in image", "pass_condition": "Zero human presence detected" },
+          { "check": "No animals", "pass_condition": "Zero animals" },
+          { "check": "No furniture clearly identifying modern era (IKEA-style, contemporary design)", "pass_condition": "All visible objects look pre-1974 era" },
+          { "check": "No modern objects (smartphones, plastic, signage)", "pass_condition": "Zero contemporary objects" },
+          { "check": "No bright or saturated colors (no red, bright orange, vivid green)", "pass_condition": "Color palette is grey, brown-grey, muted only" },
+          { "check": "Light shaft effect present if generated model permits", "pass_condition": "Some light penetration through ceiling/windows visible" },
+          { "check": "Broken staircase element present", "pass_condition": "A staircase or staircase fragment visible" },
+          { "check": "Film grain texture visible (or will be added in post)", "pass_condition": "Grain present OR will be composited in post" },
+          { "check": "Image is 16:9 or can be cropped to 16:9 without losing core subject", "pass_condition": "16:9 delivery confirmed" },
+          { "check": "No watermark, logo, text, border, or artist signature", "pass_condition": "Image is clean" }
+        ],
+        "rejection_triggers": [
+          "Any human form, shadow, or silhouette",
+          "Bright or clearly modern color palette",
+          "Corporate or brand logos",
+          "Any text on walls or surfaces that looks placed/generated",
+          "Horror exaggeration (blood, decay with flesh, grotesque imagery)"
+        ],
+        "notes": "Light shaft in the image is important for S002 scene purpose. If generation lacks light shafts: prefer the output that has the most interesting structural decay detail instead. The image will be held for 15 seconds with ken_burns_zoom_in motion applied in post."
+      }
+    },
+
+    {
+      "image_id": "IMG004",
+      "scene_id": "S005",
+      "section": "ACT_I",
+      "timecode": "1:00–1:40",
+      "duration_seconds": 40,
+      "shot_type": "wide_shot",
+      "motion_direction": "slow_pan_left",
+      "priority": "HIGH",
+      "safety_status": "READY",
+      "human_review_required": false,
+      "approved_for_batch_1": true,
+
+      "reason_approved_for_batch_1": "Simulated Meiji-era archival industrial image. Black and white/sepia. No identifiable real people ('no identifiable individuals' in prompt). No forced labor context — this is the early industrialization era (1890–1910), predating the wartime forced labor period (1939–1945). All 11 safety dimensions PASS. No rewrite needed. Archival simulation style is a well-understood AI generation category with low surprise risk.",
+
+      "production_label_required": true,
+      "production_label_text": "illustrative archival simulation",
+      "production_label_reason": "This is AI-generated. Must not be presented as a real historical photograph. Add subtle caption or context in narration if needed.",
+
+      "final_prompt": "Simulated early 20th century Japanese industrial landscape, black and white, factory chimneys with smoke rising, steel structures, raw atmosphere of industrialization, grainy vintage photograph aesthetic, sepia toned, no identifiable individuals, atmosphere suggests labor and industry, Meiji era Japan --ar 16:9 --no modern elements, color, faces, logos, text",
+
+      "negative_prompt": "modern elements, color photography, faces, logos, text, digital look, contemporary architecture, modern vehicles, watermark, signatures",
+
+      "midjourney_command": "/imagine Simulated early 20th century Japanese industrial landscape, black and white, factory chimneys with smoke rising, steel structures, raw atmosphere of industrialization, grainy vintage photograph aesthetic, sepia toned, no identifiable individuals, atmosphere suggests labor and industry, Meiji era Japan --ar 16:9 --no modern elements, color, faces, logos, text --v 6.1 --q 2 --style raw",
+
+      "dalle3_prompt": "Simulated early 20th century Japanese industrial landscape. Black and white monochrome. Factory chimneys with smoke rising. Steel industrial structures. Raw atmosphere of Meiji-era industrialization. Grainy vintage photograph aesthetic, sepia-toned. No identifiable individuals. No faces. Atmosphere suggests labor and industry. Historical Japan ca. 1890–1910. No modern elements, no color photography look, no logos, no text. 16:9 aspect ratio.",
+
+      "aspect_ratio": "16:9",
+      "output_filename": "IMG004_S005_meiji_industrial.jpg",
+      "output_path": "assets/ai_images/generated/batch_1/IMG004_S005_meiji_industrial.jpg",
+
+      "scene_visual_description_en": "Meiji-era industrial landscape. Smokestacks rising from factory complex. Archival-style monochrome/sepia. Steam locomotive. Harbor.",
+      "scene_visual_description_ja": "明治時代の工業風景。煙突から煙が立ち上る工場群。モノクロ・セピア調のアーカイブ風イメージ。",
+
+      "qa_checklist": {
+        "required_checks_before_approval": [
+          { "check": "No human faces identifiable", "pass_condition": "Any figures are distant, small, faceless, or absent" },
+          { "check": "No modern elements present", "pass_condition": "All visible structures/vehicles are consistent with pre-1920 era" },
+          { "check": "Black and white or sepia tone dominant", "pass_condition": "Image is desaturated/monochrome — not in full color" },
+          { "check": "Industrial atmosphere conveyed (smokestacks, factory, steel)", "pass_condition": "At least one industrial element clearly visible" },
+          { "check": "Vintage/archival texture present (grain, vignette, or aging effects)", "pass_condition": "Image reads as historical document, not modern render" },
+          { "check": "No color photography look (no modern digital clarity)", "pass_condition": "Image has analog/archival aesthetic" },
+          { "check": "No watermark, logo, text, border", "pass_condition": "Image is clean" },
+          { "check": "16:9 aspect ratio deliverable", "pass_condition": "Confirmed" }
+        ],
+        "rejection_triggers": [
+          "Any identifiable human face",
+          "Modern vehicle (car, truck, electric train, airplane)",
+          "Full color palette (modern photography look)",
+          "Corporate branding or logos",
+          "Any text visible on buildings or objects"
+        ],
+        "post_production_notes": "This image will be further desaturated and film-grain treated in post. Even if AI output is slightly warm or slightly sepia, post treatment will harmonize it. Apply slow_pan_left in post at very slow speed. Duration: 40 seconds. Label in video as 'illustrative' — not presented as archival photo."
+      }
+    },
+
+    {
+      "image_id": "IMG018",
+      "scene_id": "S022",
+      "section": "ACT_IV",
+      "timecode": "10:20–11:00",
+      "duration_seconds": 40,
+      "shot_type": "wide_shot",
+      "motion_direction": "static",
+      "is_ma_beat": true,
+      "priority": "HIGH",
+      "safety_status": "READY",
+      "human_review_required": false,
+      "approved_for_batch_1": true,
+
+      "reason_approved_for_batch_1": "Ma beat wide panoramic. No narration over this image (40 seconds of silence + ocean ambient sound only). No historical sensitivity in the image itself. Panoramic island view is safe, atmospheric, and appropriate for contemplative beat. No forced labor reference. All 11 safety dimensions PASS. No rewrite needed.",
+
+      "ma_beat_rules": {
+        "narration": "NONE — no voice over this image",
+        "music": "ambient ocean waves and environment only — no music track",
+        "motion": "static — no pan, no zoom, no ken burns",
+        "duration": "40 seconds (fixed per BEAT_JPN_02 and japan_mystery_lost_place.json)",
+        "transition_in": "dissolve from S021",
+        "transition_out": "dissolve to S023"
+      },
+
+      "final_prompt": "Hashima Island full panoramic view, concrete ruins rising from ocean, wide sky above, clouds, ocean in foreground, final cinematic establishing shot, balanced composition, haunting and beautiful, desaturated cinematic, prepares for fade to black --ar 16:9 --no people, text, bright colors",
+
+      "negative_prompt": "people, human figures, text, bright colors, sunlight, tropical colors, boats, modern elements, watermark, logos, signatures",
+
+      "midjourney_command": "/imagine Hashima Island full panoramic view, concrete ruins rising from ocean, wide sky above, clouds, ocean in foreground, final cinematic establishing shot, balanced composition, haunting and beautiful, desaturated cinematic, prepares for fade to black --ar 16:9 --no people, text, bright colors --v 6.1 --q 2",
+
+      "dalle3_prompt": "Hashima Island (Gunkanjima) full panoramic view. Concrete ruins rising from the ocean. Wide sky with clouds above. Ocean in foreground. Cinematic wide establishing shot. Balanced and symmetrical composition. Haunting and beautiful atmosphere. Desaturated cinematic color grade. Dark and contemplative. No people, no text, no bright colors, no boats, no sunlight. 16:9 aspect ratio.",
+
+      "aspect_ratio": "16:9",
+      "output_filename": "IMG018_S022_ma_beat_panoramic.jpg",
+      "output_path": "assets/ai_images/generated/batch_1/IMG018_S022_ma_beat_panoramic.jpg",
+
+      "scene_visual_description_en": "Wide static shot of Hashima ruins. Ocean waves and music only. No narration. Complete 40 seconds of silence. Ma beat.",
+      "scene_visual_description_ja": "端島の静止した廃墟広角。波音と音楽のみ。ナレーションなし。完全な沈黙の40秒。「間（ま）」。",
+
+      "director_option": "PROMPT_016 ('Abstract ocean waves, island edge barely visible, minimalist') may be substituted for a more abstract Ma beat. Both are safe. PROMPT_016 produces a more 'empty/silent' visual. PROMPT_018 produces a more 'island is still there' visual. Either is appropriate for the 間 beat.",
+
+      "qa_checklist": {
+        "required_checks_before_approval": [
+          { "check": "No people visible anywhere in image", "pass_condition": "Zero human presence" },
+          { "check": "No boats or vehicles", "pass_condition": "Open ocean only" },
+          { "check": "No text or signage", "pass_condition": "Image is text-free" },
+          { "check": "Desaturated or near-monochrome palette", "pass_condition": "Grey, blue-grey, muted tones only" },
+          { "check": "Island ruins visible and prominent", "pass_condition": "Hashima-like island silhouette with concrete ruins visible" },
+          { "check": "Composition is balanced and horizon is level", "pass_condition": "No tilted horizon, no Dutch angle" },
+          { "check": "Image works as a 40-second static hold", "pass_condition": "Composition is restful and contemplative — not busy or distracting" },
+          { "check": "No watermark, logo, text, border, signature", "pass_condition": "Image is clean" },
+          { "check": "16:9 aspect ratio deliverable", "pass_condition": "Confirmed" }
+        ],
+        "rejection_triggers": [
+          "Any human form or silhouette",
+          "Boats or ships",
+          "Bright or saturated colors",
+          "Busy composition that would distract during 40-second silence",
+          "Distracting text or artifacting at edges"
+        ],
+        "post_production_notes": "This image will be held completely static for 40 seconds. Composition quality is more important here than for any other image — the viewer has full time to notice flaws. Select the output that is most compositionally balanced and hauntingly beautiful. Apply fade to black at end of hold."
+      }
+    }
+  ],
+
+  "batch_1_summary": {
+    "approved_image_count": 3,
+    "approved_image_ids": ["IMG002", "IMG004", "IMG018"],
+    "all_safety_checks_passed": true,
+    "human_review_required_for_any": false,
+    "mine_or_tunnel_scenes_present": false,
+    "tragedy_sensitive_scenes_present": false,
+    "forced_labor_scenes_present": false,
+    "generation_may_begin": true,
+    "generation_order_recommendation": "Generate all three simultaneously or in any order — no dependencies between them.",
+    "estimated_generation_time": "3–10 minutes per image depending on tool and queue",
+    "output_directory": "assets/ai_images/generated/batch_1/",
+    "next_batch": "BATCH_2 — READY_WITH_REWRITE images (IMG003, IMG008, IMG010–IMG015, IMG017, IMG019) after corrected prompts confirmed"
+  }
+}

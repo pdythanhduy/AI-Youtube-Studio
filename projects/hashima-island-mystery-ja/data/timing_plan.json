@@ -1,0 +1,219 @@
+{
+  "project_id": "hashima-island-mystery-ja",
+  "schema_version": "1.0",
+  "document_type": "timing_plan",
+  "fix_id": "FIX-M3",
+  "created_at": "2026-06-27",
+  "status": "complete",
+
+  "summary": {
+    "total_video_duration_seconds": 720,
+    "total_video_duration_timecode": "12:00",
+    "total_narration_speaking_seconds": 423,
+    "total_pause_gap_seconds": 101,
+    "total_narrated_content_seconds": 524,
+    "total_visual_silence_seconds": 196,
+    "ma_beat_duration_seconds": 40,
+    "ma_beat_timecode": "10:20-11:00",
+    "target_met": true,
+    "word_count_morae_estimate": 1201,
+    "effective_pacing_morae_per_min": 170,
+    "language": "ja",
+    "pacing_style": "deliberate_slow_contemplative"
+  },
+
+  "sections": [
+    {
+      "section_id": "HOOK",
+      "timecode_start": "0:00",
+      "timecode_end": "1:00",
+      "duration_seconds": 60,
+      "narration_speaking_seconds": 21,
+      "pause_gap_seconds": 7,
+      "narrated_content_seconds": 28,
+      "visual_silence_seconds": 32,
+      "lines": ["L001", "L002", "L003", "L004"]
+    },
+    {
+      "section_id": "ACT_I",
+      "timecode_start": "1:00",
+      "timecode_end": "3:00",
+      "duration_seconds": 120,
+      "narration_speaking_seconds": 71,
+      "pause_gap_seconds": 5,
+      "narrated_content_seconds": 76,
+      "visual_silence_seconds": 44,
+      "lines": ["L005", "L006", "L007", "L008"],
+      "timing_flags": [
+        {
+          "flag_id": "TF-001",
+          "severity": "WARNING",
+          "line_id": "L008",
+          "scene_id": "S008",
+          "issue": "S008 scene window is 15s; L008 narration is 22s. Overflow of 7s.",
+          "resolution": "Begin L008 at approximately 2:37, spanning the S007/S008 visual cut. L008 completes at ~2:59, 1s before S009 begins.",
+          "action_required": true
+        }
+      ]
+    },
+    {
+      "section_id": "ACT_II",
+      "timecode_start": "3:00",
+      "timecode_end": "6:00",
+      "duration_seconds": 180,
+      "narration_speaking_seconds": 124,
+      "pause_gap_seconds": 9,
+      "narrated_content_seconds": 133,
+      "visual_silence_seconds": 47,
+      "lines": ["L009", "L010", "L011", "L012", "L013", "L014", "L015", "L016", "L017"],
+      "cross_scene_bleeds": [
+        { "line_id": "L011", "starts_in": "S009", "ends_in": "S010", "bleed_seconds": 12 },
+        { "line_id": "L012", "starts_in": "S010", "ends_in": "S011a", "bleed_seconds": 5 },
+        { "line_id": "L014", "starts_in": "S011a", "ends_in": "S011b", "bleed_seconds": 5 },
+        { "line_id": "L015", "starts_in": "S011b", "ends_in": "S012", "bleed_seconds": 4 }
+      ],
+      "note": "ACT_II is the densest narration section. Multiple lines span scene cuts — this is by design and standard documentary production."
+    },
+    {
+      "section_id": "ACT_III",
+      "timecode_start": "6:00",
+      "timecode_end": "9:00",
+      "duration_seconds": 180,
+      "narration_speaking_seconds": 92,
+      "pause_gap_seconds": 10,
+      "narrated_content_seconds": 102,
+      "visual_silence_seconds": 78,
+      "lines": ["L018", "L019", "L020", "L021", "L022", "L023", "L024", "L025", "L026"],
+      "note": "Most spacious section. Visual silences of 20s+ after short narration lines (L018: 7s in 30s scene; L020: 8s in 30s scene) are intentional — do not fill with narration."
+    },
+    {
+      "section_id": "ACT_IV",
+      "timecode_start": "9:00",
+      "timecode_end": "11:00",
+      "duration_seconds": 120,
+      "narration_speaking_seconds": 54,
+      "pause_gap_seconds": 8,
+      "narrated_content_seconds": 62,
+      "visual_silence_seconds": 18,
+      "ma_beat_seconds": 40,
+      "lines": ["L027", "L028", "L029", "L030", "L031"],
+      "timing_flags": [
+        {
+          "flag_id": "TF-002",
+          "severity": "WARNING",
+          "line_id": "L028",
+          "issue": "L028 through L030 must complete before 10:20 for the 40s Ma beat to begin within S022.",
+          "resolution": "Begin L028 at 9:35 (5s before S021 start at 9:40), using S020 visual silence period. L028(22s)+gap(1s)+L029(18s)+gap(2s)+L030(2s) = 45s total, completing at 9:35+45=10:20 exactly.",
+          "action_required": true,
+          "preferred_l028_start": "9:35"
+        }
+      ],
+      "ma_beat": {
+        "line_id": "L031",
+        "timecode_start": "10:20",
+        "timecode_end": "11:00",
+        "duration_seconds": 40,
+        "scene_id": "S022",
+        "content": "SILENCE — no narration. Music and ocean waves only.",
+        "fix_ref": "FIX-H3"
+      }
+    },
+    {
+      "section_id": "OUTRO",
+      "timecode_start": "11:00",
+      "timecode_end": "12:00",
+      "duration_seconds": 60,
+      "narration_speaking_seconds": 33,
+      "pause_gap_seconds": 6,
+      "narrated_content_seconds": 39,
+      "visual_silence_seconds": 21,
+      "lines": ["L032", "L033", "L034", "L035"]
+    }
+  ],
+
+  "line_timecodes": [
+    { "line_id": "L001", "type": "narration", "section": "HOOK", "start": "0:00", "end": "0:05", "duration_s": 5, "pacing": "very_slow" },
+    { "line_id": "L002", "type": "narration", "section": "HOOK", "start": "0:06", "end": "0:16", "duration_s": 10, "pacing": "very_slow" },
+    { "line_id": "L003", "type": "narration", "section": "HOOK", "start": "0:18", "end": "0:24", "duration_s": 6, "pacing": "very_slow" },
+    { "line_id": "L004", "type": "pause", "section": "HOOK", "start": "0:26", "end": "0:28", "duration_s": 2 },
+    { "line_id": "L005", "type": "narration", "section": "ACT_I", "start": "1:01", "end": "1:21", "duration_s": 20, "pacing": "normal" },
+    { "line_id": "L006", "type": "narration", "section": "ACT_I", "start": "1:41", "end": "1:56", "duration_s": 15, "pacing": "slow" },
+    { "line_id": "L007", "type": "narration", "section": "ACT_I", "start": "2:11", "end": "2:25", "duration_s": 14, "pacing": "slow" },
+    { "line_id": "L008", "type": "narration", "section": "ACT_I", "start": "2:37", "end": "2:59", "duration_s": 22, "pacing": "normal", "note": "Begins in S007 visual, spans cut to S008. Preferred start: 2:37." },
+    { "line_id": "L009", "type": "narration", "section": "ACT_I", "start": "3:01", "end": "3:29", "duration_s": 28, "pacing": "normal" },
+    { "line_id": "L010", "type": "pause", "section": "ACT_I", "start": "3:31", "end": "3:33", "duration_s": 2 },
+    { "line_id": "L011", "type": "narration", "section": "ACT_II", "start": "3:34", "end": "3:52", "duration_s": 18, "pacing": "normal", "note": "Begins in S009, ends in S010" },
+    { "line_id": "L012", "type": "narration", "section": "ACT_II", "start": "3:53", "end": "4:15", "duration_s": 22, "pacing": "normal", "note": "Begins in S010, ends in S011a" },
+    { "line_id": "L013", "type": "narration", "section": "ACT_II", "start": "4:17", "end": "4:27", "duration_s": 10, "pacing": "slow" },
+    { "line_id": "L014", "type": "narration", "section": "ACT_II", "start": "4:29", "end": "4:45", "duration_s": 16, "pacing": "slow", "note": "Begins in S011a, ends in S011b" },
+    { "line_id": "L015", "type": "narration", "section": "ACT_II", "start": "4:46", "end": "5:04", "duration_s": 18, "pacing": "normal", "note": "Begins in S011b, ends in S012" },
+    { "line_id": "L016", "type": "narration", "section": "ACT_II", "start": "5:05", "end": "5:23", "duration_s": 18, "pacing": "normal" },
+    { "line_id": "L017", "type": "narration", "section": "ACT_II", "start": "5:31", "end": "5:53", "duration_s": 22, "pacing": "slow" },
+    { "line_id": "L018", "type": "narration", "section": "ACT_III", "start": "6:02", "end": "6:09", "duration_s": 7, "pacing": "slow" },
+    { "line_id": "L019", "type": "narration", "section": "ACT_III", "start": "6:31", "end": "6:46", "duration_s": 15, "pacing": "slow" },
+    { "line_id": "L020", "type": "narration", "section": "ACT_III", "start": "7:02", "end": "7:10", "duration_s": 8, "pacing": "slow" },
+    { "line_id": "L021", "type": "narration", "section": "ACT_III", "start": "7:32", "end": "7:48", "duration_s": 16, "pacing": "very_slow" },
+    { "line_id": "L022", "type": "pause", "section": "ACT_III", "start": "7:50", "end": "7:52", "duration_s": 2 },
+    { "line_id": "L023", "type": "narration", "section": "ACT_III", "start": "8:01", "end": "8:19", "duration_s": 18, "pacing": "slow" },
+    { "line_id": "L024", "type": "narration", "section": "ACT_III", "start": "8:31", "end": "8:47", "duration_s": 16, "pacing": "slow" },
+    { "line_id": "L025", "type": "narration", "section": "ACT_III", "start": "8:48", "end": "9:00", "duration_s": 12, "pacing": "very_slow" },
+    { "line_id": "L026", "type": "pause", "section": "ACT_III", "start": "9:02", "end": "9:04", "duration_s": 2, "note": "Bleeds 4s into S020 — acceptable" },
+    { "line_id": "L027", "type": "narration", "section": "ACT_IV", "start": "9:05", "end": "9:19", "duration_s": 14, "pacing": "slow" },
+    { "line_id": "L028", "type": "narration", "section": "ACT_IV", "start": "9:35", "end": "9:57", "duration_s": 22, "pacing": "normal", "note": "PREFERRED START: 9:35 (during S020 visual silence) to ensure Ma beat begins at 10:20" },
+    { "line_id": "L029", "type": "narration", "section": "ACT_IV", "start": "9:58", "end": "10:16", "duration_s": 18, "pacing": "slow" },
+    { "line_id": "L030", "type": "pause", "section": "ACT_IV", "start": "10:18", "end": "10:20", "duration_s": 2 },
+    { "line_id": "L031", "type": "silence", "section": "ACT_IV", "start": "10:20", "end": "11:00", "duration_s": 40, "note": "Ma beat — 40s silence. Music + ocean waves only. Absolutely no narration." },
+    { "line_id": "L032", "type": "narration", "section": "OUTRO", "start": "11:01", "end": "11:13", "duration_s": 12, "pacing": "normal" },
+    { "line_id": "L033", "type": "narration", "section": "OUTRO", "start": "11:32", "end": "11:44", "duration_s": 12, "pacing": "slow" },
+    { "line_id": "L034", "type": "narration", "section": "OUTRO", "start": "11:47", "end": "11:56", "duration_s": 9, "pacing": "slow" },
+    { "line_id": "L035", "type": "pause", "section": "OUTRO", "start": "11:58", "end": "12:00", "duration_s": 2, "note": "Final pause — video fade to black" }
+  ],
+
+  "timing_flags": [
+    {
+      "flag_id": "TF-001",
+      "severity": "WARNING",
+      "category": "SCENE_OVERFLOW",
+      "line_id": "L008",
+      "scene_id": "S008",
+      "description": "S008 window is 15s (2:45-3:00). L008 narration is 22s. Structural overflow of 7 seconds.",
+      "resolution": "Begin L008 at 2:37 within S007 visual. Narration spans scene cut. Completes at 2:59.",
+      "status": "flagged_pending_director_confirmation"
+    },
+    {
+      "flag_id": "TF-002",
+      "severity": "WARNING",
+      "category": "MA_BEAT_INTEGRITY",
+      "line_id": "L028",
+      "description": "L028+L029+L030 must complete by 10:20 for full 40s Ma beat within S022.",
+      "resolution": "Begin L028 at 9:35 (5s before S021 start). Uses final 5s of S020 visual silence.",
+      "preferred_start": "9:35",
+      "status": "flagged_pending_director_confirmation"
+    },
+    {
+      "flag_id": "TF-003",
+      "severity": "INFO",
+      "category": "CROSS_SCENE_BLEED",
+      "lines": ["L011", "L012", "L014", "L015"],
+      "description": "Four ACT_II lines span scene cuts. Normal in documentary production — audio is continuous across visual cuts.",
+      "resolution": "No action required. Editor places audio independently of scene cuts.",
+      "status": "noted_no_action"
+    }
+  ],
+
+  "readthrough_checklist": {
+    "img009_rename_complete": true,
+    "img009_rename_confirmed_date": "2026-06-27",
+    "director_live_readthrough_complete": false,
+    "director_readthrough_timing_confirmed": false,
+    "l008_start_marked_at_237": false,
+    "l028_start_marked_at_935": false,
+    "ma_beat_40s_confirmed_in_daw": false,
+    "l013_l014_fix_m1_tone_reviewed": false,
+    "fix_m3_gate_cleared": false,
+    "fix_m3_gate_cleared_by": null,
+    "fix_m3_gate_cleared_date": null
+  },
+
+  "updated_at": "2026-06-27"
+}

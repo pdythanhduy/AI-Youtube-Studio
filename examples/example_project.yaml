@@ -1,0 +1,101 @@
+# Example Project — Hashima Island Mystery
+# Language: Japanese | Duration: 12 min | Style: dark_documentary
+#
+# This file demonstrates a complete project configuration.
+# To run: paste agents/director_ai_v1.md into Claude Code, then provide:
+#   TOPIC: The Mystery of Hashima Island
+#   LANGUAGE: ja
+#   DURATION_MINUTES: 12
+#   STYLE: dark_documentary
+
+project:
+  topic: "The Mystery of Hashima Island"
+  language: "ja"
+  video_length_minutes: 12
+  style: "dark_documentary"
+
+  # Hashima is a Japanese location — override the default internet_mystery niche
+  # to load japan_template.md instead of mystery_template.md
+  niche: "japanese_mystery"
+
+  # Optional: your channel name (appears in SEO description only — never narration)
+  channel_name: "Mystery Archive JP"
+
+  # Additional Director AI instructions for this specific topic
+  notes: |
+    This video covers Hashima Island (端島), also known as Gunkanjima (軍艦島).
+    Key historical facts:
+    - Abandoned coal mining island off Nagasaki Prefecture
+    - Operated by Mitsubishi from 1890 to 1974
+    - Population peaked at 5,259 in 1959 (one of the densest places on Earth)
+    - Abandoned when coal demand collapsed; residents evacuated April 20, 1974
+    - UNESCO World Heritage Site since 2015 (part of Meiji Industrial Revolution sites)
+    - Controversy: Korean and Chinese forced labor during WWII
+    - Appeared as villain's lair in James Bond film Skyfall (2012)
+    The video should acknowledge the forced labor history with sensitivity.
+    Use Imperial calendar (Showa/Heisei) alongside Western dates where appropriate.
+    Apply the Ma (間) principle — allow moments of silence and stillness.
+
+
+pipeline:
+  start_stage: 0
+  stop_after_stage: 12
+  max_retries_per_stage: 1
+  halt_on_advisory: false
+
+
+quality:
+  # Japanese multiplier applies: 12 × 130 × 0.77 = 1,201 target words
+  word_count_tolerance: 0.10
+  min_verified_facts: 5
+  min_sources: 4        # Slightly higher because forced labor history needs multiple sources
+  require_source_pass: false
+
+
+models:
+  primary: "claude-opus-4-8"
+  secondary: "claude-sonnet-4-6"
+  stage_overrides: {}
+
+
+images:
+  # Hashima has extensive real photography — keep AI escalation low
+  max_ai_escalation_rate: 0.30
+  minimum_license: "cc_by"
+  allow_fair_use: true
+
+
+voice:
+  # Japanese ElevenLabs voice — fill in with your actual voice ID
+  elevenlabs_voice_id: ""
+  # Japan template overrides pacing: opening_pace = very_slow, silence_budget = 5 × [PAUSE:2s]
+
+
+seo:
+  tag_count_min: 15
+  tag_count_max: 28
+  # English tags addendum is required for Japanese-language videos
+  extra_tags:
+    - "Hashima Island"
+    - "Gunkanjima"
+    - "abandoned island Japan"
+    - "Nagasaki mystery"
+    - "軍艦島"
+
+
+export:
+  bundle_export_assets: true
+  include_run_log: true
+  generate_editor_handoff: true
+
+
+analytics:
+  write_to_memory: true
+  project_tags:
+    - "japanese_mystery"
+    - "abandoned_location"
+    - "historical"
+    - "nagasaki"
+
+
+schema_version: "1.0"

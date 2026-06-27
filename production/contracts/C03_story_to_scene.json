@@ -1,0 +1,249 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Contract C03: Story → Scene List",
+  "contract_id": "C03",
+  "version": "1.0",
+  "description": "Governs the transition from Stages 3–5 (Story + Story Bible) to Stage 6 (Scene List). Defines how story sections and script lines are translated into ordered, timecoded scenes. Enforces motion direction requirement, Ma beat rules, and duration balance.",
+  "upstream_stages": [
+    {
+      "stage_number": 4,
+      "stage_id": "script",
+      "produces_schema": "https://ai-youtube-studio/production/schemas/story.json"
+    },
+    {
+      "stage_number": 5,
+      "stage_id": "story_bible",
+      "produces_schema": "https://ai-youtube-studio/production/schemas/story_bible.json"
+    }
+  ],
+  "downstream_stage": {
+    "stage_number": 6,
+    "stage_id": "scene_list",
+    "produces_schema": "https://ai-youtube-studio/production/schemas/scene.json"
+  },
+  "input": {
+    "description": "Fields from story.json and story_bible.json required before scene_list production begins.",
+    "required_from_story": [
+      {
+        "field": "script.lines",
+        "purpose": "Scene list is built from narration lines. Each narration line generates one or more scenes."
+      },
+      {
+        "field": "script.template_compliance.status",
+        "required_value": "PASS",
+        "purpose": "Scene list may not be started until template compliance is confirmed."
+      },
+      {
+        "field": "outline.sections",
+        "purpose": "Section boundaries define scene group boundaries. Scene section_id must match an outline section."
+      }
+    ],
+    "required_from_project": [
+      {
+        "field": "duration_minutes",
+        "purpose": "Used to set total_duration_seconds. Total scene duration must equal duration_minutes × 60 (±5 seconds)."
+      },
+      {
+        "field": "fps",
+        "purpose": "Frame rate must be specified before scene list. All timecodes must be valid at this FPS."
+      }
+    ],
+    "required_from_story_bible": [
+      {
+        "field": "canonical_names",
+        "purpose": "Scene visual_description must use story_bible canonical spellings for all named entities."
+      }
+    ],
+    "preconditions": [
+      "story.script.template_compliance.status === 'PASS'",
+      "story.script.word_count is within 5% of target_word_count",
+      "story_bible.canonical_names is populated"
+    ]
+  },
+  "output": {
+    "description": "What scene.json must contain when Stage 6 is complete.",
+    "required_fields": [
+      {
+        "field": "total_duration_seconds",
+        "validation": "Must equal project.duration_minutes × 60 (±5 seconds)",
+        "purpose": "Ensures scene list covers full video duration."
+      },
+      {
+        "field": "coverage_validated",
+        "required_value": true,
+        "purpose": "Explicit flag confirming sum of scene durations equals total_duration_seconds."
+      },
+      {
+        "field": "scenes",
+        "minimum_count": 10,
+        "purpose": "A 12-minute documentary must have at least 10 distinct scenes. (Practical: expect 20–30.)"
+      }
+    ],
+    "per_scene_constraints": [
+      {
+        "constraint": "motion_direction is required for all scenes with duration_seconds > 5",
+        "allowed_exception": "is_ma_beat = true → motion_direction = 'static'",
+        "reason": "Static shots >5s without Ma beat context = amateur production. Ken Burns or pan minimum."
+      },
+      {
+        "constraint": "is_ma_beat = true → narration_present must be false",
+        "reason": "Ma beat is pure silence. Narration breaks the contemplative function of the Ma moment."
+      },
+      {
+        "constraint": "is_ma_beat = true → motion_direction must be 'static'",
+        "reason": "Motion during Ma beat disrupts stillness."
+      },
+      {
+        "constraint": "timecode_start of scene[n+1] must equal timecode_end of scene[n]",
+        "reason": "No gaps in the timeline. Scene list must be continuous from 0:00 to end."
+      },
+      {
+        "constraint": "duration_seconds must equal timecode_end_seconds minus timecode_start_seconds",
+        "reason": "Computed field must be consistent."
+      },
+      {
+        "constraint": "section_id must match one of outline.sections[*].section_id",
+        "reason": "Cross-reference integrity. Scene grouping maps to story structure."
+      },
+      {
+        "constraint": "visual_description.text_en must not be empty",
+        "reason": "All scenes must have an English visual description for AI image generation and editor communication."
+      }
+    ],
+    "ma_beat_rules": {
+      "minimum_duration_seconds": 10,
+      "maximum_duration_seconds": 60,
+      "narration_present": false,
+      "motion_direction": "static",
+      "source_type_allowed": ["STOCK_LICENSED", "AI_GENERATE", "ARCHIVE_PUBLIC_DOMAIN"],
+      "notes": "Ma beat is a cultural requirement for the japan_template. Its timecode must be consistent across scene.json, voice.json, and story.json. Discrepancies are a HIGH review issue."
+    }
+  },
+  "validation": {
+    "gate": "Scene List Delivery Gate (end of Stage 6)",
+    "checks": [
+      {
+        "check_id": "C03-V01",
+        "description": "Sum of scene durations equals total_duration_seconds (±5 seconds)",
+        "severity": "FAIL",
+        "action_on_fail": "Identify gap or overlap. Adjust affected scenes."
+      },
+      {
+        "check_id": "C03-V02",
+        "description": "coverage_validated === true",
+        "severity": "FAIL",
+        "action_on_fail": "Recompute coverage. Set to true only after coverage passes."
+      },
+      {
+        "check_id": "C03-V03",
+        "description": "All scenes with duration_seconds > 5 have motion_direction set (and not 'static' unless Ma beat)",
+        "severity": "HIGH",
+        "action_on_fail": "Flag scenes. Add motion direction for each. Review FIX-H2 applies."
+      },
+      {
+        "check_id": "C03-V04",
+        "description": "is_ma_beat = true → narration_present = false",
+        "severity": "FAIL",
+        "action_on_fail": "Remove narration from Ma beat scene or remove Ma beat flag."
+      },
+      {
+        "check_id": "C03-V05",
+        "description": "Exactly one Ma beat scene (for japan_template niche)",
+        "severity": "WARNING",
+        "action_on_fail": "Confirm Ma beat count with director. Zero = template violation. Two = possibly redundant."
+      },
+      {
+        "check_id": "C03-V06",
+        "description": "No timecode gaps or overlaps between consecutive scenes",
+        "severity": "FAIL",
+        "action_on_fail": "Identify gap/overlap. Adjust timecode_end of preceding scene."
+      },
+      {
+        "check_id": "C03-V07",
+        "description": "Ma beat duration is between 10 and 60 seconds",
+        "severity": "HIGH",
+        "action_on_fail": "Adjust Ma beat duration. Voice.json and story.json must be updated to match."
+      },
+      {
+        "check_id": "C03-V08",
+        "description": "Ma beat timecode matches voice.json [NO NARRATION] section",
+        "severity": "HIGH",
+        "action_on_fail": "Synchronize Ma beat timecode across scene.json, voice.json, and story.md."
+      }
+    ]
+  },
+  "failure_conditions": [
+    {
+      "condition": "Total scene duration does not match project duration",
+      "severity": "FAIL",
+      "pipeline_action": "revision_required",
+      "human_action": "Rebalance scene durations. Common cause: intro/outro too short."
+    },
+    {
+      "condition": "Missing motion directions on scenes >5s",
+      "severity": "HIGH",
+      "pipeline_action": "revision_required",
+      "human_action": "Apply FIX-H2: add motion_direction column. Assign direction to each scene >5s."
+    },
+    {
+      "condition": "Ma beat has narration",
+      "severity": "FAIL",
+      "pipeline_action": "revision_required",
+      "human_action": "Remove narration from Ma beat scene. Move narration lines to adjacent scene."
+    },
+    {
+      "condition": "Ma beat duration inconsistent across documents",
+      "severity": "HIGH",
+      "pipeline_action": "revision_required",
+      "human_action": "Apply FIX-H3: standardize Ma beat duration across scene.json, voice.json, story.json."
+    },
+    {
+      "condition": "Scene spans two story sections without being split",
+      "severity": "MEDIUM",
+      "pipeline_action": "flag_for_review",
+      "human_action": "Split scene at section boundary. Review FIX-H2a applies."
+    }
+  ],
+  "recovery_strategy": [
+    {
+      "scenario": "Duration gap at end of scene list",
+      "strategy": "Add the gap seconds to the final scene (OUTRO) duration. If OUTRO is already full, split OUTRO into OUTRO + END_CARD scene."
+    },
+    {
+      "scenario": "Duration total exceeds target",
+      "strategy": "Identify scenes where estimated duration is padded. Trim 1–3 seconds from lower-priority B-roll scenes. Do not trim Ma beat or hook scene."
+    },
+    {
+      "scenario": "Missing motion direction",
+      "strategy": "For each static scene >5s: assign default motion based on content type. Landscape/exterior → slow_pan_right or slow_pan_left. Architecture detail → slow_zoom_in. Ruin/decay → ken_burns. Title card → static (exception applies)."
+    },
+    {
+      "scenario": "Ma beat timecode mismatch across documents",
+      "strategy": "Treat scene.json as authoritative for Ma beat duration. Update voice.json [NO NARRATION] duration. Update story.md section timing note. Do not change Ma beat scene ID."
+    }
+  ],
+  "example": {
+    "valid_scene": {
+      "scene_id": "S022",
+      "timecode_start": "8:30",
+      "timecode_end": "9:10",
+      "duration_seconds": 40,
+      "section_id": "MA_BEAT",
+      "shot_type": "static_wide",
+      "source_type": "AI_GENERATE",
+      "motion_direction": "static",
+      "narration_present": false,
+      "is_ma_beat": true,
+      "visual_description": {
+        "text_en": "Empty concrete corridors of Hashima apartment block. Amber late-afternoon light. Dust particles visible."
+      }
+    },
+    "invalid_scene": {
+      "scene_id": "S010",
+      "duration_seconds": 15,
+      "motion_direction": null,
+      "narration_present": true,
+      "violation": "C03-V03: duration > 5s but motion_direction is null. Must be set."
+    }
+  }
+}

@@ -1,0 +1,22 @@
+Source: https://commons.wikimedia.org/wiki/File:Cku-74-20_c45_6_hashima.jpg
+Download URL: https://upload.wikimedia.org/wikipedia/commons/c/cc/Cku-74-20_c45_6_hashima.jpg
+File (original): S024_IMG020_Cku-74-20_c45_6_hashima_original.jpg
+File (processed): ../processed/S024_IMG020_Cku-74-20_c45_6_hashima_16x9.jpg
+License: National Land Image Information (Color Aerial Photographs)
+License URL: https://nlftp.mlit.go.jp/ksj/other/agreement.html
+Attribution (VERBATIM — do NOT paraphrase — required in video description):
+  Aerial photograph of Hashima Island (1974)
+  Source: National Land Image Information (Color Aerial Photographs)
+  Ministry of Land, Infrastructure, Transport and Tourism of Japan
+Photographer/Source: Geospatial Information Authority of Japan (国土地理院)
+Date taken: 1974
+Downloaded: 2026-06-27
+Original dimensions: 1900 x 2100 (portrait)
+Processed dimensions: 1900 x 1069 (16:9 center crop, y-offset=516)
+Original file size: 1790.6 KB
+Processed file size: 422.9 KB
+Commercial use: YES
+Modification allowed: YES
+ShareAlike required: NO
+Used in scenes: S024 (final shot — processed 16:9 version) / S007 companion ACT III historical insert (original also usable)
+Note: Japanese government public data, explicitly cleared for commercial use. Attribution string is legally required and must not be shortened or paraphrased.

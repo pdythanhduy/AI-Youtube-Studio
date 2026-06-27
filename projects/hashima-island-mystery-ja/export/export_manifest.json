@@ -1,0 +1,40 @@
+{
+  "project_id": "hashima-island-mystery-ja",
+  "schema_version": "1.0",
+  "status": "complete",
+  "pipeline_stage": "stage_12",
+  "created_at": "2026-06-27T00:00:00Z",
+  "updated_at": "2026-06-27T12:00:00Z",
+  "qa_result": "PASS",
+  "stages_passed": 13,
+  "stages_failed": 0,
+  "warnings": 1,
+  "assets": {
+    "input_json":         { "file": "input/input.json",               "status": "complete",   "stage_produced": 0 },
+    "project_yaml":       { "file": "input/project.yaml",             "status": "complete",   "stage_produced": 0 },
+    "research":           { "file": "research/research.md",           "status": "complete",   "stage_produced": 1, "word_count": 1050, "sources": 7 },
+    "source_report":      { "file": "research/source_report.md",      "status": "complete",   "stage_produced": 2, "verdict": "NEEDS_REVISION", "flag_count": 3, "fail_count": 0 },
+    "research_verified":  { "file": "research/research_verified.md",  "status": "complete",   "stage_produced": 2, "verified_facts": 12 },
+    "story_outline":      { "file": "script/story_outline.md",        "status": "complete",   "stage_produced": 3, "sections": 6, "japan_template_pass": true },
+    "script":             { "file": "script/script.md",               "status": "complete",   "stage_produced": 4, "word_count": 1201, "target_words": 1201, "pauses": 5 },
+    "story_bible":        { "file": "script/story_bible.md",          "status": "complete",   "stage_produced": 5, "canonical_names": 8 },
+    "scene_list":         { "file": "visuals/scene_list.csv",         "status": "complete",   "stage_produced": 6, "scene_count": 24 },
+    "image_plan":         { "file": "visuals/image_plan.csv",         "status": "complete",   "stage_produced": 7, "image_count": 20, "ai_generate_count": 17, "motion_graphics_count": 3 },
+    "ai_image_prompts":   { "file": "visuals/ai_image_prompts.md",    "status": "complete",   "stage_produced": 8, "prompt_count": 18 },
+    "voice_script":       { "file": "voice/voice_script.txt",         "status": "complete",   "stage_produced": 9 },
+    "voice_direction":    { "file": "voice/voice_direction.md",       "status": "complete",   "stage_produced": 9 },
+    "seo":                { "file": "seo/youtube_seo.md",             "status": "complete",   "stage_produced": 10, "title_options": 3, "tags": 29 },
+    "qa_report":          { "file": "logs/qa_report.md",              "status": "complete",   "stage_produced": 11, "checks_passed": 20, "checks_failed": 0 },
+    "director_run_log":   { "file": "logs/director_run_log.md",       "status": "complete",   "stage_produced": 0 },
+    "export_manifest":    { "file": "export/export_manifest.json",    "status": "complete",   "stage_produced": 12 },
+    "project_report":     { "file": "export/project_report.md",       "status": "complete",   "stage_produced": 12 }
+  },
+  "warnings_log": [
+    {
+      "code": "ERR_WARN_001",
+      "stage": 2,
+      "message": "3 FLAG items in source_report. Language adjustments applied to research_verified.md and script.",
+      "resolved": true
+    }
+  ]
+}

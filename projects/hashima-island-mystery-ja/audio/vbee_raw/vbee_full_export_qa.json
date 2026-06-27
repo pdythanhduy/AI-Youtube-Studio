@@ -1,0 +1,243 @@
+{
+  "schema_version": "1.0",
+  "project_id": "hashima-island-mystery-ja",
+  "qa_type": "vbee_full_export_qa",
+  "generated_at": "2026-06-28T00:00:00Z",
+  "stage": 37,
+
+  "summary": {
+    "files_expected": 28,
+    "files_found": 28,
+    "files_missing": 0,
+    "total_actual_duration_sec": 345.12,
+    "total_planned_duration_sec": 423,
+    "duration_delta_sec": -77.88,
+    "speed_note": "All segments exported at speed_rate=1 (VBEE_INCLUDE_SPEED=false). Duration shorter than planned — content complete, pacing faster than intended.",
+    "status_ok": 13,
+    "status_needs_timeline_adjustment": 12,
+    "status_too_short": 3,
+    "status_needs_reexport": 0,
+    "critical_timing_pass": true,
+    "ma_beat_integrity": "INTACT",
+    "human_listening_required": ["L001", "L003", "L008", "L013", "L014", "L028"],
+    "sensitive_content_review": ["L013", "L014", "L015", "L016"],
+    "timeline_assembly_readiness": "CONDITIONAL_PASS"
+  },
+
+  "critical_timing": {
+    "TF001_L008": {
+      "flag": "TF-001",
+      "line_id": "L008",
+      "preferred_start": "2:37",
+      "target_sec": 22,
+      "actual_sec": 22.03,
+      "expected_end": "2:59",
+      "result": "PASS",
+      "note": "L008 spans S007/S008 visual cut. Duration matches target. Place at 2:37."
+    },
+    "TF002_ma_beat_chain": {
+      "flag": "TF-002",
+      "l028_start": "9:35",
+      "l028_actual_sec": 20.42,
+      "l028_ends_at": "9:55.42",
+      "l029_starts_at": "9:56.42",
+      "l029_actual_sec": 13.73,
+      "l029_ends_at": "10:10.15",
+      "l030_pause_sec": 2,
+      "narration_complete_at": "10:12.15",
+      "ma_beat_starts_at": "10:20",
+      "buffer_sec": 7.85,
+      "ma_beat_duration_sec": 40,
+      "ma_beat_ends_at": "11:00",
+      "result": "PASS",
+      "note": "Narration completes at ~10:12, leaving 7.85s additional visual silence in S021 before Ma beat. Ma beat 10:20-11:00 intact."
+    },
+    "ma_beat_integrity": {
+      "timecode_start": "10:20",
+      "timecode_end": "11:00",
+      "duration_sec": 40,
+      "scene_id": "S022",
+      "result": "INTACT",
+      "fix_ref": "FIX-H3"
+    }
+  },
+
+  "segments": [
+    {
+      "line_id": "L001", "section": "HOOK", "filename": "hashima_L001_hook_01.mp3",
+      "actual_sec": 4.42, "target_sec": 5, "ratio": 0.884, "delivery_mode": "very_slow",
+      "sensitive_content": false, "status": "OK",
+      "human_listening_required": true, "human_listening_reason": "HOOK opening line — very_slow delivery, emotional weight on かつて"
+    },
+    {
+      "line_id": "L002", "section": "HOOK", "filename": "hashima_L002_hook_02.mp3",
+      "actual_sec": 8.11, "target_sec": 10, "ratio": 0.811, "delivery_mode": "very_slow",
+      "sensitive_content": false, "status": "OK",
+      "human_listening_required": false
+    },
+    {
+      "line_id": "L003", "section": "HOOK", "filename": "hashima_L003_hook_03.mp3",
+      "actual_sec": 2.66, "target_sec": 6, "ratio": 0.443, "delivery_mode": "very_slow",
+      "sensitive_content": false, "status": "TOO_SHORT",
+      "human_listening_required": true, "human_listening_reason": "Dramatic pivot line — 2.66s may be too brief for そして、ある日——すべてが消えました。 at very_slow"
+    },
+    {
+      "line_id": "L005", "section": "ACT_I", "filename": "hashima_L005_act1_01.mp3",
+      "actual_sec": 16.44, "target_sec": 20, "ratio": 0.822, "delivery_mode": "normal",
+      "sensitive_content": false, "status": "OK",
+      "human_listening_required": false
+    },
+    {
+      "line_id": "L006", "section": "ACT_I", "filename": "hashima_L006_act1_02.mp3",
+      "actual_sec": 15.10, "target_sec": 15, "ratio": 1.007, "delivery_mode": "slow",
+      "sensitive_content": false, "status": "OK",
+      "human_listening_required": false
+    },
+    {
+      "line_id": "L007", "section": "ACT_I", "filename": "hashima_L007_act1_03.mp3",
+      "actual_sec": 12.77, "target_sec": 14, "ratio": 0.912, "delivery_mode": "slow",
+      "sensitive_content": false, "status": "OK",
+      "human_listening_required": false
+    },
+    {
+      "line_id": "L008", "section": "ACT_I", "filename": "hashima_L008_act1_04.mp3",
+      "actual_sec": 22.03, "target_sec": 22, "ratio": 1.001, "delivery_mode": "normal",
+      "sensitive_content": false, "status": "OK",
+      "human_listening_required": true, "human_listening_reason": "Critical timing line spanning S007/S008 cut. Place at 2:37 in timeline.",
+      "timeline_critical": true, "preferred_start": "2:37"
+    },
+    {
+      "line_id": "L009", "section": "ACT_I", "filename": "hashima_L009_act1_05.mp3",
+      "actual_sec": 29.62, "target_sec": 28, "ratio": 1.058, "delivery_mode": "normal",
+      "sensitive_content": false, "status": "OK",
+      "human_listening_required": false
+    },
+    {
+      "line_id": "L011", "section": "ACT_II", "filename": "hashima_L011_act2_01.mp3",
+      "actual_sec": 17.16, "target_sec": 18, "ratio": 0.953, "delivery_mode": "normal",
+      "sensitive_content": false, "status": "OK",
+      "human_listening_required": false
+    },
+    {
+      "line_id": "L012", "section": "ACT_II", "filename": "hashima_L012_act2_02.mp3",
+      "actual_sec": 22.85, "target_sec": 22, "ratio": 1.039, "delivery_mode": "normal",
+      "sensitive_content": false, "status": "OK",
+      "human_listening_required": false
+    },
+    {
+      "line_id": "L013", "section": "ACT_II", "filename": "hashima_L013_act2_03.mp3",
+      "actual_sec": 6.84, "target_sec": 10, "ratio": 0.684, "delivery_mode": "slow",
+      "sensitive_content": true, "status": "NEEDS_TIMELINE_ADJUSTMENT",
+      "human_listening_required": true, "human_listening_reason": "SENSITIVE: forced labor topic — verify factual, respectful tone",
+      "sensitive_content_note": "Mandatory tone review before YouTube publication. Factual delivery only, no emotional amplification."
+    },
+    {
+      "line_id": "L014", "section": "ACT_II", "filename": "hashima_L014_act2_04.mp3",
+      "actual_sec": 14.35, "target_sec": 16, "ratio": 0.897, "delivery_mode": "slow",
+      "sensitive_content": true, "status": "OK",
+      "human_listening_required": true, "human_listening_reason": "SENSITIVE: forced labor conditions — verify measured, historically accurate tone",
+      "sensitive_content_note": "Mandatory tone review. Verify no bias or sensationalism."
+    },
+    {
+      "line_id": "L015", "section": "ACT_II", "filename": "hashima_L015_act2_05.mp3",
+      "actual_sec": 16.46, "target_sec": 18, "ratio": 0.914, "delivery_mode": "normal",
+      "sensitive_content": true, "status": "OK",
+      "human_listening_required": false,
+      "sensitive_content_note": "Consequence framing — review for nationalistic bias before publication."
+    },
+    {
+      "line_id": "L016", "section": "ACT_II", "filename": "hashima_L016_act2_06.mp3",
+      "actual_sec": 13.03, "target_sec": 18, "ratio": 0.724, "delivery_mode": "normal",
+      "sensitive_content": true, "status": "NEEDS_TIMELINE_ADJUSTMENT",
+      "human_listening_required": false,
+      "sensitive_content_note": "Disputed historical framing flagged in voice.json. Verify wording accuracy."
+    },
+    {
+      "line_id": "L017", "section": "ACT_II", "filename": "hashima_L017_act2_07.mp3",
+      "actual_sec": 17.16, "target_sec": 22, "ratio": 0.780, "delivery_mode": "slow",
+      "sensitive_content": false, "status": "NEEDS_TIMELINE_ADJUSTMENT",
+      "human_listening_required": false
+    },
+    {
+      "line_id": "L018", "section": "ACT_III", "filename": "hashima_L018_act3_01.mp3",
+      "actual_sec": 5.59, "target_sec": 7, "ratio": 0.799, "delivery_mode": "slow",
+      "sensitive_content": false, "status": "OK",
+      "human_listening_required": false
+    },
+    {
+      "line_id": "L019", "section": "ACT_III", "filename": "hashima_L019_act3_02.mp3",
+      "actual_sec": 10.39, "target_sec": 15, "ratio": 0.693, "delivery_mode": "slow",
+      "sensitive_content": false, "status": "NEEDS_TIMELINE_ADJUSTMENT",
+      "human_listening_required": false
+    },
+    {
+      "line_id": "L020", "section": "ACT_III", "filename": "hashima_L020_act3_03.mp3",
+      "actual_sec": 4.46, "target_sec": 8, "ratio": 0.558, "delivery_mode": "slow",
+      "sensitive_content": false, "status": "TOO_SHORT",
+      "human_listening_required": false,
+      "note": "ACT_III scene has 30s window. Even at 4.46s, fits within visual silence. Director listen to confirm content completeness."
+    },
+    {
+      "line_id": "L021", "section": "ACT_III", "filename": "hashima_L021_act3_04.mp3",
+      "actual_sec": 10.08, "target_sec": 16, "ratio": 0.630, "delivery_mode": "very_slow",
+      "sensitive_content": false, "status": "NEEDS_TIMELINE_ADJUSTMENT",
+      "human_listening_required": false
+    },
+    {
+      "line_id": "L023", "section": "ACT_III", "filename": "hashima_L023_act3_05.mp3",
+      "actual_sec": 12.43, "target_sec": 18, "ratio": 0.690, "delivery_mode": "slow",
+      "sensitive_content": false, "status": "NEEDS_TIMELINE_ADJUSTMENT",
+      "human_listening_required": false
+    },
+    {
+      "line_id": "L024", "section": "ACT_III", "filename": "hashima_L024_act3_06.mp3",
+      "actual_sec": 11.30, "target_sec": 16, "ratio": 0.706, "delivery_mode": "slow",
+      "sensitive_content": false, "status": "NEEDS_TIMELINE_ADJUSTMENT",
+      "human_listening_required": false
+    },
+    {
+      "line_id": "L025", "section": "ACT_III", "filename": "hashima_L025_act3_07.mp3",
+      "actual_sec": 7.82, "target_sec": 12, "ratio": 0.652, "delivery_mode": "very_slow",
+      "sensitive_content": false, "status": "NEEDS_TIMELINE_ADJUSTMENT",
+      "human_listening_required": false
+    },
+    {
+      "line_id": "L027", "section": "ACT_IV", "filename": "hashima_L027_act4_01.mp3",
+      "actual_sec": 9.86, "target_sec": 14, "ratio": 0.704, "delivery_mode": "slow",
+      "sensitive_content": false, "status": "NEEDS_TIMELINE_ADJUSTMENT",
+      "human_listening_required": false
+    },
+    {
+      "line_id": "L028", "section": "ACT_IV", "filename": "hashima_L028_act4_02.mp3",
+      "actual_sec": 20.42, "target_sec": 22, "ratio": 0.928, "delivery_mode": "normal",
+      "sensitive_content": false, "status": "OK",
+      "human_listening_required": true, "human_listening_reason": "Critical pre-Ma-beat line. Must be placed at 9:35 in timeline.",
+      "timeline_critical": true, "preferred_start": "9:35"
+    },
+    {
+      "line_id": "L029", "section": "ACT_IV", "filename": "hashima_L029_act4_03.mp3",
+      "actual_sec": 13.73, "target_sec": 18, "ratio": 0.763, "delivery_mode": "slow",
+      "sensitive_content": false, "status": "NEEDS_TIMELINE_ADJUSTMENT",
+      "human_listening_required": false
+    },
+    {
+      "line_id": "L032", "section": "OUTRO", "filename": "hashima_L032_outro_01.mp3",
+      "actual_sec": 8.18, "target_sec": 12, "ratio": 0.682, "delivery_mode": "normal",
+      "sensitive_content": false, "status": "NEEDS_TIMELINE_ADJUSTMENT",
+      "human_listening_required": false
+    },
+    {
+      "line_id": "L033", "section": "OUTRO", "filename": "hashima_L033_outro_02.mp3",
+      "actual_sec": 7.39, "target_sec": 12, "ratio": 0.616, "delivery_mode": "slow",
+      "sensitive_content": false, "status": "NEEDS_TIMELINE_ADJUSTMENT",
+      "human_listening_required": false
+    },
+    {
+      "line_id": "L034", "section": "OUTRO", "filename": "hashima_L034_outro_03.mp3",
+      "actual_sec": 4.39, "target_sec": 9, "ratio": 0.488, "delivery_mode": "slow",
+      "sensitive_content": false, "status": "TOO_SHORT",
+      "human_listening_required": false,
+      "note": "Final narration line. 4.39s vs 9s target. Director confirm content is complete before deciding on re-export."
+    }
+  ]
+}

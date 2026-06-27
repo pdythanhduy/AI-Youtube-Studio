@@ -1,0 +1,166 @@
+{
+  "profile_version": "0.1-draft",
+  "interview_completeness_percent": 35,
+  "data_confidence": "LOW — 6 of ~20 topic areas covered",
+  "last_updated": "2026-06-27",
+
+  "emotional_goals": {
+    "primary_emotion_on_exit": "curiosity",
+    "secondary_emotion_on_exit": "satisfaction_of_learning",
+    "explicitly_avoided_emotions": ["fear", "shock", "manipulation", "sadness_for_its_own_sake"],
+    "end_of_video_device": "one_unanswered_question_that_leads_to_next_video",
+    "trust_is_non_negotiable": true,
+    "priority_order": ["entertainment", "education", "tension"],
+    "confidence": "HIGH — stated directly by creator"
+  },
+
+  "storytelling_philosophy": {
+    "core_feeling_for_viewer": "I have never heard this story before",
+    "channel_goal": "viewer stays, trusts channel, returns for next video",
+    "shock_value": "rejected",
+    "sensationalism": "rejected",
+    "fact_integrity": "non_negotiable",
+    "respect_for_real_people_and_tragedy": "explicitly_required",
+    "confidence": "HIGH — stated directly by creator"
+  },
+
+  "style_influences": {
+    "primary_references": [
+      {
+        "creator": "Lemmino",
+        "what_to_take": ["deep structure", "visual explanations", "narrative satisfaction"],
+        "confidence": "HIGH"
+      },
+      {
+        "creator": "Johnny Harris",
+        "what_to_take": ["engaging pacing", "making complex topics accessible"],
+        "confidence": "HIGH"
+      },
+      {
+        "creator": "MagnatesMedia",
+        "what_to_take": ["documentary-style narration", "retention until the end"],
+        "confidence": "HIGH"
+      },
+      {
+        "creator": "Neo",
+        "what_to_take": ["clean visuals", "maps", "timelines", "motion graphics"],
+        "confidence": "HIGH"
+      },
+      {
+        "creator": "MrBallen",
+        "what_to_take": ["strong hooks", "suspense structure"],
+        "what_to_reject": ["horror tone", "excessive fear"],
+        "confidence": "HIGH"
+      }
+    ],
+    "synthesis_goal": "cinematic + trustworthy + highly engaging + fact-based + respectful",
+    "copy_any_single_creator": false,
+    "confidence": "HIGH — stated directly by creator"
+  },
+
+  "pacing": {
+    "overall_model": "hybrid",
+    "speed_reference": "closer to Johnny Harris than Lemmino",
+    "depth_reference": "Lemmino-level depth and structure",
+    "arc": {
+      "0_to_30s": {
+        "style": "fast",
+        "goal": "curiosity-driven hook",
+        "confidence": "HIGH"
+      },
+      "1_to_4_min": {
+        "style": "steady",
+        "goal": "context building",
+        "confidence": "HIGH"
+      },
+      "middle_section": {
+        "style": "slightly slower",
+        "goal": "let important facts sink in",
+        "confidence": "HIGH"
+      },
+      "final_2_min": {
+        "style": "build tension then release",
+        "goal": "memorable takeaway + one open question",
+        "confidence": "HIGH"
+      }
+    },
+    "guiding_principle": "never wastes viewer time, never feels rushed",
+    "confidence": "HIGH — stated directly by creator"
+  },
+
+  "narration": {
+    "persona": "calm intelligent investigator",
+    "explicitly_rejected": ["actor delivery", "news anchor delivery"],
+    "tonal_modes": {
+      "facts": "calm and objective",
+      "new_evidence": "curious",
+      "major_discoveries": "slightly more intense",
+      "real_people_or_tragedy": "respectful"
+    },
+    "sensationalism": "rejected",
+    "audience_relationship": "trust over entertainment",
+    "implied_backstory_of_narrator": "someone who spent months researching and is now sharing evidence",
+    "confidence": "HIGH — stated directly by creator",
+
+    "unknown": {
+      "gender_preference": null,
+      "language_strategy": null,
+      "tts_vs_human_voice": null,
+      "accent_preference": null
+    }
+  },
+
+  "music": {
+    "role": "emotional_guide_not_protagonist",
+    "audience_should_remember": "story, not soundtrack",
+    "arc": {
+      "hook": "subtle tension and curiosity",
+      "explanations": "minimal, almost invisible",
+      "discoveries": "slightly stronger to support emotion",
+      "emotional_or_historical_moments": "respectful and restrained",
+      "ending": "reflective — viewer thinks, not feels manipulated"
+    },
+    "never_used_to": "fill silence",
+    "silence_as_tool": true,
+    "confidence": "HIGH — stated directly by creator",
+
+    "unknown": {
+      "genre_preference": null,
+      "instrumental_vs_vocal": null,
+      "specific_artists_or_tracks": null,
+      "tempo_bpm_range": null
+    }
+  },
+
+  "silence": {
+    "is_storytelling_tool": true,
+    "is_empty_space": false,
+    "usage_by_context": {
+      "most_common": "curiosity — let audience think and process",
+      "uncertainty": "tension and anticipation",
+      "emotional_or_historical": "respect"
+    },
+    "every_silence_requires_clear_purpose": true,
+    "confidence": "HIGH — stated directly by creator"
+  },
+
+  "NOT_YET_INTERVIEWED": {
+    "visual_preferences": null,
+    "broll_philosophy": null,
+    "ai_image_tolerance": null,
+    "real_footage_philosophy": null,
+    "camera_language": null,
+    "editing_style": null,
+    "color_grade_preference": null,
+    "text_on_screen_philosophy": null,
+    "motion_graphics_detail_level": null,
+    "thumbnail_philosophy": null,
+    "audience_age": null,
+    "ideal_viewer_profile": null,
+    "audience_retention_philosophy": null,
+    "channel_language_strategy": null,
+    "publishing_frequency": null,
+    "topic_selection_criteria": null,
+    "sound_design_philosophy": null
+  }
+}

@@ -1,0 +1,223 @@
+{
+  "template_id": "documentary",
+  "schema_version": "1.0",
+  "template_type": "base",
+  "inherits_from": null,
+  "display_name": "Documentary",
+  "description": "Root template for cinematic non-fiction content. Defines the full baseline documentary production language. All documentary-derived genre templates inherit from this.",
+  "applicable_primary_genres": [],
+
+  "pacing": {
+    "hook_duration_seconds": 30,
+    "hook_style": "question",
+    "arc": {
+      "hook": {
+        "style": "engaging and purposeful",
+        "goal": "establish the central question and give the viewer a clear reason to continue",
+        "target_duration_percent": 5
+      },
+      "act_I": {
+        "style": "steady",
+        "goal": "provide essential context, establish credibility, introduce the subject",
+        "target_duration_percent": 20
+      },
+      "act_II": {
+        "style": "evidence-paced",
+        "goal": "build the case with verified facts, sources, and structured argument",
+        "target_duration_percent": 40
+      },
+      "act_III": {
+        "style": "measured synthesis",
+        "goal": "draw together the evidence toward a conclusion or clear observation",
+        "target_duration_percent": 20
+      },
+      "outro": {
+        "style": "reflective",
+        "goal": "leave the viewer with a clear takeaway and a forward-looking thought",
+        "target_duration_percent": 15
+      }
+    },
+    "cut_frequency": "moderate",
+    "breath_point_frequency": "every_90s",
+    "silence_usage": "deliberate",
+    "guiding_principle": "Every moment earns its place. Never rush a fact. Never pad a transition."
+  },
+
+  "camera_language": {
+    "preferred_shot_types": [
+      "extreme_wide_shot", "wide_shot", "medium_wide_shot",
+      "medium_shot", "close_up", "aerial",
+      "animated_map", "motion_graphic", "text_overlay"
+    ],
+    "forbidden_shot_types": [],
+    "preferred_motion_directions": [
+      "slow_pan_right", "slow_pan_left", "slow_zoom_in", "ken_burns", "very_slow_pan_right"
+    ],
+    "forbidden_motion_directions": [],
+    "perspective_rule": "Always establish location with a wide or aerial shot before moving to close-up detail.",
+    "motion_intensity": "slow"
+  },
+
+  "editing_language": {
+    "transition_style": "dissolve_allowed",
+    "text_on_screen": {
+      "usage": "moderate",
+      "purpose": ["key_facts", "names", "dates", "chapter_markers", "data"],
+      "style": "clean, minimal — text anchors facts, never decorates"
+    },
+    "motion_graphics_complexity": "moderate",
+    "color_grade": "natural",
+    "film_grain": false,
+    "speed_ramps_allowed": false,
+    "jump_cuts_allowed": false
+  },
+
+  "music_language": {
+    "role": "support",
+    "intensity_arc": {
+      "hook": "subtle — present but not dominant",
+      "act_I": "minimal — nearly invisible",
+      "act_II": "moderate — rises with the weight of evidence",
+      "act_III": "measured — builds toward resolution without manipulation",
+      "outro": "reflective — quiet and open-ended"
+    },
+    "silence_ratio_percent": 20,
+    "preferred_genres": ["ambient", "orchestral_minimal", "cinematic_underscore"],
+    "vocals_allowed": false,
+    "tempo_guidance": "slow to moderate tempo, no driving percussion beats"
+  },
+
+  "visual_style": {
+    "tone": "neutral to cinematic",
+    "saturation": "neutral",
+    "contrast": "medium",
+    "lighting_preference": "natural",
+    "ai_image_max_percent": 75,
+    "real_footage_preference": "strongly_preferred"
+  },
+
+  "motion_grammar": {
+    "opening_motion": "slow_pan_right",
+    "default_motion": "ken_burns",
+    "emotional_motion_map": {
+      "neutral_exposition": "slow_pan_right",
+      "revelation": "slow_zoom_in",
+      "reflection": "very_slow_pan_right",
+      "transition": "ken_burns"
+    },
+    "forbidden_in_emotional_moments": []
+  },
+
+  "scene_grammar": {
+    "required_scene_types": ["establishing_shot", "narration_scene", "evidence_scene"],
+    "forbidden_scene_types": [],
+    "required_beats": [
+      {
+        "beat_id": "BEAT_DOC_01",
+        "beat_name": "hook",
+        "description": "Opening that establishes the central question, mystery, or claim of the video and gives the viewer a compelling reason to continue.",
+        "section_hint": "HOOK",
+        "required": true
+      },
+      {
+        "beat_id": "BEAT_DOC_02",
+        "beat_name": "context",
+        "description": "Background information establishing why this story matters, the historical or geographic setting, and what the viewer needs to know to follow the evidence.",
+        "section_hint": "ACT_I",
+        "required": true
+      },
+      {
+        "beat_id": "BEAT_DOC_03",
+        "beat_name": "evidence_presentation",
+        "description": "Presentation of verified facts and sources supporting the central argument or narrative, building methodically.",
+        "section_hint": "ACT_II",
+        "required": true
+      },
+      {
+        "beat_id": "BEAT_DOC_04",
+        "beat_name": "synthesis",
+        "description": "Drawing together the evidence into a coherent conclusion, observation, or honest assessment of what remains unknown.",
+        "section_hint": "ACT_III",
+        "required": true
+      },
+      {
+        "beat_id": "BEAT_DOC_05",
+        "beat_name": "takeaway",
+        "description": "Clear ending statement that gives the viewer something meaningful to carry with them after the video ends.",
+        "section_hint": "OUTRO",
+        "required": true
+      }
+    ],
+    "scene_duration_rules": {
+      "min_scene_duration_seconds": 8,
+      "max_scene_duration_seconds": 90,
+      "special_scenes": []
+    },
+    "section_structure": {
+      "required_sections": ["HOOK", "ACT_I", "ACT_II", "OUTRO"],
+      "section_order_enforced": true
+    }
+  },
+
+  "thumbnail_strategy": {
+    "primary_style": "documentary_authentic",
+    "composition_rule": "strong focal image with clear subject — readable at thumbnail size",
+    "text_overlay_rule": "optional",
+    "face_rule": "optional",
+    "emotion_on_thumbnail": "curiosity or awe",
+    "color_palette": "natural to slightly dramatic",
+    "factual_accuracy_required": true,
+    "respect_check_required": true
+  },
+
+  "narrator_guidance": {
+    "tonal_modes": {
+      "neutral_facts": "calm and objective",
+      "introducing_evidence": "engaged and deliberate",
+      "major_finding": "measured emphasis — significant but never sensational",
+      "historical_or_tragic": "respectful and restrained",
+      "conclusion": "reflective and grounded"
+    },
+    "forbidden_delivery_styles": [
+      "sensational",
+      "theatrical",
+      "news_anchor_flat",
+      "actor_performance"
+    ],
+    "pacing_notes": "Read at a pace that allows each sentence to land before the next begins. Pause after key facts. Do not rush evidence to fill time."
+  },
+
+  "forbidden_elements": [
+    {
+      "element": "fabricated_facts_or_statistics",
+      "reason": "Documentary credibility is built on verifiable truth. Fabrication destroys the trust that defines the genre.",
+      "severity": "CRITICAL"
+    },
+    {
+      "element": "invented_quotes_from_real_people",
+      "reason": "Misrepresentation of real individuals is both ethically wrong and legally risky.",
+      "severity": "CRITICAL"
+    },
+    {
+      "element": "unverified_claims_presented_as_established_fact",
+      "reason": "Undermines viewer trust and violates creator quality standards.",
+      "severity": "HIGH"
+    },
+    {
+      "element": "graphic_imagery_of_suffering_or_death",
+      "reason": "Disrespectful to subjects and families. Violates creator absolute safety rules.",
+      "severity": "CRITICAL"
+    }
+  ],
+
+  "scoring_weights": {
+    "factual_accuracy": 0.35,
+    "emotional_impact": 0.20,
+    "retention": 0.20,
+    "visual_quality": 0.15,
+    "trust": 0.10
+  },
+
+  "created_at": "2026-06-27T00:00:00Z",
+  "updated_at": "2026-06-27T00:00:00Z"
+}

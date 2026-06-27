@@ -1,0 +1,194 @@
+{
+  "project_id": "hashima-island-mystery-ja",
+  "qa_id": "BATCH1_QA_001",
+  "qa_date": "2026-06-27",
+  "batch_id": "BATCH_1",
+  "reviewer": "batch_1_image_qa_gate",
+  "total_images": 3,
+  "approved": 1,
+  "approved_with_minor_notes": 2,
+  "regenerate": 0,
+  "rejected": 0,
+  "batch_2_may_begin": true,
+
+  "images": [
+    {
+      "image_id": "IMG002",
+      "scene_id": "S002",
+      "filename": "IMG002_S002_interior_ruin.png",
+      "file_found": true,
+      "file_size_kb": 2727,
+
+      "classification": "APPROVED_WITH_MINOR_NOTES",
+      "approved_for_production": true,
+      "requires_post_processing": true,
+      "requires_regeneration": false,
+
+      "checks": {
+        "correct_scene_match": { "result": "PASS", "note": "Interior ruin with broken staircase — matches S002 scene description" },
+        "correct_subject": { "result": "PASS", "note": "Staircase, peeling walls, exposed concrete structure, debris — all present" },
+        "no_people": { "result": "PASS", "note": "No human forms, silhouettes, or shadows readable as human anywhere in frame" },
+        "no_victims": { "result": "PASS" },
+        "no_forced_labor_suffering": { "result": "PASS" },
+        "no_ghost_horror": { "result": "PASS", "note": "No supernatural or horror elements" },
+        "no_gore_violence": { "result": "PASS" },
+        "no_modern_objects": { "result": "PASS", "note": "All visible structure is consistent with pre-1974 concrete construction" },
+        "no_unreadable_text": { "result": "PASS", "note": "No text visible" },
+        "no_logos_watermarks": { "result": "PASS" },
+        "suitable_16x9_youtube": { "result": "PASS", "note": "16:9 format confirmed" },
+        "respectful_hashima_tone": { "result": "PASS", "note": "No sensational or exploitative content" },
+        "usable_for_slow_zoom_pan": { "result": "PASS_WITH_NOTE", "note": "Usable for ken_burns_zoom_in. Director should frame motion toward staircase (left/center) and away from right-side exterior opening to avoid war-zone cityscape framing" }
+      },
+
+      "visual_observations": [
+        "Staircase: PRESENT — prominent, center-frame, ascending to upper floor with collapsed concrete",
+        "Debris: PRESENT — heavy rubble coverage on floor",
+        "Peeling walls: PRESENT — excellent concrete decay texture",
+        "Light: PRESENT — natural daylight flooding through collapsed openings",
+        "Color: WARM DAYLIGHT — image is brighter and warmer than the dark documentary target palette; post-processing desaturation required",
+        "Right-side view: Through a large collapsed wall at far right, an extensive field of destroyed building facades is visible. This exterior view creates a war-zone urban destruction impression (analogous to Middle Eastern conflict imagery) rather than a single haikyo building. The interior staircase content is correct; the exterior context through the opening is not."
+      ],
+
+      "minor_notes": [
+        "POST-PROCESSING REQUIRED: Significant desaturation and darkening needed to achieve dark documentary palette. The raw AI output is warm daylight; target is grey-brown cinematic.",
+        "DIRECTOR NOTE — FRAME FOR STAIRCASE: The ken_burns_zoom_in motion should begin on a wide frame that includes the staircase and then slowly push in. The right-side opening that reveals extensive exterior ruins should be de-emphasized or cropped. If the exterior ruins are prominent in the final frame, they evoke urban warfare rather than haikyo abandonment.",
+        "MINOR CONTENT NOTE: The exterior ruins visible through the right-side opening are extensive enough that they could contextually read as a bombed city rather than an abandoned Japanese industrial building. With careful framing and post-processing this is manageable."
+      ],
+
+      "post_processing_instructions": [
+        "Desaturate to 60-70% of original color saturation",
+        "Darken overall exposure by -0.5 to -1.0 stop",
+        "Add film grain layer (standard dark_documentary preset)",
+        "Ken_burns_zoom_in: start wide on staircase, push slowly toward middle-stair landing — keep frame left-of-center to avoid the exterior right-side opening",
+        "Optional: slight vignette to further de-emphasize peripheral exterior view"
+      ],
+
+      "file_path": "assets/ai_images/generated/batch_1/IMG002_S002_interior_ruin.png",
+      "production_status": "approved_with_notes_pending_post"
+    },
+
+    {
+      "image_id": "IMG004",
+      "scene_id": "S005",
+      "filename": "IMG004_S005_meiji_industrial.png",
+      "file_found": true,
+      "file_size_kb": 2681,
+
+      "classification": "APPROVED_WITH_MINOR_NOTES",
+      "approved_for_production": true,
+      "requires_post_processing": true,
+      "requires_regeneration": false,
+
+      "checks": {
+        "correct_scene_match": { "result": "PASS", "note": "Meiji-era industrial scene — smokestacks, mine headframe, industrial buildings in mountainous landscape" },
+        "correct_subject": { "result": "PASS", "note": "All core elements present: chimneys with smoke, industrial steel structures, period-appropriate wooden buildings, mountain backdrop" },
+        "no_people": { "result": "PASS_WITH_NOTE", "note": "No identifiable individuals. Extremely small, non-identifiable human-scale shapes may be present in the far mid-ground near mine buildings — not visible at any meaningful scale, consistent with 'no identifiable individuals' constraint" },
+        "no_victims": { "result": "PASS" },
+        "no_forced_labor_suffering": { "result": "PASS", "note": "Meiji era (1890-1910) context predates wartime forced labor (1939-1945). No suffering depiction." },
+        "no_ghost_horror": { "result": "PASS" },
+        "no_gore_violence": { "result": "PASS" },
+        "no_modern_objects": { "result": "PASS", "note": "No modern vehicles, no contemporary signage, no post-1920 elements visible" },
+        "no_unreadable_text": { "result": "PASS", "note": "No text visible" },
+        "no_logos_watermarks": { "result": "PASS" },
+        "suitable_16x9_youtube": { "result": "PASS", "note": "16:9 letterbox confirmed" },
+        "respectful_hashima_tone": { "result": "PASS" },
+        "usable_for_slow_zoom_pan": { "result": "PASS", "note": "Wide industrial landscape is suitable for slow_pan_left motion at 40-second duration" }
+      },
+
+      "visual_observations": [
+        "Monochrome: CONFIRMED — true black and white, not sepia — acceptable (both are within spec per batch plan)",
+        "Mine headframe: PRESENT (right side) — prominent coal mine pit-head tower, period-appropriate",
+        "Smokestacks: PRESENT — at least one chimney with smoke visible center-left",
+        "Industrial buildings: PRESENT — various wooden and metal structures in foreground",
+        "Mountain backdrop: PRESENT — hills/mountains visible in background, consistent with Japanese mine geography",
+        "Vintage aesthetic: EXCELLENT — image is convincingly historical; grain, tonal range, and perspective are period-appropriate",
+        "This image is extremely realistic as a period photograph. The 'illustrative archival simulation' production label is MANDATORY."
+      ],
+
+      "minor_notes": [
+        "MANDATORY PRODUCTION LABEL: This image must be labeled in the video edit as 'illustrative archival simulation' — it is NOT an actual historical photograph. The image is convincing enough that viewers may believe it is real.",
+        "CONTEXTUAL NOTE — MINE HEADFRAME: The dominant mine shaft headframe on the right makes this clearly a coal mine industrial scene, not a general Meiji factory. This is thematically appropriate for a Hashima documentary (the island is a coal mine), but the production label should clarify it is an illustrative image of the Meiji industrial era, not a photograph of Hashima itself.",
+        "DIRECTOR NOTE: For slow_pan_left motion, beginning on the smokestacks (left-center) and panning right to reveal the mine headframe creates a natural industrial reveal that matches the narration context for S005."
+      ],
+
+      "post_processing_instructions": [
+        "Image is already black-and-white — no desaturation needed",
+        "May benefit from slight contrast boost to deepen blacks and increase documentary drama",
+        "Add film grain if not already present in output (image may already have period grain)",
+        "Apply slow_pan_left at very slow speed for 40-second duration",
+        "MANDATORY: Add 'illustrative archival simulation / 明治時代のイラスト' caption in the edit"
+      ],
+
+      "file_path": "assets/ai_images/generated/batch_1/IMG004_S005_meiji_industrial.png",
+      "production_status": "approved_with_notes_pending_post"
+    },
+
+    {
+      "image_id": "IMG018",
+      "scene_id": "S022",
+      "filename": "IMG018_S022_hashima_panorama.png",
+      "file_found": true,
+      "file_size_kb": 2014,
+
+      "classification": "APPROVED",
+      "approved_for_production": true,
+      "requires_post_processing": false,
+      "requires_regeneration": false,
+
+      "checks": {
+        "correct_scene_match": { "result": "PASS", "note": "Hashima Island full panoramic view — exactly matches S022 Ma beat scene requirement" },
+        "correct_subject": { "result": "PASS", "note": "Island ruins rising from ocean, wide sky, ocean foreground — all present and prominent" },
+        "no_people": { "result": "PASS", "note": "No human forms anywhere in frame" },
+        "no_victims": { "result": "PASS" },
+        "no_forced_labor_suffering": { "result": "PASS" },
+        "no_ghost_horror": { "result": "PASS" },
+        "no_gore_violence": { "result": "PASS" },
+        "no_modern_objects": { "result": "PASS", "note": "No boats, no vehicles, open ocean only" },
+        "no_unreadable_text": { "result": "PASS" },
+        "no_logos_watermarks": { "result": "PASS" },
+        "suitable_16x9_youtube": { "result": "PASS", "note": "16:9 letterbox confirmed. Excellent for YouTube documentary format." },
+        "respectful_hashima_tone": { "result": "PASS", "note": "Haunting and beautiful without sensationalism — exactly right" },
+        "usable_for_slow_zoom_pan": { "result": "PASS", "note": "Motion directive is STATIC — no motion applied. Image is compositionally restful for 40-second hold." }
+      },
+
+      "visual_observations": [
+        "Island identification: EXCELLENT — Hashima/Gunkanjima silhouette is distinct and recognizable. Concrete apartment block mass, seawall, and distinctive battleship profile all visible.",
+        "Ocean: PRESENT — grey-blue overcast water in foreground, calm",
+        "Sky: PRESENT — overcast with cloud cover, matching the contemplative Ma beat mood",
+        "Composition: EXCELLENT — balanced horizon, island centered, ocean and sky in correct proportions for wide panoramic",
+        "Color palette: NATURALLY DESATURATED — overcast sky produces a grey-blue palette that already matches dark documentary target. Minimal or no post-processing needed for color.",
+        "Background detail: Faint land/coastline visible at far right background — minor, does not distract, actually anchors the island's real Nagasaki geography",
+        "Note on photorealism: The image is extremely photorealistic. It is difficult to distinguish from an actual photograph of Hashima Island taken from a tour boat. This is a positive quality indicator for the generation. However, if there is any doubt about whether this is AI-generated or a real photograph sourced externally, the file provenance should be confirmed."
+      ],
+
+      "minor_notes": [
+        "PHOTOREALISM NOTE: This image is convincingly photographic. If the production team cannot confirm with certainty that it was generated by the AI tool (not downloaded from an external source), the file provenance should be verified before finalizing for production. If it is a real photograph, a separate license check would be required.",
+        "MA BEAT COMPLIANCE: Motion = STATIC confirmed. 40-second hold confirmed. No narration over this scene. Ocean ambient audio only. This image meets all Ma beat (間) requirements."
+      ],
+
+      "post_processing_instructions": [
+        "Minimal processing needed — image is already naturally desaturated",
+        "Optional: very slight film grain addition to match the rest of the video's visual language",
+        "Hold STATIC for exactly 40 seconds — no ken burns, no pan",
+        "Apply dissolve transition in from S021 and out to S023",
+        "Apply fade to black at the end of the S022 hold"
+      ],
+
+      "file_path": "assets/ai_images/generated/batch_1/IMG018_S022_hashima_panorama.png",
+      "production_status": "approved_for_production"
+    }
+  ],
+
+  "batch_summary": {
+    "files_found": 3,
+    "files_expected": 3,
+    "all_files_present": true,
+    "approved": 1,
+    "approved_with_minor_notes": 2,
+    "regenerate": 0,
+    "rejected": 0,
+    "corrected_prompts_needed": 0,
+    "batch_2_may_begin": true,
+    "batch_2_note": "All Batch 1 images approved (1 APPROVED, 2 APPROVED_WITH_MINOR_NOTES). No regeneration required. Proceed to Batch 2: IMG003/IMG008/IMG010/IMG011/IMG012/IMG013/IMG014/IMG015/IMG017/IMG019 using corrected prompts from assets/ai_images/generation_queue.json."
+  }
+}
