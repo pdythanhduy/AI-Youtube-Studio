@@ -140,7 +140,7 @@ def main():
 
     for seg in segments:
         line_id  = seg["line_id"]
-        if args.segment and line_id != args.segment:
+        if args.segment and line_id.upper() != args.segment.upper():
             continue
 
         filename   = seg["filename"]

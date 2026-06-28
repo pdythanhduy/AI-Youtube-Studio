@@ -468,8 +468,18 @@ def main():
             if src == "MOTION_GRAPHICS":
                 render_mg_scene(scene, clip, fps, dry_run=args.dry_run)
             elif scene.get("image_file"):
-                render_image_scene(scene, clip, fps, args.no_motion,
-                                   dry_run=args.dry_run)
+                ok = render_image_scene(scene, clip, fps, args.no_motion,
+                                        dry_run=args.dry_run)
+                if not ok:
+                    print(f"       [WARN] Image missing for {sid} - using black placeholder")
+                    run([
+                        str(FFMPEG), "-y", "-f", "lavfi",
+                        "-i", f"color=c=black:s={W}x{H}:r={fps}",
+                        "-t", str(scene["scene_duration_sec"]),
+                        "-c:v", "libx264", "-preset", V_PRESET,
+                        "-crf", str(V_CRF), "-pix_fmt", "yuv420p", "-an",
+                        str(clip),
+                    ], dry_run=args.dry_run, label=f"SCENE {sid} (black fallback)")
             else:
                 print(f"       [WARN] No image for {sid} - black placeholder")
                 blk = [

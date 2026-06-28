@@ -328,7 +328,7 @@ def write_report(video: Path, plan: dict, results: dict, report_path: Path) -> N
         f"|-------|-------|",
         f"| Window | {MA_BEAT_START:.0f}-{MA_BEAT_END:.0f}s ({ma_tc_s}-{ma_tc_e}) |",
         f"| Duration | {MA_BEAT_END - MA_BEAT_START:.0f}s |",
-        f"| Status | {results.get('ma_beat', (False,'N/A'))[1]} |",
+        f"| Status | {results.get('5. Ma beat clear', (False,'N/A'))[1]} |",
         "",
         "---",
         "",
