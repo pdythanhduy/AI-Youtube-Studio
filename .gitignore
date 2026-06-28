@@ -1,6 +1,7 @@
 # Audio binaries
 projects/*/audio/vbee_raw/*.mp3
 projects/*/audio/vbee_slow_*/*.mp3
+projects/*/audio/ambience/*.wav
 
 # Video renders and render cache
 projects/*/export/rough/*.mp4
@@ -21,3 +22,9 @@ __pycache__/
 # OS
 .DS_Store
 Thumbs.db
+
+# delivery secrets (never commit)
+tools/deliver/*.pickle
+tools/deliver/*.session
+tools/deliver/*.session-journal
+.env

@@ -30,6 +30,7 @@ Estimated render time (Intel i7 / AMD Ryzen 7, ultrafast preset):
 import argparse
 import json
 import os
+import shutil
 import subprocess
 import sys
 from pathlib import Path
@@ -42,6 +43,7 @@ AUDIO_DIR    = PROJECT / "audio" / "vbee_raw"
 ASSETS_DIR   = PROJECT / "assets"
 EXPORT_DIR   = PROJECT / "export" / "rough"
 CACHE_DIR    = PROJECT / "timeline" / "render_cache"
+AMBIENCE_FILE = PROJECT / "audio" / "ambience" / "sea_wind_procedural.wav"
 
 FFMPEG  = Path(r"C:\ffmpeg\ffmpeg-7.1.1-essentials_build\ffmpeg-7.1.1-essentials_build\bin\ffmpeg.exe")
 FFPROBE = Path(r"C:\ffmpeg\ffmpeg-7.1.1-essentials_build\ffmpeg-7.1.1-essentials_build\bin\ffprobe.exe")
@@ -56,18 +58,41 @@ TOTAL_DURATION = 720.0          # overridden from timeline meta if present
 V_PRESET       = "ultrafast"    # fast encode; switch to "medium" for fine cut
 V_CRF          = 28             # coarser than final (23), fine for review
 
-# ─── Motion graphics placeholder text ────────────────────────────────────────
+# ─── Motion graphics card design ──────────────────────────────────────────────
+# Designed JP cards (no longer English placeholders). Rendered in-pipeline via
+# ffmpeg drawtext/drawbox using a Windows JP gothic font. To dodge the Windows
+# drive-colon escaping minefield in filtergraphs, the font + per-element text
+# files are staged into CACHE_DIR and referenced by bare relative names with
+# ffmpeg's cwd set to CACHE_DIR (see render_mg_scene).
+#
+# Card content is faithful to data/scene.json visual_description_ja and the VO
+# line under each card. MG003 deliberately asserts NO specific casualty number —
+# it visualizes only the fact that Japanese and Korean records diverge.
 
-MG_TEXT = {
-    "MG001": "[TITLE CARD] Hashima / Gunkanjima",
-    "MG002": "[ANIMATED MAP] Nagasaki Port to Hashima approx 15-18km",
-    "MG003": "[DATA GRAPHIC] Disputed labor statistics 1939-1945",
-    "MG004": "[DATE OVERLAY] 1974-01-15 Island abandonment date",
-}
+def _gothic_src(bold):
+    """Cross-platform JP gothic source font. Windows BIZ-UDGothic, else Linux Noto Sans CJK JP."""
+    win = Path(r"C:\Windows\Fonts\BIZ-UDGothicB.ttc" if bold
+               else r"C:\Windows\Fonts\BIZ-UDGothicR.ttc")
+    if win.exists():
+        return win
+    for base in ("/usr/share/fonts/opentype/noto", "/usr/share/fonts/truetype/noto"):
+        p = Path(base) / ("NotoSansCJK-Bold.ttc" if bold else "NotoSansCJK-Regular.ttc")
+        if p.exists():
+            return p
+    return win  # errors clearly downstream if truly missing
+
+FONT_BOLD_SRC = _gothic_src(True)     # heavy gothic
+FONT_REG_SRC  = _gothic_src(False)    # regular
+FONT_BOLD = "mg_font_b.ttc"   # relative names inside CACHE_DIR
+FONT_REG  = "mg_font_r.ttc"
+
+BG_DARK = "0x0a0a14"   # near-black, faint blue (title/date)
+BG_SEA  = "0x0a1018"   # bluer (map)
+BG_GRAVE = "0x120a0a"  # warm-dark (disputed data)
 
 # ─── Helpers ──────────────────────────────────────────────────────────────────
 
-def run(cmd: list, dry_run: bool = False, label: str = "") -> int:
+def run(cmd: list, dry_run: bool = False, label: str = "", cwd: "Path | None" = None) -> int:
     cmd_strs = [str(c) for c in cmd]
     preview = " ".join(cmd_strs)
     if len(preview) > 300:
@@ -78,7 +103,7 @@ def run(cmd: list, dry_run: bool = False, label: str = "") -> int:
         print(f"\n[CMD] {preview}")
     if dry_run:
         return 0
-    result = subprocess.run(cmd_strs)
+    result = subprocess.run(cmd_strs, cwd=str(cwd) if cwd else None)
     if result.returncode != 0:
         print(f"[ERROR] Command failed (code {result.returncode})", file=sys.stderr)
         sys.exit(result.returncode)
@@ -223,21 +248,106 @@ def render_image_scene(scene: dict, out: Path, fps: int, no_motion: bool, dry_ru
     return True
 
 
+def _mg_stage_font():
+    """Copy JP fonts into CACHE_DIR under colon-free relative names (once)."""
+    for src, dst in ((FONT_BOLD_SRC, FONT_BOLD), (FONT_REG_SRC, FONT_REG)):
+        target = CACHE_DIR / dst
+        if not target.exists():
+            shutil.copy(src, target)
+
+
+def _mg_text(scene_id: str, idx: int, text: str) -> str:
+    """Write one text element to CACHE_DIR (UTF-8, no BOM); return bare name."""
+    name = f"mg_{scene_id}_{idx}.txt"
+    (CACHE_DIR / name).write_text(text, encoding="utf-8")
+    return name
+
+
+def _dt(textfile: str, size: int, color: str, y, t0: float, fdur: float,
+        bold: bool = True, x="(w-text_w)/2") -> str:
+    """drawtext with a comma-safe linear alpha fade-in starting at t0."""
+    font = FONT_BOLD if bold else FONT_REG
+    return (f"drawtext=fontfile={font}:textfile={textfile}:fontcolor={color}:"
+            f"fontsize={size}:x={x}:y={y}:"
+            f"alpha='clip((t-{t0})/{fdur}\\,0\\,1)'")
+
+
+def _dt_pulse(textfile: str, size: int, color: str, y, x="(w-text_w)/2") -> str:
+    """drawtext whose alpha pulses (for a location pin / divergence mark).
+    Floor kept high (~0.3) so the element never drops near-invisible mid-pulse."""
+    font = FONT_BOLD
+    return (f"drawtext=fontfile={font}:textfile={textfile}:fontcolor={color}:"
+            f"fontsize={size}:x={x}:y={y}:alpha='0.62+0.3*sin(2*PI*t/1.6)'")
+
+
+def _mg_build(mg_id: str, scene_id: str, duration: float):
+    """Return (bg_color, [filter,...]) for a designed MG card."""
+    half = "(w-text_w)/2"
+    if mg_id == "MG001":  # Title: 端島 / 軍艦島 — minimal, staggered fade
+        f = [
+            _dt(_mg_text(scene_id, 0, "端島"),      180, "white",     360, 0.6, 1.6),
+            f"drawbox=x=660:y=600:w=600:h=3:color=0x8899aa@0.55:t=fill:enable='gte(t\\,1.8)'",
+            _dt(_mg_text(scene_id, 1, "軍艦島"),     78, "0xb0b8c4",  640, 2.0, 1.4),
+        ]
+        return BG_DARK, f
+    if mg_id == "MG002":  # Route schematic: Nagasaki Port -> ~15-18km SW -> Hashima
+        # Tightened: compact vertical band, larger distance hero + larger pin,
+        # single connector arrow (was two) so the route reads as one unit.
+        f = [
+            _dt(_mg_text(scene_id, 0, "長崎港"),         58, "white",    285, 0.5, 1.0),
+            _dt(_mg_text(scene_id, 1, "↓"),              50, "0x7e8a9a", 373, 1.1, 0.8),
+            _dt(_mg_text(scene_id, 2, "約 15〜18 km"),   104, "0xe8d9a0", 443, 1.5, 1.2),
+            _dt(_mg_text(scene_id, 3, "南西へ"),          40, "0x7e8a9a", 585, 2.2, 0.9),
+            _dt_pulse(_mg_text(scene_id, 4, "●"),         76, "0xd2452f", 643),
+            _dt(_mg_text(scene_id, 5, "端島（軍艦島）"),    66, "white",    733, 2.7, 1.0),
+        ]
+        return BG_SEA, f
+    if mg_id == "MG003":  # Disputed records — NO specific number asserted
+        f = [
+            _dt(_mg_text(scene_id, 0, "強制労働の記録"),          66, "white",    140, 0.4, 1.0),
+            _dt(_mg_text(scene_id, 1, "数値は資料により異なる"),    40, "0x9aa0ac", 248, 1.0, 1.0, bold=False),
+            f"drawbox=x=958:y=380:w=4:h=420:color=0x5a6270@0.7:t=fill:enable='gte(t\\,1.6)'",
+            _dt(_mg_text(scene_id, 2, "日本側の資料"),    50, "white",    430, 1.4, 0.9, x="480-text_w/2"),
+            _dt(_mg_text(scene_id, 3, "韓国側の資料"),    50, "white",    430, 1.9, 0.9, x="1440-text_w/2"),
+            _dt(_mg_text(scene_id, 4, "？"),              92, "0x6b7280", 560, 2.3, 0.8, x="480-text_w/2"),
+            _dt(_mg_text(scene_id, 5, "？"),              92, "0x6b7280", 560, 2.6, 0.8, x="1440-text_w/2"),
+            _dt_pulse(_mg_text(scene_id, 6, "≠"),         104, "0xd0a060", 540, x="(w-text_w)/2"),
+            _dt(_mg_text(scene_id, 7, "具体的な数値は確定していない"), 38, "0x9aa0ac", 870, 3.0, 1.0, bold=False),
+        ]
+        return BG_GRAVE, f
+    if mg_id == "MG004":  # Date overlay — heavy, minimal
+        f = [
+            f"drawbox=x=560:y=600:w=800:h=3:color=0x8899aa@0.6:t=fill:enable='gte(t\\,1.5)'",
+            _dt(_mg_text(scene_id, 0, "1974年1月15日"), 120, "white",    420, 0.5, 2.0),
+            _dt(_mg_text(scene_id, 1, "閉山"),            46, "0xaab2c0", 640, 1.8, 1.5, bold=False),
+        ]
+        return BG_DARK, f
+    # Unknown MG id → simple centered label fallback
+    name = _mg_text(scene_id, 0, mg_id)
+    return BG_DARK, [_dt(name, 48, "white", "(h-text_h)/2", 0.3, 0.8)]
+
+
 def render_mg_scene(scene: dict, out: Path, fps: int, dry_run: bool):
     mg_id    = scene.get("mg_id", "MG???")
+    scene_id = scene["scene_id"]
     duration = float(scene["scene_duration_sec"])
-    text     = MG_TEXT.get(mg_id, f"[{mg_id}]").replace("'", "").replace(":", " -")
 
-    # Fade in + out for all MG cards
-    fade_vf = f"fade=in:st=0:d=0.5,fade=out:st={max(0.0, duration - 0.5):.2f}:d=0.5"
+    CACHE_DIR.mkdir(parents=True, exist_ok=True)
+    _mg_stage_font()
+    bg, filters = _mg_build(mg_id, scene_id, duration)
+
+    # Global fade in/out wraps the whole card.
+    filters = filters + [
+        "fade=in:st=0:d=0.8",
+        f"fade=out:st={max(0.0, duration - 0.8):.2f}:d=0.8",
+    ]
+    vf = ",".join(filters)
 
     cmd = [
         str(FFMPEG), "-y",
         "-f", "lavfi",
-        "-i", f"color=c=0x0a0a18:s={W}x{H}:r={fps}",
-        "-vf", (f"drawtext=text='{text}':fontcolor=white:fontsize=38:"
-                f"x=(w-text_w)/2:y=(h-text_h)/2:box=1:"
-                f"boxcolor=black@0.65:boxborderw=14,{fade_vf}"),
+        "-i", f"color=c={bg}:s={W}x{H}:r={fps}",
+        "-vf", vf,
         "-t", f"{duration:.4f}",
         "-c:v", "libx264",
         "-preset", V_PRESET,
@@ -246,7 +356,9 @@ def render_mg_scene(scene: dict, out: Path, fps: int, dry_run: bool):
         "-an",
         str(out),
     ]
-    run(cmd, dry_run=dry_run, label=f"SCENE {scene['scene_id']} (MG)")
+    # cwd=CACHE_DIR so bare font/text filenames in the filtergraph resolve
+    # (avoids Windows drive-colon escaping in ffmpeg filter parsing).
+    run(cmd, dry_run=dry_run, label=f"SCENE {scene_id} (MG {mg_id})", cwd=CACHE_DIR)
     return True
 
 
@@ -275,30 +387,38 @@ def collect_audio_placements(scenes: list) -> list[tuple[Path, float]]:
 
 
 def build_audio_mix(placements: list[tuple[Path, float]],
-                    out: Path, dry_run: bool):
-    """Mix all narration files into a single {TOTAL_DURATION}s WAV track."""
+                    out: Path, dry_run: bool,
+                    ambience: "Path | None" = None):
+    """Mix all narration files (+ optional ambience bed) into a single WAV track."""
     n = len(placements)
     if n == 0:
         print("[WARN] No audio placements - skipping audio mix")
         return
 
-    print(f"\n[AUDIO] Mixing {n} narration files into {TOTAL_DURATION:.0f}s track ...")
+    use_ambience = ambience is not None and ambience.exists()
+    total_inputs = n + (1 if use_ambience else 0)
+    print(f"\n[AUDIO] Mixing {n} narration files"
+          f"{' + ambience bed' if use_ambience else ''} into {TOTAL_DURATION:.0f}s track ...")
 
-    # Write filter_complex to a script file to avoid CLI length limits on Windows
     filter_lines = []
     for i, (_, start_sec) in enumerate(placements):
         delay_ms = int(start_sec * 1000)
         filter_lines.append(f"[{i}]adelay={delay_ms}|{delay_ms}[a{i}]")
 
-    mix_in = "".join(f"[a{i}]" for i in range(n))
+    if use_ambience:
+        # Ambience bed: starts at t=0, volume at ~-28 dBFS (3.56 linear ≈ +11dB from file level)
+        filter_lines.append(f"[{n}]volume=3.56[amb]")
+        mix_in = "".join(f"[a{i}]" for i in range(n)) + "[amb]"
+    else:
+        mix_in = "".join(f"[a{i}]" for i in range(n))
+
     filter_lines.append(
-        f"{mix_in}amix=inputs={n}:duration=longest:normalize=0,"
+        f"{mix_in}amix=inputs={total_inputs}:duration=longest:normalize=0,"
         f"apad=whole_dur={int(TOTAL_DURATION)}[aout]"
     )
 
     script = CACHE_DIR / "audio_filter.txt"
     if not dry_run:
-        # ffmpeg filter_complex requires ";" as chain separator (newlines alone cause parse error)
         script.write_text(";\n".join(filter_lines), encoding="utf-8")
     else:
         print(f"[DRY] Would write filter script: {script}")
@@ -306,6 +426,8 @@ def build_audio_mix(placements: list[tuple[Path, float]],
     cmd = [str(FFMPEG), "-y"]
     for path, _ in placements:
         cmd.extend(["-i", str(path)])
+    if use_ambience:
+        cmd.extend(["-i", str(ambience)])
     cmd.extend([
         "-/filter_complex", str(script),
         "-map", "[aout]",
@@ -528,7 +650,8 @@ def main():
 
     # ── Audio mix ─────────────────────────────────────────────────────────────
     audio_mix = CACHE_DIR / "audio_mix.wav"
-    build_audio_mix(placements, audio_mix, dry_run=args.dry_run)
+    build_audio_mix(placements, audio_mix, dry_run=args.dry_run,
+                    ambience=AMBIENCE_FILE)
 
     # ── Final mux ─────────────────────────────────────────────────────────────
     print(f"\n[MUX] Final mux → {OUTPUT_FILE}")
