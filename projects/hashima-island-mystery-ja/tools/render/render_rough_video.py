@@ -462,8 +462,12 @@ def main():
                   f"src={src}  motion={mot}")
 
             if args.skip_existing and clip.exists():
-                print(f"       [SKIP] {clip.name} already exists")
-                continue
+                cached_dur = probe_duration(clip)
+                expected_dur = float(scene["scene_duration_sec"])
+                if abs(cached_dur - expected_dur) <= 0.1:
+                    print(f"       [SKIP] {clip.name} already exists ({cached_dur:.2f}s)")
+                    continue
+                print(f"       [STALE] {clip.name} cached={cached_dur:.2f}s expected={expected_dur:.2f}s — re-rendering")
 
             if src == "MOTION_GRAPHICS":
                 render_mg_scene(scene, clip, fps, dry_run=args.dry_run)
