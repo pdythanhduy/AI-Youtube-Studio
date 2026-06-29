@@ -77,6 +77,7 @@ def main() -> int:
     ap.add_argument("--no-motion", action="store_true", help="disable Ken Burns (static fallback)")
     ap.add_argument("--no-ambience", action="store_true", help="disable the background ambience bed")
     ap.add_argument("--ambience", help="ambience audio file to use (else synthesized)")
+    ap.add_argument("--no-cards", action="store_true", help="disable the title + chapter MG cards")
     a = ap.parse_args()
     proj = PROJECTS / a.project
     audio = sorted((proj / "assets" / "audio").glob("seg_*.mp3"), key=numkey)
@@ -154,39 +155,69 @@ def main() -> int:
         print(f"audio: {len(items)} paced segs | {amb_label} | total {total:.1f}s")
 
         n = len(images)
-        per = round(total / n, 3)
-        print(f"narration {total:.1f}s | {len(audio)} audio segs | {n} images | ~{per:.1f}s/image")
+        # build the visual sequence: opening title card + images interleaved with chapter cards
+        # (cards consume timeline; narration plays over them, so audio stays in sync)
+        TITLE_D, CH_D = 3.6, 2.7
+        sequence: list[tuple[str, Path, float]] = []
+        ch_at: dict[int, list[Path]] = {}
+        use_cards = not a.no_cards
+        card_time = 0.0
+        if use_cards:
+            try:
+                sys.path.insert(0, str(REPO / "tools" / "visuals"))
+                import render_cards as RC
+                if not RC.font_path():
+                    raise RuntimeError("no font for cards")
+                tc = work / "card_title.jpg"
+                RC.render_title_card(proj, tc)
+                chapters = RC.parse_chapters(proj)
+                plan_total = max((s for s, _ in chapters), default=0) or 1
+                for k, (sec, ctitle) in enumerate(chapters[1:], start=2):  # skip ch1 (title card covers intro)
+                    cc = work / f"card_ch{k:02d}.jpg"
+                    RC.render_chapter_card(proj, k, len(chapters), ctitle, cc)
+                    idx = min(n - 1, max(1, round(sec / plan_total * n)))
+                    ch_at.setdefault(idx, []).append(cc)
+                card_time = TITLE_D + sum(len(v) for v in ch_at.values()) * CH_D
+                sequence.append(("card", tc, TITLE_D))
+            except Exception as e:
+                print(f"[WARN] MG cards disabled: {e}")
+                use_cards = False
+        per = round((total - card_time) / n, 3)
+        for i, img in enumerate(images):
+            for cc in ch_at.get(i, []):
+                sequence.append(("card", cc, CH_D))
+            d = round(total - card_time - per * (n - 1), 3) if i == n - 1 else per
+            sequence.append(("image", img, d))
+        ncards = sum(1 for k, _, _ in sequence if k == "card")
+        print(f"sequence: {len(sequence)} clips ({ncards} cards + {n} images) | total {total:.1f}s")
 
-        # title-card font (relative name in work/ to dodge Windows colon escaping)
-        font = serif_font()
-        if font:
+        font = serif_font()  # only for the no-cards title-overlay fallback
+        if font and not use_cards:
             shutil.copy(font, work / "f.ttf")
             (work / "title.txt").write_text(title_text(proj), encoding="utf-8")
 
         clips = []
-        for i, img in enumerate(images):
-            d = round(total - per * (n - 1), 3) if i == n - 1 else per
-            frames = max(2, round(d * FPS))
+        for i, (kind, src, d) in enumerate(sequence):
             clip = work / f"clip_{i:03d}.mp4"
             if a.no_motion:
-                vf = (f"scale={W}:{H}:force_original_aspect_ratio=increase,crop={W}:{H},format=yuv420p")
-            else:
-                # Ken Burns: slow zoom-in within an upscaled frame, plus fade in/out
-                vf = (f"scale=2400:-1,"
-                      f"zoompan=z='min(max(pzoom,1)+0.0008,1.16)':d=1:"
+                vf = f"scale={W}:{H}:force_original_aspect_ratio=increase,crop={W}:{H},format=yuv420p"
+            elif kind == "card":  # gentle zoom + fade (cards are already 1920x1080)
+                vf = (f"scale=2200:-1,zoompan=z='min(max(pzoom,1)+0.0004,1.07)':d=1:"
                       f"x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':s={W}x{H}:fps={FPS},"
-                      f"trim=duration={d},"
-                      f"fade=t=in:st=0:d=0.7,fade=t=out:st={max(0.1, d-0.7):.2f}:d=0.7,"
-                      f"format=yuv420p")
-            if i == 0 and font:  # title overlay on the opening clip, fades out ~6s
+                      f"trim=duration={d},fade=t=in:st=0:d=0.5,fade=t=out:st={max(0.1, d-0.5):.2f}:d=0.5,format=yuv420p")
+            else:  # Ken Burns slow zoom-in + fade
+                vf = (f"scale=2400:-1,zoompan=z='min(max(pzoom,1)+0.0008,1.16)':d=1:"
+                      f"x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':s={W}x{H}:fps={FPS},"
+                      f"trim=duration={d},fade=t=in:st=0:d=0.7,fade=t=out:st={max(0.1, d-0.7):.2f}:d=0.7,format=yuv420p")
+            if kind == "image" and i == 0 and font and not use_cards:  # title overlay fallback
                 vf += (f",drawtext=fontfile=f.ttf:textfile=title.txt:fontcolor=white:fontsize=70:"
                        f"x=(w-text_w)/2:y=h*0.70:box=1:boxcolor=black@0.45:boxborderw=26:"
                        f"alpha='if(lt(t,4.5),1,max(0,(6-t)/1.5))'")
-            run(["ffmpeg", "-y", "-loop", "1", "-i", str(img.resolve()), "-t", f"{d}", "-r", str(FPS),
+            run(["ffmpeg", "-y", "-loop", "1", "-i", str(src.resolve()), "-t", f"{d}", "-r", str(FPS),
                  "-vf", vf, "-c:v", "libx264", "-preset", "veryfast", "-crf", "20", str(clip)],
                 cwd=str(work))
             clips.append(clip)
-            print(f"  clip {i+1}/{n}: {img.name} ({d:.1f}s){' +title' if i == 0 and font else ''}")
+            print(f"  clip {i+1}/{len(sequence)}: [{kind}] {src.name} ({d:.1f}s)")
 
         clist = work / "clips.txt"
         clist.write_text("".join(f"file '{c.resolve().as_posix()}'\n" for c in clips), encoding="utf-8")
