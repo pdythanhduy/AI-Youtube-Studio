@@ -160,9 +160,12 @@ def main() -> int:
     # ── 6/6 DELIVERY — only when the gate PASSED ──
     if a.deliver:
         if passed:
-            step("6/6 DELIVER (Telegram — for human review)", [
-                "tools/deliver/drive_send.py", "--upload", str(rough.relative_to(REPO)),
-                "--caption", review_caption(proj), "--notify"])
+            deliver_cmd = ["tools/deliver/drive_send.py", "--upload", str(rough.relative_to(REPO)),
+                           "--caption", review_caption(proj), "--notify"]
+            thumb = proj / "export" / "thumbnail" / f"{slug}_thumb.jpg"
+            if thumb.exists():
+                deliver_cmd += ["--thumbnail", str(thumb.relative_to(REPO))]
+            step("6/6 DELIVER (Telegram — for human review)", deliver_cmd)
         else:
             why = "QA skipped (--skip-qa)" if a.skip_qa else project_status
             print(f"\n[run_all] DELIVERY BLOCKED by QA gate ({why}). Nothing sent to Telegram.")

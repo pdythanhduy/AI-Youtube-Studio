@@ -64,7 +64,7 @@ def cmd_auth(client_secret: Path) -> int:
 
 
 def cmd_upload(file: str, caption: str | None, notify: bool,
-               client_secret: Path, tg_env: Path) -> int:
+               client_secret: Path, tg_env: Path, thumbnail: str | None = None) -> int:
     from googleapiclient.discovery import build
     from googleapiclient.http import MediaFileUpload
     from googleapiclient.errors import HttpError
@@ -109,6 +109,16 @@ def cmd_upload(file: str, caption: str | None, notify: bool,
         if not (tok and chat):
             print("[WARN] TELEGRAM_BOT_TOKEN/CHAT_ID not in .env - skipped notify.")
         else:
+            if thumbnail and Path(thumbnail).is_file():   # send the thumbnail first, as a photo
+                title = (caption or p.name).splitlines()[0][:200]
+                try:
+                    with open(thumbnail, "rb") as fh:
+                        rp = requests.post(f"https://api.telegram.org/bot{tok}/sendPhoto",
+                                           data={"chat_id": chat, "caption": title},
+                                           files={"photo": fh}, timeout=60)
+                    print("Telegram thumbnail:", "OK" if rp.ok else f"FAILED {rp.status_code}")
+                except Exception as e:
+                    print(f"[WARN] thumbnail send failed: {e}")
             text = (f"{caption or p.name}\n\n"
                     f"\U0001F3AC Full-quality master ({size_mb:.0f} MB)\n\U0001F4E5 {link}")
             r = requests.post(f"https://api.telegram.org/bot{tok}/sendMessage",
@@ -123,13 +133,14 @@ def main() -> int:
     ap.add_argument("--upload", metavar="FILE", help="file to upload")
     ap.add_argument("--caption", help="message caption")
     ap.add_argument("--notify", action="store_true", help="send the link via the existing Telegram bot")
+    ap.add_argument("--thumbnail", help="thumbnail image to send as a photo before the link")
     ap.add_argument("--client-secret", default=str(DEFAULT_CLIENT))
     ap.add_argument("--tg-env", default=str(DEFAULT_TG_ENV))
     a = ap.parse_args()
     if a.auth:
         return cmd_auth(Path(a.client_secret))
     if a.upload:
-        return cmd_upload(a.upload, a.caption, a.notify, Path(a.client_secret), Path(a.tg_env))
+        return cmd_upload(a.upload, a.caption, a.notify, Path(a.client_secret), Path(a.tg_env), a.thumbnail)
     ap.print_help()
     return 0
 
