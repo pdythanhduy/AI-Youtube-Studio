@@ -58,6 +58,31 @@ def stage_model(stage: int) -> str:
     return STAGE_MODEL.get(stage, DEFAULT_MODEL)
 
 
+def stage_directive(stage: int, ctx: dict) -> str:
+    """Orchestrator-injected directive (not a prompt-file edit) to raise visual density.
+    The autopilot only generates AI images, so it needs ~1 visual beat per ~25-30s and an
+    AI prompt for EVERY beat (real/stock/map types can't be sourced here)."""
+    try:
+        minutes = int(ctx.get("video_length_minutes", 12) or 12)
+    except (TypeError, ValueError):
+        minutes = 12
+    target = max(14, min(28, round(minutes * 2.2)))      # ~22 for 10min, ~26 for 12min
+    sec = max(20, round(minutes * 60 / target))
+    if stage == 6:
+        return (f"\n\n=== VISUAL DENSITY (autopilot) ===\n"
+                f"- Produce ~{target} visual beats for this ~{minutes}-min video — roughly one every "
+                f"{sec}s (beats {max(18, sec - 8)}–{sec + 8}s, max 45s). Cover every second.\n"
+                f"- Make each beat a concrete, distinct visual so it can become its own image.\n")
+    if stage == 8:
+        return (f"\n\n=== AI-ONLY IMAGE POLICY (autopilot) ===\n"
+                f"- This pipeline generates ALL visuals with AI (no real/stock/archival sourcing). "
+                f"Produce an AI image-generation prompt for EVERY visual beat — aim for ~{target} prompts.\n"
+                f"- For beats typed real/stock/map/archival, still write an AI prompt depicting the scene "
+                f"as a respectful illustration/dramatization, labelled [AI-GENERATED | DRAMATIZATION — NOT REAL].\n"
+                f"- No identifiable real faces, no gore. Each prompt distinct and self-contained.\n")
+    return ""
+
+
 def load_env() -> None:
     for d in [Path(__file__).resolve().parent, *Path(__file__).resolve().parents]:
         f = d / ".env"
@@ -97,26 +122,33 @@ def fill(template: str, ctx: dict) -> str:
     return re.sub(r"\{([a-zA-Z_][a-zA-Z0-9_]*)\}", repl, template)
 
 
-def call_claude(system: str, user: str, use_search: bool, model: str = MODEL) -> str:
+def call_claude(system: str, user: str, use_search: bool, model: str = MODEL, think: bool = True) -> str:
     import anthropic
     client = anthropic.Anthropic(api_key=api_key())
-    tools = [{"type": "web_search_20260209", "name": "web_search", "max_uses": 6}] if use_search else []
-    messages = [{"role": "user", "content": user}]
-    # adaptive thinking on the 4.6+ models (Opus/Sonnet); Haiku 4.5 doesn't take it
-    think = {"thinking": {"type": "adaptive"}} if model.startswith(("claude-opus", "claude-sonnet")) else {}
-    for _ in range(8):  # pause_turn loop for server-side web search
-        resp = client.messages.create(
-            model=model, max_tokens=12000,
-            system=system, messages=messages,
-            tools=tools or anthropic.NOT_GIVEN, **think,
-        )
-        if resp.stop_reason == "pause_turn":
-            messages.append({"role": "assistant", "content": resp.content})
-            continue
-        if resp.stop_reason == "refusal":
-            raise RuntimeError(f"Claude refused: {getattr(resp, 'stop_details', None)}")
-        break
-    return "".join(b.text for b in resp.content if b.type == "text").strip()
+    # adaptive thinking only when asked AND on a 4.6+ model (Haiku 4.5 doesn't take it)
+    think_kw = {"thinking": {"type": "adaptive"}} if (think and model.startswith(("claude-opus", "claude-sonnet"))) else {}
+    if use_search:
+        tools = [{"type": "web_search_20260209", "name": "web_search", "max_uses": 6}]
+        messages = [{"role": "user", "content": user}]
+        for _ in range(8):  # pause_turn loop for server-side web search
+            resp = client.messages.create(model=model, max_tokens=16000, system=system,
+                                          messages=messages, tools=tools, **think_kw)
+            if resp.stop_reason == "pause_turn":
+                messages.append({"role": "assistant", "content": resp.content})
+                continue
+            break
+    else:
+        # stream the no-tool stages — some produce long output (storyboard / image prompts);
+        # streaming avoids the non-streaming timeout and large max_tokens without empty results.
+        with client.messages.stream(model=model, max_tokens=24000, system=system,
+                                    messages=[{"role": "user", "content": user}], **think_kw) as s:
+            resp = s.get_final_message()
+    if getattr(resp, "stop_reason", "") == "refusal":
+        raise RuntimeError(f"Claude refused: {getattr(resp, 'stop_details', None)}")
+    text = "".join(b.text for b in resp.content if b.type == "text").strip()
+    if not text:
+        raise RuntimeError(f"empty output (stop_reason={resp.stop_reason}) — raise max_tokens or disable thinking")
+    return text
 
 
 def run_stage(proj: Path, stage: int, dry: bool) -> int:
@@ -154,7 +186,7 @@ def run_stage(proj: Path, stage: int, dry: bool) -> int:
         "  unconfirmed, write 'URL not confirmed' — never invent one.\n"
         f"- Write the entire document in: {ctx.get('language', 'en')}.\n"
     )
-    user = (("\n\n".join(prior) + "\n\n") if prior else "") + prompt + contract
+    user = (("\n\n".join(prior) + "\n\n") if prior else "") + prompt + stage_directive(stage, ctx) + contract
 
     model = stage_model(stage)
     print(f"[stage {stage}] {stem} -> {outfile}  (model={model}, web_search={use_search}, deps={DEPS.get(stage)})")
@@ -164,7 +196,9 @@ def run_stage(proj: Path, stage: int, dry: bool) -> int:
     if not api_key():
         sys.exit("[ERROR] ANTHROPIC/EXPO_PUBLIC_ANTHROPIC_API_KEY not in .env")
     t0 = time.time()
-    out = call_claude(system, user, use_search, model)
+    # enumeration stages (storyboard, image prompts) don't need deep thinking — and it can
+    # eat the whole token budget on long outputs, yielding empty text.
+    out = call_claude(system, user, use_search, model, think=stage not in (6, 8))
     (proj / outfile).write_text(out, encoding="utf-8")
     upd_manifest(proj, stage, outfile, len(out), time.time() - t0)
     print(f"  wrote {outfile} ({len(out)} chars) in {time.time()-t0:.0f}s")
