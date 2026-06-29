@@ -41,6 +41,22 @@ STAGES = {
     10: ("10_youtube_seo",             "seo.md",             False),
 }
 
+# Lean context: each stage gets ONLY the upstream outputs its prompt actually needs
+# (not every prior file) — the main cost saver, ~50-70% fewer input tokens, no quality loss.
+DEPS = {1: [], 2: [1], 3: [1, 2], 4: [1, 3], 5: [1, 3, 4],
+        6: [4], 7: [6], 8: [6, 7], 9: [4], 10: [1, 4]}
+
+# Mixed model: keep Opus for fabrication/quality-critical stages (research, source-verify,
+# script); Sonnet 4.6 for structural/creative middle stages; Haiku 4.5 for the near-mechanical
+# voice-script strip. QA gate stays on Opus separately (safety — not weakened here).
+STAGE_MODEL = {1: "claude-opus-4-8", 2: "claude-opus-4-8", 4: "claude-opus-4-8",
+               9: "claude-haiku-4-5"}
+DEFAULT_MODEL = "claude-sonnet-4-6"
+
+
+def stage_model(stage: int) -> str:
+    return STAGE_MODEL.get(stage, DEFAULT_MODEL)
+
 
 def load_env() -> None:
     for d in [Path(__file__).resolve().parent, *Path(__file__).resolve().parents]:
@@ -81,17 +97,18 @@ def fill(template: str, ctx: dict) -> str:
     return re.sub(r"\{([a-zA-Z_][a-zA-Z0-9_]*)\}", repl, template)
 
 
-def call_claude(system: str, user: str, use_search: bool) -> str:
+def call_claude(system: str, user: str, use_search: bool, model: str = MODEL) -> str:
     import anthropic
     client = anthropic.Anthropic(api_key=api_key())
     tools = [{"type": "web_search_20260209", "name": "web_search", "max_uses": 6}] if use_search else []
     messages = [{"role": "user", "content": user}]
+    # adaptive thinking on the 4.6+ models (Opus/Sonnet); Haiku 4.5 doesn't take it
+    think = {"thinking": {"type": "adaptive"}} if model.startswith(("claude-opus", "claude-sonnet")) else {}
     for _ in range(8):  # pause_turn loop for server-side web search
         resp = client.messages.create(
-            model=MODEL, max_tokens=12000,
-            thinking={"type": "adaptive"},
+            model=model, max_tokens=12000,
             system=system, messages=messages,
-            tools=tools or anthropic.NOT_GIVEN,
+            tools=tools or anthropic.NOT_GIVEN, **think,
         )
         if resp.stop_reason == "pause_turn":
             messages.append({"role": "assistant", "content": resp.content})
@@ -114,9 +131,9 @@ def run_stage(proj: Path, stage: int, dry: bool) -> int:
     # (preamble + "I've saved it" + a summary instead of the full document). Strip it.
     prompt = re.sub(r"(?im)^.*save (the )?output to.*$\n?", "", prompt)
 
-    # prior stage outputs as upstream context
+    # lean upstream context — only the outputs this stage actually depends on
     prior = []
-    for n in range(1, stage):
+    for n in DEPS.get(stage, list(range(1, stage))):
         of = proj / STAGES[n][1]
         if of.exists():
             prior.append(f"=== {STAGES[n][1]} (upstream output) ===\n{of.read_text(encoding='utf-8')}")
@@ -139,14 +156,15 @@ def run_stage(proj: Path, stage: int, dry: bool) -> int:
     )
     user = (("\n\n".join(prior) + "\n\n") if prior else "") + prompt + contract
 
-    print(f"[stage {stage}] {stem} -> {outfile}  (web_search={use_search})")
+    model = stage_model(stage)
+    print(f"[stage {stage}] {stem} -> {outfile}  (model={model}, web_search={use_search}, deps={DEPS.get(stage)})")
     if dry:
-        print(f"  DRY: system {len(system)} chars, user {len(user)} chars; would call {MODEL}")
+        print(f"  DRY: system {len(system)} chars, user {len(user)} chars; would call {model}")
         return 0
     if not api_key():
         sys.exit("[ERROR] ANTHROPIC/EXPO_PUBLIC_ANTHROPIC_API_KEY not in .env")
     t0 = time.time()
-    out = call_claude(system, user, use_search)
+    out = call_claude(system, user, use_search, model)
     (proj / outfile).write_text(out, encoding="utf-8")
     upd_manifest(proj, stage, outfile, len(out), time.time() - t0)
     print(f"  wrote {outfile} ({len(out)} chars) in {time.time()-t0:.0f}s")
