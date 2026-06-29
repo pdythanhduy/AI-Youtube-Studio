@@ -52,16 +52,27 @@ API_URL = "https://vbee.vn/api/v1/tts"
 RESULT_URL = "https://vbee.vn/api/v1/tts/{request_id}/callback-result"
 
 
-def segments_from_voice(raw: str) -> list[str]:
-    txt = re.sub(r"\[[^\]]*\]", "", raw)      # drop [PAUSE]/[SLOW]/[WHISPER]/... markers
-    txt = txt.replace("\r", "").replace("\n", "")
+def segments_from_voice(raw: str) -> list[dict]:
+    # keep [PAUSE:Ns] (pacing); drop the spoken-delivery markers ([SLOW]/[FAST]/[NORMAL]/[WHISPER]/...)
+    txt = re.sub(r"\[(?!PAUSE)[^\]]*\]", " ", raw, flags=re.I)
+    txt = txt.replace("\r", "").replace("\n", " ")
     parts = re.split(r"(?<=[。！？!?])", txt)   # keep sentence-ending punctuation
-    segs = [p.strip() for p in parts if p.strip()]
+    segs: list[dict] = []
+    for p in parts:
+        pauses = re.findall(r"\[PAUSE:?\s*([0-9.]+)\s*s?\]", p, flags=re.I)
+        pause = min(3.0, sum(float(x) for x in pauses)) if pauses else 0.0
+        text = re.sub(r"\[[^\]]*\]", "", p).strip()
+        if not text:                               # stray pause marker -> add to previous seg
+            if segs and pause:
+                segs[-1]["pause_after"] = min(3.0, segs[-1]["pause_after"] + pause)
+            continue
+        segs.append({"text": text, "pause_after": pause or 0.35})  # 0.35s default breathing gap
     # merge very short fragments into the previous segment
-    merged: list[str] = []
+    merged: list[dict] = []
     for s in segs:
-        if merged and len(s) < 6:
-            merged[-1] += s
+        if merged and len(s["text"]) < 6:
+            merged[-1]["text"] += s["text"]
+            merged[-1]["pause_after"] = s["pause_after"]
         else:
             merged.append(s)
     return merged
@@ -151,7 +162,7 @@ def main() -> int:
     segs = segments_from_voice(vs.read_text(encoding="utf-8"))
     if a.list:
         for i, s in enumerate(segs, 1):
-            print(f"  seg {i:02d} ({len(s)} chars): {s[:48]}")
+            print(f"  seg {i:02d} ({len(s['text'])} chars, pause {s['pause_after']}s): {s['text'][:44]}")
         print(f"total: {len(segs)} segments")
         return 0
     if a.limit:
@@ -172,12 +183,13 @@ def main() -> int:
             print(f"SKIP seg {i:02d} (exists)")
             continue
         try:
-            print(f"TTS  seg {i:02d} ({len(s)} chars) ...", flush=True)
-            audio = synth(s, token, app_id, voice, callback)
+            print(f"TTS  seg {i:02d} ({len(s['text'])} chars) ...", flush=True)
+            audio = synth(s["text"], token, app_id, voice, callback)
             out.parent.mkdir(parents=True, exist_ok=True)
             out.write_bytes(audio)
             rows.append({"seg": i, "file": str(out.relative_to(proj)),
-                         "chars": len(s), "bytes": len(audio), "text": s})
+                         "chars": len(s["text"]), "bytes": len(audio),
+                         "pause_after": s["pause_after"], "text": s["text"]})
             print(f"     saved {out.relative_to(proj)} ({len(audio)//1024} KB)")
         except Exception as e:
             print(f"[ERROR] seg {i:02d}: {e}", file=sys.stderr)

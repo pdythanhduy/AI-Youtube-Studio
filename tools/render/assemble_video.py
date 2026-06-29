@@ -10,10 +10,12 @@ narration muxed on top.
 Inputs:  projects/<slug>/assets/audio/seg_NN.mp3, assets/images/beat_NN.jpg
 Output:  projects/<slug>/export/rough/<slug>_rough.mp4
 
-Still a rough auto-cut (no motion-graphic data cards / ambience bed yet — those remain
-the polish backlog), but now with image motion + title, much closer to the hand-made bar.
+Audio is paced (each segment keeps its [PAUSE] gap from voice_script) and a low ambience
+bed is mixed under the narration (a provided assets/ambience.* file, else a synthesized
+rumble). Motion-graphic data cards remain the polish backlog.
 
 Usage: python tools/render/assemble_video.py --project <slug>
+       [--no-ambience] [--ambience FILE] [--no-motion]
 """
 from __future__ import annotations
 import argparse, json, re, shutil, subprocess, sys, tempfile
@@ -73,6 +75,8 @@ def main() -> int:
     ap = argparse.ArgumentParser(description="Assemble TTS audio + beat images into a motion video")
     ap.add_argument("--project", required=True)
     ap.add_argument("--no-motion", action="store_true", help="disable Ken Burns (static fallback)")
+    ap.add_argument("--no-ambience", action="store_true", help="disable the background ambience bed")
+    ap.add_argument("--ambience", help="ambience audio file to use (else synthesized)")
     a = ap.parse_args()
     proj = PROJECTS / a.project
     audio = sorted((proj / "assets" / "audio").glob("seg_*.mp3"), key=numkey)
@@ -85,15 +89,69 @@ def main() -> int:
 
     work = Path(tempfile.mkdtemp(prefix="assemble_", dir=str(proj)))
     try:
-        # 1) narration
+        # 1) narration — pace each segment with its trailing [PAUSE] gap, then lay an ambience bed
+        amf = proj / "audio_manifest.json"
+        items: list[list] = []
+        manifest_has_pause = False
+        if amf.exists():
+            data = json.loads(amf.read_text(encoding="utf-8"))
+            segs_m = sorted(data.get("segments", []), key=lambda x: x.get("seg", 0))
+            manifest_has_pause = any("pause_after" in s for s in segs_m)
+            for s in segs_m:
+                f = proj / s["file"]
+                if f.exists():
+                    items.append([f, float(s.get("pause_after", 0.35))])
+        if not items:
+            items = [[p, 0.35] for p in audio]   # no manifest -> uniform breathing gap
+        # fallback: if the manifest predates pacing, derive pauses from voice_script.txt
+        if not manifest_has_pause and (proj / "voice_script.txt").exists():
+            try:
+                sys.path.insert(0, str(REPO / "tools" / "audio"))
+                from tts_generate import segments_from_voice
+                vp = [s["pause_after"] for s in segments_from_voice((proj / "voice_script.txt").read_text(encoding="utf-8"))]
+                if len(vp) == len(items):
+                    for it, p in zip(items, vp):
+                        it[1] = p
+            except Exception:
+                pass
+        # pad each segment with its pause; normalize params so concat -c copy is safe
+        padded = []
+        for i, (f, pause) in enumerate(items):
+            pf = work / f"a_{i:04d}.m4a"
+            af = f"apad=pad_dur={pause:.2f}" if pause > 0 else "anull"
+            run(["ffmpeg", "-y", "-i", str(f), "-af", af, "-ar", "44100", "-ac", "2",
+                 "-c:a", "aac", "-b:a", "192k", str(pf)])
+            padded.append(pf)
         alist = work / "audio.txt"
-        alist.write_text("".join(f"file '{p.resolve().as_posix()}'\n" for p in audio), encoding="utf-8")
-        narration = work / "narration.m4a"
-        run(["ffmpeg", "-y", "-f", "concat", "-safe", "0", "-i", str(alist),
-             "-c:a", "aac", "-b:a", "192k", str(narration)])
-        total = duration(narration)
+        alist.write_text("".join(f"file '{p.resolve().as_posix()}'\n" for p in padded), encoding="utf-8")
+        voice_track = work / "voice.m4a"
+        run(["ffmpeg", "-y", "-f", "concat", "-safe", "0", "-i", str(alist), "-c", "copy", str(voice_track)])
+        total = duration(voice_track)
         if total <= 0:
             sys.exit("[ERROR] narration has zero duration")
+
+        narration = voice_track
+        amb_label = "no ambience"
+        if not a.no_ambience:
+            amb_src = (Path(a.ambience) if a.ambience else
+                       next((c for c in [proj / "assets" / "ambience.mp3", proj / "assets" / "ambience.wav",
+                                         REPO / "assets" / "ambience.mp3"] if c.exists()), None))
+            amb = work / "amb.m4a"
+            if amb_src:
+                amb_label = f"ambience({Path(amb_src).name})"
+                run(["ffmpeg", "-y", "-stream_loop", "-1", "-i", str(amb_src), "-t", f"{total:.2f}",
+                     "-af", "volume=0.18", "-ar", "44100", "-ac", "2", "-c:a", "aac", str(amb)])
+            else:  # synthesize a quiet, low-passed rumble bed (dark-documentary atmosphere)
+                amb_label = "ambience(synth)"
+                run(["ffmpeg", "-y", "-f", "lavfi", "-i", "anoisesrc=color=brown:amplitude=0.7:r=44100",
+                     "-t", f"{total:.2f}", "-af", "highpass=f=40,lowpass=f=320,volume=0.06",
+                     "-ac", "2", "-c:a", "aac", str(amb)])
+            narration = work / "narration.m4a"
+            run(["ffmpeg", "-y", "-i", str(voice_track), "-i", str(amb), "-filter_complex",
+                 "[0:a][1:a]amix=inputs=2:duration=first:normalize=0[a]", "-map", "[a]",
+                 "-c:a", "aac", "-b:a", "192k", str(narration)])
+            total = duration(narration)
+        print(f"audio: {len(items)} paced segs | {amb_label} | total {total:.1f}s")
 
         n = len(images)
         per = round(total / n, 3)

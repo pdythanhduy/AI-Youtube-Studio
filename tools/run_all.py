@@ -42,6 +42,36 @@ def project_title(proj: Path) -> str:
     return proj.name
 
 
+def review_caption(proj: Path) -> str:
+    """Telegram review caption: recommended title + description + hashtags from seo.md,
+    so the owner reviews the full publish package (not just the video). Capped for Telegram."""
+    title, desc, tags = project_title(proj), "", ""
+    seo = proj / "seo.md"
+    if seo.exists():
+        txt = seo.read_text(encoding="utf-8")
+        m = re.search(r"Recommended:\**\s*Option\s*(\d)", txt)          # which title option
+        opt = m.group(1) if m else "1"
+        mo = re.search(rf"###\s*Option\s*{opt}\b[^\n]*\n+([^\n]+)", txt)
+        if mo:
+            title = re.sub(r"\s*\[\d+\s*characters?\]\s*$", "", mo.group(1)).strip().strip("「」\" ")
+        md = re.search(r"##\s*Description\s*\n+(.+?)(?:\n##\s|\Z)", txt, re.S)  # description body
+        if md:
+            body = re.split(r"━{3,}|^CHAPTERS|^TAGS", md.group(1), maxsplit=1, flags=re.M)[0].strip()
+            desc = body[:700].rstrip()
+        seen: list[str] = []                                            # hashtags (dedup)
+        for h in re.findall(r"#[^\s#、。]+", txt):
+            if h not in seen:
+                seen.append(h)
+        tags = " ".join(seen[:8])
+    parts = ["[AUTOPILOT — NEEDS REVIEW]", f"📺 {title}"]
+    if desc:
+        parts.append("\n" + desc)
+    if tags:
+        parts.append("\n🏷 " + tags)
+    parts.append("\n⚠️ upload_allowed=false — review only; YouTube upload là bước riêng.")
+    return "\n".join(parts)[:3500]
+
+
 def main() -> int:
     try:
         sys.stdout.reconfigure(encoding="utf-8", errors="replace")
@@ -128,7 +158,7 @@ def main() -> int:
         if passed:
             step("6/6 DELIVER (Telegram — for human review)", [
                 "tools/deliver/drive_send.py", "--upload", str(rough.relative_to(REPO)),
-                "--caption", f"[AUTOPILOT — NEEDS REVIEW] {project_title(proj)}", "--notify"])
+                "--caption", review_caption(proj), "--notify"])
         else:
             why = "QA skipped (--skip-qa)" if a.skip_qa else project_status
             print(f"\n[run_all] DELIVERY BLOCKED by QA gate ({why}). Nothing sent to Telegram.")
