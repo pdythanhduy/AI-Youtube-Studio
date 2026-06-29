@@ -42,16 +42,50 @@ load_env()
 TOKEN = os.environ.get("STUDIO_BOT_TOKEN")
 OWNER = os.environ.get("STUDIO_OWNER_CHAT_ID") or os.environ.get("TELEGRAM_CHAT_ID")
 API = f"https://api.telegram.org/bot{TOKEN}"
+
+sys.path.insert(0, str(REPO / "tools" / "review"))
+from update_human_decision import apply_decision, build_review_card  # noqa: E402
+
 LOCK = threading.Lock()
 STATE = {"running": False, "topic": None, "since": None}
 
 
-def send(text: str) -> None:
+def send(text: str, reply_markup: dict | None = None) -> None:
     try:
-        data = urllib.parse.urlencode({"chat_id": OWNER, "text": text}).encode()
-        urllib.request.urlopen(f"{API}/sendMessage", data=data, timeout=20).read()
+        body = {"chat_id": OWNER, "text": text}
+        if reply_markup:
+            body["reply_markup"] = json.dumps(reply_markup)
+        urllib.request.urlopen(f"{API}/sendMessage", data=urllib.parse.urlencode(body).encode(), timeout=20).read()
     except Exception as e:
         print(f"[send fail] {e}", file=sys.stderr)
+
+
+def answer_cb(cb_id: str, text: str = "") -> None:
+    try:
+        data = urllib.parse.urlencode({"callback_query_id": cb_id, "text": text}).encode()
+        urllib.request.urlopen(f"{API}/answerCallbackQuery", data=data, timeout=15).read()
+    except Exception:
+        pass
+
+
+def edit_msg(chat_id, message_id, text: str) -> None:
+    try:
+        data = urllib.parse.urlencode({"chat_id": chat_id, "message_id": message_id, "text": text}).encode()
+        urllib.request.urlopen(f"{API}/editMessageText", data=data, timeout=15).read()
+    except Exception:
+        pass
+
+
+def _manifest(pid: str):
+    mf = REPO / "runtime" / Path(pid).name / "human_review_manifest.json"
+    return (mf, json.loads(mf.read_text(encoding="utf-8"))) if mf.exists() else (mf, None)
+
+
+def _review_keyboard(pid: str, ready: bool) -> dict:
+    row = ([{"text": "✅ Approve", "callback_data": f"approve:{pid}"}] if ready else []) + \
+          [{"text": "❌ Reject", "callback_data": f"reject:{pid}"},
+           {"text": "🔁 Revise", "callback_data": f"revise:{pid}"}]
+    return {"inline_keyboard": [row]}
 
 
 def run_job(topic: str) -> None:
@@ -82,11 +116,34 @@ def handle(text: str) -> None:
         if not LOCK.acquire(blocking=False):
             send(f"⏳ Đang chạy job khác ({STATE['topic']}). Đợi xong đã."); return
         threading.Thread(target=run_job, args=(topic,), daemon=True).start()
+    elif cmd == "/review":
+        pid = arg.strip()
+        if not pid:
+            send("Cú pháp: /review <project_id>"); return
+        _, m = _manifest(pid)
+        if not m:
+            send(f"Chưa có manifest cho {pid} (đã chạy QA gate chưa?)"); return
+        ready = m.get("gate_status") == "READY_FOR_HUMAN_REVIEW"
+        card = build_review_card(pid, m)
+        if not ready:
+            card += f"\n\n⚠️ {m.get('gate_status')} — KHÔNG cho Approve (QA chưa pass). Chỉ Reject/Revise."
+        send(card, reply_markup=_review_keyboard(pid, ready))
     elif cmd == "/status":
-        send(f"Running: {STATE['running']}" + (f" — {STATE['topic']} (từ {STATE['since']})"
-                                               if STATE["running"] else ""))
+        pid = arg.strip()
+        if pid:
+            _, m = _manifest(pid)
+            if not m:
+                send(f"Chưa có manifest cho {pid}."); return
+            send(f"{pid}\n gate={m.get('gate_status')}  safety={m.get('safety_status')}\n"
+                 f" human_decision={m.get('human_decision')}  project_status={m.get('project_status','-')}\n"
+                 f" upload_allowed={m.get('upload_allowed')}")
+        else:
+            send(f"Running: {STATE['running']}" + (f" — {STATE['topic']} (từ {STATE['since']})"
+                                                   if STATE["running"] else ""))
     else:
-        send("🤖 AI-Youtube-Studio bot\n/make <chủ đề> — sinh video tự động + giao\n/status\n/help")
+        send("🤖 AI-Youtube-Studio bot\n/make <chủ đề> — sinh video + giao\n"
+             "/review <project_id> — duyệt (Approve/Reject/Revise)\n"
+             "/status [project_id] — trạng thái job hoặc project\n/help")
 
 
 def main() -> int:
@@ -102,6 +159,24 @@ def main() -> int:
             data = json.loads(urllib.request.urlopen(url, timeout=60).read().decode())
             for upd in data.get("result", []):
                 offset = upd["update_id"] + 1
+                cb = upd.get("callback_query")
+                if cb:
+                    frm = str((cb.get("from") or {}).get("id", ""))
+                    if frm != str(OWNER):
+                        answer_cb(cb.get("id"), "Not authorized")  # non-owner clicks ignored
+                        continue
+                    decision, _, pid = (cb.get("data") or "").partition(":")
+                    res = apply_decision(decision, by=frm, owner=OWNER, project_id=pid)
+                    cmsg = cb.get("message") or {}
+                    if res.get("ok"):
+                        answer_cb(cb.get("id"), f"{decision} ✓")
+                        edit_msg((cmsg.get("chat") or {}).get("id"), cmsg.get("message_id"),
+                                 f"[DECISION] {pid} → {res['project_status']} (by owner). "
+                                 f"upload_allowed=False — YouTube upload vẫn là gate riêng.")
+                    else:
+                        answer_cb(cb.get("id"), "Refused")
+                        send(f"❌ {pid}: {res.get('error')}")
+                    continue
                 msg = upd.get("message") or {}
                 chat_id = str((msg.get("chat") or {}).get("id", ""))
                 text = msg.get("text") or ""
