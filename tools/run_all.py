@@ -56,6 +56,12 @@ def main() -> int:
     ap.add_argument("--limit-images", type=int, default=0)
     ap.add_argument("--limit-audio", type=int, default=0)
     ap.add_argument("--deliver", action="store_true", help="send the rough video to Telegram (Drive link)")
+    ap.add_argument("--skip-qa", action="store_true",
+                    help="DEV ONLY: skip the mandatory QA/safety gate. Output is left UNVERIFIED and "
+                         "will NOT be delivered. Never use for anything that ships.")
+    ap.add_argument("--qa-no-llm", action="store_true",
+                    help="DEV: run the QA gate structurally only (no LLM judges). Semantic checks "
+                         "become WARN, so the gate will NOT report PASS and delivery stays blocked.")
     a = ap.parse_args()
     if not (a.topic or a.project):
         sys.exit("[ERROR] need --topic (new) or --project (existing)")
@@ -82,17 +88,52 @@ def main() -> int:
     if a.limit_audio:
         tts_cmd += ["--limit", str(a.limit_audio)]
     step("3/5 TTS (Vbee)", tts_cmd)
-    step("4/5 RENDER", ["tools/render/assemble_video.py", "--project", slug])
-
+    step("4/6 RENDER", ["tools/render/assemble_video.py", "--project", slug])
     rough = proj / "export" / "rough" / f"{slug}_rough.mp4"
+    if not rough.exists():
+        sys.exit("[ERROR] render produced no file")
+
+    # ── 5/6 QA / SAFETY GATE — mandatory, after render, BEFORE any delivery ──
+    manifest = None
+    if a.skip_qa:
+        print("\n" + "!" * 64)
+        print("!! --skip-qa: QA/SAFETY GATE SKIPPED — DEV ONLY.")
+        print("!! Output is UNVERIFIED for safety and will NOT be delivered.")
+        print("!! Never use --skip-qa for anything that ships.")
+        print("!" * 64)
+    else:
+        gate_cmd = [PY, "tools/qa/final_gate.py", "--project", slug]
+        if a.qa_no_llm:
+            gate_cmd.append("--no-llm")
+        print("\n===== 5/6 QA / SAFETY GATE =====", flush=True)
+        subprocess.run(gate_cmd, cwd=str(REPO))  # prints its own summary; do NOT exit on rc
+        mf = REPO / "runtime" / slug / "human_review_manifest.json"
+        if not mf.exists():
+            sys.exit("[run_all] QA gate produced no manifest — aborting (no silent fallthrough)")
+        manifest = json.loads(mf.read_text(encoding="utf-8"))
+
+    # ── State machine (upload_allowed stays false everywhere; run_all never publishes) ──
+    passed = bool(manifest and manifest.get("automatic_checks_passed"))
+    project_status = ("UNVERIFIED_QA_SKIPPED" if a.skip_qa
+                      else "READY_FOR_HUMAN_REVIEW" if passed else "BLOCKED_BY_QA")
+    print(f"\n[run_all] project_status = {project_status}   upload_allowed = False")
+    if manifest and not passed:
+        nonpass = [f"{k.replace('_status','')}={manifest[k]}" for k in
+                   ("source_status", "script_status", "image_status", "render_status")
+                   if manifest.get(k) != "pass"]
+        print(f"[run_all] gate did NOT pass — non-passing checks: {nonpass}")
+
+    # ── 6/6 DELIVERY — only when the gate PASSED ──
     if a.deliver:
-        if not rough.exists():
-            sys.exit("[ERROR] render produced no file; cannot deliver")
-        step("5/5 DELIVER (Telegram)", [
-            "tools/deliver/drive_send.py", "--upload", str(rough.relative_to(REPO)),
-            "--caption", f"[AUTOPILOT] {project_title(proj)}", "--notify"])
-    print(f"\n[run_all] DONE — {rough.relative_to(REPO) if rough.exists() else '(no video)'}")
-    return 0
+        if passed:
+            step("6/6 DELIVER (Telegram — for human review)", [
+                "tools/deliver/drive_send.py", "--upload", str(rough.relative_to(REPO)),
+                "--caption", f"[AUTOPILOT — NEEDS REVIEW] {project_title(proj)}", "--notify"])
+        else:
+            why = "QA skipped (--skip-qa)" if a.skip_qa else project_status
+            print(f"\n[run_all] DELIVERY BLOCKED by QA gate ({why}). Nothing sent to Telegram.")
+    print(f"\n[run_all] DONE — status={project_status}, video={rough.relative_to(REPO)}")
+    return 0 if (a.skip_qa or passed) else 2
 
 
 if __name__ == "__main__":

@@ -68,9 +68,30 @@ python tools/qa/script_check.py --project <project_id>
 ```
 Exit code is non-zero if any check fails (CI / automation friendly).
 
-## Where it sits in the autopilot
+## Where it sits in the autopilot (WIRED into `run_all.py`)
 
-`run_all.py` (text → images → TTS → render) should call `final_gate.py` **before**
-the delivery step; deliver to Telegram only at `automatic_checks_passed` (for human
-review), and never set `upload_allowed=true` without explicit per-action user approval.
-(Wiring the gate into run_all and the Telegram approve/reject loop is a follow-up.)
+`run_all.py` runs the gate as **step 5/6**, after RENDER and before DELIVERY:
+
+```
+1 TEXT → 2 IMAGES → 3 TTS → 4 RENDER → 5 QA GATE → 6 DELIVER (only if gate PASSED)
+```
+
+State machine enforced by `run_all.py`:
+
+| Gate outcome | `project_status` | Telegram delivery | `upload_allowed` |
+|---|---|---|---|
+| all checks **pass** | `READY_FOR_HUMAN_REVIEW` | allowed (caption `[AUTOPILOT — NEEDS REVIEW]`) | **false** |
+| any **warn / needs_review** | `BLOCKED_BY_QA` | **blocked** (logged) | **false** |
+| any **fail** | `BLOCKED_BY_QA` | **blocked** (logged) | **false** |
+| `--skip-qa` (dev) | `UNVERIFIED_QA_SKIPPED` | **never delivered** | **false** |
+
+- The gate **always runs** by default. If it produces no manifest, `run_all` aborts
+  (no silent fallthrough). Non-passing checks are printed by name.
+- `--qa-no-llm` (dev) runs the gate structurally only → semantic checks WARN → never
+  PASS → delivery stays blocked. `--skip-qa` (dev) skips the gate entirely, leaves the
+  output UNVERIFIED, and disables delivery.
+- `run_all` **never** sets `upload_allowed=true` and never uploads to YouTube. Telegram
+  delivery is for human review only; publishing remains a separate, explicit user action.
+
+The Telegram approve/reject loop (human sets `human_decision`) and full-scale validation
+are the remaining go-live items — not part of this integration.
