@@ -21,8 +21,16 @@ import argparse, pickle, sys
 from pathlib import Path
 
 HERE = Path(__file__).resolve()
-DEFAULT_CLIENT = Path(r"C:/Users/thanh/japan-news-bot/client_secrets.json")
-DEFAULT_TG_ENV = Path(r"C:/Users/thanh/japan-news-bot/.env")
+
+
+def _jnb(name: str) -> Path:
+    """japan-news-bot resource path — Windows dev path if present, else ~/japan-news-bot (VPS)."""
+    win = Path("C:/Users/thanh/japan-news-bot") / name
+    return win if win.exists() else Path.home() / "japan-news-bot" / name
+
+
+DEFAULT_CLIENT = _jnb("client_secrets.json")
+DEFAULT_TG_ENV = _jnb(".env")
 TOKEN = HERE.parent / "drive_token.pickle"
 SCOPES = ["https://www.googleapis.com/auth/drive.file"]
 
