@@ -88,15 +88,23 @@ def _review_keyboard(pid: str, ready: bool) -> dict:
     return {"inline_keyboard": [row]}
 
 
-def run_job(topic: str) -> None:
-    STATE.update(running=True, topic=topic, since=time.strftime("%H:%M:%S"))
-    send(f"🎬 Bắt đầu pipeline: {topic}\n(text → ảnh → TTS → render → giao). Mất ~25–40 phút.")
+def run_job(topic: str | None = None) -> None:
     try:
+        if not topic:                       # bare /make -> auto-pick a fresh safe topic
+            send("🎲 Đang chọn chủ đề...")
+            p = subprocess.run([PY, "tools/daily/pick_topic.py"], cwd=str(REPO),
+                               capture_output=True, text=True)
+            topic = p.stdout.strip().splitlines()[-1].strip() if (p.returncode == 0 and p.stdout.strip()) else ""
+            if not topic:
+                send(f"❌ Không chọn được chủ đề:\n{(p.stderr or '')[-300:]}")
+                return
+        STATE.update(running=True, topic=topic, since=time.strftime("%H:%M:%S"))
+        send(f"🎬 Bắt đầu pipeline: {topic}\n(text → ảnh → TTS → render → QA → giao). ~30–50 phút.")
         r = subprocess.run([PY, "tools/run_all.py", "--topic", topic,
                             "--niche", "japanese_mystery", "--language", "ja", "--deliver"],
                            cwd=str(REPO), capture_output=True, text=True)
         if r.returncode == 0:
-            send("✅ Xong — video đã giao qua link Telegram phía trên.")
+            send("✅ Xong — video + thumbnail + mô tả đã giao ở trên (để bạn duyệt).")
         else:
             send(f"❌ Lỗi pipeline:\n{(r.stderr or r.stdout)[-800:]}")
     except Exception as e:
@@ -109,10 +117,8 @@ def run_job(topic: str) -> None:
 def handle(text: str) -> None:
     cmd, _, arg = text.strip().partition(" ")
     cmd = cmd.lower()
-    if cmd in ("/make", "/làm", "/lam"):
-        topic = arg.strip()
-        if not topic:
-            send("Cú pháp: /make <chủ đề>"); return
+    if cmd in ("/make", "/làm", "/lam", "/tao", "/tạo"):
+        topic = arg.strip() or None        # no topic -> auto-pick
         if not LOCK.acquire(blocking=False):
             send(f"⏳ Đang chạy job khác ({STATE['topic']}). Đợi xong đã."); return
         threading.Thread(target=run_job, args=(topic,), daemon=True).start()
@@ -141,7 +147,8 @@ def handle(text: str) -> None:
             send(f"Running: {STATE['running']}" + (f" — {STATE['topic']} (từ {STATE['since']})"
                                                    if STATE["running"] else ""))
     else:
-        send("🤖 AI-Youtube-Studio bot\n/make <chủ đề> — sinh video + giao\n"
+        send("🤖 AI-Youtube-Studio bot\n"
+             "/make — tự chọn chủ đề, sinh video + giao (hoặc /make <chủ đề>)\n"
              "/review <project_id> — duyệt (Approve/Reject/Revise)\n"
              "/status [project_id] — trạng thái job hoặc project\n/help")
 
