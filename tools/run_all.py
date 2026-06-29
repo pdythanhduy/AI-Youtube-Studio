@@ -123,6 +123,10 @@ def main() -> int:
     if not rough.exists():
         sys.exit("[ERROR] render produced no file")
 
+    # thumbnail (free, PIL) — completes the publish package; non-fatal if it fails
+    print("\n===== 4b/6 THUMBNAIL =====", flush=True)
+    subprocess.run([PY, "tools/visuals/render_thumbnail.py", "--project", slug], cwd=str(REPO))
+
     # ── 5/6 QA / SAFETY GATE — mandatory, after render, BEFORE any delivery ──
     manifest = None
     if a.skip_qa:

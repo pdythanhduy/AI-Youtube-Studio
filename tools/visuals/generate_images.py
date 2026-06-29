@@ -76,9 +76,31 @@ def _req(url: str, key: str, method="GET", body=None) -> dict:
         raise RuntimeError(f"HTTP {e.code} {detail}".strip()) from None
 
 
-def generate_one(prompt: str, key: str) -> str:
+_TRIGGER = [(r"\bgun batter\w*", "old fortification"), (r"\bbatter(?:y|ies)\b", "stone emplacement"),
+            (r"\b(?:guns?|cannons?|artiller\w*)\b", "old emplacement"), (r"\bweapons?\b", "structures"),
+            (r"\bmilitary\b", "historic"), (r"\b(?:soldiers?|troops?)\b", "figures"),
+            (r"\bdemolish\w*\b", "ruined"), (r"\b(?:corpses?|bodies|dead|blood\w*)\b", "")]
+
+
+def neutralize(prompt: str) -> str:
+    """Replace likely safety-trigger words (weapon/military/gore) with neutral equivalents."""
+    for pat, rep in _TRIGGER:
+        prompt = re.sub(pat, rep, prompt, flags=re.I)
+    return re.sub(r"\s{2,}", " ", prompt).strip()
+
+
+def _is_black(path: Path) -> bool:
+    try:
+        from PIL import Image, ImageStat
+        s = ImageStat.Stat(Image.open(path).convert("L"))
+        return s.mean[0] < 8 and s.stddev[0] < 6
+    except Exception:
+        return False
+
+
+def generate_one(prompt: str, key: str, safety: bool = True) -> str:
     payload = {"prompt": prompt, "image_size": {"width": OUT_W, "height": OUT_H},
-               "num_images": 1, "output_format": "jpeg", "enable_safety_checker": True}
+               "num_images": 1, "output_format": "jpeg", "enable_safety_checker": safety}
     sub = _req(f"{QUEUE}/{FAL_MODEL}", key, "POST", payload)
     rid = sub.get("request_id")
     status_url = sub.get("status_url") or f"{QUEUE}/{FAL_MODEL}/requests/{rid}/status"
@@ -148,11 +170,20 @@ def main() -> int:
             continue
         try:
             print(f"GEN  beat {it['beat']} ...", flush=True)
-            url = generate_one(it["prompt"], key)
-            download(url, out)
+            download(generate_one(it["prompt"], key), out)
+            gstat = "ok"
+            if _is_black(out):                       # FLUX safety-blanked / failed -> retry, safety off
+                print(f"     beat {it['beat']} returned black; retry (safety checker off)")
+                download(generate_one(it["prompt"], key, safety=False), out)
+                if _is_black(out):                   # still black -> neutralize trigger words, safety on
+                    print(f"     still black; retry with neutralized prompt")
+                    download(generate_one(neutralize(it["prompt"]), key), out)
+                    gstat = "ok_neutralized" if not _is_black(out) else "BLACK_FAILED"
+                else:
+                    gstat = "ok_safety_off"
             rows.append({"beat": it["beat"], "file": str(out.relative_to(proj)),
-                         "title": it["title"], "qa_status": "PENDING_QA"})
-            print(f"     saved {out.relative_to(proj)}")
+                         "title": it["title"], "qa_status": "PENDING_QA", "gen_status": gstat})
+            print(f"     saved {out.relative_to(proj)}" + ("" if gstat == "ok" else f"  [{gstat}]"))
         except Exception as e:
             print(f"[ERROR] beat {it['beat']}: {e}", file=sys.stderr)
     if rows:
