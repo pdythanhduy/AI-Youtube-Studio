@@ -20,6 +20,7 @@ Run (VPS):  python tools/bot/studio_bot.py     (under tmux/systemd; one instance
 """
 from __future__ import annotations
 import os, sys, time, threading, subprocess, urllib.request, urllib.parse, urllib.error, json
+import requests
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[2]
@@ -55,23 +56,22 @@ def send(text: str, reply_markup: dict | None = None) -> None:
         body = {"chat_id": OWNER, "text": text}
         if reply_markup:
             body["reply_markup"] = json.dumps(reply_markup)
-        urllib.request.urlopen(f"{API}/sendMessage", data=urllib.parse.urlencode(body).encode(), timeout=20).read()
+        requests.post(f"{API}/sendMessage", data=body, timeout=20)
     except Exception as e:
         print(f"[send fail] {e}", file=sys.stderr)
 
 
 def answer_cb(cb_id: str, text: str = "") -> None:
     try:
-        data = urllib.parse.urlencode({"callback_query_id": cb_id, "text": text}).encode()
-        urllib.request.urlopen(f"{API}/answerCallbackQuery", data=data, timeout=15).read()
+        requests.post(f"{API}/answerCallbackQuery", data={"callback_query_id": cb_id, "text": text}, timeout=15)
     except Exception:
         pass
 
 
 def edit_msg(chat_id, message_id, text: str) -> None:
     try:
-        data = urllib.parse.urlencode({"chat_id": chat_id, "message_id": message_id, "text": text}).encode()
-        urllib.request.urlopen(f"{API}/editMessageText", data=data, timeout=15).read()
+        requests.post(f"{API}/editMessageText",
+                      data={"chat_id": chat_id, "message_id": message_id, "text": text}, timeout=15)
     except Exception:
         pass
 
@@ -162,8 +162,9 @@ def main() -> int:
     offset = 0
     while True:
         try:
-            url = f"{API}/getUpdates?timeout=50&offset={offset}"
-            data = json.loads(urllib.request.urlopen(url, timeout=60).read().decode())
+            # short long-poll via requests — the 50s urllib long-poll was being dropped on the VPS
+            resp = requests.get(f"{API}/getUpdates", params={"timeout": 10, "offset": offset}, timeout=25)
+            data = resp.json()
             for upd in data.get("result", []):
                 offset = upd["update_id"] + 1
                 cb = upd.get("callback_query")
@@ -191,10 +192,10 @@ def main() -> int:
                     continue  # owner-only
                 if text:
                     handle(text)
-        except urllib.error.URLError:
-            time.sleep(5)
+        except requests.exceptions.RequestException:
+            time.sleep(3)
         except Exception as e:
-            print(f"[poll err] {e}", file=sys.stderr); time.sleep(5)
+            print(f"[poll err] {e}", file=sys.stderr); time.sleep(3)
 
 
 if __name__ == "__main__":
