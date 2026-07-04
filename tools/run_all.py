@@ -146,31 +146,43 @@ def main() -> int:
             sys.exit("[run_all] QA gate produced no manifest — aborting (no silent fallthrough)")
         manifest = json.loads(mf.read_text(encoding="utf-8"))
 
-    # ── State machine (upload_allowed stays false everywhere; run_all never publishes) ──
+    # ── State machine ── only a hard FAIL blocks delivery. WARN/NEEDS_REVIEW is DELIVERED to
+    # the human, flagged, because human review is the real gate (upload_allowed stays false).
     passed = bool(manifest and manifest.get("automatic_checks_passed"))
-    project_status = ("UNVERIFIED_QA_SKIPPED" if a.skip_qa
-                      else "READY_FOR_HUMAN_REVIEW" if passed else "BLOCKED_BY_QA")
+    hard_fail = bool(manifest and manifest.get("safety_status") == "fail")
+    nonpass = [f"{k.replace('_status','')}={manifest[k]}" for k in
+               ("source_status", "script_status", "image_status", "render_status")
+               if manifest and manifest.get(k) not in (None, "pass")]
+    if a.skip_qa:
+        project_status = "UNVERIFIED_QA_SKIPPED"
+    elif passed:
+        project_status = "READY_FOR_HUMAN_REVIEW"
+    elif hard_fail:
+        project_status = "BLOCKED_BY_QA"
+    else:
+        project_status = "NEEDS_HUMAN_REVIEW"        # warn-level: delivered, flagged
+    deliverable = (not a.skip_qa) and (passed or not hard_fail)
     print(f"\n[run_all] project_status = {project_status}   upload_allowed = False")
-    if manifest and not passed:
-        nonpass = [f"{k.replace('_status','')}={manifest[k]}" for k in
-                   ("source_status", "script_status", "image_status", "render_status")
-                   if manifest.get(k) != "pass"]
-        print(f"[run_all] gate did NOT pass — non-passing checks: {nonpass}")
+    if nonpass:
+        print(f"[run_all] non-passing checks: {nonpass}")
 
-    # ── 6/6 DELIVERY — only when the gate PASSED ──
+    # ── 6/6 DELIVERY — PASS or WARN delivered for review; only a hard FAIL blocks ──
     if a.deliver:
-        if passed:
+        if deliverable:
+            caption = review_caption(proj)
+            if not passed:                            # warn-level: prepend a clear flag
+                caption = f"⚠️ QA CẢNH BÁO — xem kỹ trước khi đăng ({', '.join(nonpass)})\n\n" + caption
             deliver_cmd = ["tools/deliver/drive_send.py", "--upload", str(rough.relative_to(REPO)),
-                           "--caption", review_caption(proj), "--notify"]
+                           "--caption", caption, "--notify"]
             thumb = proj / "export" / "thumbnail" / f"{slug}_thumb.jpg"
             if thumb.exists():
                 deliver_cmd += ["--thumbnail", str(thumb.relative_to(REPO))]
-            step("6/6 DELIVER (Telegram — for human review)", deliver_cmd)
+            step("6/6 DELIVER" + ("" if passed else " (⚠️ NEEDS REVIEW)"), deliver_cmd)
         else:
-            why = "QA skipped (--skip-qa)" if a.skip_qa else project_status
-            print(f"\n[run_all] DELIVERY BLOCKED by QA gate ({why}). Nothing sent to Telegram.")
+            why = "QA skipped (--skip-qa)" if a.skip_qa else "hard FAIL"
+            print(f"\n[run_all] DELIVERY BLOCKED ({why}). Nothing sent to Telegram.")
     print(f"\n[run_all] DONE — status={project_status}, video={rough.relative_to(REPO)}")
-    return 0 if (a.skip_qa or passed) else 2
+    return 0 if (a.skip_qa or not hard_fail) else 2
 
 
 if __name__ == "__main__":
