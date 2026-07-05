@@ -31,6 +31,19 @@ python tools/build_dub.py --mix --video <source_video.mp4> --background <no_voca
 
 File media (audio/, export/) không commit — xem .gitignore gốc repo.
 
+## Rebrand watermark
+
+Kênh tiếng Nhật: **ネタバレ映画館** (gợi ý handle `@netabare-eigakan`).
+
+```bash
+python tools/brand_watermark.py --input export/sieu_trom_iq300_ja_dub.mp4 --text "ネタバレ映画館"
+```
+
+Xóa logo kênh gốc (tĩnh, góc trên-trái, bbox mặc định `6,6,300,88` cho 1080p)
+bằng `delogo`, overlay watermark chữ (Pillow + font Yu Gothic Bold, opacity ~59%)
+tại (24,18), encode h264_nvenc cq19, audio copy →
+`export/sieu_trom_iq300_ja_dub_branded.mp4`.
+
 ## Lưu ý bản quyền
 
 Chỉ dùng khi bạn sở hữu video gốc (kênh của bạn). Video chứa footage phim của

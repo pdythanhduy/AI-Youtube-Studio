@@ -23,6 +23,15 @@ Ngày: 2026-07-05
 - `export/sieu_trom_iq300_ja_dub.mp4` — video track copy nguyên gốc (không re-encode),
   audio AAC 192k
 
+## Rebrand watermark (v2)
+- Logo kênh gốc "nguyen review": tĩnh, góc trên-trái, xác nhận tại 4 mốc
+  (30s/342s/900s/1600s) → delogo bbox x=6,y=6,w=300,h=88
+- Watermark mới: chữ ネタバレ映画館 (Yu Gothic Bold 54px, trắng viền tối,
+  opacity ~59%) overlay tại (24,18)
+- Encode: libx264 crf19 medium (NVENC không dùng được — driver 12.2 < API 13.0
+  của ffmpeg 7.1.1), audio copy nguyên mix đã QC
+- Output: `export/sieu_trom_iq300_ja_dub_branded.mp4`
+
 ## Hạn chế đã biết
 - Bản dịch cô đọng (~không dịch từng chữ) để lời Nhật đọc vừa đúng khung 12s/đoạn;
   nội dung cốt truyện giữ nguyên theo từng phân đoạn.
