@@ -1,0 +1,49 @@
+# QC report — sieu-trom-iq300-ja-dub v1
+
+Ngày: 2026-07-05
+
+## Nguồn
+- Video: https://www.youtube.com/watch?v=mQ_FK6_o678 (1642s, 1080p, "Nguyễn Review 2")
+- Phụ đề: auto-captions tiếng Việt (json3, word-level timing), 8057 từ
+
+## Phân đoạn & khớp thời gian
+- 136 phân đoạn, phủ 1641/1642s (đoạn cuối S136 kết thúc 1641.2s)
+- Mỗi đoạn: end = start của đoạn kế → không hở, không chồng lấn
+- Time-fit sau khi rút gọn 5 câu dịch dài (S109/S125/S127/S128/S130):
+  - overflow > 0.3s: **0/136**
+  - tempo nén trung bình ~1.13×, tối đa ~1.39× (trên nền edge-tts +10%)
+
+## Giọng & âm thanh
+- TTS: edge-tts `ja-JP-KeitaNeural`, rate +10%, loudnorm -16 LUFS/đoạn
+- Nền: demucs htdemucs two-stems — dùng `no_vocals` (loại giọng Việt,
+  giữ nhạc + hiệu ứng phim), sidechain-duck dưới giọng Nhật
+- Mix cuối: loudnorm -14 LUFS, TP -1.0
+
+## Đầu ra
+- `export/sieu_trom_iq300_ja_dub.mp4` — video track copy nguyên gốc (không re-encode),
+  audio AAC 192k
+
+## Rebrand watermark (v2)
+- Logo kênh gốc "nguyen review": tĩnh, góc trên-trái, xác nhận tại 4 mốc
+  (30s/342s/900s/1600s) → delogo bbox x=6,y=6,w=300,h=88
+- Watermark mới: chữ ネタバレ映画館 (Yu Gothic Bold 54px, trắng viền tối,
+  opacity ~59%) overlay tại (24,18)
+- Encode: libx264 crf19 medium (NVENC không dùng được — driver 12.2 < API 13.0
+  của ffmpeg 7.1.1), audio copy nguyên mix đã QC
+- Output: `export/sieu_trom_iq300_ja_dub_branded.mp4`
+
+## Sự cố & khắc phục (v3)
+- **Lỗi**: audio câm từ ~9:30 trong cả 2 MP4 đầu ra — hai tiến trình ffmpeg mix
+  cùng ghi `ja_full_mix.wav` chạy chồng nhau, bước mux đọc file đang ghi dở.
+- **Khắc phục**: remux (video stream copy + audio từ `ja_full_mix.wav` hoàn chỉnh);
+  verify RMS tại 30/342/600/900/1300/1600s — tất cả có mức âm ~-17dB, duration 1642s,
+  watermark nguyên vẹn. `build_dub.py` nay ghi mix ra file tạm + rename atomic.
+- **Bài học QC**: kiểm tra âm thanh phải rải mốc đến cuối video, không chỉ 1 điểm.
+
+## Hạn chế đã biết
+- Bản dịch cô đọng (~không dịch từng chữ) để lời Nhật đọc vừa đúng khung 12s/đoạn;
+  nội dung cốt truyện giữ nguyên theo từng phân đoạn.
+- Tên nhân vật lấy theo phụ đề tự động (Berlin/Roy/Cameron/Brooks/Kayla/Ken…),
+  phụ đề gốc có nhiễu chính tả nên một số tên là phiên âm gần đúng.
+- Giọng nói trong phim (thoại gốc của diễn viên) cũng bị demucs loại cùng giọng
+  bình luận tiếng Việt — nền chỉ còn nhạc + hiệu ứng.

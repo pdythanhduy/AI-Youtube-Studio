@@ -1,0 +1,1090 @@
+[
+ {
+  "id": "S001",
+  "slot_s": 12.25,
+  "raw_s": 12.6,
+  "tempo": 1.029,
+  "fit_s": 12.23,
+  "overflow_s": 0.0
+ },
+ {
+  "id": "S002",
+  "slot_s": 12.05,
+  "raw_s": 13.75,
+  "tempo": 1.141,
+  "fit_s": 12.03,
+  "overflow_s": 0.0
+ },
+ {
+  "id": "S003",
+  "slot_s": 11.97,
+  "raw_s": 12.67,
+  "tempo": 1.059,
+  "fit_s": 11.95,
+  "overflow_s": 0.0
+ },
+ {
+  "id": "S004",
+  "slot_s": 11.93,
+  "raw_s": 8.66,
+  "tempo": 1.0,
+  "fit_s": 8.66,
+  "overflow_s": 0.0
+ },
+ {
+  "id": "S005",
+  "slot_s": 11.89,
+  "raw_s": 13.46,
+  "tempo": 1.132,
+  "fit_s": 11.87,
+  "overflow_s": 0.0
+ },
+ {
+  "id": "S006",
+  "slot_s": 11.89,
+  "raw_s": 9.6,
+  "tempo": 1.0,
+  "fit_s": 9.6,
+  "overflow_s": 0.0
+ },
+ {
+  "id": "S007",
+  "slot_s": 11.97,
+  "raw_s": 14.69,
+  "tempo": 1.227,
+  "fit_s": 11.95,
+  "overflow_s": 0.0
+ },
+ {
+  "id": "S008",
+  "slot_s": 11.97,
+  "raw_s": 12.7,
+  "tempo": 1.061,
+  "fit_s": 11.95,
+  "overflow_s": 0.0
+ },
+ {
+  "id": "S009",
+  "slot_s": 12.05,
+  "raw_s": 12.84,
+  "tempo": 1.065,
+  "fit_s": 12.03,
+  "overflow_s": 0.0
+ },
+ {
+  "id": "S010",
+  "slot_s": 11.93,
+  "raw_s": 12.1,
+  "tempo": 1.014,
+  "fit_s": 11.91,
+  "overflow_s": 0.0
+ },
+ {
+  "id": "S011",
+  "slot_s": 12.01,
+  "raw_s": 11.16,
+  "tempo": 1.0,
+  "fit_s": 11.16,
+  "overflow_s": 0.0
+ },
+ {
+  "id": "S012",
+  "slot_s": 11.89,
+  "raw_s": 13.63,
+  "tempo": 1.146,
+  "fit_s": 11.87,
+  "overflow_s": 0.0
+ },
+ {
+  "id": "S013",
+  "slot_s": 11.89,
+  "raw_s": 12.07,
+  "tempo": 1.015,
+  "fit_s": 11.87,
+  "overflow_s": 0.0
+ },
+ {
+  "id": "S014",
+  "slot_s": 12.05,
+  "raw_s": 13.15,
+  "tempo": 1.092,
+  "fit_s": 12.03,
+  "overflow_s": 0.0
+ },
+ {
+  "id": "S015",
+  "slot_s": 11.89,
+  "raw_s": 12.62,
+  "tempo": 1.062,
+  "fit_s": 11.87,
+  "overflow_s": 0.0
+ },
+ {
+  "id": "S016",
+  "slot_s": 12.01,
+  "raw_s": 12.31,
+  "tempo": 1.025,
+  "fit_s": 11.99,
+  "overflow_s": 0.0
+ },
+ {
+  "id": "S017",
+  "slot_s": 11.93,
+  "raw_s": 12.7,
+  "tempo": 1.064,
+  "fit_s": 11.91,
+  "overflow_s": 0.0
+ },
+ {
+  "id": "S018",
+  "slot_s": 11.89,
+  "raw_s": 11.71,
+  "tempo": 1.0,
+  "fit_s": 11.71,
+  "overflow_s": 0.0
+ },
+ {
+  "id": "S019",
+  "slot_s": 11.93,
+  "raw_s": 10.78,
+  "tempo": 1.0,
+  "fit_s": 10.78,
+  "overflow_s": 0.0
+ },
+ {
+  "id": "S020",
+  "slot_s": 11.89,
+  "raw_s": 13.39,
+  "tempo": 1.126,
+  "fit_s": 11.87,
+  "overflow_s": 0.0
+ },
+ {
+  "id": "S021",
+  "slot_s": 11.89,
+  "raw_s": 13.2,
+  "tempo": 1.11,
+  "fit_s": 11.87,
+  "overflow_s": 0.0
+ },
+ {
+  "id": "S022",
+  "slot_s": 12.01,
+  "raw_s": 12.77,
+  "tempo": 1.063,
+  "fit_s": 11.99,
+  "overflow_s": 0.0
+ },
+ {
+  "id": "S023",
+  "slot_s": 11.97,
+  "raw_s": 11.86,
+  "tempo": 1.0,
+  "fit_s": 11.86,
+  "overflow_s": 0.0
+ },
+ {
+  "id": "S024",
+  "slot_s": 11.93,
+  "raw_s": 13.51,
+  "tempo": 1.133,
+  "fit_s": 11.91,
+  "overflow_s": 0.0
+ },
+ {
+  "id": "S025",
+  "slot_s": 11.89,
+  "raw_s": 13.06,
+  "tempo": 1.098,
+  "fit_s": 11.87,
+  "overflow_s": 0.0
+ },
+ {
+  "id": "S026",
+  "slot_s": 11.93,
+  "raw_s": 11.11,
+  "tempo": 1.0,
+  "fit_s": 11.11,
+  "overflow_s": 0.0
+ },
+ {
+  "id": "S027",
+  "slot_s": 11.97,
+  "raw_s": 15.89,
+  "tempo": 1.327,
+  "fit_s": 11.96,
+  "overflow_s": 0.0
+ },
+ {
+  "id": "S028",
+  "slot_s": 11.89,
+  "raw_s": 13.8,
+  "tempo": 1.161,
+  "fit_s": 11.87,
+  "overflow_s": 0.0
+ },
+ {
+  "id": "S029",
+  "slot_s": 11.97,
+  "raw_s": 11.11,
+  "tempo": 1.0,
+  "fit_s": 11.11,
+  "overflow_s": 0.0
+ },
+ {
+  "id": "S030",
+  "slot_s": 11.97,
+  "raw_s": 12.17,
+  "tempo": 1.017,
+  "fit_s": 11.95,
+  "overflow_s": 0.0
+ },
+ {
+  "id": "S031",
+  "slot_s": 11.97,
+  "raw_s": 12.24,
+  "tempo": 1.023,
+  "fit_s": 11.95,
+  "overflow_s": 0.0
+ },
+ {
+  "id": "S032",
+  "slot_s": 12.13,
+  "raw_s": 12.62,
+  "tempo": 1.041,
+  "fit_s": 12.11,
+  "overflow_s": 0.0
+ },
+ {
+  "id": "S033",
+  "slot_s": 11.93,
+  "raw_s": 14.3,
+  "tempo": 1.199,
+  "fit_s": 11.92,
+  "overflow_s": 0.0
+ },
+ {
+  "id": "S034",
+  "slot_s": 11.93,
+  "raw_s": 13.1,
+  "tempo": 1.098,
+  "fit_s": 11.91,
+  "overflow_s": 0.0
+ },
+ {
+  "id": "S035",
+  "slot_s": 11.93,
+  "raw_s": 14.21,
+  "tempo": 1.191,
+  "fit_s": 11.91,
+  "overflow_s": 0.0
+ },
+ {
+  "id": "S036",
+  "slot_s": 11.93,
+  "raw_s": 13.51,
+  "tempo": 1.133,
+  "fit_s": 11.91,
+  "overflow_s": 0.0
+ },
+ {
+  "id": "S037",
+  "slot_s": 11.97,
+  "raw_s": 13.92,
+  "tempo": 1.163,
+  "fit_s": 11.95,
+  "overflow_s": 0.0
+ },
+ {
+  "id": "S038",
+  "slot_s": 11.89,
+  "raw_s": 13.51,
+  "tempo": 1.136,
+  "fit_s": 11.87,
+  "overflow_s": 0.0
+ },
+ {
+  "id": "S039",
+  "slot_s": 12.01,
+  "raw_s": 12.98,
+  "tempo": 1.081,
+  "fit_s": 11.99,
+  "overflow_s": 0.0
+ },
+ {
+  "id": "S040",
+  "slot_s": 11.97,
+  "raw_s": 10.61,
+  "tempo": 1.0,
+  "fit_s": 10.61,
+  "overflow_s": 0.0
+ },
+ {
+  "id": "S041",
+  "slot_s": 11.89,
+  "raw_s": 13.63,
+  "tempo": 1.147,
+  "fit_s": 11.87,
+  "overflow_s": 0.0
+ },
+ {
+  "id": "S042",
+  "slot_s": 12.09,
+  "raw_s": 10.7,
+  "tempo": 1.0,
+  "fit_s": 10.7,
+  "overflow_s": 0.0
+ },
+ {
+  "id": "S043",
+  "slot_s": 12.01,
+  "raw_s": 13.99,
+  "tempo": 1.165,
+  "fit_s": 11.99,
+  "overflow_s": 0.0
+ },
+ {
+  "id": "S044",
+  "slot_s": 12.05,
+  "raw_s": 14.71,
+  "tempo": 1.221,
+  "fit_s": 12.03,
+  "overflow_s": 0.0
+ },
+ {
+  "id": "S045",
+  "slot_s": 11.97,
+  "raw_s": 13.9,
+  "tempo": 1.161,
+  "fit_s": 11.95,
+  "overflow_s": 0.0
+ },
+ {
+  "id": "S046",
+  "slot_s": 11.89,
+  "raw_s": 13.27,
+  "tempo": 1.116,
+  "fit_s": 11.87,
+  "overflow_s": 0.0
+ },
+ {
+  "id": "S047",
+  "slot_s": 12.01,
+  "raw_s": 11.16,
+  "tempo": 1.0,
+  "fit_s": 11.16,
+  "overflow_s": 0.0
+ },
+ {
+  "id": "S048",
+  "slot_s": 11.97,
+  "raw_s": 12.26,
+  "tempo": 1.025,
+  "fit_s": 11.95,
+  "overflow_s": 0.0
+ },
+ {
+  "id": "S049",
+  "slot_s": 11.93,
+  "raw_s": 14.18,
+  "tempo": 1.189,
+  "fit_s": 11.91,
+  "overflow_s": 0.0
+ },
+ {
+  "id": "S050",
+  "slot_s": 12.13,
+  "raw_s": 12.46,
+  "tempo": 1.027,
+  "fit_s": 12.11,
+  "overflow_s": 0.0
+ },
+ {
+  "id": "S051",
+  "slot_s": 12.05,
+  "raw_s": 13.34,
+  "tempo": 1.107,
+  "fit_s": 12.03,
+  "overflow_s": 0.0
+ },
+ {
+  "id": "S052",
+  "slot_s": 11.89,
+  "raw_s": 13.7,
+  "tempo": 1.153,
+  "fit_s": 11.87,
+  "overflow_s": 0.0
+ },
+ {
+  "id": "S053",
+  "slot_s": 11.97,
+  "raw_s": 11.23,
+  "tempo": 1.0,
+  "fit_s": 11.23,
+  "overflow_s": 0.0
+ },
+ {
+  "id": "S054",
+  "slot_s": 11.97,
+  "raw_s": 13.46,
+  "tempo": 1.125,
+  "fit_s": 11.95,
+  "overflow_s": 0.0
+ },
+ {
+  "id": "S055",
+  "slot_s": 11.89,
+  "raw_s": 16.13,
+  "tempo": 1.356,
+  "fit_s": 11.88,
+  "overflow_s": 0.0
+ },
+ {
+  "id": "S056",
+  "slot_s": 11.97,
+  "raw_s": 12.89,
+  "tempo": 1.077,
+  "fit_s": 11.95,
+  "overflow_s": 0.0
+ },
+ {
+  "id": "S057",
+  "slot_s": 12.05,
+  "raw_s": 9.62,
+  "tempo": 1.0,
+  "fit_s": 9.62,
+  "overflow_s": 0.0
+ },
+ {
+  "id": "S058",
+  "slot_s": 12.01,
+  "raw_s": 14.23,
+  "tempo": 1.185,
+  "fit_s": 11.99,
+  "overflow_s": 0.0
+ },
+ {
+  "id": "S059",
+  "slot_s": 11.97,
+  "raw_s": 13.25,
+  "tempo": 1.107,
+  "fit_s": 11.95,
+  "overflow_s": 0.0
+ },
+ {
+  "id": "S060",
+  "slot_s": 12.09,
+  "raw_s": 11.26,
+  "tempo": 1.0,
+  "fit_s": 11.26,
+  "overflow_s": 0.0
+ },
+ {
+  "id": "S061",
+  "slot_s": 11.89,
+  "raw_s": 11.69,
+  "tempo": 1.0,
+  "fit_s": 11.69,
+  "overflow_s": 0.0
+ },
+ {
+  "id": "S062",
+  "slot_s": 11.93,
+  "raw_s": 12.91,
+  "tempo": 1.082,
+  "fit_s": 11.91,
+  "overflow_s": 0.0
+ },
+ {
+  "id": "S063",
+  "slot_s": 11.93,
+  "raw_s": 14.06,
+  "tempo": 1.179,
+  "fit_s": 11.91,
+  "overflow_s": 0.0
+ },
+ {
+  "id": "S064",
+  "slot_s": 12.01,
+  "raw_s": 13.13,
+  "tempo": 1.093,
+  "fit_s": 11.99,
+  "overflow_s": 0.0
+ },
+ {
+  "id": "S065",
+  "slot_s": 12.21,
+  "raw_s": 12.12,
+  "tempo": 1.0,
+  "fit_s": 12.12,
+  "overflow_s": 0.0
+ },
+ {
+  "id": "S066",
+  "slot_s": 11.97,
+  "raw_s": 15.55,
+  "tempo": 1.299,
+  "fit_s": 11.96,
+  "overflow_s": 0.0
+ },
+ {
+  "id": "S067",
+  "slot_s": 12.05,
+  "raw_s": 11.57,
+  "tempo": 1.0,
+  "fit_s": 11.57,
+  "overflow_s": 0.0
+ },
+ {
+  "id": "S068",
+  "slot_s": 11.89,
+  "raw_s": 13.75,
+  "tempo": 1.157,
+  "fit_s": 11.87,
+  "overflow_s": 0.0
+ },
+ {
+  "id": "S069",
+  "slot_s": 11.97,
+  "raw_s": 13.9,
+  "tempo": 1.161,
+  "fit_s": 11.95,
+  "overflow_s": 0.0
+ },
+ {
+  "id": "S070",
+  "slot_s": 11.93,
+  "raw_s": 12.46,
+  "tempo": 1.044,
+  "fit_s": 11.91,
+  "overflow_s": 0.0
+ },
+ {
+  "id": "S071",
+  "slot_s": 11.93,
+  "raw_s": 9.96,
+  "tempo": 1.0,
+  "fit_s": 9.96,
+  "overflow_s": 0.0
+ },
+ {
+  "id": "S072",
+  "slot_s": 11.97,
+  "raw_s": 12.14,
+  "tempo": 1.015,
+  "fit_s": 11.95,
+  "overflow_s": 0.0
+ },
+ {
+  "id": "S073",
+  "slot_s": 11.93,
+  "raw_s": 11.81,
+  "tempo": 1.0,
+  "fit_s": 11.81,
+  "overflow_s": 0.0
+ },
+ {
+  "id": "S074",
+  "slot_s": 11.97,
+  "raw_s": 12.48,
+  "tempo": 1.043,
+  "fit_s": 11.95,
+  "overflow_s": 0.0
+ },
+ {
+  "id": "S075",
+  "slot_s": 12.09,
+  "raw_s": 10.87,
+  "tempo": 1.0,
+  "fit_s": 10.87,
+  "overflow_s": 0.0
+ },
+ {
+  "id": "S076",
+  "slot_s": 12.01,
+  "raw_s": 13.06,
+  "tempo": 1.087,
+  "fit_s": 11.99,
+  "overflow_s": 0.0
+ },
+ {
+  "id": "S077",
+  "slot_s": 11.97,
+  "raw_s": 12.98,
+  "tempo": 1.085,
+  "fit_s": 11.95,
+  "overflow_s": 0.0
+ },
+ {
+  "id": "S078",
+  "slot_s": 12.01,
+  "raw_s": 12.22,
+  "tempo": 1.017,
+  "fit_s": 11.99,
+  "overflow_s": 0.0
+ },
+ {
+  "id": "S079",
+  "slot_s": 12.09,
+  "raw_s": 14.5,
+  "tempo": 1.199,
+  "fit_s": 12.07,
+  "overflow_s": 0.0
+ },
+ {
+  "id": "S080",
+  "slot_s": 12.01,
+  "raw_s": 15.29,
+  "tempo": 1.273,
+  "fit_s": 11.99,
+  "overflow_s": 0.0
+ },
+ {
+  "id": "S081",
+  "slot_s": 11.89,
+  "raw_s": 11.35,
+  "tempo": 1.0,
+  "fit_s": 11.35,
+  "overflow_s": 0.0
+ },
+ {
+  "id": "S082",
+  "slot_s": 12.01,
+  "raw_s": 13.66,
+  "tempo": 1.137,
+  "fit_s": 11.99,
+  "overflow_s": 0.0
+ },
+ {
+  "id": "S083",
+  "slot_s": 11.97,
+  "raw_s": 12.91,
+  "tempo": 1.079,
+  "fit_s": 11.95,
+  "overflow_s": 0.0
+ },
+ {
+  "id": "S084",
+  "slot_s": 11.89,
+  "raw_s": 11.3,
+  "tempo": 1.0,
+  "fit_s": 11.3,
+  "overflow_s": 0.0
+ },
+ {
+  "id": "S085",
+  "slot_s": 11.97,
+  "raw_s": 13.39,
+  "tempo": 1.119,
+  "fit_s": 11.95,
+  "overflow_s": 0.0
+ },
+ {
+  "id": "S086",
+  "slot_s": 12.05,
+  "raw_s": 14.52,
+  "tempo": 1.205,
+  "fit_s": 12.03,
+  "overflow_s": 0.0
+ },
+ {
+  "id": "S087",
+  "slot_s": 12.05,
+  "raw_s": 11.59,
+  "tempo": 1.0,
+  "fit_s": 11.59,
+  "overflow_s": 0.0
+ },
+ {
+  "id": "S088",
+  "slot_s": 11.93,
+  "raw_s": 14.81,
+  "tempo": 1.241,
+  "fit_s": 11.91,
+  "overflow_s": 0.0
+ },
+ {
+  "id": "S089",
+  "slot_s": 11.93,
+  "raw_s": 13.32,
+  "tempo": 1.116,
+  "fit_s": 11.91,
+  "overflow_s": 0.0
+ },
+ {
+  "id": "S090",
+  "slot_s": 12.05,
+  "raw_s": 13.2,
+  "tempo": 1.095,
+  "fit_s": 12.03,
+  "overflow_s": 0.0
+ },
+ {
+  "id": "S091",
+  "slot_s": 11.97,
+  "raw_s": 10.92,
+  "tempo": 1.0,
+  "fit_s": 10.92,
+  "overflow_s": 0.0
+ },
+ {
+  "id": "S092",
+  "slot_s": 11.97,
+  "raw_s": 14.71,
+  "tempo": 1.229,
+  "fit_s": 11.95,
+  "overflow_s": 0.0
+ },
+ {
+  "id": "S093",
+  "slot_s": 11.97,
+  "raw_s": 15.02,
+  "tempo": 1.255,
+  "fit_s": 11.95,
+  "overflow_s": 0.0
+ },
+ {
+  "id": "S094",
+  "slot_s": 11.93,
+  "raw_s": 13.13,
+  "tempo": 1.1,
+  "fit_s": 11.91,
+  "overflow_s": 0.0
+ },
+ {
+  "id": "S095",
+  "slot_s": 11.97,
+  "raw_s": 11.57,
+  "tempo": 1.0,
+  "fit_s": 11.57,
+  "overflow_s": 0.0
+ },
+ {
+  "id": "S096",
+  "slot_s": 12.21,
+  "raw_s": 11.11,
+  "tempo": 1.0,
+  "fit_s": 11.11,
+  "overflow_s": 0.0
+ },
+ {
+  "id": "S097",
+  "slot_s": 11.89,
+  "raw_s": 13.13,
+  "tempo": 1.104,
+  "fit_s": 11.87,
+  "overflow_s": 0.0
+ },
+ {
+  "id": "S098",
+  "slot_s": 11.97,
+  "raw_s": 12.79,
+  "tempo": 1.069,
+  "fit_s": 11.95,
+  "overflow_s": 0.0
+ },
+ {
+  "id": "S099",
+  "slot_s": 12.01,
+  "raw_s": 13.92,
+  "tempo": 1.159,
+  "fit_s": 11.99,
+  "overflow_s": 0.0
+ },
+ {
+  "id": "S100",
+  "slot_s": 12.01,
+  "raw_s": 15.07,
+  "tempo": 1.255,
+  "fit_s": 11.99,
+  "overflow_s": 0.0
+ },
+ {
+  "id": "S101",
+  "slot_s": 11.93,
+  "raw_s": 13.18,
+  "tempo": 1.105,
+  "fit_s": 11.91,
+  "overflow_s": 0.0
+ },
+ {
+  "id": "S102",
+  "slot_s": 11.89,
+  "raw_s": 13.08,
+  "tempo": 1.1,
+  "fit_s": 11.87,
+  "overflow_s": 0.0
+ },
+ {
+  "id": "S103",
+  "slot_s": 12.01,
+  "raw_s": 12.86,
+  "tempo": 1.071,
+  "fit_s": 11.99,
+  "overflow_s": 0.0
+ },
+ {
+  "id": "S104",
+  "slot_s": 11.93,
+  "raw_s": 15.19,
+  "tempo": 1.273,
+  "fit_s": 11.92,
+  "overflow_s": 0.0
+ },
+ {
+  "id": "S105",
+  "slot_s": 11.93,
+  "raw_s": 14.21,
+  "tempo": 1.191,
+  "fit_s": 11.91,
+  "overflow_s": 0.0
+ },
+ {
+  "id": "S106",
+  "slot_s": 12.05,
+  "raw_s": 15.7,
+  "tempo": 1.302,
+  "fit_s": 12.04,
+  "overflow_s": 0.0
+ },
+ {
+  "id": "S107",
+  "slot_s": 11.89,
+  "raw_s": 14.04,
+  "tempo": 1.181,
+  "fit_s": 11.87,
+  "overflow_s": 0.0
+ },
+ {
+  "id": "S108",
+  "slot_s": 11.89,
+  "raw_s": 14.11,
+  "tempo": 1.187,
+  "fit_s": 11.88,
+  "overflow_s": 0.0
+ },
+ {
+  "id": "S109",
+  "slot_s": 11.89,
+  "raw_s": 13.34,
+  "tempo": 1.122,
+  "fit_s": 11.87,
+  "overflow_s": 0.0
+ },
+ {
+  "id": "S110",
+  "slot_s": 12.01,
+  "raw_s": 15.31,
+  "tempo": 1.275,
+  "fit_s": 11.99,
+  "overflow_s": 0.0
+ },
+ {
+  "id": "S111",
+  "slot_s": 11.93,
+  "raw_s": 15.55,
+  "tempo": 1.304,
+  "fit_s": 11.92,
+  "overflow_s": 0.0
+ },
+ {
+  "id": "S112",
+  "slot_s": 12.01,
+  "raw_s": 13.78,
+  "tempo": 1.147,
+  "fit_s": 11.99,
+  "overflow_s": 0.0
+ },
+ {
+  "id": "S113",
+  "slot_s": 11.93,
+  "raw_s": 16.03,
+  "tempo": 1.344,
+  "fit_s": 11.92,
+  "overflow_s": 0.0
+ },
+ {
+  "id": "S114",
+  "slot_s": 11.97,
+  "raw_s": 13.15,
+  "tempo": 1.099,
+  "fit_s": 11.95,
+  "overflow_s": 0.0
+ },
+ {
+  "id": "S115",
+  "slot_s": 12.05,
+  "raw_s": 13.99,
+  "tempo": 1.161,
+  "fit_s": 12.03,
+  "overflow_s": 0.0
+ },
+ {
+  "id": "S116",
+  "slot_s": 11.97,
+  "raw_s": 14.86,
+  "tempo": 1.241,
+  "fit_s": 11.95,
+  "overflow_s": 0.0
+ },
+ {
+  "id": "S117",
+  "slot_s": 12.01,
+  "raw_s": 15.46,
+  "tempo": 1.287,
+  "fit_s": 12.0,
+  "overflow_s": 0.0
+ },
+ {
+  "id": "S118",
+  "slot_s": 12.01,
+  "raw_s": 15.86,
+  "tempo": 1.321,
+  "fit_s": 12.0,
+  "overflow_s": 0.0
+ },
+ {
+  "id": "S119",
+  "slot_s": 12.05,
+  "raw_s": 14.54,
+  "tempo": 1.207,
+  "fit_s": 12.03,
+  "overflow_s": 0.0
+ },
+ {
+  "id": "S120",
+  "slot_s": 12.25,
+  "raw_s": 16.01,
+  "tempo": 1.307,
+  "fit_s": 12.24,
+  "overflow_s": 0.0
+ },
+ {
+  "id": "S121",
+  "slot_s": 12.09,
+  "raw_s": 13.15,
+  "tempo": 1.088,
+  "fit_s": 12.07,
+  "overflow_s": 0.0
+ },
+ {
+  "id": "S122",
+  "slot_s": 12.01,
+  "raw_s": 13.51,
+  "tempo": 1.125,
+  "fit_s": 11.99,
+  "overflow_s": 0.0
+ },
+ {
+  "id": "S123",
+  "slot_s": 11.97,
+  "raw_s": 15.07,
+  "tempo": 1.259,
+  "fit_s": 11.95,
+  "overflow_s": 0.0
+ },
+ {
+  "id": "S124",
+  "slot_s": 12.01,
+  "raw_s": 15.12,
+  "tempo": 1.259,
+  "fit_s": 11.99,
+  "overflow_s": 0.0
+ },
+ {
+  "id": "S125",
+  "slot_s": 11.89,
+  "raw_s": 14.35,
+  "tempo": 1.207,
+  "fit_s": 11.87,
+  "overflow_s": 0.0
+ },
+ {
+  "id": "S126",
+  "slot_s": 11.93,
+  "raw_s": 15.72,
+  "tempo": 1.318,
+  "fit_s": 11.92,
+  "overflow_s": 0.0
+ },
+ {
+  "id": "S127",
+  "slot_s": 12.01,
+  "raw_s": 14.9,
+  "tempo": 1.241,
+  "fit_s": 11.99,
+  "overflow_s": 0.0
+ },
+ {
+  "id": "S128",
+  "slot_s": 12.01,
+  "raw_s": 13.15,
+  "tempo": 1.095,
+  "fit_s": 11.99,
+  "overflow_s": 0.0
+ },
+ {
+  "id": "S129",
+  "slot_s": 11.93,
+  "raw_s": 15.53,
+  "tempo": 1.302,
+  "fit_s": 11.92,
+  "overflow_s": 0.0
+ },
+ {
+  "id": "S130",
+  "slot_s": 11.93,
+  "raw_s": 11.64,
+  "tempo": 1.0,
+  "fit_s": 11.64,
+  "overflow_s": 0.0
+ },
+ {
+  "id": "S131",
+  "slot_s": 12.01,
+  "raw_s": 13.9,
+  "tempo": 1.157,
+  "fit_s": 11.99,
+  "overflow_s": 0.0
+ },
+ {
+  "id": "S132",
+  "slot_s": 11.93,
+  "raw_s": 13.99,
+  "tempo": 1.173,
+  "fit_s": 11.91,
+  "overflow_s": 0.0
+ },
+ {
+  "id": "S133",
+  "slot_s": 12.01,
+  "raw_s": 15.96,
+  "tempo": 1.329,
+  "fit_s": 12.0,
+  "overflow_s": 0.0
+ },
+ {
+  "id": "S134",
+  "slot_s": 11.93,
+  "raw_s": 16.34,
+  "tempo": 1.37,
+  "fit_s": 11.92,
+  "overflow_s": 0.0
+ },
+ {
+  "id": "S135",
+  "slot_s": 11.97,
+  "raw_s": 15.29,
+  "tempo": 1.277,
+  "fit_s": 11.96,
+  "overflow_s": 0.0
+ },
+ {
+  "id": "S136",
+  "slot_s": 3.97,
+  "raw_s": 4.2,
+  "tempo": 1.058,
+  "fit_s": 3.95,
+  "overflow_s": 0.0
+ }
+]
