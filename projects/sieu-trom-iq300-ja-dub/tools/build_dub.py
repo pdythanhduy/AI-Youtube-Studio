@@ -145,7 +145,9 @@ def assemble(segs, total_ms):
 def mix_and_mux(video, background):
     voice = EXPORT / "ja_voice_track.wav"
     final_audio = EXPORT / "ja_full_mix.wav"
-    # Duck the separated background under the Japanese narration.
+    # Write to a temp file and rename atomically: the mux below (and any
+    # concurrent run) must never read a half-written mix.
+    tmp_audio = final_audio.with_suffix(".tmp.wav")
     subprocess.run(
         ["ffmpeg", "-y", "-loglevel", "error",
          "-i", str(voice), "-i", str(background),
@@ -154,8 +156,9 @@ def mix_and_mux(video, background):
          "[bg][0:a]sidechaincompress=threshold=0.03:ratio=8:attack=20:release=400[duck];"
          "[duck][0:a]amix=inputs=2:duration=first:weights=1 1.6:normalize=0,"
          "loudnorm=I=-14:TP=-1.0:LRA=11[out]",
-         "-map", "[out]", "-ar", "44100", "-ac", "2", str(final_audio)],
+         "-map", "[out]", "-ar", "44100", "-ac", "2", str(tmp_audio)],
         check=True)
+    tmp_audio.replace(final_audio)
     print(f"mixed audio -> {final_audio}")
     final_video = EXPORT / "sieu_trom_iq300_ja_dub.mp4"
     subprocess.run(

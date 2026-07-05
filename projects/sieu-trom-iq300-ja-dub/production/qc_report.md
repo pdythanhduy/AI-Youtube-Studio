@@ -32,6 +32,14 @@ Ngày: 2026-07-05
   của ffmpeg 7.1.1), audio copy nguyên mix đã QC
 - Output: `export/sieu_trom_iq300_ja_dub_branded.mp4`
 
+## Sự cố & khắc phục (v3)
+- **Lỗi**: audio câm từ ~9:30 trong cả 2 MP4 đầu ra — hai tiến trình ffmpeg mix
+  cùng ghi `ja_full_mix.wav` chạy chồng nhau, bước mux đọc file đang ghi dở.
+- **Khắc phục**: remux (video stream copy + audio từ `ja_full_mix.wav` hoàn chỉnh);
+  verify RMS tại 30/342/600/900/1300/1600s — tất cả có mức âm ~-17dB, duration 1642s,
+  watermark nguyên vẹn. `build_dub.py` nay ghi mix ra file tạm + rename atomic.
+- **Bài học QC**: kiểm tra âm thanh phải rải mốc đến cuối video, không chỉ 1 điểm.
+
 ## Hạn chế đã biết
 - Bản dịch cô đọng (~không dịch từng chữ) để lời Nhật đọc vừa đúng khung 12s/đoạn;
   nội dung cốt truyện giữ nguyên theo từng phân đoạn.
