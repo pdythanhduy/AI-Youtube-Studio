@@ -10,6 +10,10 @@ projects/*/timeline/render_cache/*.wav
 projects/*/timeline/render_cache/concat.txt
 projects/*/timeline/render_cache/audio_filter.txt
 
+# ja-dub media binaries (regenerable via tools/build_dub.py)
+projects/sieu-trom-iq300-ja-dub/audio/
+projects/sieu-trom-iq300-ja-dub/export/
+
 # Python cache
 __pycache__/
 *.pyc
