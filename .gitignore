@@ -32,3 +32,7 @@ tools/deliver/*.pickle
 tools/deliver/*.session
 tools/deliver/*.session-journal
 .env
+
+# one-man-army-ja-dub media binaries (regenerable)
+projects/one-man-army-ja-dub/audio/
+projects/one-man-army-ja-dub/export/
