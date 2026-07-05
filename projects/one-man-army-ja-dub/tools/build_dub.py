@@ -160,7 +160,7 @@ def mix_and_mux(video, background):
         check=True)
     tmp_audio.replace(final_audio)
     print(f"mixed audio -> {final_audio}")
-    final_video = EXPORT / "sieu_trom_iq300_ja_dub.mp4"
+    final_video = EXPORT / f"{ROOT.name.replace('-', '_')}.mp4"
     subprocess.run(
         ["ffmpeg", "-y", "-loglevel", "error",
          "-i", str(video), "-i", str(final_audio),
