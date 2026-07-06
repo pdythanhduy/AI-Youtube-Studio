@@ -1,4 +1,4 @@
-# QC report — sinh-ton-dao-hoang-ja-dub
+# QC report — dao-hoang-tom-hum-ca-map-ja-dub
 
 Source: https://www.youtube.com/watch?v=DkeK3zCXq2k (Sinh Tồn Trên Đảo Hoang, 32:15, 1080p)
 
@@ -32,8 +32,8 @@ All points within normal speaking-level range, no silent/dropped sections.
   can't stream-copy).
 
 ## Output
-- export/sinh_ton_dao_hoang_ja_dub_branded.mp4 — final deliverable
-- export/sinh_ton_dao_hoang_ja_dub.mp4 — unbranded (JA audio + original video)
+- export/dao_hoang_tom_hum_ca_map_ja_dub_branded.mp4 — final deliverable
+- export/dao_hoang_tom_hum_ca_map_ja_dub.mp4 — unbranded (JA audio + original video)
 - export/channel_watermark.png, export/ja_title_bar.png — overlay assets
 
 ## Note for user
@@ -41,3 +41,12 @@ Channel watermark defaulted to ネタバレ映画館 (@netabare-eigakan) per the
 established JA-dub channel branding used on prior movie-recap videos. This
 video is a survival/reality vlog, not a movie recap — flag if a different
 channel/branding should be used for this content type going forward.
+
+## Naming collision note
+This project was originally named `sinh-ton-dao-hoang-ja-dub` (matching the VI
+title "Sinh Tồn Trên Đảo Hoang"). Renamed to `dao-hoang-tom-hum-ca-map-ja-dub`
+because a different, unrelated JA-dub project (K6IWmbcGJDo, "Một Mình Sinh Tồn
+Trên Đảo Hoang", Dung Review channel) already occupies that exact folder name
+in the main checkout (C:/youtubeAI/AI-Youtube-Studio/projects/). Same video
+source (DkeK3zCXq2k, Sinh Tồn Review channel) throughout — only the folder/file
+name changed.

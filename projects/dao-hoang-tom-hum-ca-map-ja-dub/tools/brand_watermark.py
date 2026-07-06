@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 """
-Rebrand for sinh-ton-dao-hoang-ja-dub:
+Rebrand for dao-hoang-tom-hum-ca-map-ja-dub:
   1. cover the burned-in Vietnamese title bar (black, y=0..98) and draw a
      Japanese title in the same spot
   2. delogo the source channel watermark (@SinhTonRV, top-left under the bar)
   3. overlay the Japanese channel watermark in its place
 
-    python tools/brand_watermark.py --input export/sinh_ton_dao_hoang_ja_dub.mp4 \
+    python tools/brand_watermark.py --input export/dao_hoang_tom_hum_ca_map_ja_dub.mp4 \
         [--title "無人島サバイバル挑戦"] [--text "ネタバレ映画館"] [--cpu]
 
 Output: <input stem>_branded.mp4 next to the input.
