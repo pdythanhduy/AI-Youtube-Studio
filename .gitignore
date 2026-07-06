@@ -13,6 +13,10 @@ projects/*/timeline/render_cache/audio_filter.txt
 # ja-dub media binaries (regenerable via tools/build_dub.py)
 projects/sieu-trom-iq300-ja-dub/audio/
 projects/sieu-trom-iq300-ja-dub/export/
+projects/*-ja-dub/source/
+projects/*-ja-dub/work/
+projects/*-ja-dub/audio/
+projects/*-ja-dub/export/
 
 # Python cache
 __pycache__/
