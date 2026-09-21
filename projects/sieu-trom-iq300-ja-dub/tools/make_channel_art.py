@@ -58,33 +58,69 @@ def avatar():
     print("avatar ->", OUT / "avatar_800.png")
 
 
+FRAMES = pathlib.Path(__file__).resolve().parent / "frames"
+
+
+def panel(name, box, size, tint=(120, 20, 30)):
+    """Crop a still (clean of watermark/overlay text), scale to panel size, grade it."""
+    im = Image.open(FRAMES / name).convert("RGB").crop(box)
+    im = im.resize(size, Image.LANCZOS).filter(ImageFilter.GaussianBlur(1.2))
+    im = Image.blend(im, Image.new("RGB", size, tint), 0.22)
+    return im
+
+
 def banner():
     W, H = 2048, 1152
-    img = Image.new("RGB", (W, H), BG)
+    GOLD = (240, 196, 92)
+    img = Image.new("RGB", (W, H), (10, 10, 16))
+    # movie stills band (crop boxes skip the source channel's logo and overlay text)
+    top, bh, pw = 190, 772, W // 4 + 1
+    stills = [
+        ("still_w1.jpg", (170, 95, 400, 385)),
+        ("still_helmet.jpg", (505, 100, 875, 655)),
+        ("still_w2.jpg", (200, 95, 470, 385)),
+        ("still_w3.jpg", (300, 95, 570, 385)),
+    ]
+    for i, (n, b) in enumerate(stills):
+        img.paste(panel(n, b, (pw, bh)), (i * (W // 4), top))
+    # dark vignette + centre shade so the text pops
+    shade = Image.new("L", (W, H), 0)
+    sd = ImageDraw.Draw(shade)
+    sd.rectangle([0, top, W, top + bh], fill=45)
+    sd.ellipse([W / 2 - 760, H / 2 - 260, W / 2 + 760, H / 2 + 260], fill=95)
+    shade = shade.filter(ImageFilter.GaussianBlur(70))
+    img.paste(Image.new("RGB", (W, H), (6, 6, 10)), (0, 0), shade)
     d = ImageDraw.Draw(img)
-    # vertical gradient
-    for i in range(H):
-        t = i / H
-        c = tuple(int(a + (b - a) * t) for a, b in zip((24, 24, 34), (12, 12, 18)))
-        d.line([(0, i), (W, i)], fill=c)
-    # safe area: 1235x338 centered
+    # edge fade of the band into the background
+    fade = Image.new("L", (W, H), 0)
+    fd = ImageDraw.Draw(fade)
+    for k in range(120):
+        a = int(255 * (1 - k / 120))
+        fd.line([(0, top + k), (W, top + k)], fill=a)
+        fd.line([(0, top + bh - k), (W, top + bh - k)], fill=a)
+    img.paste(Image.new("RGB", (W, H), (10, 10, 16)), (0, 0), fade)
+    d = ImageDraw.Draw(img)
+    for y in (70, H - 70 - 60):
+        d.rectangle([0, y, W, y + 60], fill=(28, 28, 36))
+        perforations(d, 10, y + 18, W, 24, 22, (10, 10, 16))
+        d.line([(0, y), (W, y)], fill=RED, width=4)
+        d.line([(0, y + 60), (W, y + 60)], fill=RED, width=4)
     cx, cy = W // 2, H // 2
-    # film strips above and below the title
-    for y in (cy - 150, cy + 96):
-        d.rectangle([cx - 590, y, cx + 590, y + 54], fill=RED)
-        perforations(d, cx - 570, y + 15, cx + 570, 24, 22, BG)
-    # title
-    font = ImageFont.truetype(FONT, 150, index=0)
+    font = ImageFont.truetype(FONT, 168, index=0)
     text = "ネタバレ映画館"
     box = d.textbbox((0, 0), text, font=font)
     w, h = box[2] - box[0], box[3] - box[1]
-    d.text((cx - w / 2 - box[0], cy - h / 2 - box[1] - 6), text,
-           font=font, fill=WHITE)
-    # tagline inside safe area
-    f2 = ImageFont.truetype(FONT, 44, index=0)
-    tag = "映画をまるごとネタバレ解説 — 結末まで一気見"
+    tx, ty = cx - w / 2 - box[0], cy - h / 2 - box[1] + 4
+    for dx, dy in [(-3, -3), (3, -3), (-3, 3), (3, 3), (0, 6)]:
+        d.text((tx + dx, ty + dy), text, font=font, fill=(90, 12, 22))
+    d.text((tx, ty), text, font=font, fill=WHITE)
+    d.line([(cx - 260, cy + 110), (cx + 260, cy + 110)], fill=GOLD, width=3)
+    f2 = ImageFont.truetype(FONT, 46, index=0)
+    tag = "結末まで全部見せます。あらすじ＆ラスト完全解説"
     b2 = d.textbbox((0, 0), tag, font=f2)
-    d.text((cx - (b2[2] - b2[0]) / 2, cy + 190), tag, font=f2, fill=GRAY)
+    for dx, dy in [(-2, 0), (2, 0), (0, 2), (0, -2)]:
+        d.text((cx - (b2[2] - b2[0]) / 2 - b2[0] + dx, cy + 122 + dy), tag, font=f2, fill=(0, 0, 0))
+    d.text((cx - (b2[2] - b2[0]) / 2 - b2[0], cy + 122), tag, font=f2, fill=GOLD)
     img.save(OUT / "banner_2048x1152.png")
     print("banner ->", OUT / "banner_2048x1152.png")
 
