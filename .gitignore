@@ -32,3 +32,7 @@ tools/deliver/*.pickle
 tools/deliver/*.session
 tools/deliver/*.session-journal
 .env
+
+# janitor-assassin-ja-dub media binaries (regenerable)
+projects/janitor-assassin-ja-dub/audio/
+projects/janitor-assassin-ja-dub/export/
