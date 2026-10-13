@@ -11,9 +11,9 @@ Tiêu đề gốc: 千葉・ベトナム語の免許試験問題が流出か　�
 | `export/audio/` | `voice.wav` (giọng đọc), `bed.wav` (nhạc nền), `timing.json` |
 | `tools/make_audio.py` | Tạo giọng đọc + nhạc nền, ghi độ dài từng cảnh |
 | `tools/render_reel.py` | Dựng hình (sửa `SCENES` để đổi chữ) |
+| Canva design `DAHX5-EwcVM` | Thumbnail YouTube 1280×720 — https://canva.link/p7k8kqh5hw53k01 |
 
 Dựng lại: `python tools/make_audio.py && python tools/render_reel.py`, rồi ghép tiếng bằng lệnh ffmpeg ghi trong đầu `tools/make_audio.py`.
-| Canva design `DAHX5-EwcVM` | Thumbnail YouTube 1280×720 — https://canva.link/p7k8kqh5hw53k01 |
 
 Ảnh AI minh họa trong Canva (media id): `MAHX5wPptF8` (phòng thi 16:9), `MAHX5_7iyg8` (điện thoại + AI, 9:16),
 `MAHX5xC5ALk` (trung tâm sát hạch, 9:16), `MAHX5-iLw5g` (phòng thi bị phong tỏa, 9:16).
