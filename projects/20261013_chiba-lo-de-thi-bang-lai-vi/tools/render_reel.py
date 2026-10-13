@@ -23,7 +23,7 @@ RED, YELLOW, WHITE, GREY = (220, 30, 40), (255, 210, 0), (255, 255, 255), (170, 
 # (seconds, kicker, headline, body)  — headline in yellow, body in white
 SCENES = [
     (5.0, "CHIBA · NHẬT BẢN", "NGHI LỘ ĐỀ THI\nBẰNG LÁI\nTIẾNG VIỆT?", "Thí sinh nói: \"Tìm bằng ChatGPT\""),
-    (5.5, "13/10 · SAU GIỜ THI", "CHỤP BẢNG ĐEN\nBẰNG ĐIỆN THOẠI", "Một phụ nữ quốc tịch Việt Nam (29 tuổi)\nbị giám thị chú ý"),
+    (5.5, "13/10 · SAU GIỜ THI", "CHỤP BẢNG ĐEN\nBẰNG ĐIỆN THOẠI", "Một phụ nữ quốc tịch Việt Nam\n(29 tuổi) bị giám thị chú ý"),
     (5.5, "GIÁM THỊ KIỂM TRA", "TRONG MÁY CÓ\nĐỀ THI TIẾNG VIỆT", "Đề lý thuyết bằng lái\nxe máy loại thường"),
     (5.5, "THEO CẢNH SÁT", "TRANG 1 – 4\nĐÃ ĐƯỢC ĐÁNH DẤU", "Nghi đã có đề bị lộ ra ngoài\ntừ trước khi thi"),
     (5.0, "LỜI KHAI", "\"TÌM BẰNG\nCHATGPT RỒI\nMANG ĐẾN\"", ""),
@@ -75,6 +75,19 @@ def background(t: float) -> Image.Image:
     return Image.blend(img, glow, 0.35)
 
 
+SAFE_X = 110
+SAFE_W = W - 2 * SAFE_X
+
+
+def fit(d: ImageDraw.ImageDraw, text: str, path: str, size: int, max_w: int) -> ImageFont.FreeTypeFont:
+    """Largest font <= size whose widest line fits max_w."""
+    f = font(path, size)
+    while max(d.textlength(l, font=f) for l in text.split("\n")) > max_w and size > 24:
+        size -= 2
+        f = font(path, size)
+    return f
+
+
 def draw_center(d: ImageDraw.ImageDraw, text: str, y: int, fnt, fill, alpha: float, spacing=18) -> int:
     lines = text.split("\n")
     for ln in lines:
@@ -97,39 +110,41 @@ def frame(t: float, total: float) -> Image.Image:
     img = background(t)
     d = ImageDraw.Draw(img)
 
-    # Top bar: TIN NÓNG + channel strip
-    d.rectangle([0, 150, W, 250], fill=(15, 18, 30))
-    d.rectangle([0, 150, 350, 250], fill=RED)
-    d.text((40, 172), "TIN NÓNG", font=font(BOLD, 52), fill=WHITE)
-    d.text((380, 178), "NHẬT BẢN 24H", font=font(BOLD, 44), fill=YELLOW)
+    # Everything sits inside SAFE (x 110..970, y 330..1590): survives the 4:5 feed crop,
+    # player zoom-to-fill, and the Reels UI overlays at top/bottom.
+    sx0, sx1 = SAFE_X, W - SAFE_X
+    bar_w = 740
+    bx = (W - bar_w) // 2
+    d.rounded_rectangle([bx, 340, bx + bar_w, 430], radius=14, fill=(15, 18, 30))
+    d.rounded_rectangle([bx, 340, bx + 300, 430], radius=14, fill=RED)
+    d.text((bx + 32, 360), "TIN NÓNG", font=font(BOLD, 46), fill=WHITE)
+    d.text((bx + 330, 364), "NHẬT BẢN 24H", font=font(BOLD, 40), fill=YELLOW)
 
     a1, a2, a3 = ease(lt / 0.5), ease((lt - 0.3) / 0.6), ease((lt - 0.9) / 0.6)
     fade_out = ease((dur - lt) / 0.35) if idx < len(SCENES) - 1 else 1.0
 
     # Kicker pill
-    kf = font(BOLD, 46)
+    kf = fit(d, kicker, BOLD, 42, SAFE_W - 80)
     kw = d.textlength(kicker, font=kf)
     kx = (W - kw) / 2
-    ky = 700 - int(40 * (1 - a1))
-    d.rounded_rectangle([kx - 30, ky - 16, kx + kw + 30, ky + 66], radius=40,
+    ky = 540 - int(40 * (1 - a1))
+    d.rounded_rectangle([kx - 30, ky - 14, kx + kw + 30, ky + kf.size + 22], radius=40,
                         fill=tuple(int(c * a1 * fade_out) for c in RED))
     d.text((kx, ky), kicker, font=kf, fill=tuple(int(255 * a1 * fade_out) for _ in range(3)))
 
-    # Headline (scale font to fit width)
-    size = 112
-    hf = font(BOLD, size)
-    while max(d.textlength(l, font=hf) for l in head.split("\n")) > W - 110 and size > 60:
-        size -= 4
-        hf = font(BOLD, size)
-    y = draw_center(d, head, 860 + int(60 * (1 - a2)), hf, YELLOW, a2 * fade_out)
+    hf = fit(d, head, BOLD, 100, SAFE_W)
+    y = draw_center(d, head, 670 + int(60 * (1 - a2)), hf, YELLOW, a2 * fade_out)
 
     if body:
-        draw_center(d, body, y + 50 + int(40 * (1 - a3)), font(REG, 56), WHITE, a3 * fade_out, spacing=16)
+        bf = fit(d, body, REG, 48, SAFE_W)
+        draw_center(d, body, y + 40 + int(40 * (1 - a3)), bf, WHITE, a3 * fade_out, spacing=14)
 
     # Bottom: disclaimer + progress bar
-    d.text((60, H - 250), "Thông tin đang được cảnh sát điều tra", font=font(REG, 34), fill=GREY)
-    d.rectangle([60, H - 180, W - 60, H - 168], fill=(40, 48, 70))
-    d.rectangle([60, H - 180, 60 + int((W - 120) * t / total), H - 168], fill=RED)
+    df = font(REG, 32)
+    note = "Thông tin đang được cảnh sát điều tra"
+    d.text(((W - d.textlength(note, font=df)) / 2, 1480), note, font=df, fill=GREY)
+    d.rectangle([sx0, 1545, sx1, 1555], fill=(40, 48, 70))
+    d.rectangle([sx0, 1545, sx0 + int((sx1 - sx0) * t / total), 1555], fill=RED)
     return img
 
 

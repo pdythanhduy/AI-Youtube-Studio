@@ -8,7 +8,9 @@
 
 Then: render_reel.py, then mux (see README in script/post_package.md):
   ffmpeg -i export/reel_1080x1920.mp4 -i export/audio/voice.wav -i export/audio/bed.wav \
-    -filter_complex "[2]volume=0.35[b];[1][b]amix=inputs=2:normalize=0[a]" \
+    -filter_complex "[1]highpass=f=90,acompressor=threshold=-18dB:ratio=3,volume=1.6[v];\
+[2]volume=0.35[b];[v][b]amix=inputs=2:normalize=0,loudnorm=I=-14:TP=-1.5,\
+aresample=48000,pan=stereo|c0=c0|c1=c0[a]" \
     -map 0:v -map "[a]" -c:v copy -c:a aac -b:a 192k -shortest export/reel_final.mp4
 
 Usage: python tools/make_audio.py [--speed 150]
