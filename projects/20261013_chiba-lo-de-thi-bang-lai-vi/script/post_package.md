@@ -6,8 +6,13 @@ Tiêu đề gốc: 千葉・ベトナム語の免許試験問題が流出か　�
 ## Tệp
 | Tệp | Mô tả |
 |---|---|
-| `export/reel_1080x1920.mp4` | Video dọc 38,5 giây (Reels / TikTok / Shorts), không âm thanh — thêm nhạc + lồng tiếng trong CapCut |
-| `tools/render_reel.py` | Script dựng video (sửa `SCENES` rồi chạy lại để đổi chữ) |
+| `export/reel_final.mp4` | **Video hoàn chỉnh** 46 giây, có giọng đọc (espeak-ng) + nhạc nền tích tắc |
+| `export/reel_1080x1920.mp4` | Bản chỉ hình, không tiếng (để tự lồng giọng khác trong CapCut) |
+| `export/audio/` | `voice.wav` (giọng đọc), `bed.wav` (nhạc nền), `timing.json` |
+| `tools/make_audio.py` | Tạo giọng đọc + nhạc nền, ghi độ dài từng cảnh |
+| `tools/render_reel.py` | Dựng hình (sửa `SCENES` để đổi chữ) |
+
+Dựng lại: `python tools/make_audio.py && python tools/render_reel.py`, rồi ghép tiếng bằng lệnh ffmpeg ghi trong đầu `tools/make_audio.py`.
 | Canva design `DAHX5-EwcVM` | Thumbnail YouTube 1280×720 — https://canva.link/p7k8kqh5hw53k01 |
 
 Ảnh AI minh họa trong Canva (media id): `MAHX5wPptF8` (phòng thi 16:9), `MAHX5_7iyg8` (điện thoại + AI, 9:16),

@@ -31,6 +31,13 @@ SCENES = [
     (6.0, "BẠN NGHĨ SAO?", "BÌNH LUẬN\nBÊN DƯỚI", "Vụ việc đang được điều tra\nNguồn: Fuji TV / Yahoo! News"),
 ]
 
+# If make_audio.py has run, stretch each scene to fit its voice line.
+TIMING = ROOT / "export" / "audio" / "timing.json"
+if TIMING.exists():
+    import json
+    _durs = json.loads(TIMING.read_text())["scene_seconds"]
+    SCENES = [(d, *s[1:]) for d, s in zip(_durs, SCENES)]
+
 _fonts: dict[tuple[str, int], ImageFont.FreeTypeFont] = {}
 
 
